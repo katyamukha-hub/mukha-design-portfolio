@@ -1219,7 +1219,7 @@
 
 
 
-    /* Case layout: 9-column covers, alternating backgrounds */
+    /**/
     .hero-screen {
       min-height: 100svh;
     }
@@ -1231,6 +1231,27 @@
 
     .case-preview--avalike {
       margin-top: -128px;
+    }
+
+    /**/
+    @media (min-width: 901px) {
+      .site .header {
+        top: 50%; /**/
+        transform: translate(-50%, -50%);
+      }
+
+      .site .hero-hand {
+        --hero-hand-intro-y: calc(50svh - var(--hero-hand-center-y)); /**/
+        transform: translateY(var(--hero-hand-intro-y)) scale(0.92);
+      }
+
+      .site .hero-screen.is-hand-visible .hero-hand {
+        transform: translateY(var(--hero-hand-intro-y)) scale(1);
+      }
+
+      .site .hero-screen.is-hand-settled .hero-hand {
+        transform: translateY(0) scale(1);
+      }
     }
 
     .case-preview__content {
@@ -1741,9 +1762,7 @@
     }
 
   
-    /* Ordered section backgrounds:
-       hero — white, avalike — gray, skillshare — white, mendi — gray,
-       friends — white, facts — gray, photo project — white, contacts — gray */
+    /**/
     .hero-screen {
       background: #fff;
     }
@@ -1778,8 +1797,7 @@
     }
 
   
-    /* Final explicit section backgrounds.
-       Higher specificity than the old nth-of-type alternation. */
+    /*---------------*/
     .site > .hero-screen {
       background: #fff;
     }
@@ -2441,7 +2459,7 @@
       }
     }
 
-    @media (min-width: 481px) and (max-width: 540px) {
+    @media (min-width: 480px) and (max-width: 540px) {
       :root {
         --page-x: 12px;
       }
@@ -2470,7 +2488,7 @@
       .site .hero-hand {
         width: 28px;
         height: auto;
-        margin-bottom: 22px;
+        margin-bottom: 50px;
       }
 
       .site .brand__name,
@@ -2484,16 +2502,16 @@
       }
 
       .site .brand__role {
-        margin-top: -20px;
+        margin-top: 0;
       }
 
       .site .hero {
-        margin-top: 2px;
+        margin-top: 30px;
       }
 
       .site .header__actions {
         gap: 8px;
-        margin-top: 8px;
+        margin-top: 38px;
       }
 
       .site .cv-button,
@@ -2944,6 +2962,123 @@
       }
     }
 
+    @media (max-width: 359.98px) {
+      .site .hero-hand {
+        margin-bottom: 22px;
+      }
+    }
+
+    @media (max-width: 279.98px) {
+      .site .header__actions {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+    }
+
+
+    @media (min-width: 1601px) {
+      :root {
+        --page-x: calc((100vw - 1552px) / 2);
+      }
+    }
+
+    .site .facts-section,
+    .site .photo-project {
+      padding-bottom: 56px;
+    }
+
+    .site .photo-project {
+      min-height: auto;
+    }
+
+    @media (max-width: 279.98px) {
+      .site .case-preview::after {
+        top: 40px;
+        right: auto;
+        left: var(--page-x);
+        text-align: left;
+      }
+    }
+
+    .hero-scroll-indicator {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      z-index: 3;
+      width: 40px;
+      height: 40px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue);
+      opacity: 0.72;
+      transform: translateX(-50%);
+    }
+
+    .hero-scroll-indicator::before {
+      content: "";
+      width: 14px;
+      height: 14px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg);
+    }
+
+    @media (max-width: 900px) and (min-height: 681px) {
+      .site .header {
+        top: 50%; /*--------------------*/
+        transform: translate(-50%, -50%);
+      }
+
+      .site .hero-hand {
+        --hero-hand-intro-y: calc(50svh - var(--hero-hand-center-y)); /*------------*/
+        transform: translateY(var(--hero-hand-intro-y)) scale(0.92);
+      }
+
+      .site .hero-screen.is-hand-visible .hero-hand {
+        transform: translateY(var(--hero-hand-intro-y)) scale(1);
+      }
+
+      .site .hero-screen.is-hand-settled .hero-hand {
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Keep Avalike below the fold on short viewports. */
+    @media (max-height: 680px) {
+      .site .hero-screen {
+        min-height: 100svh;
+      }
+
+      .site .case-preview--avalike {
+        margin-top: 0;
+      }
+
+      .site .header {
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .site .hero-hand {
+        --hero-hand-intro-y: calc(50svh - var(--hero-hand-center-y));
+        transform: translateY(var(--hero-hand-intro-y)) scale(0.92);
+      }
+
+      .site .hero-screen.is-hand-visible .hero-hand {
+        transform: translateY(var(--hero-hand-intro-y)) scale(1);
+      }
+
+      .site .hero-screen.is-hand-settled .hero-hand {
+        transform: translateY(0) scale(1);
+      }
+
+      .site .hero-scroll-indicator {
+        display: flex;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -2989,6 +3124,7 @@
       </div>
 
       <a class="language-switch" href="#">eng</a>
+      <a class="hero-scroll-indicator" href="#screen-case-avalike" aria-label="Прокрутить вниз"></a>
     </section>
 
     <section id="screen-case-avalike" class="case-preview case-preview--avalike" aria-labelledby="avalike-title">
