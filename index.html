@@ -861,7 +861,7 @@
     }
 
     .case-preview--avalike .case-preview__image {
-      border-radius: 8px;
+      border-radius: 4px;
     }
 
     video.case-preview__image {
@@ -1172,6 +1172,13 @@
     .contacts__item--cv {
       grid-column: 4 / span 4;
       transform: translateY(44px);
+    }
+
+    .contacts__actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
     }
 
     .contacts__label {
@@ -1566,7 +1573,7 @@
       }
     }
 
-    @media (max-width: 520px) {
+    @media (min-width: 360px) and (max-width: 480px) {
       .header {
         gap: 16px;
       }
@@ -1808,6 +1815,11 @@
 
   
     /* Final case button style from Figma */
+    .site .cv-button,
+    .site .telegram-link {
+      height: 52px;
+    }
+
     .site .case-preview__button {
       display: inline-flex;
       align-items: center;
@@ -1817,7 +1829,7 @@
       min-width: 0;
       height: 52px;
       padding: 0 18px 0 24px;
-      border-radius: 8px;
+      border-radius: 4px;
       background: #FF8A54;
       color: #fff;
       font-family: var(--font-main);
@@ -1881,8 +1893,14 @@
 
   
     /* Final case meta layout for first three cases */
+    .site .case-preview:not(.case-preview--friends) {
+      --case-text-line-height: 20px;
+    }
+
     .site .case-preview:not(.case-preview--friends) .case-preview__description {
-      margin-bottom: 36px;
+      margin-bottom: var(--case-text-line-height);
+      line-height: var(--case-text-line-height);
+      color: var(--blue);
     }
 
     .site .case-preview:not(.case-preview--friends) .case-preview__details {
@@ -1890,9 +1908,9 @@
       margin: 0 0 56px;
       font-family: var(--font-main);
       font-size: 16px;
-      line-height: 1.15;
+      line-height: var(--case-text-line-height);
       font-weight: 400;
-      color: rgba(17, 17, 17, 0.72);
+      color: var(--blue);
     }
 
     .site .case-preview__bullets {
@@ -1913,9 +1931,13 @@
       margin: 0;
       font-family: var(--font-main);
       font-size: 16px;
-      line-height: 1.15;
+      line-height: var(--case-text-line-height);
       font-weight: 400;
-      color: rgba(17, 17, 17, 0.72);
+      color: var(--blue);
+    }
+
+    .site .case-preview__image {
+      border-radius: 4px;
     }
 
   
@@ -1980,10 +2002,9 @@
     }
 
   
-    /* Final case meta vertical offset:
-       bullets, year and button are moved 12px lower */
+    /* Final case meta vertical offset */
     .site .case-preview:not(.case-preview--friends) .case-preview__description {
-      margin-bottom: 48px;
+      margin-bottom: var(--case-text-line-height);
     }
 
   
@@ -2011,8 +2032,8 @@
     }
 
   
-    /* Mobile hero preset: around 400px viewport width */
-    @media (max-width: 520px) {
+    /* Mobile hero preset: 360-480px viewport width */
+    @media (min-width: 360px) and (max-width: 480px) {
       .site .hero-hand {
         width: 28px;
         height: auto;
@@ -2049,12 +2070,12 @@
     }
 
   
-    /* Mobile preset: up to 400px viewport width */
+    /* Mobile preset: 360-480px viewport width */
     .hero__title-mobile {
       display: none;
     }
 
-    @media (max-width: 400px) {
+    @media (min-width: 360px) and (max-width: 480px) {
       :root {
         --page-x: 12px;
       }
@@ -2089,15 +2110,15 @@
 
   
     /* Mobile brand gap correction: 12px closer */
-    @media (max-width: 400px) {
+    @media (min-width: 360px) and (max-width: 480px) {
       .site .brand__role {
         margin-top: -12px;
       }
     }
 
   
-    /* Mobile hero compact tuning: up to 400px viewport width */
-    @media (max-width: 400px) {
+    /* Mobile hero compact tuning: 360-480px viewport width */
+    @media (min-width: 360px) and (max-width: 480px) {
       .site .header {
         top: 172px;
       }
@@ -2140,6 +2161,786 @@
       .site .telegram-link {
         height: 56px;
         font-size: 15px;
+      }
+    }
+
+  
+    /* Final mobile tuning: 360-480px viewport width */
+    @media (min-width: 360px) and (max-width: 480px) {
+      :root {
+        --page-x: 12px;
+      }
+
+      .site .hero__meta {
+        left: 12px;
+        right: auto;
+      }
+
+      .site .language-switch {
+        right: 12px;
+      }
+
+      .site .brand__role {
+        margin-top: -20px;
+      }
+    }
+
+  
+    /* Final mobile hero top controls and text sizes: 360-480px viewport width */
+    @media (min-width: 360px) and (max-width: 480px) {
+      .site .hero__meta {
+        top: 16px;
+      }
+
+      .site .language-switch {
+        top: 16px;
+      }
+
+      .site .hero__title {
+        font-size: 16px;
+        line-height: 1.2;
+      }
+
+      .site .cv-button,
+      .site .telegram-link {
+        font-size: 16px;
+      }
+    }
+
+  
+    /* Final mobile button text size: 360-480px viewport width */
+    @media (min-width: 360px) and (max-width: 480px) {
+      .site .cv-button,
+      .site .telegram-link {
+        font-size: 17px;
+      }
+    }
+
+  
+    /* Final mobile subtitle size: 360-480px viewport width */
+    @media (min-width: 360px) and (max-width: 480px) {
+      .site .hero__title {
+        font-size: 17px;
+        line-height: 1.2;
+      }
+    }
+
+  
+    /* iPhone 17 / mobile layout reference */
+    @media (min-width: 360px) and (max-width: 480px) {
+      :root {
+        --page-x: 12px;
+      }
+
+      .site .hero-screen {
+        min-height: calc(100svh - 140px);
+      }
+
+      .site .hero__meta {
+        display: none;
+      }
+
+      .site .language-switch {
+        top: 16px;
+        right: 12px;
+      }
+
+      .site .header {
+        top: 172px;
+      }
+
+      .site .hero-hand {
+        width: 28px;
+        height: auto;
+        margin-bottom: 34px;
+      }
+
+      .site .brand__name,
+      .site .brand__role {
+        font-size: 42px;
+        line-height: 48px;
+      }
+
+      .site .brand__text {
+        gap: 4px;
+      }
+
+      .site .brand__role {
+        margin-top: -20px;
+      }
+
+      .site .hero {
+        margin-top: 26px;
+      }
+
+      .site .hero__title {
+        font-size: 17px;
+        line-height: 1.2;
+      }
+
+      .site .header__actions {
+        gap: 8px;
+        margin-top: 32px;
+      }
+
+      .site .cv-button,
+      .site .telegram-link {
+        height: 56px;
+        font-size: 17px;
+      }
+
+      .site .case-preview {
+        position: relative;
+        padding: 36px var(--page-x) 56px;
+      }
+
+      .site .case-preview--avalike {
+        margin-top: 0;
+      }
+
+      .site .case-preview::before,
+      .site .case-preview::after {
+        position: absolute;
+        top: 20px;
+        font-family: var(--font-main);
+        font-size: 16px;
+        line-height: 1;
+        font-weight: 400;
+        color: var(--blue);
+      }
+
+      .site .case-preview::before {
+        left: var(--page-x);
+      }
+
+      .site .case-preview::after {
+        right: var(--page-x);
+      }
+
+      .site .case-preview--avalike::before {
+        content: "(1 — 3)";
+      }
+
+      .site .case-preview--skillshare::before {
+        content: "(2 — 3)";
+      }
+
+      .site .case-preview--mendi::before {
+        content: "(3 — 3)";
+      }
+
+      .site .case-preview--avalike::after,
+      .site .case-preview--skillshare::after,
+      .site .case-preview--mendi::after {
+        content: "2025 - 2026";
+      }
+
+      .site .case-preview__content {
+        grid-template-columns: 1fr;
+        row-gap: calc(var(--case-text-line-height) * 2);
+        padding-top: 0;
+      }
+
+      .site .case-preview__info,
+      .site .case-preview__media {
+        grid-column: auto;
+      }
+
+      .site .case-preview__info {
+        padding-top: 24px;
+      }
+
+      .site .case-preview__title {
+        margin: 0 0 26px;
+        font-size: 42px;
+        line-height: 0.95;
+        white-space: nowrap;
+      }
+
+      .site .case-preview__description {
+        max-width: 315px;
+        margin: 0 0 var(--case-text-line-height);
+        font-size: 16px;
+        line-height: var(--case-text-line-height);
+        color: var(--blue);
+      }
+
+      .site .case-preview:not(.case-preview--friends) .case-preview__details {
+        max-width: 315px;
+        margin: 0;
+        font-size: 16px;
+        line-height: var(--case-text-line-height);
+        color: var(--blue);
+      }
+
+      .site .case-preview__bullets {
+        margin: 0;
+      }
+
+      .site .case-preview__year {
+        display: none;
+      }
+
+      .site .case-preview__button {
+        display: none;
+      }
+
+      .site .case-preview__media {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .site .case-preview__image {
+        width: 100%;
+        height: auto;
+        max-width: none;
+        display: block;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+    }
+
+  
+    /* Final mobile clock visibility */
+    @media (min-width: 360px) and (max-width: 480px) {
+      .site .hero__meta {
+        display: block;
+        top: 16px;
+        left: 12px;
+        right: auto;
+      }
+    }
+
+  
+    /* Final mobile hero geometry:
+       hero height ends exactly where Avalike starts; content is centered inside that area */
+    @media (min-width: 360px) and (max-width: 480px) {
+      .site .hero-screen {
+        min-height: calc(100svh - 140px);
+      }
+
+      .site .header {
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .site .case-preview--avalike {
+        margin-top: 0;
+      }
+
+      .site .hero-hand {
+        margin-bottom: 22px;
+      }
+
+      .site .hero {
+        margin-top: 2px;
+      }
+
+      .site .header__actions {
+        margin-top: 8px;
+      }
+    }
+
+    @media (min-width: 481px) and (max-width: 540px) {
+      :root {
+        --page-x: 12px;
+      }
+
+      .site .hero-screen {
+        min-height: calc(100svh - 140px);
+      }
+
+      .site .hero__meta {
+        display: block;
+        top: 16px;
+        left: 12px;
+        right: auto;
+      }
+
+      .site .language-switch {
+        top: 16px;
+        right: 12px;
+      }
+
+      .site .header {
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .site .hero-hand {
+        width: 28px;
+        height: auto;
+        margin-bottom: 22px;
+      }
+
+      .site .brand__name,
+      .site .brand__role {
+        font-size: 60px;
+        line-height: 48px;
+      }
+
+      .site .brand__text {
+        gap: 4px;
+      }
+
+      .site .brand__role {
+        margin-top: -20px;
+      }
+
+      .site .hero {
+        margin-top: 2px;
+      }
+
+      .site .header__actions {
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .site .cv-button,
+      .site .telegram-link {
+        height: 56px;
+        font-size: 17px;
+      }
+    }
+
+    @media (min-width: 481px) and (max-width: 900px) {
+      .site {
+        --case-text-line-height: 20px;
+      }
+
+      .site .hero-screen {
+        min-height: calc(100svh - 140px);
+      }
+
+      .site .header {
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .site .case-preview {
+        padding-top: 36px;
+        padding-bottom: 56px;
+      }
+
+      .site .case-preview__content {
+        row-gap: calc(var(--case-text-line-height) * 2);
+        padding-top: 0;
+      }
+
+      .site .case-preview__info {
+        padding-top: 24px;
+      }
+
+      .site .case-preview__title {
+        margin-bottom: var(--case-text-line-height);
+      }
+
+      .site .case-preview__description {
+        margin-bottom: var(--case-text-line-height);
+        line-height: var(--case-text-line-height);
+      }
+
+      .site .case-preview:not(.case-preview--friends) .case-preview__details {
+        margin-bottom: 0;
+        line-height: var(--case-text-line-height);
+      }
+
+      .site .case-preview--friends .case-preview__description {
+        margin-bottom: 0;
+      }
+    }
+
+    @media (min-width: 900px) and (max-width: 1180px) {
+      .site h2 {
+        font-size: 48px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .site .case-preview::before,
+      .site .case-preview::after {
+        position: absolute;
+        top: 20px;
+        font-family: var(--font-main);
+        font-size: 16px;
+        line-height: 1;
+        font-weight: 400;
+        color: var(--blue);
+      }
+
+      .site .case-preview::before {
+        left: var(--page-x);
+      }
+
+      .site .case-preview::after {
+        right: var(--page-x);
+        white-space: nowrap;
+      }
+
+      .site .case-preview--avalike::before {
+        content: "(1 — 4)";
+      }
+
+      .site .case-preview--skillshare::before {
+        content: "(2 — 4)";
+      }
+
+      .site .case-preview--mendi::before {
+        content: "(3 — 4)";
+      }
+
+      .site .case-preview--friends::before {
+        content: "(4 — 4)";
+      }
+
+      .site .case-preview--avalike::after,
+      .site .case-preview--skillshare::after,
+      .site .case-preview--mendi::after {
+        content: "2025 - 2026";
+      }
+
+      .site .case-preview--friends::after {
+        content: "2025";
+      }
+
+      .site .case-preview__button {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        --page-x: 12px;
+      }
+
+      .site {
+        --mobile-main-line-height: 20px;
+        --mobile-heading-1-size: 42px;
+        --mobile-heading-1-line-height: 1;
+        --mobile-heading-2-size: 28px;
+        --mobile-heading-2-line-height: 1;
+        --case-text-line-height: var(--mobile-main-line-height);
+      }
+
+      .site .case-preview--avalike::before {
+        content: "(1 — 4)";
+      }
+
+      .site .case-preview--skillshare::before {
+        content: "(2 — 4)";
+      }
+
+      .site .case-preview--mendi::before {
+        content: "(3 — 4)";
+      }
+
+      .site .case-preview--friends::before {
+        content: "(4 — 4)";
+      }
+
+      .site .case-preview--friends::after {
+        content: "2025";
+      }
+
+      .site .case-preview {
+        position: relative;
+        padding: 36px var(--page-x) 56px;
+      }
+
+      .site .case-preview--avalike {
+        margin-top: 0;
+      }
+
+      .site .case-preview::before,
+      .site .case-preview::after {
+        position: absolute;
+        top: 20px;
+        font-family: var(--font-main);
+        font-size: 16px;
+        line-height: 1;
+        font-weight: 400;
+        color: var(--blue);
+      }
+
+      .site .case-preview::before {
+        left: var(--page-x);
+      }
+
+      .site .case-preview::after {
+        right: var(--page-x);
+        white-space: nowrap;
+      }
+
+      .site .case-preview--avalike::after,
+      .site .case-preview--skillshare::after,
+      .site .case-preview--mendi::after {
+        content: "2025 - 2026";
+      }
+
+      .site .case-preview__content {
+        grid-template-columns: 1fr;
+        row-gap: calc(var(--mobile-main-line-height) * 2);
+        padding-top: 0;
+      }
+
+      .site .case-preview__info,
+      .site .case-preview__media {
+        grid-column: auto;
+      }
+
+      .site .case-preview__info {
+        padding-top: 24px;
+      }
+
+      .site .case-preview__title {
+        margin-bottom: var(--mobile-main-line-height);
+        font-size: 42px;
+        line-height: 0.95;
+        white-space: nowrap;
+      }
+
+      .site .case-preview__description {
+        max-width: 315px;
+        margin: 0 0 var(--mobile-main-line-height);
+        font-size: 16px;
+        line-height: var(--mobile-main-line-height);
+        color: var(--blue);
+      }
+
+      .site .case-preview:not(.case-preview--friends) .case-preview__details {
+        max-width: 315px;
+        margin: 0;
+        font-size: 16px;
+        line-height: var(--mobile-main-line-height);
+        color: var(--blue);
+      }
+
+      .site .case-preview--friends .case-preview__description {
+        margin-bottom: 0;
+      }
+
+      .site .case-preview__bullets {
+        margin: 0;
+      }
+
+      .site .case-preview__year,
+      .site .case-preview__button {
+        display: none;
+      }
+
+      .site .case-preview__media {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .site .case-preview__image {
+        width: 100%;
+        height: auto;
+        max-width: none;
+        display: block;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+
+      .site .facts-section,
+      .site .photo-project,
+      .site .contacts-section {
+        padding-right: var(--page-x);
+        padding-left: var(--page-x);
+      }
+
+      .site .facts-section__title,
+      .site .photo-project__title,
+      .site .contacts__title {
+        font-size: var(--mobile-heading-1-size);
+        line-height: var(--mobile-heading-1-line-height);
+      }
+
+      .site .facts-section__header {
+        display: block;
+        padding-top: 8px;
+      }
+
+      .site .facts-section__grid {
+        display: block;
+        margin-top: calc(var(--mobile-main-line-height) * 2);
+      }
+
+      .site .fact-card--left,
+      .site .fact-card--right {
+        grid-column: auto;
+        transform: none;
+      }
+
+      .site .fact-card + .fact-card {
+        margin-top: calc(var(--mobile-main-line-height) * 2);
+      }
+
+      .site .fact-card__meta {
+        margin-bottom: 8px;
+      }
+
+      .site .fact-card__title {
+        margin: 0 0 var(--mobile-main-line-height);
+        font-size: var(--mobile-heading-2-size);
+        line-height: var(--mobile-heading-2-line-height);
+        white-space: normal;
+      }
+
+      .site .fact-card__text {
+        margin: 0 0 var(--mobile-main-line-height);
+        font-size: 16px;
+        line-height: var(--mobile-main-line-height);
+      }
+
+      .site .fact-card__image {
+        margin-top: 0;
+      }
+
+      .site .photo-project {
+        padding-bottom: calc(var(--mobile-main-line-height) * 3);
+      }
+
+      .site .photo-project__header {
+        grid-template-columns: minmax(0, 1fr) auto;
+        column-gap: 12px;
+        padding-top: 8px;
+      }
+
+      .site .photo-project__title {
+        grid-column: 1 / span 1;
+        grid-row: 1;
+      }
+
+      .site .photo-project__counter {
+        grid-column: 2 / span 1;
+        grid-row: 1;
+        justify-self: end;
+        white-space: nowrap;
+      }
+
+      .site .photo-project__description {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        width: 100%;
+        margin-top: var(--mobile-main-line-height);
+        font-size: 16px;
+        line-height: var(--mobile-main-line-height);
+      }
+
+      .site .photo-project__grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        column-gap: 12px;
+        row-gap: 12px;
+        margin-top: var(--mobile-main-line-height);
+      }
+
+      .site .photo-project__item {
+        width: 100%;
+      }
+
+      .site .photo-project__item:nth-child(n + 19) {
+        display: none;
+      }
+
+      .site .photo-project__image {
+        width: 100%;
+      }
+
+      .site .photo-project__item:hover .photo-project__image,
+      .site .photo-project__item:nth-child(7n + 1):hover .photo-project__image,
+      .site .photo-project__item:nth-child(7n):hover .photo-project__image {
+        transform: none;
+      }
+
+      .site .contacts-section {
+        min-height: auto;
+        padding-top: 8px;
+        padding-bottom: var(--mobile-main-line-height);
+      }
+
+      .site .contacts__intro {
+        max-width: none;
+        margin-top: var(--mobile-main-line-height);
+        font-size: 16px;
+        line-height: var(--mobile-main-line-height);
+      }
+
+      .site .contacts__details {
+        position: static;
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: var(--mobile-main-line-height);
+        margin-top: 40px;
+      }
+
+      .site .contacts__item--email,
+      .site .contacts__item--cv {
+        grid-column: auto;
+        transform: none;
+      }
+
+      .site .contacts__actions {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .site .contacts__item--email .contacts__value {
+        font-size: var(--mobile-heading-2-size);
+        line-height: var(--mobile-heading-2-line-height);
+        font-weight: 200;
+      }
+
+      .site .contacts__cv-button,
+      .site .contacts__telegram-button {
+        height: 56px;
+      }
+
+      .site .contacts__year {
+        position: static;
+        margin-top: 40px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .site .brand__text {
+        gap: 0;
+      }
+
+      .site .brand__name,
+      .site .brand__role {
+        font-size: 36px;
+        line-height: 36px;
+      }
+
+      .site .brand__name {
+        margin-bottom: 0;
+      }
+
+      .site .brand__role {
+        margin-top: 0;
+      }
+
+      .site .hero__title-desktop {
+        display: inline;
+      }
+
+      .site .hero__title-mobile {
+        display: none;
+      }
+
+      .site .hero__line {
+        display: inline;
+        width: auto;
+        margin-right: 0;
+        margin-left: 0;
+      }
+
+      .site .cv-button,
+      .site .telegram-link {
+        height: 52px;
       }
     }
 
@@ -2201,7 +3002,6 @@
               <li>web&nbsp;+&nbsp;mobile,</li>
               <li>end-to-end core flows</li>
             </ul>
-            <p class="case-preview__year">2024</p>
           </div>
           <a class="case-preview__button" href="avalike.html">Смотреть&nbsp;кейс</a>
         </div>
@@ -2223,7 +3023,6 @@
               <li>web&nbsp;+&nbsp;mobile,</li>
               <li>end-to-end core flows</li>
             </ul>
-            <p class="case-preview__year">2024</p>
           </div>
           <a class="case-preview__button" href="#">Смотреть&nbsp;кейс</a>
         </div>
@@ -2254,7 +3053,6 @@
               <li>web&nbsp;+&nbsp;mobile,</li>
               <li>end-to-end core flows</li>
             </ul>
-            <p class="case-preview__year">2024</p>
           </div>
           <a class="case-preview__button" href="mendi.html">Смотреть&nbsp;кейс</a>
         </div>
@@ -2280,12 +3078,12 @@
 
     <section id="screen-facts" class="facts-section" aria-labelledby="facts-title">
       <div class="facts-section__header">
-        <h2 class="facts-section__title" id="facts-title">пара фактов обо мне</h2>
+        <h2 class="facts-section__title" id="facts-title">пара фактов&nbsp;обо мне</h2>
       </div>
 
       <div class="facts-section__grid">
         <article class="fact-card fact-card--left">
-          <p class="fact-card__meta">Факт (1 — 2)</p>
+          <p class="fact-card__meta">факт (1 — 2)</p>
           <h3 class="fact-card__title">окончила МГТУ им. Баумана</h3>
 
           <p class="fact-card__text">
@@ -2300,7 +3098,7 @@
         </article>
 
         <article class="fact-card fact-card--right">
-          <p class="fact-card__meta">Факт (2 — 2)</p>
+          <p class="fact-card__meta">факт (2 — 2)</p>
       <h3 class="fact-card__title">занимаюсь документальной<br />фотографией</h3>
 
           <p class="fact-card__text">
@@ -2371,15 +3169,10 @@
           <a class="contacts__value" href="mailto:ket.for.you@gmail.com" title="Написать на email">ket.for.you@gmail.com</a>
         </p>
 
-        <p class="contacts__item contacts__item--telegram">
-          <span class="contacts__label">Telegram</span>
-          <a class="contacts__value" href="https://t.me/katyamukha" target="_blank" rel="noopener noreferrer" title="Открыть Telegram">@katyamukha</a>
-        </p>
-
-        <p class="contacts__item contacts__item--cv">
-          <span class="contacts__label">CV</span>
-          <a class="contacts__value" href="assets/files/katya-mukha-cv.pdf" download title="Скачать CV">Скачать CV</a>
-        </p>
+        <nav class="contacts__item contacts__item--cv contacts__actions" aria-label="Контакты и резюме">
+          <a class="cv-button contacts__cv-button" href="assets/files/katya-mukha-cv.pdf" download title="Скачать CV">Скачать&nbsp;CV</a>
+          <a class="telegram-link contacts__telegram-button" href="https://t.me/katyamukha" target="_blank" rel="noopener noreferrer">Telegram</a>
+        </nav>
       </div>
 
       <div class="contacts__year">© 2026 Катя Мукха. Все права защищены.</div>
