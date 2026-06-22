@@ -1,0 +1,1239 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mendi — Katya Mukha</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <style>
+    @font-face {
+      font-family: "CoFo Sans";
+      src: local("CoFo Sans Light"), local("CoFoSans-Light"), url("assets/fonts/CoFoSans-Light.woff2") format("woff2");
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "CoFo Sans";
+      src: local("CoFo Sans Regular"), local("CoFoSans-Regular"), url("assets/fonts/CoFoSans-Regular.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "CoFo Sans";
+      src: local("CoFo Sans Medium"), local("CoFoSans-Medium"), url("assets/fonts/CoFoSans-Medium.woff2") format("woff2");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "CoFo Sans Medium";
+      src: local("CoFo Sans Medium"), local("CoFoSans-Medium"), url("assets/fonts/CoFoSans-Medium.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #f4f4f4;
+      --blue: #111111;
+      --blue-hover: #2f3437;
+      --link-hover: #454b4f;
+      --page-x: 24px;
+      --grid-gap: 20px;
+      --block-gap: 80px;
+      --text-to-media-gap: 32px;
+      --jtbd-bg: #F6F0C9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--blue);
+      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-synthesis: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: geometricPrecision;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    @media (pointer: fine) {
+      html,
+      body,
+      a,
+      .back-to-top,
+      .case-hero__image,
+      .case-image,
+      .case-video {
+        cursor: none;
+      }
+    }
+
+    .custom-cursor {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #4267ff;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      z-index: 9998;
+      transition: opacity 0.15s ease;
+    }
+
+    .custom-cursor.is-visible {
+      opacity: 1;
+    }
+
+    .custom-cursor.is-on-contacts {
+      background: #4267ff;
+    }
+
+    .cursor-text-mask {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      color: var(--bg);
+      opacity: 0;
+      clip-path: circle(10px at var(--cursor-x, -100px) var(--cursor-y, -100px));
+      transition: opacity 0.15s ease;
+    }
+
+    .cursor-text-mask.is-visible {
+      opacity: 1;
+    }
+
+    .cursor-text-mask.is-hidden-on-media {
+      opacity: 0;
+    }
+
+    .cursor-text-mask.is-on-contacts * {
+      color: var(--blue) !important;
+      border-color: var(--blue) !important;
+      text-decoration-color: var(--blue) !important;
+    }
+
+    .cursor-text-mask * {
+      color: var(--bg) !important;
+      border-color: var(--bg) !important;
+      text-decoration-color: var(--bg) !important;
+      box-shadow: none !important;
+    }
+
+    .cursor-text-mask .page,
+    .cursor-text-mask .contacts-section {
+      background: transparent;
+    }
+
+    .cursor-text-mask .case-hero__image,
+    .cursor-text-mask .case-image,
+    .cursor-text-mask .case-video {
+      visibility: hidden;
+    }
+
+    .cursor-text-mask .cv-button {
+      background: var(--bg);
+      color: #4267ff !important;
+      box-shadow: none;
+    }
+
+    .cursor-text-mask .telegram-link {
+      background: #4267ff;
+      color: var(--bg) !important;
+      box-shadow: none;
+    }
+
+    .cursor-text-mask .jtbd-card {
+      background: var(--blue) !important;
+      color: var(--jtbd-bg) !important;
+    }
+
+    .cursor-text-mask .jtbd-card * {
+      color: var(--jtbd-bg) !important;
+    }
+
+    .page {
+      position: relative;
+      min-height: 100svh;
+      background: var(--bg);
+    }
+
+    .topbar {
+      position: absolute;
+      top: 16px;
+      left: var(--page-x);
+      right: var(--page-x);
+      z-index: 2;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      line-height: 1.15;
+      transform-origin: left center;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .brand:hover {
+      color: var(--link-hover);
+      transform: scale(0.98);
+    }
+
+    .brand__avatar {
+      display: block;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex: 0 0 auto;
+    }
+
+    .brand__text {
+      display: block;
+      transform: translateX(4px);
+    }
+
+    .brand__name {
+      display: block;
+      margin: 0 0 2px;
+      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.15;
+      font-weight: 300;
+    }
+
+    .brand__role {
+      display: block;
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.15;
+      font-weight: 300;
+    }
+
+    .topbar__actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .telegram-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      height: 58px;
+      width: auto;
+      padding: 0 20px 2px;
+      border-radius: 999px;
+      background: #E5E6EB;
+      color: #4267ff;
+      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: 420;
+      transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+      transform-origin: center center;
+    }
+
+    .telegram-link::after {
+      content: "→";
+      font-size: 0.94em;
+      line-height: 1;
+      transform: none;
+    }
+
+    .telegram-link:hover {
+      color: #6f86ff;
+      background: #E5E6EB;
+      transform: scale(0.98);
+    }
+
+    .cv-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 58px;
+      width: auto;
+      padding: 0 20px 2px;
+      border-radius: 999px;
+      background: #4267ff;
+      color: #fff;
+      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: 420;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+      transform-origin: center center;
+    }
+
+    .cv-button:hover {
+      background: #5a78ff;
+      transform: scale(0.98);
+    }
+
+    .cv-button:active {
+      transform: scale(0.96);
+    }
+
+    .case-hero {
+      min-height: 100svh;
+      padding: 124px var(--page-x) var(--block-gap);
+    }
+
+    .case-hero__grid,
+    .case-text-section__grid,
+    .case-image-section__grid,
+    .case-section-heading__grid,
+    .jtbd-section__grid,
+    .contacts__details {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--grid-gap);
+    }
+
+    .case-hero__grid {
+      align-items: start;
+    }
+
+    .case-nav {
+      position: fixed;
+      left: var(--page-x);
+      bottom: 20px;
+      z-index: 10;
+      width: calc(((100vw - var(--page-x) * 2 - var(--grid-gap) * 11) / 12) * 2 + var(--grid-gap));
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-top: 0;
+      font-size: 16px;
+      line-height: 1.15;
+      font-weight: 400;
+      color: #4267ff;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 0.24s ease, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .case-nav.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .case-nav.is-on-contacts {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+    }
+
+    .case-nav.is-docked {
+      position: absolute;
+      top: var(--case-nav-dock-top, auto);
+      bottom: auto;
+    }
+
+    .case-nav__home,
+    .case-nav__link,
+    .case-nav__current {
+      display: inline-block;
+      transition: color 0.2s ease, transform 0.2s ease;
+      transform-origin: left center;
+    }
+
+    .case-nav__home:hover,
+    .case-nav__link:hover {
+      color: #4267ff;
+      transform: scale(0.98);
+    }
+
+    .case-nav__list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .back-to-top {
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      z-index: 11;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 50%;
+      background: #4267ff;
+      color: var(--bg);
+      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 400;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 8px);
+      transition: opacity 0.24s ease, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease;
+    }
+
+    .back-to-top.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, 0);
+    }
+
+    .back-to-top:hover {
+      background: #5a78ff;
+      transform: translate(-50%, 0) scale(0.98);
+    }
+
+    .case-hero__content {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      column-gap: var(--grid-gap);
+      grid-column: 3 / span 8;
+    }
+
+    .case-hero__text {
+      grid-column: 1 / span 6;
+    }
+
+    .case-hero__media {
+      grid-column: 1 / -1;
+    }
+
+    .case-hero__title {
+      margin: 0 0 20px;
+      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-size: 56px;
+      line-height: 0.96;
+      font-weight: 300;
+      letter-spacing: 0;
+    }
+
+    .case-hero__description,
+    .case-text-section__text,
+    .case-text-section__list,
+    .case-section-heading__caption,
+    .case-section-heading__list,
+    .case-section-heading__link {
+      font-size: 18px;
+      line-height: 24px;
+      font-weight: 300;
+    }
+
+    .case-hero__description {
+      max-width: 690px;
+      margin: 0 0 32px;
+    }
+
+    .case-hero__image,
+    .case-image,
+    .case-video {
+      width: 100%;
+      display: block;
+      border-radius: 8px;
+      background: transparent;
+      object-fit: cover;
+    }
+
+    .case-hero__image {
+      background: transparent;
+    }
+
+    .case-image--competitive-analysis {
+      border-radius: 0;
+    }
+
+    .case-text-section,
+    .case-section-heading,
+    .jtbd-section {
+      padding: 0 var(--page-x) var(--block-gap);
+    }
+
+    .case-text-section--before-media,
+    .case-section-heading--before-media {
+      padding-bottom: var(--text-to-media-gap);
+    }
+
+    .case-text-section__content,
+    .case-section-heading__content {
+      grid-column: 3 / span 6;
+    }
+
+    .case-text-section__title,
+    .case-section-heading__title,
+    .jtbd-section__title {
+      margin: 0 0 20px;
+      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 300;
+      letter-spacing: 0;
+    }
+
+    .case-text-section__text {
+      margin: 0 0 16px;
+    }
+
+    .case-text-section__list,
+    .case-section-heading__list {
+      margin: 0 0 16px;
+      padding-left: 1.1em;
+      list-style: disc;
+    }
+
+    .case-text-section__list li,
+    .case-section-heading__list li {
+      margin: 0;
+      padding-left: 0.2em;
+    }
+
+    .case-section-heading__caption {
+      max-width: 640px;
+      margin: 0;
+    }
+
+    .case-section-heading__list {
+      max-width: 640px;
+      margin-top: 8px;
+    }
+
+    .case-section-heading__link {
+      display: inline-block;
+      margin-top: 0;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      transition: color 0.2s ease, transform 0.2s ease;
+      transform-origin: left center;
+    }
+
+    .case-section-heading__link:hover {
+      color: var(--link-hover);
+      transform: scale(0.98);
+    }
+
+    .case-image-section {
+      padding: 0 var(--page-x) calc(var(--block-gap) + 20px);
+    }
+
+    .case-image-section__content {
+      grid-column: 3 / span 8;
+    }
+
+    .case-image-section__content .case-image + .case-image {
+      margin-top: 20px;
+    }
+
+    .case-image-section--main-scenarios {
+      padding-right: 0;
+      padding-bottom: calc(var(--block-gap) + 20px);
+    }
+
+    .case-image-section--main-scenarios .case-image-section__grid {
+      display: block;
+    }
+
+    .case-image-section--main-scenarios .case-image-section__content {
+      width: calc(100vw - var(--page-x));
+      overflow-x: auto;
+      overflow-y: visible;
+      padding-left: calc(
+        ((100vw - var(--page-x) * 2 - var(--grid-gap) * 11) / 12) * 2 + var(--grid-gap) * 2
+      );
+      padding-right: var(--page-x);
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .case-image-section--main-scenarios .case-image-section__content::-webkit-scrollbar {
+      display: none;
+    }
+
+    .case-image-section--main-scenarios .case-image--main-scenarios {
+      width: auto;
+      min-width: max-content;
+      max-width: none;
+      height: 600px;
+      object-fit: contain;
+    }
+
+    .case-image-section--release {
+      padding-bottom: 220px;
+    }
+
+    .jtbd-section__content {
+      grid-column: 3 / span 8;
+    }
+
+    .jtbd-section__title {
+      margin-bottom: 52px;
+    }
+
+    .jtbd-board {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .jtbd-card {
+      min-height: 124px;
+      padding: 18px 18px 20px;
+      border-radius: 8px;
+      background: var(--jtbd-bg);
+      color: var(--blue);
+      font-size: 15px;
+      line-height: 1.28;
+      font-weight: 400;
+    }
+
+    .jtbd-card p {
+      margin: 0;
+    }
+
+    .placeholder-note {
+      opacity: 0.55;
+    }
+
+    .contacts-section {
+      position: relative;
+      min-height: 83.333svh;
+      padding: 36px var(--page-x) 40px;
+      background: var(--bg);
+      color: var(--blue);
+    }
+
+    .contacts__title {
+      margin: 0;
+      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-size: 60px;
+      line-height: 0.95;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .contacts__intro {
+      max-width: 300px;
+      margin: 28px 0 0;
+      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .contacts__details {
+      position: absolute;
+      left: var(--page-x);
+      right: var(--page-x);
+      bottom: 274px;
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 40px;
+      row-gap: 28px;
+      margin-top: 0;
+    }
+
+    .contacts__item {
+      margin: 0;
+    }
+
+    .contacts__item--email {
+      grid-column: 4 / span 5;
+      transform: translateY(40px);
+    }
+
+    .contacts__item--telegram {
+      grid-column: 9 / span 3;
+      transform: translateY(40px);
+    }
+
+    .contacts__item--cv {
+      grid-column: 4 / span 4;
+      transform: translateY(44px);
+    }
+
+    .contacts__label {
+      display: block;
+      margin-bottom: 12px;
+      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1;
+      font-weight: 400;
+    }
+
+    .contacts__value {
+      display: inline-block;
+      color: inherit;
+      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-size: 30px;
+      line-height: 1;
+      font-weight: 400;
+      text-decoration: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      transform-origin: center center;
+    }
+
+    .contacts__value:hover {
+      opacity: 0.72;
+      transform: scale(0.98);
+    }
+
+    .contacts__year {
+      position: absolute;
+      left: var(--page-x);
+      bottom: 20px;
+      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1;
+      font-weight: 400;
+    }
+
+    @media (max-width: 1100px) {
+      .case-text-section__content,
+      .case-section-heading__content {
+        grid-column: 3 / span 6;
+      }
+
+      .case-hero__content {
+        grid-column: 3 / span 8;
+      }
+
+      .case-image-section__content,
+      .jtbd-section__content {
+        grid-column: 2 / span 10;
+      }
+
+      .case-hero__title {
+        font-size: 48px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .topbar__actions {
+        gap: 4px;
+      }
+
+      .telegram-link,
+      .cv-button {
+        height: 58px;
+        font-size: 14px;
+      }
+
+      .telegram-link {
+        width: auto;
+      }
+
+      .cv-button {
+        width: auto;
+      }
+
+      .case-hero {
+        padding-top: 128px;
+      }
+
+      .case-hero__grid,
+      .case-text-section__grid,
+      .case-image-section__grid,
+      .case-section-heading__grid,
+      .jtbd-section__grid,
+      .contacts__details {
+        grid-template-columns: 1fr;
+      }
+
+      .contacts__details {
+        row-gap: 40px;
+      }
+
+      .case-nav {
+        display: none;
+      }
+
+      .case-hero__content,
+      .case-text-section__content,
+      .case-image-section__content,
+      .case-section-heading__content,
+      .jtbd-section__content,
+      .contacts__item--email,
+      .contacts__item--telegram,
+      .contacts__item--cv {
+        grid-column: auto;
+      }
+
+      .case-hero__content {
+        display: block;
+      }
+
+      .case-hero__title {
+        font-size: 32px;
+      }
+
+      .case-text-section__title,
+      .case-section-heading__title,
+      .jtbd-section__title {
+        font-size: 32px;
+      }
+
+      .jtbd-board {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .case-image-section,
+      .case-section-heading {
+        padding-bottom: var(--block-gap);
+      }
+
+      .contacts__title {
+        font-size: 44px;
+      }
+
+      .contacts-section {
+        padding: 36px 20px 32px;
+      }
+
+      .contacts__value {
+        font-size: 24px;
+      }
+
+      .contacts__year {
+        left: 20px;
+        right: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="custom-cursor" aria-hidden="true"></div>
+  <div class="cursor-text-mask" aria-hidden="true"></div>
+
+  <main class="page">
+    <header class="topbar" aria-label="Верхняя навигация">
+      <a class="brand" href="index.html" aria-label="На главную">
+        <img class="brand__avatar" src="assets/images/avatar.png" alt="" />
+        <span class="brand__text">
+          <span class="brand__name">Катя Мукха</span>
+          <span class="brand__role">Product designer</span>
+        </span>
+      </a>
+
+      <nav class="topbar__actions" aria-label="Контакты и резюме">
+        <a class="telegram-link" href="https://t.me/katyamukha" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a class="cv-button" href="assets/files/katya-mukha-cv.pdf" download>Скачать CV</a>
+      </nav>
+    </header>
+
+    <section class="case-hero" aria-labelledby="case-title">
+      <div class="case-hero__grid">
+        <nav class="case-nav" aria-label="Навигация по кейсам">
+          <a class="case-nav__home" href="index.html">Все кейсы</a>
+          <ul class="case-nav__list">
+            <li><a class="case-nav__link" href="avalike.html">Avalike</a></li>
+            <li><a class="case-nav__link" href="skillshare.html">Skillshare</a></li>
+            <li><span class="case-nav__current">→ Mendi</span></li>
+          </ul>
+        </nav>
+
+        <button class="back-to-top" type="button" aria-label="Наверх">↑</button>
+
+        <div class="case-hero__content">
+          <div class="case-hero__text">
+            <h1 class="case-hero__title" id="case-title">Mendi</h1>
+
+            <p class="case-hero__description">
+              Mendi — iOS-приложение, которое помогает соблюдать график приёма лекарств: позволяет гибко добавить лекарство, вовремя напоминает о&nbsp;времени и&nbsp;дозировке, а&nbsp;также хранит данные по&nbsp;прошедшим курсам лечения.
+            </p>
+          </div>
+
+          <div class="case-hero__media">
+            <img class="case-hero__image" src="assets/images/mendi/mendi-case-hero.png" alt="Интерфейс приложения Mendi" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-text-section case-text-section--before-media" aria-labelledby="results-title">
+      <div class="case-text-section__grid">
+        <div class="case-text-section__content">
+          <h2 class="case-text-section__title" id="results-title">Результаты</h2>
+
+          <p class="case-text-section__text">Готовое приложение с&nbsp;протестированными основными сценариями:</p>
+
+          <ul class="case-text-section__list">
+            <li>Главный экран, где пользователь всегда понимает, какие лекарства нужно принять сегодня и&nbsp;что уже принято;</li>
+            <li>Добавление нового лекарства;</li>
+            <li>Добавление и&nbsp;смена пользователя;</li>
+            <li>Статистика приёма лекарств.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="work-stages-title">
+      <div class="case-section-heading__grid">
+        <div class="case-section-heading__content">
+          <h2 class="case-section-heading__title" id="work-stages-title">Double Diamond</h2>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-image-section" aria-label="Double Diamond Mendi">
+      <div class="case-image-section__grid">
+        <div class="case-image-section__content">
+          <img class="case-image" src="assets/images/mendi/mendi-double-diamond.png" alt="Double Diamond процесса Mendi" />
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="competitive-title">
+      <div class="case-section-heading__grid">
+        <div class="case-section-heading__content">
+          <h2 class="case-section-heading__title" id="competitive-title">Конкурентный анализ</h2>
+          <p class="case-section-heading__caption">Изучены best practices в&nbsp;сфере учёта лекарств и&nbsp;отзывы на&nbsp;конкурентов:</p>
+
+          <ul class="case-section-heading__list">
+            <li>Гибкий флоу добавления лекарства, учитывающий все особенности способа приёма;</li>
+            <li>Интуитивный главный экран, где легко считывается информация о&nbsp;статусе принятия лекарств.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-image-section" aria-label="Конкурентный анализ Mendi">
+      <div class="case-image-section__grid">
+        <div class="case-image-section__content">
+          <img class="case-image case-image--competitive-analysis" src="assets/images/mendi/mendi-competitive-analysis.png" alt="Конкурентный анализ Mendi" />
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="interviews-title">
+      <div class="case-section-heading__grid">
+        <div class="case-section-heading__content">
+          <h2 class="case-section-heading__title" id="interviews-title">Глубинные интервью</h2>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-image-section" aria-label="Глубинные интервью Mendi">
+      <div class="case-image-section__grid">
+        <div class="case-image-section__content">
+          <img class="case-image" src="assets/images/mendi/mendi-depth-interviews1.png" alt="Глубинные интервью Mendi — часть 1" />
+          <img class="case-image" src="assets/images/mendi/mendi-depth-interviews2.png" alt="Глубинные интервью Mendi — часть 2" />
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="hypotheses-title">
+      <div class="case-section-heading__grid">
+        <div class="case-section-heading__content">
+          <h2 class="case-section-heading__title" id="hypotheses-title">Гипотезы</h2>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-image-section" aria-label="Гипотезы Mendi">
+      <div class="case-image-section__grid">
+        <div class="case-image-section__content">
+          <img class="case-image" src="assets/images/mendi/mendi-hypotheses.png" alt="Гипотезы Mendi" />
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="insights-title">
+      <div class="case-section-heading__grid">
+        <div class="case-section-heading__content">
+          <h2 class="case-section-heading__title" id="insights-title">Инсайты</h2>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-image-section" aria-label="Инсайты Mendi">
+      <div class="case-image-section__grid">
+        <div class="case-image-section__content">
+          <img class="case-image" src="assets/images/mendi/mendi-insights.png" alt="Инсайты Mendi" />
+        </div>
+      </div>
+    </section>
+
+    <section class="jtbd-section" aria-labelledby="jtbd-title">
+      <div class="jtbd-section__grid">
+        <div class="jtbd-section__content">
+          <h2 class="jtbd-section__title" id="jtbd-title">JTBD</h2>
+
+          <div class="jtbd-board" aria-label="JTBD Mendi">
+            <article class="jtbd-card"><p>Когда я&nbsp;принимаю лекарство, я&nbsp;хочу быстро отметить приём, чтобы не&nbsp;сомневаться, приняла я&nbsp;его уже или&nbsp;нет, и&nbsp;не&nbsp;принять повторно.</p></article>
+            <article class="jtbd-card"><p>Когда я&nbsp;прихожу к&nbsp;новому врачу, я&nbsp;хочу быстро показать список текущих и&nbsp;ранее принимаемых лекарств, чтобы врач видел мой лекарственный контекст и&nbsp;мог безопаснее назначить лечение.</p></article>
+            <article class="jtbd-card"><p>Когда у&nbsp;меня возникает вопрос по&nbsp;лекарству, я&nbsp;хочу быстро открыть инструкцию или&nbsp;заметки врача, чтобы уточнить дозировку, способ приёма или&nbsp;ограничения.</p></article>
+            <article class="jtbd-card"><p>Когда я&nbsp;обсуждаю лечение с&nbsp;врачом, я&nbsp;хочу показать историю приёма лекарств, чтобы вместе понять, соблюдался&nbsp;ли план лечения и&nbsp;что могло повлиять на&nbsp;результат.</p></article>
+            <article class="jtbd-card"><p>Когда мне назначают новое лекарство, я&nbsp;хочу точно настроить график приёма по&nbsp;назначению врача, чтобы получать напоминания в&nbsp;нужное время и&nbsp;не&nbsp;нарушать схему лечения.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="main-scenarios-title">
+      <div class="case-section-heading__grid">
+        <div class="case-section-heading__content">
+          <h2 class="case-section-heading__title" id="main-scenarios-title">Основные сценарии</h2>
+          <p class="case-section-heading__caption placeholder-note">Картинку добавим после экспорта.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-image-section case-image-section--main-scenarios" aria-label="Основные сценарии Mendi">
+      <div class="case-image-section__grid">
+        <div class="case-image-section__content">
+          <img class="case-image case-image--main-scenarios" src="assets/images/mendi/mendi-main-scenarios.png" alt="Основные сценарии Mendi" />
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="wireframes-title">
+      <div class="case-section-heading__grid">
+        <div class="case-section-heading__content">
+          <h2 class="case-section-heading__title" id="wireframes-title">Вайрфреймы</h2>
+          <p class="case-section-heading__caption">Основные сценарии были протестированы на&nbsp;вайрфреймах с&nbsp;помощью коридорного тестирования.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-image-section" aria-label="Вайрфреймы Mendi">
+      <div class="case-image-section__grid">
+        <div class="case-image-section__content">
+          <img class="case-image" src="assets/images/mendi/mendi-wireframes.png" alt="Вайрфреймы Mendi" />
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="moodboard-title">
+      <div class="case-section-heading__grid">
+        <div class="case-section-heading__content">
+          <h2 class="case-section-heading__title" id="moodboard-title">Мудборд</h2>
+          <p class="case-section-heading__caption">Собрала мудборд с&nbsp;референсами для&nbsp;ключевых экранов и&nbsp;интерфейсных решений.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-image-section" aria-label="Мудборд Mendi">
+      <div class="case-image-section__grid">
+        <div class="case-image-section__content">
+          <img class="case-image" src="assets/images/mendi/mendi-moodboard.png" alt="Мудборд Mendi" />
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="components-title">
+      <div class="case-section-heading__grid">
+        <div class="case-section-heading__content">
+          <h2 class="case-section-heading__title" id="components-title">UI-kit / компоненты</h2>
+          <p class="case-section-heading__caption">Собрала UI-kit для&nbsp;приложения: атомы, организмы, цвета, типографику, карточки лекарств, состояния приёма, элементы календаря, нижнюю навигацию и&nbsp;кнопки действий.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-image-section" aria-label="UI-kit Mendi">
+      <div class="case-image-section__grid">
+        <div class="case-image-section__content">
+          <img class="case-image" src="assets/images/mendi/mendi-ui-kit.png" alt="UI-kit и компоненты Mendi" />
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="final-title">
+      <div class="case-section-heading__grid">
+        <div class="case-section-heading__content">
+          <h2 class="case-section-heading__title" id="final-title">Результат</h2>
+          <p class="case-section-heading__caption">Готовое приложение с&nbsp;протестированными основными сценариями: главный экран, добавление нового лекарства, добавление и&nbsp;смена пользователя, статистика приёма лекарств.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-image-section case-image-section--release" aria-label="Финальные экраны Mendi">
+      <div class="case-image-section__grid">
+        <div class="case-image-section__content">
+          <img class="case-image" src="assets/images/mendi/mendi-final-screens-1.png" alt="Финальные экраны Mendi — часть 1" />
+          <img class="case-image" src="assets/images/mendi/mendi-final-screens-2.png" alt="Финальные экраны Mendi — часть 2" />
+          <img class="case-image" src="assets/images/mendi/mendi-final-screens-3.png" alt="Финальные экраны Mendi — часть 3" />
+        </div>
+      </div>
+    </section>
+
+    <footer class="contacts-section" aria-labelledby="contacts-title">
+      <h2 class="contacts__title" id="contacts-title">Контакты</h2>
+      <p class="contacts__intro">Открыта к&nbsp;сотрудничеству<br />в&nbsp;Москве или удалённо</p>
+
+      <div class="contacts__details" aria-label="Контактная информация">
+        <p class="contacts__item contacts__item--email">
+          <span class="contacts__label">Email</span>
+          <a class="contacts__value" href="mailto:ket.for.you@gmail.com" title="Написать на email">ket.for.you@gmail.com</a>
+        </p>
+
+        <p class="contacts__item contacts__item--telegram">
+          <span class="contacts__label">Telegram</span>
+          <a class="contacts__value" href="https://t.me/katyamukha" target="_blank" rel="noopener noreferrer" title="Открыть Telegram">@katyamukha</a>
+        </p>
+
+        <p class="contacts__item contacts__item--cv">
+          <span class="contacts__label">CV</span>
+          <a class="contacts__value" href="assets/files/katya-mukha-cv.pdf" download title="Скачать CV">Скачать CV</a>
+        </p>
+      </div>
+
+      <div class="contacts__year">2026</div>
+    </footer>
+  </main>
+
+  <script>
+    const customCursor = document.querySelector('.custom-cursor');
+    const cursorTextMask = document.querySelector('.cursor-text-mask');
+    const caseNav = document.querySelector('.case-nav');
+    const backToTopButton = document.querySelector('.back-to-top');
+    const contactsSection = document.querySelector('.contacts-section');
+    let maskCaseNav = null;
+
+    const updateCaseNavState = () => {
+      if (!caseNav) return;
+
+      const isVisible = caseNav.classList.contains('is-visible');
+
+      if (!contactsSection) return;
+
+      const shouldDock = window.scrollY + window.innerHeight - 20 >= contactsSection.offsetTop;
+
+      caseNav.classList.remove('is-docked');
+      caseNav.classList.toggle('is-on-contacts', shouldDock);
+
+      if (maskCaseNav) {
+        maskCaseNav.classList.toggle('is-visible', isVisible);
+        maskCaseNav.classList.toggle('is-on-contacts', shouldDock);
+        maskCaseNav.classList.remove('is-docked');
+        maskCaseNav.style.position = 'fixed';
+        maskCaseNav.style.left = 'var(--page-x)';
+        maskCaseNav.style.bottom = '20px';
+        maskCaseNav.style.top = 'auto';
+      }
+    };
+
+    window.addEventListener('scroll', updateCaseNavState, { passive: true });
+    window.addEventListener('resize', updateCaseNavState);
+    updateCaseNavState();
+
+    let backToTopHideTimer = null;
+
+    const updateBackToTopState = () => {
+      if (!backToTopButton) return;
+
+      window.clearTimeout(backToTopHideTimer);
+
+      if (window.scrollY <= 8) {
+        backToTopButton.classList.remove('is-visible');
+        return;
+      }
+
+      backToTopButton.classList.add('is-visible');
+      backToTopHideTimer = window.setTimeout(() => {
+        backToTopButton.classList.remove('is-visible');
+      }, 900);
+    };
+
+    window.addEventListener('scroll', updateBackToTopState, { passive: true });
+    window.addEventListener('resize', updateBackToTopState);
+    updateBackToTopState();
+
+    if (backToTopButton) {
+      backToTopButton.addEventListener('click', () => {
+        backToTopButton.classList.remove('is-visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    window.setTimeout(() => {
+      if (caseNav) {
+        caseNav.classList.add('is-visible');
+        updateCaseNavState();
+      }
+    }, 650);
+
+    if (customCursor && cursorTextMask && window.matchMedia('(pointer: fine)').matches) {
+      const page = document.querySelector('.page');
+      const pageClone = page.cloneNode(true);
+      maskCaseNav = pageClone.querySelector('.case-nav');
+
+      if (maskCaseNav) {
+        maskCaseNav.remove();
+      }
+
+      cursorTextMask.appendChild(pageClone);
+
+      if (maskCaseNav) {
+        cursorTextMask.appendChild(maskCaseNav);
+      }
+
+      updateCaseNavState();
+
+      const syncMaskScroll = () => {
+        pageClone.style.transform = `translateY(${-window.scrollY}px)`;
+      };
+
+      document.addEventListener('pointermove', (event) => {
+        customCursor.style.left = `${event.clientX}px`;
+        customCursor.style.top = `${event.clientY}px`;
+        customCursor.classList.add('is-visible');
+
+        const elementUnderCursor = document.elementFromPoint(event.clientX, event.clientY);
+        const isOnMedia = elementUnderCursor && elementUnderCursor.closest('.case-hero__image, .case-image, .case-video');
+        const isOnContacts = elementUnderCursor && elementUnderCursor.closest('.contacts-section');
+
+        customCursor.classList.toggle('is-on-contacts', Boolean(isOnContacts));
+        cursorTextMask.classList.toggle('is-on-contacts', Boolean(isOnContacts));
+        cursorTextMask.style.setProperty('--cursor-x', `${event.clientX}px`);
+        cursorTextMask.style.setProperty('--cursor-y', `${event.clientY}px`);
+        cursorTextMask.classList.add('is-visible');
+        cursorTextMask.classList.toggle('is-hidden-on-media', Boolean(isOnMedia));
+        syncMaskScroll();
+      });
+
+      document.addEventListener('pointerleave', () => {
+        customCursor.classList.remove('is-visible', 'is-on-contacts');
+        cursorTextMask.classList.remove('is-visible', 'is-on-contacts');
+      });
+
+      window.addEventListener('scroll', syncMaskScroll, { passive: true });
+      syncMaskScroll();
+    }
+  </script>
+</body>
+</html>
