@@ -58,6 +58,9 @@
       --hero-top: clamp(280px, 38svh, 345px);
       --bottom-offset: clamp(24px, 5svh, 40px);
       --hero-hand-center-y: 111px;
+      --hero-visual-center-shift: 64px;
+      --section-heading-size: 56px;
+      --section-heading-line-height: 0.95;
       --font-main: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
     }
 
@@ -101,9 +104,11 @@
       top: 0;
       width: 20px;
       height: 20px;
+      padding: 0;
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 0;
       background: #4267ff;
       border: 0;
       border-radius: 50%;
@@ -111,7 +116,13 @@
       opacity: 0;
       transform: translate(-50%, -50%);
       z-index: 9998;
-      transition: opacity 0.15s ease, transform 0.15s ease;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: opacity 0.15s ease, transform 0.15s ease, width 0.18s ease, height 0.18s ease, padding 0.18s ease, background-color 0.18s ease, border-radius 0.18s ease;
+    }
+
+    .custom-cursor::before {
+      content: none;
     }
 
     .custom-cursor::after {
@@ -123,8 +134,32 @@
       transform: translateY(-1px);
     }
 
-    .custom-cursor.is-case-hover::after {
+    .custom-cursor.is-case-hover {
+      width: max-content;
+      height: auto;
+      padding: 4px 12px;
+      gap: 8px;
+      border-radius: 999px;
+      background: #4267ff;
+    }
+
+    .custom-cursor.is-case-hover::before {
       content: "";
+      flex: 0 0 auto;
+      width: 15px;
+      height: 11px;
+      background: url("assets/images/eye.svg") center / contain no-repeat;
+    }
+
+    .custom-cursor.is-case-hover::after {
+      content: "СМОТРЕТЬ КЕЙС";
+      color: #fff;
+      font-family: "CoFo Sans Mono Trial", "CoFo Sans Mono", monospace;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+      letter-spacing: 0;
+      transform: none;
     }
 
     .custom-cursor.is-visible {
@@ -1046,7 +1081,7 @@
       justify-content: space-between;
       column-gap: 0;
       row-gap: 134px;
-      margin-top: 68px;
+      margin-top: 108px;
       overflow: visible;
     }
 
@@ -1161,11 +1196,14 @@
 
     .contacts__item--email {
       grid-column: 4 / span 5;
+      grid-row: 1;
       transform: translateY(40px);
     }
 
+    .contacts__item--tel,
     .contacts__item--telegram {
-      grid-column: 9 / span 3;
+      grid-column: 8 / -1;
+      grid-row: 1;
       transform: translateY(40px);
     }
 
@@ -1191,6 +1229,7 @@
     }
 
     .contacts__value {
+      position: relative;
       display: inline-block;
       font-family: var(--font-main);
       font-size: 30px;
@@ -1200,6 +1239,14 @@
       text-decoration: none;
       transition: opacity 0.2s ease, transform 0.2s ease;
       transform-origin: center center;
+    }
+
+    .contacts__item--email .contacts__value,
+    .contacts__item--tel .contacts__value {
+      top: -8px;
+      font-size: 24px;
+      font-weight: 100;
+      white-space: nowrap;
     }
 
     .contacts__value:hover {
@@ -1213,7 +1260,7 @@
       bottom: 20px;
       font-family: var(--font-main);
       font-size: 16px;
-      line-height: 1;
+      line-height: 1.2;
       font-weight: 400;
     }
 
@@ -1236,12 +1283,12 @@
     /**/
     @media (min-width: 901px) {
       .site .header {
-        top: 50%; /**/
+        top: calc(50svh - var(--hero-visual-center-shift)); /**/
         transform: translate(-50%, -50%);
       }
 
       .site .hero-hand {
-        --hero-hand-intro-y: calc(50svh - var(--hero-hand-center-y)); /**/
+        --hero-hand-intro-y: calc(50svh - var(--hero-visual-center-shift) - var(--hero-hand-center-y)); /**/
         transform: translateY(var(--hero-hand-intro-y)) scale(0.92);
       }
 
@@ -1582,7 +1629,7 @@
       }
 
       .photo-project__grid {
-        margin-top: 68px;
+        margin-top: 108px;
       }
 
       .case-preview__description {
@@ -1737,6 +1784,7 @@
       }
 
       .contacts__item--email,
+      .contacts__item--tel,
       .contacts__item--telegram,
       .contacts__item--cv {
         grid-column: 1 / -1;
@@ -2041,6 +2089,27 @@
     .site .photo-project__title,
     .site .contacts__title {
       font-weight: 200;
+    }
+
+    /* Final shared scale for non-hero section headings */
+    .site .case-preview__title,
+    .site .facts-section__title,
+    .site .photo-project__title,
+    .site .contacts__title {
+      font-size: var(--section-heading-size);
+      line-height: var(--section-heading-line-height);
+    }
+
+    @media (min-width: 900px) and (max-width: 1180px) {
+      .site {
+        --section-heading-size: 48px;
+      }
+    }
+
+    @media (min-width: 481px) and (max-width: 900px) {
+      .site {
+        --section-heading-size: 44px;
+      }
     }
 
   
@@ -2634,10 +2703,11 @@
       .site {
         --mobile-main-line-height: 20px;
         --mobile-heading-1-size: 42px;
-        --mobile-heading-1-line-height: 1;
+        --mobile-heading-1-line-height: 0.95;
         --mobile-heading-2-size: 28px;
         --mobile-heading-2-line-height: 1;
         --case-text-line-height: var(--mobile-main-line-height);
+        --section-heading-size: var(--mobile-heading-1-size);
       }
 
       .site .case-preview--avalike::before {
@@ -2850,7 +2920,7 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
         column-gap: 12px;
         row-gap: 12px;
-        margin-top: var(--mobile-main-line-height);
+        margin-top: calc(var(--mobile-main-line-height) + 40px);
       }
 
       .site .photo-project__item {
@@ -2893,6 +2963,7 @@
       }
 
       .site .contacts__item--email,
+      .site .contacts__item--tel,
       .site .contacts__item--cv {
         grid-column: auto;
         transform: none;
@@ -2905,7 +2976,8 @@
         margin-top: 20px;
       }
 
-      .site .contacts__item--email .contacts__value {
+      .site .contacts__item--email .contacts__value,
+      .site .contacts__item--tel .contacts__value {
         font-size: var(--mobile-heading-2-size);
         line-height: var(--mobile-heading-2-line-height);
         font-weight: 200;
@@ -2919,6 +2991,89 @@
       .site .contacts__year {
         position: static;
         margin-top: 40px;
+      }
+    }
+
+    @media (min-width: 480px) and (max-width: 900px) {
+      .site .photo-project__description {
+        grid-column: 1 / -1;
+        width: 100%;
+        max-width: none;
+      }
+
+      .site .photo-project__grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        column-gap: 12px;
+        row-gap: 12px;
+        margin-top: 108px;
+      }
+
+      .site .photo-project__item {
+        width: 100%;
+      }
+
+      .site .photo-project__item:nth-child(n + 21) {
+        display: none;
+      }
+
+      .site .photo-project__image {
+        width: 100%;
+      }
+
+      .site .facts-section {
+        --mobile-main-line-height: 20px;
+        --mobile-heading-1-size: 42px;
+        --mobile-heading-1-line-height: 0.95;
+        --mobile-heading-2-size: 28px;
+        --mobile-heading-2-line-height: 1;
+        padding-right: 12px;
+        padding-left: 12px;
+      }
+
+      .site .facts-section__title {
+        font-size: var(--mobile-heading-1-size);
+        line-height: var(--mobile-heading-1-line-height);
+      }
+
+      .site .facts-section__header {
+        display: block;
+        padding-top: 8px;
+      }
+
+      .site .facts-section__grid {
+        display: block;
+        margin-top: calc(var(--mobile-main-line-height) * 2);
+      }
+
+      .site .fact-card--left,
+      .site .fact-card--right {
+        grid-column: auto;
+        transform: none;
+      }
+
+      .site .fact-card + .fact-card {
+        margin-top: calc(var(--mobile-main-line-height) * 2);
+      }
+
+      .site .fact-card__meta {
+        margin-bottom: 8px;
+      }
+
+      .site .fact-card__title {
+        margin: 0 0 var(--mobile-main-line-height);
+        font-size: var(--mobile-heading-2-size);
+        line-height: var(--mobile-heading-2-line-height);
+        white-space: normal;
+      }
+
+      .site .fact-card__text {
+        margin: 0 0 var(--mobile-main-line-height);
+        font-size: 16px;
+        line-height: var(--mobile-main-line-height);
+      }
+
+      .site .fact-card__image {
+        margin-top: 0;
       }
     }
 
@@ -2995,10 +3150,128 @@
 
     @media (max-width: 279.98px) {
       .site .case-preview::after {
-        top: 40px;
+        top: 44px;
         right: auto;
         left: var(--page-x);
         text-align: left;
+      }
+
+      .site .case-preview__info {
+        padding-top: 32px;
+      }
+    }
+
+    @media (max-width: 279.98px) {
+      .site .contacts__details {
+        row-gap: var(--mobile-main-line-height);
+      }
+
+      .site .contacts__item--email,
+      .site .contacts__item--tel,
+      .site .contacts__item--cv {
+        grid-row: auto;
+      }
+
+      .site .contacts__item--tel {
+        margin-top: calc(42px - var(--mobile-main-line-height));
+      }
+
+      .site .contacts__item--email .contacts__value,
+      .site .contacts__item--tel .contacts__value {
+        font-size: 16px;
+        line-height: var(--mobile-main-line-height);
+      }
+
+      .site .contacts__intro,
+      .site .contacts__label,
+      .site .contacts__year {
+        line-height: var(--mobile-main-line-height);
+      }
+
+      .site .contacts__actions {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+    }
+
+    @media (min-width: 280px) and (max-width: 900px) {
+      .site .contacts__details {
+        grid-template-columns: 1fr;
+        row-gap: 40px;
+      }
+
+      .site .contacts__item--email,
+      .site .contacts__item--tel,
+      .site .contacts__item--cv {
+        grid-column: 1 / -1;
+        grid-row: auto;
+        transform: none;
+      }
+
+      .site .contacts__item--email .contacts__value,
+      .site .contacts__item--tel .contacts__value {
+        font-size: 24px;
+        line-height: 1;
+        font-weight: 100;
+      }
+
+      .site .contacts__label {
+        margin-bottom: 12px;
+        font-size: 16px;
+        line-height: 1;
+        font-weight: 400;
+      }
+    }
+
+    @media (min-width: 480px) and (max-width: 900px) {
+      .site .contacts-section {
+        --mobile-main-line-height: 20px;
+        --mobile-heading-2-size: 28px;
+        --mobile-heading-2-line-height: 1;
+        min-height: auto;
+        padding-top: 8px;
+        padding-bottom: var(--mobile-main-line-height);
+      }
+
+      .site .contacts__intro {
+        max-width: none;
+        margin-top: var(--mobile-main-line-height);
+        font-size: 16px;
+        line-height: var(--mobile-main-line-height);
+      }
+
+      .site .contacts__details {
+        position: static;
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 40px;
+        margin-top: 40px;
+      }
+
+      .site .contacts__actions {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-start;
+        margin-top: 20px;
+      }
+
+      .site .contacts__cv-button,
+      .site .contacts__telegram-button {
+        height: 56px;
+      }
+
+      .site .contacts__year {
+        position: static;
+        margin-top: 40px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .site .contacts__actions {
+        align-items: flex-start;
+        justify-content: flex-start;
       }
     }
 
@@ -3046,6 +3319,30 @@
       }
     }
 
+    @media (min-width: 480px) and (max-width: 900px) and (min-height: 681px) {
+      .site .hero-screen {
+        min-height: calc(100svh - 140px);
+      }
+
+      .site .header {
+        top: calc(50svh - 70px);
+        transform: translate(-50%, -50%);
+      }
+
+      .site .hero-hand {
+        --hero-hand-intro-y: calc(50svh - 70px - var(--hero-hand-center-y));
+        transform: translateY(var(--hero-hand-intro-y)) scale(0.92);
+      }
+
+      .site .hero-screen.is-hand-visible .hero-hand {
+        transform: translateY(var(--hero-hand-intro-y)) scale(1);
+      }
+
+      .site .hero-screen.is-hand-settled .hero-hand {
+        transform: translateY(0) scale(1);
+      }
+    }
+
     /* Keep Avalike below the fold on short viewports. */
     @media (max-height: 680px) {
       .site .hero-screen {
@@ -3076,6 +3373,210 @@
 
       .site .hero-scroll-indicator {
         display: flex;
+      }
+    }
+
+    @media (min-width: 900px) and (min-height: 681px) {
+      .site .hero-screen {
+        min-height: 100svh;
+      }
+
+      .site .case-preview--avalike {
+        margin-top: -128px;
+      }
+
+      .site .header {
+        top: calc(50svh - var(--hero-visual-center-shift));
+        transform: translate(-50%, -50%);
+      }
+
+      .site .hero-hand {
+        --hero-hand-intro-y: calc(50svh - var(--hero-visual-center-shift) - var(--hero-hand-center-y));
+        transform: translateY(var(--hero-hand-intro-y)) scale(0.92);
+      }
+
+      .site .hero-screen.is-hand-visible .hero-hand {
+        transform: translateY(var(--hero-hand-intro-y)) scale(1);
+      }
+
+      .site .hero-screen.is-hand-settled .hero-hand {
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (min-width: 901px) {
+      .site > .contacts-section {
+        min-height: 580px;
+        height: 580px;
+      }
+    }
+
+    /* Final footer layout from reference */
+    .site .contacts__item--tel {
+      display: none;
+    }
+
+    .site > .contacts-section {
+      background: #fff;
+      color: var(--blue);
+    }
+
+    .site .contacts__tagline {
+      display: none;
+      font-family: var(--font-main);
+    }
+
+    .site .contacts__title,
+    .site .contacts__intro,
+    .site .contacts__label,
+    .site .contacts__value,
+    .site .contacts__year,
+    .site .contacts__tagline,
+    .site .contacts__telegram-button,
+    .site .contacts__telegram-button:hover {
+      color: var(--blue);
+    }
+
+    .site .contacts__item--email .contacts__value {
+      top: 0;
+      left: 0;
+    }
+
+    .site .contacts__item--email .contacts__label {
+      position: relative;
+      top: 4px;
+      left: 1px;
+      font-size: 18px;
+    }
+
+    @media (min-width: 901px) {
+      .site > .photo-project {
+        min-height: auto;
+        padding-bottom: 184px;
+      }
+
+      .site > .contacts-section {
+        height: 494px;
+        min-height: 494px;
+        padding-top: 20px;
+        padding-bottom: 16px;
+      }
+
+      .site > .contacts-section::before {
+        content: none;
+        display: none;
+      }
+
+      .site .contacts__title {
+        font-size: 52px;
+        line-height: 56px;
+        font-weight: 200;
+      }
+
+      .site .contacts__intro {
+        max-width: 340px;
+        margin-top: 12px;
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 400;
+        color: var(--blue);
+      }
+
+      .site .contacts__details {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        column-gap: 20px;
+        row-gap: 32px;
+        margin-top: 24px;
+      }
+
+      .site .contacts__item--email,
+      .site .contacts__item--cv {
+        grid-column: 4 / -1;
+        grid-row: auto;
+        transform: none;
+      }
+
+      .site .contacts__label {
+        margin-bottom: 0;
+        font-size: 18px;
+        line-height: 28px;
+        font-weight: 400;
+        color: var(--blue);
+      }
+
+      .site .contacts__item--email .contacts__value {
+        font-size: 44px;
+        line-height: 56px;
+        font-weight: 100;
+        color: var(--blue);
+      }
+
+      .site .contacts__actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        margin-top: 0;
+      }
+
+      .site .contacts__cv-button,
+      .site .contacts__telegram-button {
+        height: 52px;
+        padding: 0 20px 2px;
+        border-radius: 999px;
+        font-size: 17px;
+        line-height: 1;
+        font-weight: 400;
+      }
+
+      .site .contacts__cv-button {
+        background: #02BE74;
+        color: #fff;
+      }
+
+      .site .contacts__telegram-button {
+        background: #E5E6EB;
+        color: var(--blue);
+      }
+
+      .site .contacts__year,
+      .site .contacts__tagline {
+        display: block;
+        position: absolute;
+        bottom: 16px;
+        font-family: var(--font-main);
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 400;
+        color: var(--blue);
+      }
+
+      .site .contacts__year {
+        left: var(--page-x);
+      }
+
+      .site .contacts__tagline {
+        right: var(--page-x);
+        text-align: right;
+      }
+    }
+
+    @media (max-width: 799px) {
+      .site .contacts__item--email,
+      .site .contacts__item--cv {
+        grid-column: 1 / -1;
+      }
+
+      .site .contacts__item--email .contacts__value {
+        font-size: 44px;
+      }
+    }
+
+    @media (max-width: 449px) {
+      .site .contacts__item--email .contacts__value {
+        font-size: 32px;
       }
     }
 
@@ -3258,7 +3759,7 @@
           Отделения — документальный проект о&nbsp;Почте России: 6000+ км пути, 150+ отделений, публикация на&nbsp;<a class="photo-project__more" href="http://colta.ru/galleries/specials/29544-fotoproekt-katya-muha-otdeleniya#ad-image-0" target="_blank" rel="noopener noreferrer">Colta</a>, шорт-лист журнала «Отпечаток» и&nbsp;dummy-книга. Работа&nbsp;над&nbsp;проектом&nbsp;продолжается.
           <a class="photo-project__more" href="https://katya-mukha.com/russian_post_ru" target="_blank" rel="noopener noreferrer">Подробнее</a>
         </p>
-        <div class="photo-project__counter">(1—150)</div>
+        <div class="photo-project__counter">(1 — 150)</div>
       </div>
 
       <div class="photo-project__grid" aria-label="Фотографии отделений">
@@ -3302,7 +3803,12 @@
       <div class="contacts__details" aria-label="Контактная информация">
         <p class="contacts__item contacts__item--email">
           <span class="contacts__label">Email</span>
-          <a class="contacts__value" href="mailto:ket.for.you@gmail.com" title="Написать на email">ket.for.you@gmail.com</a>
+          <a class="contacts__value" href="mailto:katya@mukha.design" title="Написать на email">katya@mukha.design</a>
+        </p>
+
+        <p class="contacts__item contacts__item--tel">
+          <span class="contacts__label">Tel</span>
+          <a class="contacts__value" href="tel:+79852399132" title="Позвонить">+7 (985) 239 91 32</a>
         </p>
 
         <nav class="contacts__item contacts__item--cv contacts__actions" aria-label="Контакты и резюме">
@@ -3312,6 +3818,7 @@
       </div>
 
       <div class="contacts__year">© 2026 Катя Мукха. Все права защищены.</div>
+      <div class="contacts__tagline">Lets design!</div>
     </footer>
   </main>
 
@@ -3402,8 +3909,8 @@
           addHeroIntroClass('is-hand-visible');
           window.setTimeout(() => addHeroIntroClass('is-hand-settled'), 520);
           window.setTimeout(() => addHeroIntroClass('is-brand-visible'), 1160);
-          window.setTimeout(() => addHeroIntroClass('is-hero-text-visible'), 1780);
-          window.setTimeout(() => addHeroIntroClass('is-actions-visible'), 2420);
+          window.setTimeout(() => addHeroIntroClass('is-hero-text-visible'), 1470);
+          window.setTimeout(() => addHeroIntroClass('is-actions-visible'), 1790);
           window.setTimeout(showAvalikeIntroCase, 3060);
         }, 0);
       }
@@ -3532,6 +4039,7 @@
         const isOnCaseMedia = elementUnderCursor && elementUnderCursor.closest('.case-preview__media');
         const isOnContacts = elementUnderCursor && elementUnderCursor.closest('.contacts-section');
 
+        customCursor.classList.toggle('is-case-hover', Boolean(isOnCaseMedia));
         customCursor.classList.toggle('is-on-contacts', Boolean(isOnContacts));
         cursorTextMask.classList.toggle('is-on-contacts', Boolean(isOnContacts));
         cursorTextMask.classList.toggle('is-hidden-on-media', Boolean(isOnCaseMedia));
@@ -3545,6 +4053,7 @@
         customCursor.classList.remove('is-visible');
         cursorTextMask.classList.remove('is-visible');
         customCursor.classList.remove('is-avatar-hover');
+        customCursor.classList.remove('is-case-hover');
         cursorTextMask.classList.remove('is-hidden-on-avatar');
         if (hoverAvatar) {
           hoverAvatar.classList.remove('is-visible');

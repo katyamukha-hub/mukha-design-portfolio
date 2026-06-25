@@ -9,7 +9,7 @@
     @font-face {
       font-family: "CoFo Sans";
       src: local("CoFo Sans Light"), local("CoFoSans-Light"), url("assets/fonts/CoFoSans-Light.woff2") format("woff2");
-      font-weight: 400;
+      font-weight: 300;
       font-style: normal;
       font-display: swap;
     }
@@ -95,10 +95,17 @@
       opacity: 0;
       transform: translate(-50%, -50%);
       z-index: 9998;
-      transition: opacity 0.15s ease;
+      transition: opacity 0.15s ease, width 0.15s ease, height 0.15s ease;
     }
 
     .custom-cursor.is-visible {
+      opacity: 1;
+    }
+
+    .custom-cursor.is-visible.is-on-section-link {
+      width: 24px;
+      height: 24px;
+      background: #878888;
       opacity: 1;
     }
 
@@ -114,11 +121,15 @@
       color: var(--bg);
       opacity: 0;
       clip-path: circle(10px at var(--cursor-x, -100px) var(--cursor-y, -100px));
-      transition: opacity 0.15s ease;
+      transition: opacity 0.15s ease, clip-path 0.15s ease;
     }
 
     .cursor-text-mask.is-visible {
       opacity: 1;
+    }
+
+    .cursor-text-mask.is-on-section-link {
+      clip-path: circle(12px at var(--cursor-x, -100px) var(--cursor-y, -100px));
     }
 
     .cursor-text-mask.is-hidden-on-media {
@@ -163,11 +174,11 @@
 
     .cursor-text-mask .jtbd-card {
       background: var(--blue) !important;
-      color: #F6F0C9 !important;
+      color: #fff !important;
     }
 
     .cursor-text-mask .jtbd-card * {
-      color: #F6F0C9 !important;
+      color: #fff !important;
     }
 
     .page {
@@ -191,8 +202,8 @@
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      line-height: 1.15;
+      gap: 16px;
+      line-height: 1;
       transform-origin: left center;
       transition: color 0.2s ease, transform 0.2s ease;
     }
@@ -204,32 +215,34 @@
 
     .brand__avatar {
       display: block;
-      width: 58px;
-      height: 58px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       object-fit: cover;
       flex: 0 0 auto;
     }
 
     .brand__text {
-      display: block;
-      transform: translateX(4px);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transform: none;
     }
 
     .brand__name {
       display: block;
-      margin: 0 0 2px;
+      margin: 0;
       font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
-      font-size: 16px;
-      line-height: 1.15;
-      font-weight: 400;
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 500;
     }
 
     .brand__role {
       display: block;
       margin: 0;
       font-size: 16px;
-      line-height: 1.15;
+      line-height: 1;
       font-weight: 400;
     }
 
@@ -385,6 +398,73 @@
       color: var(--blue);
     }
 
+    .case-section-nav {
+      position: fixed;
+      left: var(--page-x);
+      top: 124px;
+      z-index: 10;
+      width: calc(((100vw - var(--page-x) * 2 - var(--grid-gap) * 11) / 12) * 2 + var(--grid-gap));
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-top: 0;
+      font-size: 16px;
+      line-height: 1.15;
+      font-weight: 400;
+      color: #9A9A9A;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 0.24s ease, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .case-section-nav.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .case-section-nav.is-idle {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(0);
+    }
+
+    .case-section-nav.is-on-contacts {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+    }
+
+    .case-section-nav__list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .case-section-nav__link {
+      display: inline-block;
+      color: inherit;
+      transition: color 0.2s ease, transform 0.2s ease;
+      transform-origin: left center;
+    }
+
+    .case-section-nav__link:hover,
+    .case-section-nav__link:focus-visible {
+      color: #4267ff;
+    }
+
+    .case-section-nav__link:hover {
+      transform: scale(0.98);
+    }
+
+    .case-section-nav__link.is-active {
+      color: var(--blue);
+    }
+
     .back-to-top {
       position: fixed;
       left: 50%;
@@ -431,6 +511,11 @@
       grid-column: 1 / span 6;
     }
 
+    .case-hero__text--title-only {
+      grid-column: 1 / -1;
+      margin-bottom: 32px;
+    }
+
     .case-hero__media {
       grid-column: 1 / -1;
     }
@@ -438,10 +523,24 @@
     .case-hero__title {
       margin: 0 0 20px;
       font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
-      font-size: 56px;
-      line-height: 0.96;
-      font-weight: 300;
+      font-size: 48px;
+      line-height: 1.1;
+      font-weight: 400;
       letter-spacing: 0;
+    }
+
+    .case-hero__eyebrow {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 24px;
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      opacity: 0.4;
+    }
+
+    .case-hero__text--title-only .case-hero__title {
+      margin-bottom: 0;
     }
 
     .case-hero__description {
@@ -450,6 +549,10 @@
       font-size: 18px;
       line-height: 24px;
       font-weight: 300;
+    }
+
+    .case-hero__description--under-media {
+      margin: 24px 0 0;
     }
 
     .case-hero__image {
@@ -481,10 +584,11 @@
     .case-text-section__title {
       margin: 0 0 20px;
       font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
-      font-size: 32px;
+      font-size: 36px;
       line-height: 1;
-      font-weight: 300;
+      font-weight: 400;
       letter-spacing: 0;
+      scroll-margin-top: 20px;
     }
 
     .case-text-section__text {
@@ -525,10 +629,6 @@
     .case-image-section--main-scenarios {
       padding-right: 0;
       padding-bottom: calc(var(--block-gap) + 20px);
-    }
-
-    .case-image-section--release {
-      padding-bottom: 220px;
     }
 
     .case-image-section--main-scenarios .case-image-section__grid {
@@ -617,10 +717,11 @@
     .case-section-heading__title {
       margin: 0 0 20px;
       font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
-      font-size: 32px;
+      font-size: 36px;
       line-height: 1;
-      font-weight: 300;
+      font-weight: 400;
       letter-spacing: 0;
+      scroll-margin-top: 20px;
     }
 
     .case-section-heading--research .case-section-heading__content {
@@ -705,10 +806,11 @@
     .case-split-section__title {
       margin: 0 0 20px;
       font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
-      font-size: 32px;
+      font-size: 36px;
       line-height: 1;
-      font-weight: 300;
+      font-weight: 400;
       letter-spacing: 0;
+      scroll-margin-top: 20px;
     }
 
     .case-split-section__caption {
@@ -758,10 +860,11 @@
     .jtbd-section__title {
       margin: 0 0 52px;
       font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
-      font-size: 32px;
+      font-size: 36px;
       line-height: 1;
       font-weight: 400;
       letter-spacing: 0;
+      scroll-margin-top: 20px;
     }
 
     .jtbd-board {
@@ -774,11 +877,17 @@
       min-height: 124px;
       padding: 18px 18px 20px;
       border-radius: 8px;
-      background: #F6F0C9;
+      background: #fff;
       color: var(--blue);
       font-size: 15px;
       line-height: 1.28;
       font-weight: 400;
+    }
+
+    .hypotheses-card,
+    .jobs-to-be-done-card,
+    .user-story-card {
+      background: #fff;
     }
 
     .jtbd-card p {
@@ -936,6 +1045,10 @@
         display: none;
       }
 
+      .case-section-nav {
+        display: none;
+      }
+
       .case-hero__content {
         display: block;
         grid-column: auto;
@@ -993,7 +1106,8 @@
       .case-section-heading__title,
       .case-split-section__title,
       .jtbd-section__title {
-        font-size: 32px;
+        font-size: 36px;
+        font-weight: 400;
       }
 
       .case-text-section__text,
@@ -1044,6 +1158,637 @@
         font-size: 16px;
       }
     }
+
+    /* Shared footer, synced with the home page */
+    .page > .contacts-section {
+      position: relative;
+      min-height: 83.333svh;
+      padding: 8px var(--page-x) 40px;
+      background: var(--bg);
+      color: var(--blue);
+    }
+
+    .page .contacts__title {
+      margin: 0;
+      font-family: var(--font-main, "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif);
+      font-size: 56px;
+      line-height: 0.95;
+      font-weight: 200;
+      letter-spacing: 0;
+    }
+
+    .page .contacts__intro {
+      max-width: 300px;
+      margin: 12px 0 0;
+      font-family: var(--font-main, "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif);
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .page .contacts__details {
+      position: absolute;
+      left: var(--page-x);
+      right: var(--page-x);
+      bottom: 274px;
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 40px;
+      row-gap: 28px;
+      margin-top: 0;
+    }
+
+    .page .contacts__item {
+      margin: 0;
+    }
+
+    .page .contacts__item--email {
+      grid-column: 4 / span 5;
+      grid-row: 1;
+      transform: translateY(40px);
+    }
+
+    .page .contacts__item--tel {
+      grid-column: 8 / -1;
+      grid-row: 1;
+      transform: translateY(40px);
+    }
+
+    .page .contacts__item--cv {
+      grid-column: 4 / span 4;
+      transform: translateY(44px);
+    }
+
+    .page .contacts__actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .page .contacts__label {
+      display: block;
+      margin-bottom: 12px;
+      font-family: var(--font-main, "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif);
+      font-size: 16px;
+      line-height: 1;
+      font-weight: 400;
+    }
+
+    .page .contacts__value {
+      position: relative;
+      display: inline-block;
+      font-family: var(--font-main, "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif);
+      font-size: 30px;
+      line-height: 1;
+      font-weight: 400;
+      color: inherit;
+      text-decoration: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      transform-origin: center center;
+    }
+
+    .page .contacts__item--email .contacts__value,
+    .page .contacts__item--tel .contacts__value {
+      top: -8px;
+      font-size: 24px;
+      font-weight: 100;
+      white-space: nowrap;
+    }
+
+    .page .contacts__value:hover {
+      opacity: 0.72;
+      transform: scale(0.98);
+    }
+
+    .page .contacts__cv-button,
+    .page .contacts__telegram-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: auto;
+      height: 52px;
+      padding: 0 20px 2px;
+      border: 0;
+      border-radius: 999px;
+      outline: 0;
+      box-shadow: none;
+      font-family: var(--font-main, "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif);
+      font-size: 17px;
+      line-height: 1;
+      font-weight: 400;
+      text-decoration: none;
+      transform-origin: center center;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+      will-change: transform;
+    }
+
+    .page .contacts__cv-button {
+      background: #02BE74;
+      color: #fff;
+    }
+
+    .page .contacts__telegram-button {
+      background: #E5E6EB;
+      color: var(--blue);
+    }
+
+    .page .contacts__telegram-button::after {
+      content: "→";
+      font-size: 0.94em;
+      line-height: 1;
+      transform: translateY(1px);
+    }
+
+    .page .contacts__cv-button:hover,
+    .page .contacts__telegram-button:hover {
+      transform: scale(0.98);
+    }
+
+    .page .contacts__year {
+      position: absolute;
+      left: var(--page-x);
+      bottom: 20px;
+      font-family: var(--font-main, "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif);
+      font-size: 16px;
+      line-height: 1.2;
+      font-weight: 400;
+    }
+
+    @media (min-width: 901px) and (max-width: 1180px) {
+      .page .contacts__title {
+        font-size: 48px;
+      }
+    }
+
+    @media (min-width: 481px) and (max-width: 900px) {
+      .page .contacts__title {
+        font-size: 44px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page > .contacts-section {
+        --mobile-main-line-height: 20px;
+        --mobile-heading-1-size: 42px;
+        --mobile-heading-1-line-height: 0.95;
+        min-height: auto;
+        padding: 8px 12px var(--mobile-main-line-height);
+      }
+
+      .page .contacts__title {
+        font-size: var(--mobile-heading-1-size);
+        line-height: var(--mobile-heading-1-line-height);
+      }
+
+      .page .contacts__intro {
+        max-width: none;
+        margin-top: var(--mobile-main-line-height);
+        font-size: 16px;
+        line-height: var(--mobile-main-line-height);
+      }
+
+      .page .contacts__details {
+        position: static;
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: var(--mobile-main-line-height);
+        margin-top: 40px;
+      }
+
+      .page .contacts__item--email,
+      .page .contacts__item--tel,
+      .page .contacts__item--cv {
+        grid-column: auto;
+        transform: none;
+      }
+
+      .page .contacts__actions {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .page .contacts__cv-button,
+      .page .contacts__telegram-button {
+        height: 56px;
+      }
+
+      .page .contacts__year {
+        position: static;
+        margin-top: 40px;
+      }
+    }
+
+    @media (max-width: 279.98px) {
+      .page .contacts__details {
+        row-gap: var(--mobile-main-line-height);
+      }
+
+      .page .contacts__item--email,
+      .page .contacts__item--tel,
+      .page .contacts__item--cv {
+        grid-row: auto;
+      }
+
+      .page .contacts__item--tel {
+        margin-top: calc(42px - var(--mobile-main-line-height));
+      }
+
+      .page .contacts__item--email .contacts__value,
+      .page .contacts__item--tel .contacts__value {
+        font-size: 16px;
+        line-height: var(--mobile-main-line-height);
+      }
+
+      .page .contacts__intro,
+      .page .contacts__label,
+      .page .contacts__year {
+        line-height: var(--mobile-main-line-height);
+      }
+
+      .page .contacts__actions {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 8px;
+      }
+    }
+
+    @media (min-width: 280px) and (max-width: 900px) {
+      .page .contacts__details {
+        grid-template-columns: 1fr;
+        row-gap: 40px;
+      }
+
+      .page .contacts__item--email,
+      .page .contacts__item--tel,
+      .page .contacts__item--cv {
+        grid-column: 1 / -1;
+        grid-row: auto;
+        transform: none;
+      }
+
+      .page .contacts__item--email .contacts__value,
+      .page .contacts__item--tel .contacts__value {
+        font-size: 24px;
+        line-height: 1;
+        font-weight: 100;
+      }
+
+      .page .contacts__label {
+        margin-bottom: 12px;
+        font-size: 16px;
+        line-height: 1;
+        font-weight: 400;
+      }
+    }
+
+    @media (min-width: 480px) and (max-width: 900px) {
+      .page > .contacts-section {
+        --mobile-main-line-height: 20px;
+        min-height: auto;
+        padding-top: 8px;
+        padding-bottom: var(--mobile-main-line-height);
+      }
+
+      .page .contacts__intro {
+        max-width: none;
+        margin-top: var(--mobile-main-line-height);
+        font-size: 16px;
+        line-height: var(--mobile-main-line-height);
+      }
+
+      .page .contacts__details {
+        position: static;
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 40px;
+        margin-top: 40px;
+      }
+
+      .page .contacts__actions {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-start;
+        margin-top: 20px;
+      }
+
+      .page .contacts__cv-button,
+      .page .contacts__telegram-button {
+        height: 56px;
+      }
+
+      .page .contacts__year {
+        position: static;
+        margin-top: 40px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .page .contacts__actions {
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+    }
+
+    @media (min-width: 901px) {
+      .page > .contacts-section {
+        min-height: 580px;
+        height: 580px;
+      }
+    }
+
+    /* Final case page typography */
+    .case-hero__description,
+    .case-text-section__text,
+    .case-text-section__list,
+    .case-section-heading__caption,
+    .case-section-heading__list,
+    .case-section-heading__link,
+    .case-split-section__caption,
+    .case-split-section__list {
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 400;
+    }
+
+    .topbar__actions {
+      gap: 8px;
+    }
+
+    .telegram-link,
+    .cv-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+      height: 52px;
+      padding: 0 20px 2px;
+      border: 0;
+      border-radius: 999px;
+      outline: 0;
+      box-shadow: none;
+      font-family: var(--font-main, "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif);
+      font-size: 17px;
+      line-height: 1;
+      font-weight: 400;
+      text-decoration: none;
+      transform-origin: center center;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .telegram-link {
+      gap: 6px;
+      background: #E5E6EB;
+      color: var(--blue);
+    }
+
+    .telegram-link::after {
+      font-size: 0.94em;
+      line-height: 1;
+      transform: translateY(1px);
+    }
+
+    .telegram-link:hover {
+      background: #E5E6EB;
+      color: var(--link-hover);
+      transform: scale(0.98);
+    }
+
+    .cv-button {
+      background: #02BE74;
+      color: #fff;
+    }
+
+    .cv-button:hover {
+      background: #02BE74;
+      transform: scale(0.98);
+    }
+
+    .page .contacts__item--email .contacts__value,
+    .page .contacts__item--tel .contacts__value {
+      font-weight: 400;
+    }
+
+    /* Final shared case refinements */
+    :root {
+      --bg: #f4f4f4;
+    }
+
+    .brand__role {
+      font-weight: 400;
+    }
+
+    .back-to-top {
+      background: #4267ff;
+    }
+
+    .back-to-top:hover {
+      background: #5a78ff;
+    }
+
+    .page > .contacts-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: var(--page-x);
+      right: var(--page-x);
+      height: 1px;
+      background: #E5E6EB;
+    }
+
+    .page .contacts__item--email {
+      grid-column: 5 / span 5;
+      transform: translateY(20px);
+    }
+
+    .page .contacts__item--cv {
+      grid-column: 5 / span 4;
+      transform: translateY(24px);
+    }
+
+    .page .contacts__year {
+      bottom: 70px;
+    }
+
+    @media (max-width: 900px) {
+      .page .contacts__item--email,
+      .page .contacts__item--cv {
+        grid-column: 1 / -1;
+        transform: none;
+      }
+
+      .page .contacts__year {
+        bottom: auto;
+      }
+    }
+
+    /* Final footer layout from reference */
+    .page .contacts__item--tel {
+      display: none;
+    }
+
+    .page > .contacts-section {
+      background: #fff;
+      color: var(--blue);
+    }
+
+    .page .contacts__tagline {
+      display: none;
+      font-family: var(--font-main);
+    }
+
+    .page .contacts__title,
+    .page .contacts__intro,
+    .page .contacts__label,
+    .page .contacts__value,
+    .page .contacts__year,
+    .page .contacts__tagline,
+    .page .contacts__telegram-button,
+    .page .contacts__telegram-button:hover {
+      color: var(--blue);
+    }
+
+    .page .contacts__item--email .contacts__value {
+      top: 0;
+      left: 0;
+    }
+
+    .page .contacts__item--email .contacts__label {
+      position: relative;
+      top: 4px;
+      left: 1px;
+      font-size: 18px;
+    }
+
+    @media (min-width: 901px) {
+      .page > .contacts-section {
+        height: 494px;
+        min-height: 494px;
+        padding-top: 20px;
+        padding-bottom: 16px;
+      }
+
+      .page > .contacts-section::before {
+        content: none;
+        display: none;
+      }
+
+      .page .contacts__title {
+        font-size: 52px;
+        line-height: 56px;
+        font-weight: 200;
+      }
+
+      .page .contacts__intro {
+        max-width: 340px;
+        margin-top: 12px;
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 400;
+        color: var(--blue);
+      }
+
+      .page .contacts__details {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        column-gap: 20px;
+        row-gap: 32px;
+        margin-top: 24px;
+      }
+
+      .page .contacts__item--email,
+      .page .contacts__item--cv {
+        grid-column: 4 / -1;
+        grid-row: auto;
+        transform: none;
+      }
+
+      .page .contacts__label {
+        margin-bottom: 0;
+        font-size: 18px;
+        line-height: 28px;
+        font-weight: 400;
+        color: var(--blue);
+      }
+
+      .page .contacts__item--email .contacts__value {
+        font-size: 44px;
+        line-height: 56px;
+        font-weight: 100;
+        color: var(--blue);
+      }
+
+      .page .contacts__actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        margin-top: 0;
+      }
+
+      .page .contacts__cv-button,
+      .page .contacts__telegram-button {
+        height: 52px;
+        padding: 0 20px 2px;
+        border-radius: 999px;
+        font-size: 17px;
+        line-height: 1;
+        font-weight: 400;
+      }
+
+      .page .contacts__cv-button {
+        background: #02BE74;
+        color: #fff;
+      }
+
+      .page .contacts__telegram-button {
+        background: #E5E6EB;
+        color: var(--blue);
+      }
+
+      .page .contacts__year,
+      .page .contacts__tagline {
+        display: block;
+        position: absolute;
+        bottom: 16px;
+        font-family: var(--font-main);
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 400;
+        color: var(--blue);
+      }
+
+      .page .contacts__year {
+        left: var(--page-x);
+      }
+
+      .page .contacts__tagline {
+        right: var(--page-x);
+        text-align: right;
+      }
+    }
+
+    @media (max-width: 799px) {
+      .page .contacts__item--email,
+      .page .contacts__item--cv {
+        grid-column: 1 / -1;
+      }
+
+      .page .contacts__item--email .contacts__value {
+        font-size: 44px;
+      }
+    }
+
+    @media (max-width: 449px) {
+      .page .contacts__item--email .contacts__value {
+        font-size: 32px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1053,7 +1798,7 @@
   <main class="page">
     <header class="topbar" aria-label="Верхняя навигация">
       <a class="brand" href="index.html" aria-label="На главную">
-        <img class="brand__avatar" src="assets/images/avatar.png" alt="" />
+        <img class="brand__avatar" src="assets/images/avatar_for_header.png" alt="" />
         <span class="brand__text">
           <span class="brand__name">Катя Мукха</span>
           <span class="brand__role">Product designer</span>
@@ -1077,15 +1822,34 @@
           </ul>
         </nav>
 
+        <nav class="case-section-nav" aria-label="Разделы кейса Avalike">
+          <ul class="case-section-nav__list">
+            <li><a class="case-section-nav__link is-active" href="#results-title" data-section-target="results-title" aria-current="true">Результаты</a></li>
+            <li><a class="case-section-nav__link" href="#double-diamond-title" data-section-target="double-diamond-title">Double Diamond</a></li>
+            <li><a class="case-section-nav__link" href="#research-stages-title" data-section-target="research-stages-title">Исследование / этапы</a></li>
+            <li><a class="case-section-nav__link" href="#research-title" data-section-target="research-title">Конкурентный анализ</a></li>
+            <li><a class="case-section-nav__link" href="#research-results-title" data-section-target="research-results-title">Результаты исследования</a></li>
+            <li><a class="case-section-nav__link" href="#jtbd-title" data-section-target="jtbd-title">JTBD</a></li>
+            <li><a class="case-section-nav__link" href="#main-scenarios-title" data-section-target="main-scenarios-title">Основные сценарии</a></li>
+            <li><a class="case-section-nav__link" href="#wireframes-title" data-section-target="wireframes-title">Вайрфреймы</a></li>
+            <li><a class="case-section-nav__link" href="#moodboard-title" data-section-target="moodboard-title">Мудборд</a></li>
+            <li><a class="case-section-nav__link" href="#visual-design-title" data-section-target="visual-design-title">Визуальный дизайн</a></li>
+            <li><a class="case-section-nav__link" href="#interviews-title" data-section-target="interviews-title">Интервью</a></li>
+            <li><a class="case-section-nav__link" href="#handoff-title" data-section-target="handoff-title">Hand-off</a></li>
+            <li><a class="case-section-nav__link" href="#prototype-title" data-section-target="prototype-title">Прототип</a></li>
+            <li><a class="case-section-nav__link" href="#components-title" data-section-target="components-title">Компоненты</a></li>
+            <li><a class="case-section-nav__link" href="#design-review-title" data-section-target="design-review-title">Дизайн-ревью</a></li>
+            <li><a class="case-section-nav__link" href="#release-title" data-section-target="release-title">Релиз</a></li>
+          </ul>
+        </nav>
+
         <button class="back-to-top" type="button" aria-label="Наверх">↑</button>
 
         <div class="case-hero__content">
-          <div class="case-hero__text">
-            <h1 class="case-hero__title" id="case-title">Avalike</h1>
+          <div class="case-hero__text case-hero__text--title-only">
+            <p class="case-hero__eyebrow">Avalike • AI characters platform • 2025/26</p>
 
-            <p class="case-hero__description">
-              Avalike — ранний стартап, платформа-маркетплейс ai-агентов: пользователи&nbsp;находят и&nbsp;общаются с&nbsp;агентами в&nbsp;чате, а&nbsp;креаторы создают, публикуют и&nbsp;монетизируют их.
-            </p>
+            <h1 class="case-hero__title" id="case-title">Проектирование продукта, где пользователи создают, находят и&nbsp;монетизируют AI-персонажей</h1>
           </div>
 
           <div class="case-hero__media">
@@ -1094,6 +1858,10 @@
               src="assets/images/avalike/avalike-case-hero.png"
               alt="Интерфейс платформы Avalike"
             />
+
+            <p class="case-hero__description case-hero__description--under-media">
+              Avalike — ранний стартап и&nbsp;маркетплейс AI-персонажей: пользователи находят и&nbsp;общаются с&nbsp;персонажами в&nbsp;чате, а&nbsp;креаторы создают, публикуют и&nbsp;монетизируют их.
+            </p>
           </div>
         </div>
       </div>
@@ -1390,41 +2158,47 @@
           <h2 class="case-section-heading__title" id="release-title">Релиз</h2>
           <p class="case-section-heading__caption">В&nbsp;результате мы&nbsp;выпустили beta-версию платформы, снизили барьеры входа в&nbsp;ключевые сценарии и&nbsp;внедрили сценарий монетизации.</p>
 
+          <ul class="case-section-heading__list">
+            <li>6 ключевых продуктовых флоу</li>
+            <li>140+ адаптивных дизайн-макетов</li>
+            <li>35+ reusable UI components</li>
+            <li>3 основные зоны продукта: marketplace, creator flow, creator dashboard</li>
+            <li>−40% — сокращение во времени создания персонажа</li>
+            <li>+25–30% — рост завершения флоу создания персонажа</li>
+            <li>Появились первые платные пользователи</li>
+          </ul>
+
           <a class="case-section-heading__link" href="https://avalike.ru" target="_blank" rel="noopener noreferrer">Смотреть Avalike</a>
         </div>
       </div>
     </section>
 
-    <section class="case-image-section case-image-section--release" aria-label="Релиз Avalike">
-      <div class="case-image-section__grid">
-        <div class="case-image-section__content">
-          <img class="case-image" src="assets/images/avalike/avalike-release.png" alt="Релиз Avalike" />
-        </div>
-      </div>
-    </section>
 
-    <footer class="contacts-section" aria-labelledby="contacts-title">
-      <h2 class="contacts__title" id="contacts-title">Контакты</h2>
-      <p class="contacts__intro">Открыта к&nbsp;сотрудничеству<br />в&nbsp;Москве или удалённо</p>
+    <footer id="screen-contacts" class="contacts-section" aria-labelledby="contacts-title">
+      <h2 class="contacts__title" id="contacts-title">контакты</h2>
+      <p class="contacts__intro">
+        Открыта к сотрудничеству<br />в Москве или удалённо
+      </p>
 
       <div class="contacts__details" aria-label="Контактная информация">
         <p class="contacts__item contacts__item--email">
           <span class="contacts__label">Email</span>
-          <a class="contacts__value" href="mailto:ket.for.you@gmail.com" title="Написать на email">ket.for.you@gmail.com</a>
+          <a class="contacts__value" href="mailto:katya@mukha.design" title="Написать на email">katya@mukha.design</a>
         </p>
 
-        <p class="contacts__item contacts__item--telegram">
-          <span class="contacts__label">Telegram</span>
-          <a class="contacts__value" href="https://t.me/katyamukha" target="_blank" rel="noopener noreferrer" title="Открыть Telegram">@katyamukha</a>
+        <p class="contacts__item contacts__item--tel">
+          <span class="contacts__label">Tel</span>
+          <a class="contacts__value" href="tel:+79852399132" title="Позвонить">+7 (985) 239 91 32</a>
         </p>
 
-        <p class="contacts__item contacts__item--cv">
-          <span class="contacts__label">CV</span>
-          <a class="contacts__value" href="assets/files/katya-mukha-cv.pdf" download title="Скачать CV">Скачать CV</a>
-        </p>
+        <nav class="contacts__item contacts__item--cv contacts__actions" aria-label="Контакты и резюме">
+          <a class="cv-button contacts__cv-button" href="assets/files/katya-mukha-cv.pdf" download title="Скачать CV">Скачать&nbsp;CV</a>
+          <a class="telegram-link contacts__telegram-button" href="https://t.me/katyamukha" target="_blank" rel="noopener noreferrer">Telegram</a>
+        </nav>
       </div>
 
-      <div class="contacts__year">2026</div>
+      <div class="contacts__year">© 2026 Катя Мукха. Все права защищены.</div>
+      <div class="contacts__tagline">Lets design!</div>
     </footer>
   </main>
 
@@ -1432,21 +2206,100 @@
     const customCursor = document.querySelector('.custom-cursor');
     const cursorTextMask = document.querySelector('.cursor-text-mask');
     const caseNav = document.querySelector('.case-nav');
+    const caseSectionNav = document.querySelector('.case-section-nav');
+    const caseSectionLinks = caseSectionNav ? Array.from(caseSectionNav.querySelectorAll('.case-section-nav__link')) : [];
+    const caseSectionTargets = caseSectionLinks
+      .map((link) => document.getElementById(link.dataset.sectionTarget))
+      .filter(Boolean);
     const backToTopButton = document.querySelector('.back-to-top');
     const contactsSection = document.querySelector('.contacts-section');
     let maskCaseNav = null;
+    let maskCaseSectionNav = null;
+    let activeCaseSectionId = null;
+    let caseSectionNavHideTimer = null;
+    let isCaseSectionNavHovered = false;
+    let isCaseSectionNavFocused = false;
+    const CASE_SECTION_NAV_IDLE_DELAY = 2000;
+
+    const setCaseSectionActive = (sectionId, force = false) => {
+      if (!sectionId || (!force && activeCaseSectionId === sectionId)) return;
+
+      activeCaseSectionId = sectionId;
+
+      [caseSectionNav, maskCaseSectionNav].forEach((nav) => {
+        if (!nav) return;
+
+        nav.querySelectorAll('.case-section-nav__link').forEach((link) => {
+          const isActive = link.dataset.sectionTarget === sectionId;
+          link.classList.toggle('is-active', isActive);
+
+          if (isActive) {
+            link.setAttribute('aria-current', 'true');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+      });
+
+    };
+
+    const updateCaseSectionActive = () => {
+      if (!caseSectionTargets.length) return;
+
+      const markerY = Math.min(window.innerHeight * 0.42, 360);
+      let currentSection = caseSectionTargets[0];
+
+      caseSectionTargets.forEach((section) => {
+        if (section.getBoundingClientRect().top <= markerY) {
+          currentSection = section;
+        }
+      });
+
+      setCaseSectionActive(currentSection.id);
+    };
+
+    const scrollToCaseSection = (link, event) => {
+      const section = document.getElementById(link.dataset.sectionTarget);
+
+      if (!section) return;
+
+      event.preventDefault();
+      setCaseSectionActive(section.id);
+      window.history.pushState(null, '', `#${section.id}`);
+      window.scrollTo({
+        top: Math.max(0, section.getBoundingClientRect().top + window.scrollY - 20),
+        behavior: 'smooth'
+      });
+    };
+
+    document.addEventListener('click', (event) => {
+      const clickTarget = event.target instanceof Element ? event.target : event.target.parentElement;
+      const link = clickTarget ? clickTarget.closest('.case-section-nav__link') : null;
+
+      if (!link) return;
+
+      scrollToCaseSection(link, event);
+    });
 
     const updateCaseNavState = () => {
-      if (!caseNav) return;
+      if (!caseNav && !caseSectionNav) return;
 
-      const isVisible = caseNav.classList.contains('is-visible');
+      const isVisible = caseNav ? caseNav.classList.contains('is-visible') : false;
+      const isSectionNavVisible = caseSectionNav ? caseSectionNav.classList.contains('is-visible') : false;
+      const isSectionNavIdle = caseSectionNav ? caseSectionNav.classList.contains('is-idle') : false;
 
       if (!contactsSection) return;
 
       const shouldDock = window.scrollY + window.innerHeight - 20 >= contactsSection.offsetTop;
 
-      caseNav.classList.remove('is-docked');
-      caseNav.classList.toggle('is-on-contacts', shouldDock);
+      if (caseNav) {
+        caseNav.classList.remove('is-docked');
+        caseNav.classList.toggle('is-on-contacts', shouldDock);
+      }
+
+      if (caseSectionNav) {
+        caseSectionNav.classList.toggle('is-on-contacts', shouldDock);
+      }
 
       if (maskCaseNav) {
         maskCaseNav.classList.toggle('is-visible', isVisible);
@@ -1457,11 +2310,81 @@
         maskCaseNav.style.bottom = '20px';
         maskCaseNav.style.top = 'auto';
       }
+
+      if (maskCaseSectionNav) {
+        maskCaseSectionNav.classList.toggle('is-visible', isSectionNavVisible);
+        maskCaseSectionNav.classList.toggle('is-idle', isSectionNavIdle);
+        maskCaseSectionNav.classList.toggle('is-on-contacts', shouldDock);
+        maskCaseSectionNav.style.position = 'fixed';
+        maskCaseSectionNav.style.left = 'var(--page-x)';
+        maskCaseSectionNav.style.top = '124px';
+        maskCaseSectionNav.style.bottom = 'auto';
+      }
     };
 
-    window.addEventListener('scroll', updateCaseNavState, { passive: true });
-    window.addEventListener('resize', updateCaseNavState);
+    const setCaseSectionNavIdle = (isIdle) => {
+      [caseSectionNav, maskCaseSectionNav].forEach((nav) => {
+        if (!nav) return;
+
+        nav.classList.toggle('is-idle', isIdle);
+      });
+    };
+
+    const showCaseSectionNav = () => {
+      if (!caseSectionNav) return;
+
+      window.clearTimeout(caseSectionNavHideTimer);
+      caseSectionNav.classList.add('is-visible');
+      setCaseSectionNavIdle(false);
+    };
+
+    const scheduleCaseSectionNavHide = () => {
+      if (!caseSectionNav) return;
+
+      window.clearTimeout(caseSectionNavHideTimer);
+      caseSectionNavHideTimer = window.setTimeout(() => {
+        if (isCaseSectionNavHovered || isCaseSectionNavFocused) return;
+
+        setCaseSectionNavIdle(true);
+      }, CASE_SECTION_NAV_IDLE_DELAY);
+    };
+
+    if (caseSectionNav) {
+      caseSectionNav.addEventListener('mouseenter', () => {
+        isCaseSectionNavHovered = true;
+        showCaseSectionNav();
+        updateCaseNavState();
+      });
+
+      caseSectionNav.addEventListener('mouseleave', () => {
+        isCaseSectionNavHovered = false;
+        scheduleCaseSectionNavHide();
+      });
+
+      caseSectionNav.addEventListener('focusin', () => {
+        isCaseSectionNavFocused = true;
+        showCaseSectionNav();
+        updateCaseNavState();
+      });
+
+      caseSectionNav.addEventListener('focusout', () => {
+        isCaseSectionNavFocused = false;
+        scheduleCaseSectionNavHide();
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      showCaseSectionNav();
+      updateCaseNavState();
+      updateCaseSectionActive();
+      scheduleCaseSectionNavHide();
+    }, { passive: true });
+    window.addEventListener('resize', () => {
+      updateCaseNavState();
+      updateCaseSectionActive();
+    });
     updateCaseNavState();
+    updateCaseSectionActive();
 
     let backToTopHideTimer = null;
 
@@ -1497,15 +2420,25 @@
         caseNav.classList.add('is-visible');
         updateCaseNavState();
       }
+
+      if (caseSectionNav) {
+        updateCaseNavState();
+        updateCaseSectionActive();
+      }
     }, 650);
 
     if (customCursor && cursorTextMask && window.matchMedia('(pointer: fine)').matches) {
       const page = document.querySelector('.page');
       const pageClone = page.cloneNode(true);
       maskCaseNav = pageClone.querySelector('.case-nav');
+      maskCaseSectionNav = pageClone.querySelector('.case-section-nav');
 
       if (maskCaseNav) {
         maskCaseNav.remove();
+      }
+
+      if (maskCaseSectionNav) {
+        maskCaseSectionNav.remove();
       }
 
       cursorTextMask.appendChild(pageClone);
@@ -1514,7 +2447,12 @@
         cursorTextMask.appendChild(maskCaseNav);
       }
 
+      if (maskCaseSectionNav) {
+        cursorTextMask.appendChild(maskCaseSectionNav);
+      }
+
       updateCaseNavState();
+      setCaseSectionActive(activeCaseSectionId || (caseSectionTargets[0] && caseSectionTargets[0].id), true);
 
       const syncMaskScroll = () => {
         pageClone.style.transform = `translateY(${-window.scrollY}px)`;
@@ -1528,9 +2466,12 @@
         const elementUnderCursor = document.elementFromPoint(event.clientX, event.clientY);
         const isOnMedia = elementUnderCursor && elementUnderCursor.closest('.case-hero__image, .case-image, .case-video');
         const isOnContacts = elementUnderCursor && elementUnderCursor.closest('.contacts-section');
+        const isOnCaseSectionLink = elementUnderCursor && elementUnderCursor.closest('.case-section-nav__link');
 
         customCursor.classList.toggle('is-on-contacts', Boolean(isOnContacts));
+        customCursor.classList.toggle('is-on-section-link', Boolean(isOnCaseSectionLink));
         cursorTextMask.classList.toggle('is-on-contacts', Boolean(isOnContacts));
+        cursorTextMask.classList.toggle('is-on-section-link', Boolean(isOnCaseSectionLink));
         cursorTextMask.style.setProperty('--cursor-x', `${event.clientX}px`);
         cursorTextMask.style.setProperty('--cursor-y', `${event.clientY}px`);
         cursorTextMask.classList.add('is-visible');
@@ -1539,8 +2480,8 @@
       });
 
       document.addEventListener('pointerleave', () => {
-        customCursor.classList.remove('is-visible', 'is-on-contacts');
-        cursorTextMask.classList.remove('is-visible', 'is-on-contacts');
+        customCursor.classList.remove('is-visible', 'is-on-contacts', 'is-on-section-link');
+        cursorTextMask.classList.remove('is-visible', 'is-on-contacts', 'is-on-section-link');
       });
 
       window.addEventListener('scroll', syncMaskScroll, { passive: true });
