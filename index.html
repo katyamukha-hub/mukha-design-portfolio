@@ -8,31 +8,7 @@
   <style>
     @font-face {
       font-family: "CoFo Sans";
-      src: local("CoFo Sans Light"), local("CoFoSans-Light"), url("assets/fonts/CoFoSans-Light.woff2") format("woff2");
-      font-weight: 300;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "CoFo Sans";
-      src: local("CoFo Sans Regular"), local("CoFoSans-Regular"), url("assets/fonts/CoFoSans-Regular.woff2") format("woff2");
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "CoFo Sans";
-      src: local("CoFo Sans Medium"), local("CoFoSans-Medium"), url("assets/fonts/CoFoSans-Medium.woff2") format("woff2");
-      font-weight: 500;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "CoFo Sans";
-      src: local("CoFo Sans Thin"), local("CoFoSans-Thin"), url("assets/fonts/CoFoSans-Thin.woff2") format("woff2");
+      src: url("assets/fonts/CoFoSansPro-Thin-Trial.woff") format("woff");
       font-weight: 100;
       font-style: normal;
       font-display: swap;
@@ -40,13 +16,37 @@
 
     @font-face {
       font-family: "CoFo Sans";
-      src: local("CoFo Sans Bold"), local("CoFoSans-Bold"), url("assets/fonts/CoFoSans-Bold.woff2") format("woff2");
+      src: url("assets/fonts/CoFoSansPro-Regular-Trial.woff") format("woff");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "CoFo Sans";
+      src: url("assets/fonts/CoFoSansPro-Medium-Trial.woff") format("woff");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "CoFo Sans";
+      src: url("assets/fonts/CoFoSansPro-Bold-Trial.woff") format("woff");
       font-weight: 700;
       font-style: normal;
       font-display: swap;
     }
 
-    :root {
+    @font-face {
+      font-family: "CoFo Sans";
+      src: url("assets/fonts/CoFoSansPro-Black-Trial.woff") format("woff");
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+:root {
       --bg: #f4f4f4;
       --blue: #111111;
       --blue-hover: #2f3437;
@@ -61,7 +61,7 @@
       --hero-visual-center-shift: 64px;
       --section-heading-size: 56px;
       --section-heading-line-height: 0.95;
-      --font-main: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      --font-main: "CoFo Sans", Arial, Helvetica, sans-serif;
     }
 
     * {
@@ -154,7 +154,7 @@
     .custom-cursor.is-case-hover::after {
       content: "СМОТРЕТЬ КЕЙС";
       color: #fff;
-      font-family: "CoFo Sans Mono Trial", "CoFo Sans Mono", monospace;
+      font-family: var(--font-main);
       font-size: 14px;
       line-height: 20px;
       font-weight: 400;

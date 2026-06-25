@@ -8,15 +8,15 @@
   <style>
     @font-face {
       font-family: "CoFo Sans";
-      src: local("CoFo Sans Light"), local("CoFoSans-Light"), url("assets/fonts/CoFoSans-Light.woff2") format("woff2");
-      font-weight: 300;
+      src: url("assets/fonts/CoFoSansPro-Thin-Trial.woff") format("woff");
+      font-weight: 100;
       font-style: normal;
       font-display: swap;
     }
 
     @font-face {
       font-family: "CoFo Sans";
-      src: local("CoFo Sans Regular"), local("CoFoSans-Regular"), url("assets/fonts/CoFoSans-Regular.woff2") format("woff2");
+      src: url("assets/fonts/CoFoSansPro-Regular-Trial.woff") format("woff");
       font-weight: 400;
       font-style: normal;
       font-display: swap;
@@ -24,21 +24,30 @@
 
     @font-face {
       font-family: "CoFo Sans";
-      src: local("CoFo Sans Medium"), local("CoFoSans-Medium"), url("assets/fonts/CoFoSans-Medium.woff2") format("woff2");
+      src: url("assets/fonts/CoFoSansPro-Medium-Trial.woff") format("woff");
       font-weight: 500;
       font-style: normal;
       font-display: swap;
     }
 
     @font-face {
-      font-family: "CoFo Sans Medium";
-      src: local("CoFo Sans Medium"), local("CoFoSans-Medium"), url("assets/fonts/CoFoSans-Medium.woff2") format("woff2");
-      font-weight: 400;
+      font-family: "CoFo Sans";
+      src: url("assets/fonts/CoFoSansPro-Bold-Trial.woff") format("woff");
+      font-weight: 700;
       font-style: normal;
       font-display: swap;
     }
 
-    :root {
+    @font-face {
+      font-family: "CoFo Sans";
+      src: url("assets/fonts/CoFoSansPro-Black-Trial.woff") format("woff");
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+:root {
+      --font-main: "CoFo Sans", Arial, Helvetica, sans-serif;
       --bg: #f4f4f4;
       --blue: #111111;
       --blue-hover: #2f3437;
@@ -59,7 +68,7 @@
       min-height: 100%;
       background: var(--bg);
       color: var(--blue);
-      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
       font-synthesis: none;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -232,7 +241,7 @@
     .brand__name {
       display: block;
       margin: 0;
-      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
       font-size: 18px;
       line-height: 1;
       font-weight: 500;
@@ -263,7 +272,7 @@
       border-radius: 999px;
       background: #E5E6EB;
       color: var(--blue);
-      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
       font-size: 14px;
       line-height: 1;
       font-weight: 420;
@@ -294,7 +303,7 @@
       border-radius: 999px;
       background: var(--blue);
       color: #fff;
-      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
       font-size: 14px;
       line-height: 1;
       font-weight: 420;
@@ -479,7 +488,7 @@
       border-radius: 50%;
       background: var(--blue);
       color: var(--bg);
-      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
       font-size: 24px;
       line-height: 1;
       font-weight: 400;
@@ -522,7 +531,7 @@
 
     .case-hero__title {
       margin: 0 0 20px;
-      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
       font-size: 48px;
       line-height: 1.1;
       font-weight: 400;
@@ -583,7 +592,7 @@
 
     .case-text-section__title {
       margin: 0 0 20px;
-      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
       font-size: 36px;
       line-height: 1;
       font-weight: 400;
@@ -716,7 +725,7 @@
 
     .case-section-heading__title {
       margin: 0 0 20px;
-      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
       font-size: 36px;
       line-height: 1;
       font-weight: 400;
@@ -805,7 +814,7 @@
 
     .case-split-section__title {
       margin: 0 0 20px;
-      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
       font-size: 36px;
       line-height: 1;
       font-weight: 400;
@@ -859,7 +868,7 @@
 
     .jtbd-section__title {
       margin: 0 0 52px;
-      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
       font-size: 36px;
       line-height: 1;
       font-weight: 400;
@@ -904,7 +913,7 @@
 
     .contacts__title {
       margin: 0;
-      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
       font-size: 60px;
       line-height: 0.95;
       font-weight: 400;
@@ -914,7 +923,7 @@
     .contacts__intro {
       max-width: 300px;
       margin: 28px 0 0;
-      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
       font-size: 16px;
       line-height: 1.5;
       font-weight: 400;
@@ -954,7 +963,7 @@
     .contacts__label {
       display: block;
       margin-bottom: 12px;
-      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
       font-size: 16px;
       line-height: 1;
       font-weight: 400;
@@ -963,7 +972,7 @@
     .contacts__value {
       display: inline-block;
       color: inherit;
-      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
       font-size: 30px;
       line-height: 1;
       font-weight: 400;
@@ -981,7 +990,7 @@
       position: absolute;
       left: var(--page-x);
       bottom: 20px;
-      font-family: "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
       font-size: 16px;
       line-height: 1;
       font-weight: 400;
@@ -1170,7 +1179,7 @@
 
     .page .contacts__title {
       margin: 0;
-      font-family: var(--font-main, "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif);
+      font-family: var(--font-main);
       font-size: 56px;
       line-height: 0.95;
       font-weight: 200;
@@ -1180,7 +1189,7 @@
     .page .contacts__intro {
       max-width: 300px;
       margin: 12px 0 0;
-      font-family: var(--font-main, "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif);
+      font-family: var(--font-main);
       font-size: 16px;
       line-height: 1.5;
       font-weight: 400;
@@ -1229,7 +1238,7 @@
     .page .contacts__label {
       display: block;
       margin-bottom: 12px;
-      font-family: var(--font-main, "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif);
+      font-family: var(--font-main);
       font-size: 16px;
       line-height: 1;
       font-weight: 400;
@@ -1238,7 +1247,7 @@
     .page .contacts__value {
       position: relative;
       display: inline-block;
-      font-family: var(--font-main, "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif);
+      font-family: var(--font-main);
       font-size: 30px;
       line-height: 1;
       font-weight: 400;
@@ -1274,7 +1283,7 @@
       border-radius: 999px;
       outline: 0;
       box-shadow: none;
-      font-family: var(--font-main, "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif);
+      font-family: var(--font-main);
       font-size: 17px;
       line-height: 1;
       font-weight: 400;
@@ -1310,7 +1319,7 @@
       position: absolute;
       left: var(--page-x);
       bottom: 20px;
-      font-family: var(--font-main, "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif);
+      font-family: var(--font-main);
       font-size: 16px;
       line-height: 1.2;
       font-weight: 400;
@@ -1531,7 +1540,7 @@
       border-radius: 999px;
       outline: 0;
       box-shadow: none;
-      font-family: var(--font-main, "Cofo Sans Trial", "CoFo Sans", Arial, Helvetica, sans-serif);
+      font-family: var(--font-main);
       font-size: 17px;
       line-height: 1;
       font-weight: 400;
