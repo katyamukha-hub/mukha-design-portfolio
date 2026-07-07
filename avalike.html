@@ -1810,7 +1810,7 @@
   <main class="page">
     <header class="topbar" aria-label="Верхняя навигация">
       <a class="brand" href="index.html" aria-label="На главную">
-        <img class="brand__avatar" src="assets/images/avatar_for_header.png" alt="" />
+        <img class="brand__avatar" src="assets/images/avatar_for_header.png" alt="" decoding="async" />
         <span class="brand__text">
           <span class="brand__name">Катя Мукха</span>
           <span class="brand__role">Product designer</span>
@@ -1869,6 +1869,8 @@
               class="case-hero__image"
               src="assets/images/avalike/avalike-case-hero.png"
               alt="Интерфейс платформы Avalike"
+              decoding="async"
+              fetchpriority="high"
             />
 
             <p class="case-hero__description case-hero__description--under-media">
@@ -1913,6 +1915,8 @@
             class="case-image"
             src="assets/images/avalike/avalike-mobile-screens.png"
             alt="Мобильные экраны платформы Avalike"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       </div>
@@ -1933,6 +1937,8 @@
             class="case-image"
             src="assets/images/avalike/avalike-double-diamond.png"
             alt="Схема Double Diamond для&nbsp;проекта Avalike"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       </div>
@@ -1970,6 +1976,8 @@
             class="case-image case-image--competitive-analysis"
             src="assets/images/avalike/avalike-competitive-analysis.png"
             alt="Таблица конкурентного анализа Avalike"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       </div>
@@ -2021,7 +2029,7 @@
     <section class="case-image-section case-image-section--main-scenarios" aria-label="Основные сценарии Avalike">
       <div class="case-image-section__grid">
         <div class="case-image-section__content">
-          <img class="case-image case-image--main-scenarios" src="assets/images/avalike/avalike-main-scenarios.png" alt="Основные сценарии платформы Avalike" />
+          <img class="case-image case-image--main-scenarios" src="assets/images/avalike/avalike-main-scenarios.png" alt="Основные сценарии платформы Avalike" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
@@ -2038,7 +2046,7 @@
     <section class="case-image-section" aria-label="Вайрфреймы Avalike">
       <div class="case-image-section__grid">
         <div class="case-image-section__content">
-          <img class="case-image" src="assets/images/avalike/avalike-wireframes.png" alt="Вайрфреймы платформы Avalike" />
+          <img class="case-image" src="assets/images/avalike/avalike-wireframes.png" alt="Вайрфреймы платформы Avalike" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
@@ -2055,7 +2063,7 @@
     <section class="case-image-section" aria-label="Мудборд Avalike">
       <div class="case-image-section__grid">
         <div class="case-image-section__content">
-          <img class="case-image" src="assets/images/avalike/avalike-gradient-moodboard.png" alt="Градиентный мудборд Avalike" />
+          <img class="case-image" src="assets/images/avalike/avalike-gradient-moodboard.png" alt="Градиентный мудборд Avalike" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
@@ -2072,7 +2080,7 @@
     <section class="case-image-section" aria-label="Визуальный дизайн Avalike">
       <div class="case-image-section__grid">
         <div class="case-image-section__content">
-          <video class="case-video" src="assets/images/avalike/avalike-visual-design-testing.mp4" autoplay muted loop playsinline poster="assets/images/avalike/avalike-visual-design-testing.png" aria-label="Визуальный дизайн и тестирование Avalike"></video>
+          <video class="case-video" data-src="assets/images/avalike/avalike-visual-design-testing.mp4" preload="none" muted loop playsinline aria-label="Визуальный дизайн и тестирование Avalike"></video>
         </div>
       </div>
     </section>
@@ -2095,7 +2103,7 @@
     <section class="case-image-section" aria-label="Пользовательские интервью Avalike">
       <div class="case-image-section__grid">
         <div class="case-image-section__content">
-          <img class="case-image" src="assets/images/avalike/avalike-user-interviews.png" alt="Пользовательские интервью Avalike" />
+          <img class="case-image" src="assets/images/avalike/avalike-user-interviews.png" alt="Пользовательские интервью Avalike" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
@@ -2131,7 +2139,7 @@
     <section class="case-image-section" aria-label="Прототип Avalike">
       <div class="case-image-section__grid">
         <div class="case-image-section__content">
-          <video class="case-video" src="assets/images/avalike/avalike-prototype.mp4" autoplay muted loop playsinline poster="assets/images/avalike/avalike-prototype.png" aria-label="Прототип платформы Avalike"></video>
+          <video class="case-video" data-src="assets/images/avalike/avalike-prototype.mp4" preload="none" muted loop playsinline aria-label="Прототип платформы Avalike"></video>
         </div>
       </div>
     </section>
@@ -2146,7 +2154,7 @@
         </div>
 
         <div class="case-split-section__media">
-          <img class="case-image" src="assets/images/avalike/avalike-components.png" alt="Компоненты дизайн-системы Avalike" />
+          <img class="case-image" src="assets/images/avalike/avalike-components.png" alt="Компоненты дизайн-системы Avalike" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
@@ -2159,7 +2167,7 @@
         </div>
 
         <div class="case-split-section__media">
-          <img class="case-image" src="assets/images/avalike/avalike-design-review.png" alt="Дизайн-ревью Avalike" />
+          <img class="case-image" src="assets/images/avalike/avalike-design-review.png" alt="Дизайн-ревью Avalike" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
@@ -2427,6 +2435,45 @@
       });
     }
 
+    const lazyVideos = document.querySelectorAll('video[data-src]');
+    const loadLazyVideo = (video) => {
+      if (!video.getAttribute('src')) {
+        video.setAttribute('src', video.dataset.src);
+        video.load();
+      }
+    };
+    const playLazyVideo = (video) => {
+      loadLazyVideo(video);
+      const playPromise = video.play();
+
+      if (playPromise) {
+        playPromise.catch(() => {});
+      }
+    };
+
+    if (lazyVideos.length) {
+      if ('IntersectionObserver' in window) {
+        const lazyVideoObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            const video = entry.target;
+
+            if (entry.isIntersecting) {
+              playLazyVideo(video);
+            } else {
+              video.pause();
+            }
+          });
+        }, {
+          rootMargin: '480px 0px',
+          threshold: 0.01
+        });
+
+        lazyVideos.forEach((video) => lazyVideoObserver.observe(video));
+      } else {
+        lazyVideos.forEach(playLazyVideo);
+      }
+    }
+
     window.setTimeout(() => {
       if (caseNav) {
         caseNav.classList.add('is-visible');
@@ -2442,6 +2489,11 @@
     if (customCursor && cursorTextMask && window.matchMedia('(pointer: fine)').matches) {
       const page = document.querySelector('.page');
       const pageClone = page.cloneNode(true);
+      pageClone.querySelectorAll('img[loading="lazy"], video[data-src]').forEach((asset) => {
+        asset.removeAttribute('src');
+        asset.removeAttribute('srcset');
+        asset.removeAttribute('poster');
+      });
       maskCaseNav = pageClone.querySelector('.case-nav');
       maskCaseSectionNav = pageClone.querySelector('.case-section-nav');
 
