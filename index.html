@@ -7,7 +7,8 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="preload" href="assets/fonts/CoFoSansPro-Regular-Trial.woff" as="font" type="font/woff" crossorigin />
   <link rel="preload" href="assets/fonts/CoFoSansPro-Thin-Trial.woff" as="font" type="font/woff" crossorigin />
-  <link rel="preload" href="assets/fonts/CoFoSansPro-Medium-Trial.woff" as="font" type="font/woff" crossorigin />
+  <link rel="preload" href="assets/images/hand.svg" as="image" fetchpriority="high" />
+  <link rel="preload" href="assets/images/avalike/avalike-cover.png" as="image" fetchpriority="high" />
   <style>
     @font-face {
       font-family: "CoFo Sans";
@@ -3588,12 +3589,12 @@
 <body>
   <div class="custom-cursor" aria-hidden="true"></div>
   <div class="cursor-text-mask" aria-hidden="true"></div>
-  <img class="hover-avatar" src="assets/images/avatar.png" alt="" aria-hidden="true" decoding="async" />
+  <img class="hover-avatar" data-src="assets/images/avatar.png" alt="" aria-hidden="true" decoding="async" />
   <main class="site">
     <section id="screen-hero" class="hero-screen" aria-label="Первый экран">
       <header class="header" aria-label="Главный экран">
         <div class="brand" aria-label="Катя Мукха — Product Designer">
-          <img class="hero-hand" src="assets/images/hand.svg" alt="" aria-hidden="true" decoding="async" />
+          <img class="hero-hand" src="assets/images/hand.svg" alt="" aria-hidden="true" decoding="async" fetchpriority="high" />
           <div class="brand__text">
             <p class="brand__name">Катя Мукха</p>
             <p class="brand__role">Product Designer</p>
@@ -3640,7 +3641,7 @@
         </div>
 
         <a class="case-preview__media" href="avalike.html" aria-label="Открыть кейс Avalike">
-          <img class="case-preview__image" src="assets/images/avalike/avalike-cover.png" alt="Интерфейс платформы Avalike" decoding="async" />
+          <img class="case-preview__image" src="assets/images/avalike/avalike-cover.png" alt="Интерфейс платформы Avalike" decoding="async" fetchpriority="high" />
         </a>
       </div>
     </section>
@@ -3668,7 +3669,7 @@
             muted
             loop
             playsinline
-            poster="assets/images/skillshare/skillshare-cover.png"
+            data-poster="assets/images/skillshare/skillshare-cover.png"
             aria-label="Интерфейс приложения Skillshare"
           ></video>
         </div>
@@ -3691,7 +3692,7 @@
         </div>
 
         <a class="case-preview__media" href="mendi.html" aria-label="Открыть кейс Mendi">
-          <img class="case-preview__image" src="assets/images/mendi/mendi-cover.png" alt="Интерфейс приложения Mendi" loading="lazy" decoding="async" />
+          <img class="case-preview__image" data-src="assets/images/mendi/mendi-cover.png" alt="Интерфейс приложения Mendi" loading="lazy" decoding="async" />
         </a>
       </div>
     </section>
@@ -3704,7 +3705,7 @@
         </div>
 
         <div class="case-preview__media">
-          <img class="case-preview__image" src="assets/images/friends/friends-cover.png" alt="Постеры к фильму Дружи со мной нет" loading="lazy" decoding="async" />
+          <img class="case-preview__image" data-src="assets/images/friends/friends-cover.png" alt="Постеры к фильму Дружи со мной нет" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
@@ -3725,7 +3726,7 @@
 
           <img
             class="fact-card__image"
-            src="assets/images/baumanka-notes.png"
+            data-src="assets/images/baumanka-notes.png"
             alt="Конспект с инженерными схемами"
             loading="lazy"
             decoding="async"
@@ -3761,34 +3762,34 @@
       </div>
 
       <div class="photo-project__grid" aria-label="Фотографии отделений">
-        <figure class="photo-project__item"><span class="photo-project__number">01</span><img class="photo-project__image" src="assets/images/post-offices/post-office-01.jpg" alt="Почтовое отделение 01" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">02</span><img class="photo-project__image" src="assets/images/post-offices/post-office-02.jpg" alt="Почтовое отделение 02" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">03</span><img class="photo-project__image" src="assets/images/post-offices/post-office-03.jpg" alt="Почтовое отделение 03" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">04</span><img class="photo-project__image" src="assets/images/post-offices/post-office-04.jpg" alt="Почтовое отделение 04" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">05</span><img class="photo-project__image" src="assets/images/post-offices/post-office-05.jpg" alt="Почтовое отделение 05" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">06</span><img class="photo-project__image" src="assets/images/post-offices/post-office-06.jpg" alt="Почтовое отделение 06" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">07</span><img class="photo-project__image" src="assets/images/post-offices/post-office-07.jpg" alt="Почтовое отделение 07" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">08</span><img class="photo-project__image" src="assets/images/post-offices/post-office-08.jpg" alt="Почтовое отделение 08" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">09</span><img class="photo-project__image" src="assets/images/post-offices/post-office-09.jpg" alt="Почтовое отделение 09" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">10</span><img class="photo-project__image" src="assets/images/post-offices/post-office-10.jpg" alt="Почтовое отделение 10" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">11</span><img class="photo-project__image" src="assets/images/post-offices/post-office-11.jpg" alt="Почтовое отделение 11" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">12</span><img class="photo-project__image" src="assets/images/post-offices/post-office-12.jpg" alt="Почтовое отделение 12" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">13</span><img class="photo-project__image" src="assets/images/post-offices/post-office-13.jpg" alt="Почтовое отделение 13" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">14</span><img class="photo-project__image" src="assets/images/post-offices/post-office-14.jpg" alt="Почтовое отделение 14" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">15</span><img class="photo-project__image" src="assets/images/post-offices/post-office-15.jpg" alt="Почтовое отделение 15" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">16</span><img class="photo-project__image" src="assets/images/post-offices/post-office-16.jpg" alt="Почтовое отделение 16" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">17</span><img class="photo-project__image" src="assets/images/post-offices/post-office-17.jpg" alt="Почтовое отделение 17" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">18</span><img class="photo-project__image" src="assets/images/post-offices/post-office-18.jpg" alt="Почтовое отделение 18" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">19</span><img class="photo-project__image" src="assets/images/post-offices/post-office-19.jpg" alt="Почтовое отделение 19" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">20</span><img class="photo-project__image" src="assets/images/post-offices/post-office-20.jpg" alt="Почтовое отделение 20" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">21</span><img class="photo-project__image" src="assets/images/post-offices/post-office-21.jpg" alt="Почтовое отделение 21" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">22</span><img class="photo-project__image" src="assets/images/post-offices/post-office-22.jpg" alt="Почтовое отделение 22" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">23</span><img class="photo-project__image" src="assets/images/post-offices/post-office-23.jpg" alt="Почтовое отделение 23" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">24</span><img class="photo-project__image" src="assets/images/post-offices/post-office-24.jpg" alt="Почтовое отделение 24" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">25</span><img class="photo-project__image" src="assets/images/post-offices/post-office-25.jpg" alt="Почтовое отделение 25" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">26</span><img class="photo-project__image" src="assets/images/post-offices/post-office-26.jpg" alt="Почтовое отделение 26" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">27</span><img class="photo-project__image" src="assets/images/post-offices/post-office-27.jpg" alt="Почтовое отделение 27" loading="lazy" decoding="async" /></figure>
-        <figure class="photo-project__item"><span class="photo-project__number">28</span><img class="photo-project__image" src="assets/images/post-offices/post-office-28.jpg" alt="Почтовое отделение 28" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">01</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-01.jpg" alt="Почтовое отделение 01" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">02</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-02.jpg" alt="Почтовое отделение 02" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">03</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-03.jpg" alt="Почтовое отделение 03" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">04</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-04.jpg" alt="Почтовое отделение 04" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">05</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-05.jpg" alt="Почтовое отделение 05" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">06</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-06.jpg" alt="Почтовое отделение 06" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">07</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-07.jpg" alt="Почтовое отделение 07" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">08</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-08.jpg" alt="Почтовое отделение 08" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">09</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-09.jpg" alt="Почтовое отделение 09" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">10</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-10.jpg" alt="Почтовое отделение 10" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">11</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-11.jpg" alt="Почтовое отделение 11" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">12</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-12.jpg" alt="Почтовое отделение 12" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">13</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-13.jpg" alt="Почтовое отделение 13" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">14</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-14.jpg" alt="Почтовое отделение 14" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">15</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-15.jpg" alt="Почтовое отделение 15" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">16</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-16.jpg" alt="Почтовое отделение 16" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">17</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-17.jpg" alt="Почтовое отделение 17" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">18</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-18.jpg" alt="Почтовое отделение 18" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">19</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-19.jpg" alt="Почтовое отделение 19" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">20</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-20.jpg" alt="Почтовое отделение 20" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">21</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-21.jpg" alt="Почтовое отделение 21" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">22</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-22.jpg" alt="Почтовое отделение 22" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">23</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-23.jpg" alt="Почтовое отделение 23" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">24</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-24.jpg" alt="Почтовое отделение 24" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">25</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-25.jpg" alt="Почтовое отделение 25" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">26</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-26.jpg" alt="Почтовое отделение 26" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">27</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-27.jpg" alt="Почтовое отделение 27" loading="lazy" decoding="async" /></figure>
+        <figure class="photo-project__item"><span class="photo-project__number">28</span><img class="photo-project__image" data-src="assets/images/post-offices/post-office-28.jpg" alt="Почтовое отделение 28" loading="lazy" decoding="async" /></figure>
       </div>
     </section>
 
@@ -3905,52 +3906,65 @@
       } else {
         window.setTimeout(() => {
           addHeroIntroClass('is-hand-visible');
-          window.setTimeout(() => addHeroIntroClass('is-hand-settled'), 520);
-          window.setTimeout(() => addHeroIntroClass('is-brand-visible'), 1160);
-          window.setTimeout(() => addHeroIntroClass('is-hero-text-visible'), 1470);
-          window.setTimeout(() => addHeroIntroClass('is-actions-visible'), 1790);
-          window.setTimeout(showAvalikeIntroCase, 3060);
+          window.setTimeout(() => addHeroIntroClass('is-hand-settled'), 360);
+          window.setTimeout(() => addHeroIntroClass('is-brand-visible'), 620);
+          window.setTimeout(() => addHeroIntroClass('is-hero-text-visible'), 760);
+          window.setTimeout(() => addHeroIntroClass('is-actions-visible'), 920);
+          window.setTimeout(showAvalikeIntroCase, 1160);
         }, 0);
       }
     }
 
-    const lazyVideos = document.querySelectorAll('video[data-src]');
-    const loadLazyVideo = (video) => {
-      if (!video.getAttribute('src')) {
-        video.setAttribute('src', video.dataset.src);
-        video.load();
+    const deferredMedia = document.querySelectorAll('.site [data-src]');
+    const loadDeferredMedia = (asset) => {
+      if (asset.dataset.poster && !asset.getAttribute('poster')) {
+        asset.setAttribute('poster', asset.dataset.poster);
+      }
+
+      if (!asset.getAttribute('src')) {
+        asset.setAttribute('src', asset.dataset.src);
+      }
+
+      asset.dataset.loaded = 'true';
+
+      if (asset.tagName === 'VIDEO') {
+        asset.load();
+        const playPromise = asset.play();
+
+        if (playPromise) {
+          playPromise.catch(() => {});
+        }
       }
     };
-    const playLazyVideo = (video) => {
-      loadLazyVideo(video);
-      const playPromise = video.play();
+    const loadVisibleDeferredMedia = () => {
+      deferredMedia.forEach((asset) => {
+        if (asset.dataset.loaded === 'true') return;
 
-      if (playPromise) {
-        playPromise.catch(() => {});
-      }
+        const rect = asset.getBoundingClientRect();
+        const preloadOffset = asset.closest('.case-preview--skillshare') ? 280 : 160;
+        const isNearViewport = rect.top <= window.innerHeight + preloadOffset && rect.bottom >= -preloadOffset;
+
+        if (isNearViewport) {
+          loadDeferredMedia(asset);
+        }
+      });
     };
 
-    if (lazyVideos.length) {
-      if ('IntersectionObserver' in window) {
-        const lazyVideoObserver = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            const video = entry.target;
+    if (deferredMedia.length) {
+      let lazyMediaTicking = false;
+      const requestDeferredMediaCheck = () => {
+        if (lazyMediaTicking) return;
 
-            if (entry.isIntersecting) {
-              playLazyVideo(video);
-            } else {
-              video.pause();
-            }
-          });
-        }, {
-          rootMargin: '480px 0px',
-          threshold: 0.01
+        lazyMediaTicking = true;
+        window.requestAnimationFrame(() => {
+          lazyMediaTicking = false;
+          loadVisibleDeferredMedia();
         });
+      };
 
-        lazyVideos.forEach((video) => lazyVideoObserver.observe(video));
-      } else {
-        lazyVideos.forEach(playLazyVideo);
-      }
+      loadVisibleDeferredMedia();
+      window.addEventListener('scroll', requestDeferredMediaCheck, { passive: true });
+      window.addEventListener('resize', requestDeferredMediaCheck);
     }
 
 
@@ -4071,6 +4085,10 @@
           };
 
           const isOnAvatarFrame = isInsideFrame(brandName) || isInsideFrame(brandRole);
+
+          if (isOnAvatarFrame && hoverAvatar.dataset.src && !hoverAvatar.getAttribute('src')) {
+            hoverAvatar.setAttribute('src', hoverAvatar.dataset.src);
+          }
 
           hoverAvatar.classList.toggle('is-visible', isOnAvatarFrame);
           customCursor.classList.toggle('is-avatar-hover', isOnAvatarFrame);
