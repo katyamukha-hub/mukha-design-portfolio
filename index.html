@@ -27,7 +27,7 @@
     }
 
 :root {
-      --bg: #f4f4f4;
+      --bg: #fff;
       --blue: #111111;
       --blue-hover: #2f3437;
       --link-hover: #454b4f;
@@ -76,6 +76,168 @@
     .contacts__title {
       font-family: var(--font-main);
       font-weight: 100;
+    }
+
+    .custom-cursor {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      background: #4267ff;
+      border: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      z-index: 9998;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: opacity 0.15s ease, transform 0.15s ease, width 0.18s ease, height 0.18s ease, padding 0.18s ease, background-color 0.18s ease, border-radius 0.18s ease;
+    }
+
+    .custom-cursor::before {
+      content: none;
+    }
+
+    .custom-cursor::after {
+      content: "";
+      color: #fff;
+      font-family: var(--font-main);
+      font-size: 14px;
+      line-height: 1;
+      transform: translateY(-1px);
+    }
+
+    .custom-cursor.is-case-hover {
+      width: max-content;
+      height: auto;
+      padding: 4px 12px;
+      gap: 8px;
+      border-radius: 999px;
+      background: #4267ff;
+    }
+
+    .custom-cursor.is-case-hover::before {
+      content: "";
+      flex: 0 0 auto;
+      width: 15px;
+      height: 11px;
+      background: url("assets/images/eye.svg") center / contain no-repeat;
+    }
+
+    .custom-cursor.is-case-hover::after {
+      content: "СМОТРЕТЬ КЕЙС";
+      color: #fff;
+      font-family: "CoFo Sans Mono Trial", "Courier New", monospace;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+      letter-spacing: 0;
+      transform: none;
+    }
+
+    .custom-cursor.is-visible {
+      opacity: 1;
+    }
+
+    .custom-cursor.is-on-contacts {
+      background: #4267ff;
+    }
+
+    .custom-cursor.is-avatar-hover {
+      opacity: 0;
+    }
+
+    .cursor-text-mask {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      pointer-events: none;
+      color: var(--bg);
+      opacity: 0;
+      clip-path: circle(10px at var(--cursor-x, -100px) var(--cursor-y, -100px));
+      transition: opacity 0.15s ease;
+    }
+
+    .cursor-text-mask * {
+      color: #fff !important;
+      border-color: #fff !important;
+      text-decoration-color: #fff !important;
+      box-shadow: none !important;
+    }
+
+    .cursor-text-mask.is-on-contacts * {
+      color: #fff !important;
+      border-color: #fff !important;
+      text-decoration-color: #fff !important;
+    }
+
+    .cursor-text-mask.is-visible {
+      opacity: 1;
+    }
+
+    .cursor-text-mask.is-hidden-on-media,
+    .cursor-text-mask.is-hidden-on-avatar {
+      opacity: 0;
+    }
+
+    .cursor-text-mask .site {
+      background: transparent;
+    }
+
+    .cursor-text-mask .hero-screen,
+    .cursor-text-mask .case-preview,
+    .cursor-text-mask .facts-section,
+    .cursor-text-mask .photo-project,
+    .cursor-text-mask .contacts-section {
+      background: transparent;
+    }
+
+    .cursor-text-mask img,
+    .cursor-text-mask video,
+    .cursor-text-mask picture,
+    .cursor-text-mask .custom-cursor,
+    .cursor-text-mask .cursor-text-mask {
+      visibility: hidden;
+    }
+
+    .cursor-text-mask .cv-button,
+    .cursor-text-mask .telegram-link,
+    .cursor-text-mask .case-preview__button,
+    .cursor-text-mask .language-switch {
+      background: transparent !important;
+      color: #fff !important;
+      box-shadow: none;
+    }
+
+    .cursor-text-mask .char {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+
+    @media (pointer: fine) {
+      html,
+      body,
+      a,
+      button,
+      .case-preview__media,
+      .case-preview__media * {
+        cursor: none;
+      }
+    }
+
+    @media (pointer: coarse) {
+      .custom-cursor,
+      .cursor-text-mask {
+        display: none;
+      }
     }
 
     .site {
@@ -358,6 +520,27 @@
       transform: translateY(0);
     }
 
+    .hover-avatar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 200px;
+      height: auto;
+      display: block;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(0.18);
+      transform-origin: center center;
+      z-index: 9997;
+      transition: opacity 0.2s ease, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform, left, top;
+    }
+
+    .hover-avatar.is-visible {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
     .scroll-wolf {
       position: fixed;
       right: 20px;
@@ -621,6 +804,7 @@
 
     .case-preview__media {
       grid-column: 4 / -1;
+      overflow: visible;
     }
 
     .case-preview__title {
@@ -658,9 +842,10 @@
 
     .case-preview__image {
       width: 100%;
+      height: auto;
       max-width: none;
       display: block;
-      object-fit: cover;
+      object-fit: contain;
       border: 0;
       outline: 0;
       box-shadow: none;
@@ -670,14 +855,26 @@
       will-change: transform;
     }
 
-    .case-preview__media:hover .case-preview__image {
+    .case-preview:not(.case-preview--friends) .case-preview__media:hover .case-preview__image {
       transform: scale(0.985);
       filter: saturate(1.04);
     }
 
     .case-preview--avalike .case-preview__image {
-      aspect-ratio: 2880 / 1592;
+      aspect-ratio: 1920 / 1061;
       border-radius: 4px;
+    }
+
+    .case-preview--skillshare .case-preview__image {
+      aspect-ratio: 1920 / 1227;
+    }
+
+    .case-preview--mendi .case-preview__image {
+      aspect-ratio: 1920 / 1222;
+    }
+
+    .case-preview--friends .case-preview__image {
+      aspect-ratio: 1920 / 870;
     }
 
     video.case-preview__image {
@@ -690,7 +887,7 @@
     }
 
     .case-preview--skillshare .case-preview__image {
-      clip-path: inset(1px);
+      clip-path: none;
     }
 
     .case-preview--friends {
@@ -1094,13 +1291,15 @@
       grid-column: 4 / -1;
       min-width: 0;
       align-self: start;
+      overflow: visible;
     }
 
     .case-preview__image {
       width: 100%;
+      height: auto;
       max-width: none;
       display: block;
-      object-fit: cover;
+      object-fit: contain;
       border: 0;
       outline: 0;
       box-shadow: none;
@@ -1632,7 +1831,7 @@
     }
 
     .site > .case-preview.case-preview--avalike {
-      background: var(--bg);
+      background: #fff;
     }
 
     .site > .case-preview.case-preview--skillshare {
@@ -1640,7 +1839,7 @@
     }
 
     .site > .case-preview.case-preview--mendi {
-      background: var(--bg);
+      background: #fff;
     }
 
     .site > .case-preview.case-preview--friends {
@@ -1649,7 +1848,7 @@
     }
 
     .site > .facts-section {
-      background: var(--bg);
+      background: #fff;
     }
 
     .site > .photo-project {
@@ -1657,7 +1856,7 @@
     }
 
     .site > .contacts-section {
-      background: var(--bg);
+      background: #fff;
     }
 
   
@@ -1671,16 +1870,16 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 16px;
+      gap: 8px;
       width: fit-content;
       min-width: 0;
       height: 52px;
-      padding: 0 18px 0 24px;
-      border-radius: 4px;
-      background: #FF8A54;
-      color: #fff;
+      padding: 0 20px 2px;
+      border-radius: 999px;
+      background: #E5E6EB;
+      color: var(--blue);
       font-family: var(--font-main);
-      font-size: 16px;
+      font-size: 17px;
       line-height: 1;
       font-weight: 400;
       text-decoration: none;
@@ -1693,15 +1892,19 @@
     }
 
     .site .case-preview__button::after {
-      content: "→";
-      font-size: 1em;
-      line-height: 1;
-      transform: translateY(0);
+      content: "";
+      width: 15px;
+      height: 11px;
+      flex: 0 0 auto;
+      background: currentColor;
+      -webkit-mask: url("assets/images/eye.svg") center / contain no-repeat;
+      mask: url("assets/images/eye.svg") center / contain no-repeat;
+      transform: translateY(1px);
     }
 
     .site .case-preview__button:hover {
-      background: #FF8A54;
-      color: #fff;
+      background: #E5E6EB;
+      color: var(--link-hover);
       transform: scale(0.98);
       border: 0;
       outline: 0;
@@ -1785,6 +1988,10 @@
 
     .site .case-preview__image {
       border-radius: 4px;
+    }
+
+    .site .case-preview--friends .case-preview__image {
+      border-radius: 0;
     }
 
   
@@ -2263,7 +2470,7 @@
         height: auto;
         max-width: none;
         display: block;
-        object-fit: cover;
+        object-fit: contain;
         border-radius: 4px;
       }
     }
@@ -2607,7 +2814,7 @@
         height: auto;
         max-width: none;
         display: block;
-        object-fit: cover;
+        object-fit: contain;
         border-radius: 4px;
       }
 
@@ -3361,6 +3568,39 @@
       }
     }
 
+    .site,
+    .site > .hero-screen,
+    .site > .case-preview,
+    .site > .facts-section,
+    .site > .photo-project,
+    .site > .contacts-section {
+      background: #fff;
+    }
+
+    .site .facts-section__grid,
+    .site .photo-project__grid {
+      margin-top: 180px;
+    }
+
+    .site .case-preview--friends .case-preview__image {
+      border-radius: 0;
+    }
+
+    @media (max-width: 900px) {
+      .site .facts-section__grid,
+      .site .photo-project__grid {
+        margin-top: 108px;
+      }
+    }
+
+    @media (max-width: 602px) {
+      .site .photo-project__item:hover .photo-project__image,
+      .site .photo-project__item:nth-child(7n + 1):hover .photo-project__image,
+      .site .photo-project__item:nth-child(7n):hover .photo-project__image {
+        transform: none !important;
+      }
+    }
+
     html body * {
       font-weight: 400 !important;
     }
@@ -3398,9 +3638,17 @@
       font-weight: 100 !important;
     }
 
+    .site .hero__title,
+    .site .hero__title * {
+      font-weight: 400 !important;
+    }
+
   </style>
 </head>
 <body>
+  <div class="custom-cursor" aria-hidden="true"></div>
+  <div class="cursor-text-mask" aria-hidden="true"></div>
+  <img class="hover-avatar" data-src="assets/images/avatar.png" alt="" aria-hidden="true" decoding="async" />
   <main class="site">
     <section id="screen-hero" class="hero-screen" aria-label="Первый экран">
       <header class="header" aria-label="Главный экран">
@@ -3458,7 +3706,7 @@
             srcset="assets/images/avalike/avalike-cover-480.webp 480w, assets/images/avalike/avalike-cover-960.webp 960w, assets/images/avalike/avalike-cover-1440.webp 1440w, assets/images/avalike/avalike-cover-1920.webp 1920w"
             sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 75vw"
             width="1920"
-            height="1060"
+            height="1061"
             alt="Интерфейс платформы Avalike"
             decoding="async"
             fetchpriority="high"
@@ -3664,6 +3912,9 @@
   </main>
 
   <script>
+    const customCursor = document.querySelector('.custom-cursor');
+    const cursorTextMask = document.querySelector('.cursor-text-mask');
+    const hoverAvatar = document.querySelector('.hover-avatar');
     const scrollWolf = document.querySelector('.scroll-wolf');
 
     const animatedTextBlocks = document.querySelectorAll('.animate-chars');
@@ -3870,6 +4121,120 @@
     window.addEventListener('scroll', updateCaseEntrance, { passive: true });
     window.addEventListener('resize', updateCaseEntrance);
     updateCaseEntrance();
+
+    if (customCursor && cursorTextMask && window.matchMedia('(pointer: fine)').matches) {
+      const site = document.querySelector('.site');
+      const brandName = document.querySelector('.brand__name');
+      const brandRole = document.querySelector('.brand__role');
+      const heroAvatarTrigger = document.querySelector('.hero-avatar-trigger');
+      const siteClone = site ? site.cloneNode(true) : null;
+
+      let syncCursorTextMask = () => {};
+
+      if (site && siteClone) {
+        siteClone.querySelectorAll('img, source, video').forEach((asset) => {
+          asset.removeAttribute('src');
+          asset.removeAttribute('srcset');
+          asset.removeAttribute('sizes');
+          asset.removeAttribute('poster');
+        });
+
+        cursorTextMask.appendChild(siteClone);
+
+        syncCursorTextMask = () => {
+          const syncClassList = (selector) => {
+            const sourceItems = site.querySelectorAll(selector);
+            const cloneItems = siteClone.querySelectorAll(selector);
+
+            sourceItems.forEach((sourceItem, index) => {
+              const cloneItem = cloneItems[index];
+
+              if (cloneItem) {
+                cloneItem.className = sourceItem.className;
+              }
+            });
+          };
+
+          siteClone.className = site.className;
+          syncClassList('.hero-screen');
+          syncClassList('.case-preview');
+          syncClassList('.facts-section');
+          syncClassList('.photo-project');
+          syncClassList('.contacts-section');
+        };
+      }
+
+      const syncMaskScroll = () => {
+        if (siteClone) {
+          siteClone.style.transform = `translateY(${-window.scrollY}px)`;
+        }
+
+        syncCursorTextMask();
+      };
+
+      const isInsideElement = (element, event, paddingX = 18, paddingY = 14) => {
+        const rect = element ? element.getBoundingClientRect() : null;
+
+        return Boolean(
+          rect &&
+          event.clientX >= rect.left - paddingX &&
+          event.clientX <= rect.right + paddingX &&
+          event.clientY >= rect.top - paddingY &&
+          event.clientY <= rect.bottom + paddingY
+        );
+      };
+
+      document.addEventListener('pointermove', (event) => {
+        customCursor.style.left = `${event.clientX}px`;
+        customCursor.style.top = `${event.clientY}px`;
+        customCursor.classList.add('is-visible');
+
+        if (hoverAvatar) {
+          hoverAvatar.style.left = `${event.clientX}px`;
+          hoverAvatar.style.top = `${event.clientY}px`;
+
+          const isOnAvatarFrame =
+            isInsideElement(brandName, event) ||
+            isInsideElement(brandRole, event) ||
+            isInsideElement(heroAvatarTrigger, event);
+
+          if (isOnAvatarFrame && hoverAvatar.dataset.src && !hoverAvatar.getAttribute('src')) {
+            hoverAvatar.setAttribute('src', hoverAvatar.dataset.src);
+          }
+
+          hoverAvatar.classList.toggle('is-visible', isOnAvatarFrame);
+          customCursor.classList.toggle('is-avatar-hover', isOnAvatarFrame);
+          cursorTextMask.classList.toggle('is-hidden-on-avatar', isOnAvatarFrame);
+        }
+
+        const elementUnderCursor = document.elementFromPoint(event.clientX, event.clientY);
+        const caseMedia = elementUnderCursor && elementUnderCursor.closest('.case-preview__media');
+        const isOnCaseMedia = caseMedia && !caseMedia.closest('.case-preview--friends');
+        const isOnContacts = elementUnderCursor && elementUnderCursor.closest('.contacts-section');
+
+        customCursor.classList.toggle('is-case-hover', Boolean(isOnCaseMedia));
+        customCursor.classList.toggle('is-on-contacts', Boolean(isOnContacts));
+        cursorTextMask.classList.toggle('is-on-contacts', Boolean(isOnContacts));
+        cursorTextMask.classList.toggle('is-hidden-on-media', Boolean(isOnCaseMedia));
+        cursorTextMask.style.setProperty('--cursor-x', `${event.clientX}px`);
+        cursorTextMask.style.setProperty('--cursor-y', `${event.clientY}px`);
+        cursorTextMask.classList.add('is-visible');
+        syncMaskScroll();
+      });
+
+      document.addEventListener('pointerleave', () => {
+        customCursor.classList.remove('is-visible', 'is-avatar-hover', 'is-case-hover', 'is-on-contacts');
+        cursorTextMask.classList.remove('is-visible', 'is-hidden-on-avatar', 'is-hidden-on-media', 'is-on-contacts');
+
+        if (hoverAvatar) {
+          hoverAvatar.classList.remove('is-visible');
+        }
+      });
+
+      window.addEventListener('scroll', syncMaskScroll, { passive: true });
+      window.addEventListener('resize', syncMaskScroll);
+      syncMaskScroll();
+    }
   </script>
 </body>
 </html>
