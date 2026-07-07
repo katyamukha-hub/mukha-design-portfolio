@@ -63,6 +63,117 @@
       text-decoration: none;
     }
 
+    .custom-cursor {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #4267ff;
+      border: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      z-index: 10001;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: opacity 0.15s ease, transform 0.15s ease, width 0.18s ease, height 0.18s ease, background-color 0.18s ease;
+    }
+
+    .custom-cursor.is-visible {
+      opacity: 1;
+    }
+
+    .custom-cursor.is-on-section-link {
+      width: 24px;
+      height: 24px;
+      opacity: 0.5;
+    }
+
+    .custom-cursor.is-on-light-control {
+      background: #fff;
+    }
+
+    .cursor-text-mask {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      pointer-events: none;
+      color: #fff;
+      opacity: 0;
+      clip-path: circle(10px at var(--cursor-x, -100px) var(--cursor-y, -100px));
+      transition: opacity 0.15s ease;
+    }
+
+    .cursor-text-mask.is-visible {
+      opacity: 1;
+    }
+
+    .cursor-text-mask.is-on-section-link {
+      clip-path: circle(12px at var(--cursor-x, -100px) var(--cursor-y, -100px));
+    }
+
+    .cursor-text-mask *,
+    .cursor-text-mask .case-section-nav__link::before {
+      color: #fff !important;
+      border-color: #fff !important;
+      text-decoration-color: #fff !important;
+      box-shadow: none !important;
+    }
+
+    .cursor-text-mask.is-on-light-control * {
+      color: #4267ff !important;
+      border-color: #4267ff !important;
+      text-decoration-color: #4267ff !important;
+    }
+
+    .cursor-text-mask,
+    .cursor-text-mask *,
+    .cursor-text-mask .page,
+    .cursor-text-mask .case-hero,
+    .cursor-text-mask .case-text-section,
+    .cursor-text-mask .case-image-section,
+    .cursor-text-mask .case-section-heading,
+    .cursor-text-mask .jtbd-section,
+    .cursor-text-mask .contacts-section {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+
+    .cursor-text-mask img,
+    .cursor-text-mask video,
+    .cursor-text-mask picture {
+      visibility: hidden !important;
+    }
+
+    .cursor-text-mask .custom-cursor,
+    .cursor-text-mask .cursor-text-mask {
+      visibility: hidden !important;
+    }
+
+    @media (pointer: fine) {
+      html,
+      body,
+      a,
+      button,
+      .case-section-nav__link {
+        cursor: none;
+      }
+    }
+
+    @media (pointer: coarse) {
+      .custom-cursor,
+      .cursor-text-mask {
+        display: none;
+      }
+    }
+
     .page {
       position: relative;
       min-height: 100svh;
@@ -1541,6 +1652,20 @@
       }
     }
 
+    @media (max-width: 900px) {
+      .page .contacts__tagline {
+        display: block;
+        position: static;
+        margin-top: 8px;
+        font-family: var(--font-main);
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 400;
+        color: var(--blue);
+        text-align: left;
+      }
+    }
+
     html body * {
       font-weight: 400 !important;
     }
@@ -1567,9 +1692,28 @@
     ) * {
       font-weight: 100 !important;
     }
+
+    html body :is(
+      .case-hero__title,
+      .case-text-section__title,
+      .case-section-heading__title,
+      .case-split-section__title,
+      .jtbd-section__title
+    ),
+    html body :is(
+      .case-hero__title,
+      .case-text-section__title,
+      .case-section-heading__title,
+      .case-split-section__title,
+      .jtbd-section__title
+    ) * {
+      font-weight: 400 !important;
+    }
   </style>
 </head>
 <body>
+  <div class="custom-cursor" aria-hidden="true"></div>
+  <div class="cursor-text-mask" aria-hidden="true"></div>
   <main class="page">
     <header class="topbar" aria-label="Верхняя навигация">
       <a class="brand" href="index.html" aria-label="На главную">
@@ -2085,6 +2229,77 @@
       }
     }, 650);
 
+  </script>
+  <script>
+    (() => {
+      const customCursor = document.querySelector('.custom-cursor');
+      const cursorTextMask = document.querySelector('.cursor-text-mask');
+      const page = document.querySelector('.page');
+
+      if (!customCursor || !cursorTextMask || !page || !window.matchMedia('(pointer: fine)').matches) return;
+
+      const pageClone = page.cloneNode(true);
+
+      pageClone.querySelectorAll('img, source, video').forEach((asset) => {
+        asset.setAttribute('aria-hidden', 'true');
+      });
+
+      cursorTextMask.appendChild(pageClone);
+
+      const syncCursorTextMask = () => {
+        const syncClassList = (selector) => {
+          const sourceItems = page.querySelectorAll(selector);
+          const cloneItems = pageClone.querySelectorAll(selector);
+
+          sourceItems.forEach((sourceItem, index) => {
+            const cloneItem = cloneItems[index];
+
+            if (cloneItem) {
+              cloneItem.className = sourceItem.className;
+            }
+          });
+        };
+
+        pageClone.className = page.className;
+        syncClassList('.case-nav');
+        syncClassList('.case-section-nav');
+        syncClassList('.case-section-nav__link');
+        syncClassList('.back-to-top');
+      };
+
+      const syncMaskScroll = () => {
+        pageClone.style.transform = `translateY(${-window.scrollY}px)`;
+        syncCursorTextMask();
+      };
+
+      document.addEventListener('pointermove', (event) => {
+        customCursor.style.left = `${event.clientX}px`;
+        customCursor.style.top = `${event.clientY}px`;
+        customCursor.classList.add('is-visible');
+
+        const elementUnderCursor = document.elementFromPoint(event.clientX, event.clientY);
+        const isOnSectionLink = elementUnderCursor && elementUnderCursor.closest('.case-section-nav__link, .case-nav__link');
+        const isOnLightControl = elementUnderCursor && elementUnderCursor.closest('.cv-button');
+
+        customCursor.classList.toggle('is-on-section-link', Boolean(isOnSectionLink));
+        customCursor.classList.toggle('is-on-light-control', Boolean(isOnLightControl));
+        cursorTextMask.classList.toggle('is-on-section-link', Boolean(isOnSectionLink));
+        cursorTextMask.classList.toggle('is-on-light-control', Boolean(isOnLightControl));
+        cursorTextMask.style.setProperty('--cursor-x', `${event.clientX}px`);
+        cursorTextMask.style.setProperty('--cursor-y', `${event.clientY}px`);
+        cursorTextMask.classList.add('is-visible');
+        syncMaskScroll();
+      });
+
+      document.addEventListener('pointerleave', () => {
+        customCursor.classList.remove('is-visible', 'is-on-section-link', 'is-on-light-control');
+        cursorTextMask.classList.remove('is-visible', 'is-on-section-link', 'is-on-light-control');
+      });
+
+      window.addEventListener('scroll', syncMaskScroll, { passive: true });
+      window.addEventListener('resize', syncMaskScroll);
+      syncMaskScroll();
+    })();
   </script>
 </body>
 </html>

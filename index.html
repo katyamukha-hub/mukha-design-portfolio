@@ -150,6 +150,10 @@
       background: #4267ff;
     }
 
+    .custom-cursor.is-on-light-control {
+      background: #fff;
+    }
+
     .custom-cursor.is-avatar-hover {
       opacity: 0;
     }
@@ -176,6 +180,12 @@
       color: #fff !important;
       border-color: #fff !important;
       text-decoration-color: #fff !important;
+    }
+
+    .cursor-text-mask.is-on-light-control * {
+      color: #4267ff !important;
+      border-color: #4267ff !important;
+      text-decoration-color: #4267ff !important;
     }
 
     .cursor-text-mask.is-visible {
@@ -220,6 +230,13 @@
       opacity: 1;
       transform: none;
       animation: none;
+    }
+
+    .cursor-text-mask .case-preview::before,
+    .cursor-text-mask .case-preview::after {
+      color: #fff !important;
+      border-color: #fff !important;
+      text-decoration-color: #fff !important;
     }
 
     @media (pointer: fine) {
@@ -3568,6 +3585,20 @@
       }
     }
 
+    @media (max-width: 900px) {
+      .site .contacts__tagline {
+        display: block;
+        position: static;
+        margin-top: 8px;
+        font-family: var(--font-main);
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 400;
+        color: var(--blue);
+        text-align: left;
+      }
+    }
+
     .site,
     .site > .hero-screen,
     .site > .case-preview,
@@ -3575,6 +3606,44 @@
     .site > .photo-project,
     .site > .contacts-section {
       background: #fff;
+    }
+
+    .cursor-text-mask,
+    .cursor-text-mask *,
+    .cursor-text-mask .site,
+    .cursor-text-mask .hero-screen,
+    .cursor-text-mask .case-preview,
+    .cursor-text-mask .facts-section,
+    .cursor-text-mask .photo-project,
+    .cursor-text-mask .contacts-section {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+
+    .cursor-text-mask img,
+    .cursor-text-mask video,
+    .cursor-text-mask picture {
+      visibility: hidden !important;
+    }
+
+    .cursor-text-mask .hero-hand {
+      visibility: visible !important;
+      filter: brightness(0) invert(1);
+    }
+
+    .cursor-text-mask .case-preview::before,
+    .cursor-text-mask .case-preview::after {
+      color: #fff !important;
+      border-color: #fff !important;
+      text-decoration-color: #fff !important;
+    }
+
+    .cursor-text-mask.is-on-light-control .cv-button,
+    .cursor-text-mask.is-on-light-control .language-switch {
+      color: #4267ff !important;
+      border-color: #4267ff !important;
+      text-decoration-color: #4267ff !important;
     }
 
     .site .facts-section__grid,
@@ -4133,10 +4202,7 @@
 
       if (site && siteClone) {
         siteClone.querySelectorAll('img, source, video').forEach((asset) => {
-          asset.removeAttribute('src');
-          asset.removeAttribute('srcset');
-          asset.removeAttribute('sizes');
-          asset.removeAttribute('poster');
+          asset.setAttribute('aria-hidden', 'true');
         });
 
         cursorTextMask.appendChild(siteClone);
@@ -4155,12 +4221,32 @@
             });
           };
 
+          const syncAttributes = (selector, attributes) => {
+            const sourceItems = site.querySelectorAll(selector);
+            const cloneItems = siteClone.querySelectorAll(selector);
+
+            sourceItems.forEach((sourceItem, index) => {
+              const cloneItem = cloneItems[index];
+
+              if (!cloneItem) return;
+
+              attributes.forEach((attribute) => {
+                if (sourceItem.hasAttribute(attribute)) {
+                  cloneItem.setAttribute(attribute, sourceItem.getAttribute(attribute));
+                }
+              });
+            });
+          };
+
           siteClone.className = site.className;
           syncClassList('.hero-screen');
           syncClassList('.case-preview');
           syncClassList('.facts-section');
           syncClassList('.photo-project');
           syncClassList('.contacts-section');
+          syncAttributes('img', ['src', 'srcset', 'sizes']);
+          syncAttributes('source', ['src', 'srcset', 'sizes']);
+          syncAttributes('video', ['src', 'poster']);
         };
       }
 
@@ -4211,10 +4297,13 @@
         const caseMedia = elementUnderCursor && elementUnderCursor.closest('.case-preview__media');
         const isOnCaseMedia = caseMedia && !caseMedia.closest('.case-preview--friends');
         const isOnContacts = elementUnderCursor && elementUnderCursor.closest('.contacts-section');
+        const isOnLightControl = elementUnderCursor && elementUnderCursor.closest('.cv-button, .language-switch');
 
         customCursor.classList.toggle('is-case-hover', Boolean(isOnCaseMedia));
         customCursor.classList.toggle('is-on-contacts', Boolean(isOnContacts));
+        customCursor.classList.toggle('is-on-light-control', Boolean(isOnLightControl));
         cursorTextMask.classList.toggle('is-on-contacts', Boolean(isOnContacts));
+        cursorTextMask.classList.toggle('is-on-light-control', Boolean(isOnLightControl));
         cursorTextMask.classList.toggle('is-hidden-on-media', Boolean(isOnCaseMedia));
         cursorTextMask.style.setProperty('--cursor-x', `${event.clientX}px`);
         cursorTextMask.style.setProperty('--cursor-y', `${event.clientY}px`);
@@ -4223,8 +4312,8 @@
       });
 
       document.addEventListener('pointerleave', () => {
-        customCursor.classList.remove('is-visible', 'is-avatar-hover', 'is-case-hover', 'is-on-contacts');
-        cursorTextMask.classList.remove('is-visible', 'is-hidden-on-avatar', 'is-hidden-on-media', 'is-on-contacts');
+        customCursor.classList.remove('is-visible', 'is-avatar-hover', 'is-case-hover', 'is-on-contacts', 'is-on-light-control');
+        cursorTextMask.classList.remove('is-visible', 'is-hidden-on-avatar', 'is-hidden-on-media', 'is-on-contacts', 'is-on-light-control');
 
         if (hoverAvatar) {
           hoverAvatar.classList.remove('is-visible');
