@@ -84,115 +84,6 @@
       text-decoration: none;
     }
 
-    @media (pointer: fine) {
-      html,
-      body,
-      a,
-      .back-to-top,
-      .case-hero__image,
-      .case-image,
-      .case-video {
-        cursor: none;
-      }
-    }
-
-    .custom-cursor {
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #4267ff;
-      pointer-events: none;
-      opacity: 0;
-      transform: translate(-50%, -50%);
-      z-index: 9998;
-      transition: opacity 0.15s ease, width 0.15s ease, height 0.15s ease;
-    }
-
-    .custom-cursor.is-visible {
-      opacity: 1;
-    }
-
-    .custom-cursor.is-visible.is-on-section-link {
-      width: 24px;
-      height: 24px;
-      opacity: 0.5;
-    }
-
-    .custom-cursor.is-on-contacts {
-      background: #4267ff;
-    }
-
-    .cursor-text-mask {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      pointer-events: none;
-      color: var(--bg);
-      opacity: 0;
-      clip-path: circle(10px at var(--cursor-x, -100px) var(--cursor-y, -100px));
-      transition: opacity 0.15s ease, clip-path 0.15s ease;
-    }
-
-    .cursor-text-mask.is-visible {
-      opacity: 1;
-    }
-
-    .cursor-text-mask.is-on-section-link {
-      clip-path: circle(12px at var(--cursor-x, -100px) var(--cursor-y, -100px));
-    }
-
-    .cursor-text-mask.is-hidden-on-media {
-      opacity: 0;
-    }
-
-    .cursor-text-mask.is-on-contacts * {
-      color: var(--blue) !important;
-      border-color: var(--blue) !important;
-      text-decoration-color: var(--blue) !important;
-    }
-
-    .cursor-text-mask * {
-      color: var(--bg) !important;
-      border-color: var(--bg) !important;
-      text-decoration-color: var(--bg) !important;
-      box-shadow: none !important;
-    }
-
-    .cursor-text-mask .page,
-    .cursor-text-mask .contacts-section {
-      background: transparent;
-    }
-
-    .cursor-text-mask .case-hero__image,
-    .cursor-text-mask .case-image,
-    .cursor-text-mask .case-video {
-      visibility: hidden;
-    }
-
-    .cursor-text-mask .cv-button {
-      background: var(--bg);
-      color: #4267ff !important;
-      box-shadow: none;
-    }
-
-    .cursor-text-mask .telegram-link {
-      background: #4267ff;
-      color: var(--bg) !important;
-      box-shadow: none;
-    }
-
-    .cursor-text-mask .jtbd-card {
-      background: var(--blue) !important;
-      color: var(--jtbd-bg) !important;
-    }
-
-    .cursor-text-mask .jtbd-card * {
-      color: var(--jtbd-bg) !important;
-    }
-
     .page {
       position: relative;
       min-height: 100svh;
@@ -1673,9 +1564,6 @@
   </style>
 </head>
 <body>
-  <div class="custom-cursor" aria-hidden="true"></div>
-  <div class="cursor-text-mask" aria-hidden="true"></div>
-
   <main class="page">
     <header class="topbar" aria-label="Верхняя навигация">
       <a class="brand" href="index.html" aria-label="На главную">
@@ -1994,8 +1882,6 @@
   </main>
 
   <script>
-    const customCursor = document.querySelector('.custom-cursor');
-    const cursorTextMask = document.querySelector('.cursor-text-mask');
     const caseNav = document.querySelector('.case-nav');
     const caseSectionNav = document.querySelector('.case-section-nav');
     const caseSectionLinks = caseSectionNav ? Array.from(caseSectionNav.querySelectorAll('.case-section-nav__link')) : [];
@@ -2004,8 +1890,6 @@
       .filter(Boolean);
     const backToTopButton = document.querySelector('.back-to-top');
     const contactsSection = document.querySelector('.contacts-section');
-    let maskCaseNav = null;
-    let maskCaseSectionNav = null;
     let activeCaseSectionId = null;
     let caseSectionNavHideTimer = null;
     let isCaseSectionNavHovered = false;
@@ -2017,7 +1901,7 @@
 
       activeCaseSectionId = sectionId;
 
-      [caseSectionNav, maskCaseSectionNav].forEach((nav) => {
+      [caseSectionNav].forEach((nav) => {
         if (!nav) return;
 
         nav.querySelectorAll('.case-section-nav__link').forEach((link) => {
@@ -2075,10 +1959,6 @@
     const updateCaseNavState = () => {
       if (!caseNav && !caseSectionNav) return;
 
-      const isVisible = caseNav ? caseNav.classList.contains('is-visible') : false;
-      const isSectionNavVisible = caseSectionNav ? caseSectionNav.classList.contains('is-visible') : false;
-      const isSectionNavIdle = caseSectionNav ? caseSectionNav.classList.contains('is-idle') : false;
-
       if (!contactsSection) return;
 
       const shouldDock = window.scrollY + window.innerHeight - 20 >= contactsSection.offsetTop;
@@ -2092,29 +1972,10 @@
         caseSectionNav.classList.toggle('is-on-contacts', shouldDock);
       }
 
-      if (maskCaseNav) {
-        maskCaseNav.classList.toggle('is-visible', isVisible);
-        maskCaseNav.classList.toggle('is-on-contacts', shouldDock);
-        maskCaseNav.classList.remove('is-docked');
-        maskCaseNav.style.position = 'fixed';
-        maskCaseNav.style.left = 'var(--page-x)';
-        maskCaseNav.style.bottom = '20px';
-        maskCaseNav.style.top = 'auto';
-      }
-
-      if (maskCaseSectionNav) {
-        maskCaseSectionNav.classList.toggle('is-visible', isSectionNavVisible);
-        maskCaseSectionNav.classList.toggle('is-idle', isSectionNavIdle);
-        maskCaseSectionNav.classList.toggle('is-on-contacts', shouldDock);
-        maskCaseSectionNav.style.position = 'fixed';
-        maskCaseSectionNav.style.left = 'var(--page-x)';
-        maskCaseSectionNav.style.top = '124px';
-        maskCaseSectionNav.style.bottom = 'auto';
-      }
     };
 
     const setCaseSectionNavIdle = (isIdle) => {
-      [caseSectionNav, maskCaseSectionNav].forEach((nav) => {
+      [caseSectionNav].forEach((nav) => {
         if (!nav) return;
 
         nav.classList.toggle('is-idle', isIdle);
@@ -2218,71 +2079,6 @@
       }
     }, 650);
 
-    if (customCursor && cursorTextMask && window.matchMedia('(pointer: fine)').matches) {
-      const page = document.querySelector('.page');
-      const pageClone = page.cloneNode(true);
-      pageClone.querySelectorAll('img[loading="lazy"], video[data-src]').forEach((asset) => {
-        asset.removeAttribute('src');
-        asset.removeAttribute('srcset');
-        asset.removeAttribute('poster');
-      });
-      maskCaseNav = pageClone.querySelector('.case-nav');
-      maskCaseSectionNav = pageClone.querySelector('.case-section-nav');
-
-      if (maskCaseNav) {
-        maskCaseNav.remove();
-      }
-
-      if (maskCaseSectionNav) {
-        maskCaseSectionNav.remove();
-      }
-
-      cursorTextMask.appendChild(pageClone);
-
-      if (maskCaseNav) {
-        cursorTextMask.appendChild(maskCaseNav);
-      }
-
-      if (maskCaseSectionNav) {
-        cursorTextMask.appendChild(maskCaseSectionNav);
-      }
-
-      updateCaseNavState();
-      setCaseSectionActive(activeCaseSectionId || (caseSectionTargets[0] && caseSectionTargets[0].id), true);
-
-      const syncMaskScroll = () => {
-        pageClone.style.transform = `translateY(${-window.scrollY}px)`;
-      };
-
-      document.addEventListener('pointermove', (event) => {
-        customCursor.style.left = `${event.clientX}px`;
-        customCursor.style.top = `${event.clientY}px`;
-        customCursor.classList.add('is-visible');
-
-        const elementUnderCursor = document.elementFromPoint(event.clientX, event.clientY);
-        const isOnMedia = elementUnderCursor && elementUnderCursor.closest('.case-hero__image, .case-image, .case-video');
-        const isOnContacts = elementUnderCursor && elementUnderCursor.closest('.contacts-section');
-        const isOnCaseSectionLink = elementUnderCursor && elementUnderCursor.closest('.case-section-nav__link');
-
-        customCursor.classList.toggle('is-on-contacts', Boolean(isOnContacts));
-        customCursor.classList.toggle('is-on-section-link', Boolean(isOnCaseSectionLink));
-        cursorTextMask.classList.toggle('is-on-contacts', Boolean(isOnContacts));
-        cursorTextMask.classList.toggle('is-on-section-link', Boolean(isOnCaseSectionLink));
-        cursorTextMask.style.setProperty('--cursor-x', `${event.clientX}px`);
-        cursorTextMask.style.setProperty('--cursor-y', `${event.clientY}px`);
-        cursorTextMask.classList.add('is-visible');
-        cursorTextMask.classList.toggle('is-hidden-on-media', Boolean(isOnMedia));
-        syncMaskScroll();
-      });
-
-      document.addEventListener('pointerleave', () => {
-        customCursor.classList.remove('is-visible', 'is-on-contacts', 'is-on-section-link');
-        cursorTextMask.classList.remove('is-visible', 'is-on-contacts', 'is-on-section-link');
-      });
-
-      window.addEventListener('scroll', syncMaskScroll, { passive: true });
-      syncMaskScroll();
-    }
   </script>
 </body>
 </html>

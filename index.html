@@ -100,179 +100,6 @@
       font-weight: 100;
     }
 
-    .custom-cursor {
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 20px;
-      height: 20px;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      background: #4267ff;
-      border: 0;
-      border-radius: 50%;
-      pointer-events: none;
-      opacity: 0;
-      transform: translate(-50%, -50%);
-      z-index: 9998;
-      overflow: hidden;
-      white-space: nowrap;
-      transition: opacity 0.15s ease, transform 0.15s ease, width 0.18s ease, height 0.18s ease, padding 0.18s ease, background-color 0.18s ease, border-radius 0.18s ease;
-    }
-
-    .custom-cursor::before {
-      content: none;
-    }
-
-    .custom-cursor::after {
-      content: "";
-      color: var(--bg);
-      font-family: var(--font-main);
-      font-size: 14px;
-      line-height: 1;
-      transform: translateY(-1px);
-    }
-
-    .custom-cursor.is-case-hover {
-      width: max-content;
-      height: auto;
-      padding: 4px 12px;
-      gap: 8px;
-      border-radius: 999px;
-      background: #4267ff;
-    }
-
-    .custom-cursor.is-case-hover::before {
-      content: "";
-      flex: 0 0 auto;
-      width: 15px;
-      height: 11px;
-      background: url("assets/images/eye.svg") center / contain no-repeat;
-    }
-
-    .custom-cursor.is-case-hover::after {
-      content: "СМОТРЕТЬ КЕЙС";
-      color: #fff;
-      font-family: var(--font-main);
-      font-size: 14px;
-      line-height: 20px;
-      font-weight: 400;
-      letter-spacing: 0;
-      transform: none;
-    }
-
-    .custom-cursor.is-visible {
-      opacity: 1;
-    }
-
-    .custom-cursor.is-hovering {
-      transform: translate(-50%, -50%);
-    }
-
-    .custom-cursor.is-on-contacts {
-      background: #4267ff;
-    }
-
-    .custom-cursor.is-avatar-hover {
-      opacity: 0;
-    }
-
-    .cursor-text-mask {
-      position: fixed;
-      inset: 0;
-      z-index: 10000;
-      pointer-events: none;
-      color: var(--bg);
-      opacity: 0;
-      clip-path: circle(10px at var(--cursor-x, -100px) var(--cursor-y, -100px));
-      transition: opacity 0.15s ease;
-    }
-
-    .cursor-text-mask * {
-      color: var(--bg) !important;
-      border-color: var(--bg) !important;
-      text-decoration-color: var(--bg) !important;
-      box-shadow: none !important;
-    }
-
-    .cursor-text-mask.is-on-contacts * {
-      color: var(--blue) !important;
-      border-color: var(--blue) !important;
-      text-decoration-color: var(--blue) !important;
-    }
-
-    .cursor-text-mask.is-visible {
-      opacity: 1;
-    }
-
-    .cursor-text-mask.is-hidden-on-media,
-    .cursor-text-mask.is-hidden-on-avatar {
-      opacity: 0;
-    }
-
-    .cursor-text-mask .site {
-      background: transparent;
-    }
-
-    .cursor-text-mask .hero-screen,
-    .cursor-text-mask .case-preview,
-    .cursor-text-mask .facts-section,
-    .cursor-text-mask .photo-project,
-    .cursor-text-mask .contacts-section {
-      background: transparent;
-    }
-
-    .cursor-text-mask .custom-cursor,
-    .cursor-text-mask .cursor-text-mask {
-      visibility: hidden;
-    }
-
-    .cursor-text-mask .cv-button {
-      background: var(--bg);
-      box-shadow: none;
-    }
-
-    .cursor-text-mask .cv-button {
-      color: var(--blue) !important;
-    }
-
-    .cursor-text-mask .telegram-link,
-    .cursor-text-mask .case-preview__button {
-      background: var(--blue);
-      color: var(--bg) !important;
-      box-shadow: none;
-    }
-
-    .cursor-text-mask .photo-project__image {
-      background: var(--bg);
-    }
-
-    .cursor-text-mask .char {
-      opacity: 1;
-      transform: none;
-      animation: none;
-    }
-
-    @media (pointer: fine) {
-      html,
-      body,
-      a,
-      .case-preview__media,
-      .case-preview__media * {
-        cursor: none;
-      }
-    }
-
-    @media (pointer: coarse) {
-      .custom-cursor,
-      .cursor-text-mask {
-        display: none;
-      }
-    }
-
     .site {
       width: 100%;
       min-height: 100%;
@@ -311,7 +138,6 @@
       margin: 0;
       text-align: center;
       text-decoration: none;
-      cursor: none;
     }
 
     .hero-hand {
@@ -554,27 +380,6 @@
       transform: translateY(0);
     }
 
-    .hover-avatar {
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 200px;
-      height: auto;
-      display: block;
-      opacity: 0;
-      pointer-events: none;
-      transform: translate(-50%, -50%) scale(0.18);
-      transform-origin: center center;
-      z-index: 9997;
-      transition: opacity 0.2s ease, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: opacity, transform, left, top;
-    }
-
-    .hover-avatar.is-visible {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-
     .scroll-wolf {
       position: fixed;
       right: 20px;
@@ -807,11 +612,6 @@
     .case-preview.is-visible .case-preview__meta {
       opacity: 1;
       transform: translateY(0);
-    }
-
-    .cursor-text-mask .case-preview__meta {
-      opacity: 1;
-      transform: none;
     }
 
     .case-preview__meta-item:first-child {
@@ -3586,9 +3386,6 @@
   </style>
 </head>
 <body>
-  <div class="custom-cursor" aria-hidden="true"></div>
-  <div class="cursor-text-mask" aria-hidden="true"></div>
-  <img class="hover-avatar" data-src="assets/images/avatar.png" alt="" aria-hidden="true" decoding="async" />
   <main class="site">
     <section id="screen-hero" class="hero-screen" aria-label="Первый экран">
       <header class="header" aria-label="Главный экран">
@@ -3821,9 +3618,6 @@
   </main>
 
   <script>
-    const customCursor = document.querySelector('.custom-cursor');
-    const cursorTextMask = document.querySelector('.cursor-text-mask');
-    const hoverAvatar = document.querySelector('.hover-avatar');
     const scrollWolf = document.querySelector('.scroll-wolf');
 
     const animatedTextBlocks = document.querySelectorAll('.animate-chars');
@@ -3866,7 +3660,6 @@
       });
     });
 
-    let syncCursorTextMask = () => {};
     const heroIntroScreen = document.querySelector('.hero-screen');
 
     const updateHeroClock = () => {
@@ -3890,18 +3683,15 @@
       const showAvalikeIntroCase = () => {
         if (avalikeIntroCase) {
           avalikeIntroCase.classList.add('is-intro-visible');
-          syncCursorTextMask();
         }
       };
       const addHeroIntroClass = (className) => {
         heroIntroScreen.classList.add(className);
-        syncCursorTextMask();
       };
 
       if (reduceHeroMotion) {
         heroIntroScreen.classList.add(...introSteps);
         showAvalikeIntroCase();
-        syncCursorTextMask();
       } else {
         window.setTimeout(() => {
           addHeroIntroClass('is-hand-visible');
@@ -3989,173 +3779,66 @@
     }
 
 
-    if (customCursor && cursorTextMask && window.matchMedia('(pointer: fine)').matches) {
-      const site = document.querySelector('.site');
-      const heroScreen = document.querySelector('.hero-screen');
-      const casePreview = document.querySelector('.case-preview');
-      const casePreviews = document.querySelectorAll('.case-preview');
-      const brandName = document.querySelector('.brand__name');
-      const brandRole = document.querySelector('.brand__role');
-      const siteClone = site.cloneNode(true);
-      siteClone.querySelectorAll('img[loading="lazy"], video[data-src]').forEach((asset) => {
-        asset.removeAttribute('src');
-        asset.removeAttribute('srcset');
-        asset.removeAttribute('poster');
+    const heroScreen = document.querySelector('.hero-screen');
+    const firstCasePreview = document.querySelector('.case-preview');
+    const casePreviews = document.querySelectorAll('.case-preview');
+
+    if ('IntersectionObserver' in window) {
+      const caseRevealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      }, {
+        threshold: 0.08,
+        rootMargin: '0px 0px -12% 0px'
       });
-      cursorTextMask.appendChild(siteClone);
 
-      syncCursorTextMask = () => {
-        const syncClassList = (selector) => {
-          const sourceItems = site.querySelectorAll(selector);
-          const cloneItems = siteClone.querySelectorAll(selector);
+      casePreviews.forEach((caseItem) => caseRevealObserver.observe(caseItem));
+    } else {
+      casePreviews.forEach((caseItem) => {
+        caseItem.classList.add('is-visible');
+      });
+    }
 
-          sourceItems.forEach((sourceItem, index) => {
-            const cloneItem = cloneItems[index];
+    let wolfWasShown = false;
 
-            if (cloneItem) {
-              cloneItem.className = sourceItem.className;
-            }
-          });
-        };
+    const updateCaseEntrance = () => {
+      if (!heroScreen || !firstCasePreview) return;
 
-        siteClone.className = site.className;
-        syncClassList('.hero-screen');
-        syncClassList('.case-preview');
-      };
+      const caseTop = firstCasePreview.getBoundingClientRect().top;
+      const caseIsEntering = caseTop <= window.innerHeight - 4;
+      heroScreen.classList.toggle('is-case-entering', caseIsEntering);
 
-      if ('IntersectionObserver' in window) {
-        const caseRevealObserver = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              syncCursorTextMask();
-            }
-          });
-        }, {
-          threshold: 0.08,
-          rootMargin: '0px 0px -12% 0px'
-        });
+      if (scrollWolf && caseIsEntering && !wolfWasShown) {
+        wolfWasShown = true;
+        scrollWolf.classList.add('is-visible');
 
-        casePreviews.forEach((caseItem) => caseRevealObserver.observe(caseItem));
-      } else {
-        casePreviews.forEach((caseItem) => {
-          caseItem.classList.add('is-visible');
-        });
-        syncCursorTextMask();
+        window.setTimeout(() => {
+          scrollWolf.classList.add('is-biting');
+        }, 260);
+
+        window.setTimeout(() => {
+          scrollWolf.classList.remove('is-biting');
+        }, 1300);
+
+        window.setTimeout(() => {
+          scrollWolf.classList.remove('is-visible');
+        }, 1900);
       }
 
-      let wolfWasShown = false;
-
-      const updateCaseEntrance = () => {
-        if (!heroScreen || !casePreview) return;
-
-        const caseTop = casePreview.getBoundingClientRect().top;
-        const caseIsEntering = caseTop <= window.innerHeight - 4;
-        heroScreen.classList.toggle('is-case-entering', caseIsEntering);
-        syncCursorTextMask();
-
-        if (scrollWolf && caseIsEntering && !wolfWasShown) {
-          wolfWasShown = true;
-          scrollWolf.classList.add('is-visible');
-
-          window.setTimeout(() => {
-            scrollWolf.classList.add('is-biting');
-          }, 260);
-
-          window.setTimeout(() => {
-            scrollWolf.classList.remove('is-biting');
-          }, 1300);
-
-          window.setTimeout(() => {
-            scrollWolf.classList.remove('is-visible');
-          }, 1900);
+      if (!caseIsEntering) {
+        wolfWasShown = false;
+        if (scrollWolf) {
+          scrollWolf.classList.remove('is-visible', 'is-biting');
         }
+      }
+    };
 
-        if (!caseIsEntering) {
-          wolfWasShown = false;
-          if (scrollWolf) {
-            scrollWolf.classList.remove('is-visible', 'is-biting');
-          }
-        }
-      };
-
-      const syncMaskScroll = () => {
-        siteClone.style.transform = `translateY(${-window.scrollY}px)`;
-        updateCaseEntrance();
-        syncCursorTextMask();
-      };
-
-      document.addEventListener('pointermove', (event) => {
-        customCursor.style.left = `${event.clientX}px`;
-        customCursor.style.top = `${event.clientY}px`;
-        customCursor.classList.add('is-visible');
-
-        if (hoverAvatar) {
-          hoverAvatar.style.left = `${event.clientX}px`;
-          hoverAvatar.style.top = `${event.clientY}px`;
-
-          const isInsideFrame = (element, paddingX = 18, paddingY = 14) => {
-            const rect = element ? element.getBoundingClientRect() : null;
-            return Boolean(
-              rect &&
-              event.clientX >= rect.left - paddingX &&
-              event.clientX <= rect.right + paddingX &&
-              event.clientY >= rect.top - paddingY &&
-              event.clientY <= rect.bottom + paddingY
-            );
-          };
-
-          const isOnAvatarFrame = isInsideFrame(brandName) || isInsideFrame(brandRole);
-
-          if (isOnAvatarFrame && hoverAvatar.dataset.src && !hoverAvatar.getAttribute('src')) {
-            hoverAvatar.setAttribute('src', hoverAvatar.dataset.src);
-          }
-
-          hoverAvatar.classList.toggle('is-visible', isOnAvatarFrame);
-          customCursor.classList.toggle('is-avatar-hover', isOnAvatarFrame);
-          cursorTextMask.classList.toggle('is-hidden-on-avatar', isOnAvatarFrame);
-        }
-
-        const elementUnderCursor = document.elementFromPoint(event.clientX, event.clientY);
-        const isOnCaseMedia = elementUnderCursor && elementUnderCursor.closest('.case-preview__media');
-        const isOnContacts = elementUnderCursor && elementUnderCursor.closest('.contacts-section');
-
-        customCursor.classList.toggle('is-case-hover', Boolean(isOnCaseMedia));
-        customCursor.classList.toggle('is-on-contacts', Boolean(isOnContacts));
-        cursorTextMask.classList.toggle('is-on-contacts', Boolean(isOnContacts));
-        cursorTextMask.classList.toggle('is-hidden-on-media', Boolean(isOnCaseMedia));
-        cursorTextMask.style.setProperty('--cursor-x', `${event.clientX}px`);
-        cursorTextMask.style.setProperty('--cursor-y', `${event.clientY}px`);
-        cursorTextMask.classList.add('is-visible');
-        syncMaskScroll();
-      });
-
-      document.addEventListener('pointerleave', () => {
-        customCursor.classList.remove('is-visible');
-        cursorTextMask.classList.remove('is-visible');
-        customCursor.classList.remove('is-avatar-hover');
-        customCursor.classList.remove('is-case-hover');
-        cursorTextMask.classList.remove('is-hidden-on-avatar');
-        if (hoverAvatar) {
-          hoverAvatar.classList.remove('is-visible');
-        }
-      });
-
-      window.addEventListener('scroll', syncMaskScroll, { passive: true });
-      window.addEventListener('resize', updateCaseEntrance);
-      syncMaskScroll();
-
-      document.querySelectorAll('a, button').forEach((element) => {
-        element.addEventListener('pointerenter', () => {
-          customCursor.classList.add('is-hovering');
-        });
-
-        element.addEventListener('pointerleave', () => {
-          customCursor.classList.remove('is-hovering');
-        });
-      });
-
-    }
+    window.addEventListener('scroll', updateCaseEntrance, { passive: true });
+    window.addEventListener('resize', updateCaseEntrance);
+    updateCaseEntrance();
   </script>
 </body>
 </html>
