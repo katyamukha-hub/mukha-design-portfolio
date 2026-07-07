@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Катя Мукха — Product Designer</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-  <link rel="preload" href="assets/fonts/CoFoSansPro-Regular-Trial.woff" as="font" type="font/woff" crossorigin />
-  <link rel="preload" href="assets/fonts/CoFoSansPro-Thin-Trial.woff" as="font" type="font/woff" crossorigin />
-  <link rel="preload" href="assets/images/hand.svg" as="image" fetchpriority="high" />
-  <link rel="preload" href="assets/images/avalike/avalike-cover.png" as="image" fetchpriority="high" />
+  <link rel="preload" href="assets/fonts/CoFoSansPro-Regular-Trial.woff" as="font" type="font/woff" crossorigin fetchpriority="high" />
+  <link rel="preload" href="assets/fonts/CoFoSansPro-Thin-Trial.woff" as="font" type="font/woff" crossorigin fetchpriority="high" />
   <style>
     @font-face {
       font-family: "CoFo Sans";
@@ -900,6 +898,7 @@
     }
 
     .case-preview--avalike .case-preview__image {
+      aspect-ratio: 2880 / 1592;
       border-radius: 4px;
     }
 
@@ -3594,7 +3593,7 @@
     <section id="screen-hero" class="hero-screen" aria-label="Первый экран">
       <header class="header" aria-label="Главный экран">
         <div class="brand" aria-label="Катя Мукха — Product Designer">
-          <img class="hero-hand" src="assets/images/hand.svg" alt="" aria-hidden="true" decoding="async" fetchpriority="high" />
+          <img class="hero-hand" src="assets/images/hand.svg" alt="" aria-hidden="true" decoding="async" />
           <div class="brand__text">
             <p class="brand__name">Катя Мукха</p>
             <p class="brand__role">Product Designer</p>
@@ -3641,7 +3640,7 @@
         </div>
 
         <a class="case-preview__media" href="avalike.html" aria-label="Открыть кейс Avalike">
-          <img class="case-preview__image" src="assets/images/avalike/avalike-cover.png" alt="Интерфейс платформы Avalike" decoding="async" fetchpriority="high" />
+          <img class="case-preview__image" data-src="assets/images/avalike/avalike-cover.png" data-load-after-fonts="true" alt="Интерфейс платформы Avalike" decoding="async" fetchpriority="high" />
         </a>
       </div>
     </section>
@@ -3915,7 +3914,8 @@
       }
     }
 
-    const deferredMedia = document.querySelectorAll('.site [data-src]');
+    const avalikePriorityImage = document.querySelector('[data-load-after-fonts="true"]');
+    const deferredMedia = document.querySelectorAll('.site [data-src]:not([data-load-after-fonts])');
     const loadDeferredMedia = (asset) => {
       if (asset.dataset.poster && !asset.getAttribute('poster')) {
         asset.setAttribute('poster', asset.dataset.poster);
@@ -3936,6 +3936,21 @@
         }
       }
     };
+
+    const loadAvalikePriorityImage = () => {
+      if (avalikePriorityImage && avalikePriorityImage.dataset.loaded !== 'true') {
+        loadDeferredMedia(avalikePriorityImage);
+      }
+    };
+
+    if (avalikePriorityImage) {
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(loadAvalikePriorityImage).catch(loadAvalikePriorityImage);
+      } else {
+        loadAvalikePriorityImage();
+      }
+    }
+
     const loadVisibleDeferredMedia = () => {
       deferredMedia.forEach((asset) => {
         if (asset.dataset.loaded === 'true') return;
