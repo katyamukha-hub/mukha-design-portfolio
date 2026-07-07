@@ -24,30 +24,6 @@
       font-display: swap;
     }
 
-    @font-face {
-      font-family: "CoFo Sans";
-      src: url("assets/fonts/CoFoSansPro-Medium-Trial.woff") format("woff");
-      font-weight: 500;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "CoFo Sans";
-      src: url("assets/fonts/CoFoSansPro-Bold-Trial.woff") format("woff");
-      font-weight: 700;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "CoFo Sans";
-      src: url("assets/fonts/CoFoSansPro-Black-Trial.woff") format("woff");
-      font-weight: 900;
-      font-style: normal;
-      font-display: swap;
-    }
-
 :root {
       --bg: #f4f4f4;
       --blue: #111111;
@@ -3383,6 +3359,43 @@
       }
     }
 
+    html body * {
+      font-weight: 400 !important;
+    }
+
+    html body :is(
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      .hero-screen .brand__name,
+      .hero-screen .brand__role,
+      .case-preview__title,
+      .facts-section__title,
+      .fact-card__title,
+      .photo-project__title,
+      .contacts__title
+    ),
+    html body :is(
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      .hero-screen .brand__name,
+      .hero-screen .brand__role,
+      .case-preview__title,
+      .facts-section__title,
+      .fact-card__title,
+      .photo-project__title,
+      .contacts__title
+    ) * {
+      font-weight: 100 !important;
+    }
+
   </style>
 </head>
 <body>
@@ -3437,7 +3450,7 @@
         </div>
 
         <a class="case-preview__media" href="avalike.html" aria-label="Открыть кейс Avalike">
-          <img class="case-preview__image" data-src="assets/images/avalike/avalike-cover.png" data-load-after-fonts="true" alt="Интерфейс платформы Avalike" decoding="async" fetchpriority="high" />
+          <img class="case-preview__image" src="assets/images/avalike/avalike-cover.png" alt="Интерфейс платформы Avalike" decoding="async" fetchpriority="high" />
         </a>
       </div>
     </section>
@@ -3704,8 +3717,7 @@
       }
     }
 
-    const avalikePriorityImage = document.querySelector('[data-load-after-fonts="true"]');
-    const deferredMedia = document.querySelectorAll('.site [data-src]:not([data-load-after-fonts])');
+    const deferredMedia = document.querySelectorAll('.site [data-src]');
     const loadDeferredMedia = (asset) => {
       if (asset.dataset.poster && !asset.getAttribute('poster')) {
         asset.setAttribute('poster', asset.dataset.poster);
@@ -3732,20 +3744,6 @@
         }
       }
     };
-
-    const loadAvalikePriorityImage = () => {
-      if (avalikePriorityImage && avalikePriorityImage.dataset.loaded !== 'true') {
-        loadDeferredMedia(avalikePriorityImage);
-      }
-    };
-
-    if (avalikePriorityImage) {
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(loadAvalikePriorityImage).catch(loadAvalikePriorityImage);
-      } else {
-        loadAvalikePriorityImage();
-      }
-    }
 
     const loadVisibleDeferredMedia = () => {
       deferredMedia.forEach((asset) => {

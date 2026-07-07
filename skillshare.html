@@ -7,7 +7,6 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="preload" href="assets/fonts/CoFoSansPro-Regular-Trial.woff" as="font" type="font/woff" crossorigin />
   <link rel="preload" href="assets/fonts/CoFoSansPro-Thin-Trial.woff" as="font" type="font/woff" crossorigin />
-  <link rel="preload" href="assets/fonts/CoFoSansPro-Medium-Trial.woff" as="font" type="font/woff" crossorigin />
   <style>
     @font-face {
       font-family: "CoFo Sans";
@@ -21,30 +20,6 @@
       font-family: "CoFo Sans";
       src: url("assets/fonts/CoFoSansPro-Regular-Trial.woff") format("woff");
       font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "CoFo Sans";
-      src: url("assets/fonts/CoFoSansPro-Medium-Trial.woff") format("woff");
-      font-weight: 500;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "CoFo Sans";
-      src: url("assets/fonts/CoFoSansPro-Bold-Trial.woff") format("woff");
-      font-weight: 700;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "CoFo Sans";
-      src: url("assets/fonts/CoFoSansPro-Black-Trial.woff") format("woff");
-      font-weight: 900;
       font-style: normal;
       font-display: swap;
     }
@@ -632,6 +607,31 @@
       .page .contacts__item--email .contacts__value {
         font-size: 32px;
       }
+    }
+
+    html body * {
+      font-weight: 400 !important;
+    }
+
+    html body :is(
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      .contacts__title
+    ),
+    html body :is(
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      .contacts__title
+    ) * {
+      font-weight: 100 !important;
     }
   </style>
 </head>
