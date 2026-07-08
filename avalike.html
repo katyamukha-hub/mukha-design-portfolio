@@ -1866,6 +1866,12 @@
         padding-left: 0;
       }
     }
+
+    .telegram-link::after,
+    .contacts__telegram-button::after {
+      content: none !important;
+      display: none !important;
+    }
   </style>
 </head>
 <body>
@@ -1873,7 +1879,7 @@
   <div class="cursor-text-mask" aria-hidden="true"></div>
   <main class="page">
     <header class="topbar" aria-label="Верхняя навигация">
-      <a class="brand" href="index.html" aria-label="На главную">
+      <a class="brand" href="/" aria-label="На главную">
         <img class="brand__avatar" src="assets/images/avatar_for_header.png" alt="" decoding="async" />
         <span class="brand__text">
           <span class="brand__name">Катя Мукха</span>
@@ -1890,11 +1896,11 @@
     <section class="case-hero" aria-labelledby="case-title">
       <div class="case-hero__grid">
         <nav class="case-nav" aria-label="Навигация по кейсам">
-          <a class="case-nav__home" href="index.html">Все кейсы</a>
+          <a class="case-nav__home" href="/">Все кейсы</a>
           <ul class="case-nav__list">
             <li><span class="case-nav__current">→ Avalike</span></li>
-            <li><a class="case-nav__link" href="skillshare.html">Skillshare</a></li>
-            <li><a class="case-nav__link" href="mendi.html">Mendi</a></li>
+            <li><a class="case-nav__link" href="/skillshare">Skillshare</a></li>
+            <li><a class="case-nav__link" href="/mendi">Mendi</a></li>
           </ul>
         </nav>
 

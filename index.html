@@ -26,6 +26,14 @@
       font-display: swap;
     }
 
+    @font-face {
+      font-family: "CoFo Sans";
+      src: url("assets/fonts/cofosanspro-medium-trial.woff") format("woff");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
 :root {
       --bg: #fff;
       --blue: #111111;
@@ -503,7 +511,7 @@
       font-family: var(--font-main);
       font-size: 17px;
       line-height: 1.2;
-      font-weight: 400;
+      font-weight: 500;
       letter-spacing: 0;
       text-align: center;
       overflow: visible;
@@ -1928,6 +1936,88 @@
 
     .site .case-preview__button:active {
       transform: scale(0.96);
+    }
+
+    .site .case-preview__button {
+      position: relative;
+      width: 52px;
+      min-width: 52px;
+      height: 52px;
+      padding: 0;
+      gap: 0;
+      overflow: hidden;
+      background: #EFEFF1;
+      color: var(--blue);
+      transition:
+        background-color 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+        color 0.45s ease,
+        transform 0.2s ease;
+      will-change: background-color, transform;
+    }
+
+    .site .case-preview__button::after {
+      content: none !important;
+    }
+
+    .case-preview__button-arrow {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      line-height: 1;
+      pointer-events: none;
+      transition:
+        opacity 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.52s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .case-preview__button-arrow--dark {
+      color: var(--blue);
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .case-preview__button-arrow--light {
+      color: #fff;
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+
+    .case-preview__button-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .site .case-preview__button:hover,
+    .site .case-preview__button:focus-visible {
+      background: #4267ff;
+      color: #fff;
+      transform: none;
+      border: 0;
+      outline: 0;
+      box-shadow: none;
+    }
+
+    .site .case-preview__button:hover .case-preview__button-arrow--dark,
+    .site .case-preview__button:focus-visible .case-preview__button-arrow--dark {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+
+    .site .case-preview__button:hover .case-preview__button-arrow--light,
+    .site .case-preview__button:focus-visible .case-preview__button-arrow--light {
+      opacity: 1;
+      transform: translateX(0);
     }
 
   
@@ -3749,7 +3839,13 @@
 
     .site .hero__title,
     .site .hero__title * {
-      font-weight: 400 !important;
+      font-weight: 500 !important;
+    }
+
+    .telegram-link::after,
+    .contacts__telegram-button::after {
+      content: none !important;
+      display: none !important;
     }
 
     .site .contacts__item--email .contacts__value {
@@ -3800,9 +3896,13 @@
     <section id="screen-case-avalike" class="case-preview case-preview--avalike" aria-labelledby="avalike-title">
       <div class="case-preview__content">
         <div class="case-preview__info">
-          <h2 class="case-preview__title" id="avalike-title"><a class="case-preview__title-link" href="avalike.html">avalike —</a></h2>
+          <h2 class="case-preview__title" id="avalike-title"><a class="case-preview__title-link" href="/avalike">avalike —</a></h2>
           <p class="case-preview__description">Платформа для создания, поиска и&nbsp;монетизации AI-агентов</p>
-          <a class="case-preview__button" href="avalike.html">Смотреть&nbsp;кейс</a>
+          <a class="case-preview__button" href="/avalike">
+            <span class="case-preview__button-arrow case-preview__button-arrow--dark" aria-hidden="true">→</span>
+            <span class="case-preview__button-arrow case-preview__button-arrow--light" aria-hidden="true">→</span>
+            <span class="case-preview__button-label">Смотреть кейс Avalike</span>
+          </a>
           <div class="case-preview__details">
             <ul class="case-preview__bullets">
               <li>product designer</li>
@@ -3813,7 +3913,7 @@
           </div>
         </div>
 
-        <a class="case-preview__media" href="avalike.html" aria-label="Открыть кейс Avalike">
+        <a class="case-preview__media" href="/avalike" aria-label="Открыть кейс Avalike">
           <img
             class="case-preview__image"
             src="assets/images/avalike/avalike-cover-960.webp"
@@ -3832,9 +3932,13 @@
     <section id="screen-case-skillshare" class="case-preview case-preview--skillshare" aria-labelledby="skillshare-title">
       <div class="case-preview__content">
         <div class="case-preview__info">
-          <h2 class="case-preview__title" id="skillshare-title">skillshare —</h2>
+          <h2 class="case-preview__title" id="skillshare-title"><a class="case-preview__title-link" href="/skillshare">skillshare —</a></h2>
           <p class="case-preview__description">Приложение для поиска хобби</p>
-          <a class="case-preview__button" href="skillshare.html">Смотреть&nbsp;кейс</a>
+          <a class="case-preview__button" href="/skillshare">
+            <span class="case-preview__button-arrow case-preview__button-arrow--dark" aria-hidden="true">→</span>
+            <span class="case-preview__button-arrow case-preview__button-arrow--light" aria-hidden="true">→</span>
+            <span class="case-preview__button-label">Смотреть кейс Skillshare</span>
+          </a>
           <div class="case-preview__details">
             <ul class="case-preview__bullets">
               <li>product designer</li>
@@ -3845,7 +3949,7 @@
           </div>
         </div>
 
-        <div class="case-preview__media">
+        <a class="case-preview__media" href="/skillshare" aria-label="Открыть кейс Skillshare">
           <img
             class="case-preview__image"
             src="assets/images/skillshare/skillshare-cover-960.webp"
@@ -3857,16 +3961,20 @@
             loading="lazy"
             decoding="async"
           />
-        </div>
+        </a>
       </div>
     </section>
 
     <section id="screen-case-mendi" class="case-preview case-preview--mendi" aria-labelledby="mendi-title">
       <div class="case-preview__content">
         <div class="case-preview__info">
-          <h2 class="case-preview__title" id="mendi-title"><a class="case-preview__title-link" href="mendi.html">mendi —</a></h2>
+          <h2 class="case-preview__title" id="mendi-title"><a class="case-preview__title-link" href="/mendi">mendi —</a></h2>
           <p class="case-preview__description">Приложение, которое помогает следить за&nbsp;приёмом лекарств</p>
-          <a class="case-preview__button" href="mendi.html">Смотреть&nbsp;кейс</a>
+          <a class="case-preview__button" href="/mendi">
+            <span class="case-preview__button-arrow case-preview__button-arrow--dark" aria-hidden="true">→</span>
+            <span class="case-preview__button-arrow case-preview__button-arrow--light" aria-hidden="true">→</span>
+            <span class="case-preview__button-label">Смотреть кейс Mendi</span>
+          </a>
           <div class="case-preview__details">
             <ul class="case-preview__bullets">
               <li>product designer</li>
@@ -3877,7 +3985,7 @@
           </div>
         </div>
 
-        <a class="case-preview__media" href="mendi.html" aria-label="Открыть кейс Mendi">
+        <a class="case-preview__media" href="/mendi" aria-label="Открыть кейс Mendi">
           <img
             class="case-preview__image"
             src="assets/images/mendi/mendi-cover-960.webp"
