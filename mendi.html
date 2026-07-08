@@ -35,6 +35,8 @@
       --blue-hover: #2f3437;
       --link-hover: #454b4f;
       --page-x: 24px;
+      --page-max: 1600px;
+      --content-max: calc(var(--page-max) - 48px);
       --grid-gap: 20px;
       --block-gap: 80px;
       --text-to-media-gap: 32px;
@@ -171,6 +173,12 @@
       .custom-cursor,
       .cursor-text-mask {
         display: none;
+      }
+    }
+
+    @media (min-width: 1601px) {
+      :root {
+        --page-x: calc((100vw - var(--content-max)) / 2);
       }
     }
 
