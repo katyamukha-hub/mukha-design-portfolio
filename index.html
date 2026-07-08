@@ -49,6 +49,7 @@
       --hero-visual-center-shift: 64px;
       --section-heading-size: 56px;
       --section-heading-line-height: 0.95;
+      --case-cover-max: 1444px;
       --font-main: "CoFo Sans", Arial, Helvetica, sans-serif;
     }
 
@@ -283,20 +284,22 @@
     .header {
       position: absolute;
       top: clamp(112px, 13svh, 142px);
-      left: 50%;
+      left: var(--page-x);
+      right: var(--page-x);
       z-index: 2;
-      width: min(760px, calc(100vw - var(--page-x) * 2));
-      display: flex;
-      flex-direction: column;
+      width: auto;
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 20px;
       align-items: center;
       justify-content: center;
-      gap: 0;
       padding: 0;
       background: transparent;
-      transform: translateX(-50%);
     }
 
     .brand {
+      grid-column: 1 / -1;
+      justify-self: center;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -333,21 +336,7 @@
       animation: heroHandIntroWave 860ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both;
     }
 
-    .brand:hover .hero-hand,
-    .hero-hand:hover {
-      animation: heroHandHoverWave 820ms cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-
     @keyframes heroHandIntroWave {
-      0% { rotate: 0deg; }
-      20% { rotate: 10deg; }
-      40% { rotate: -8deg; }
-      62% { rotate: 7deg; }
-      82% { rotate: -3deg; }
-      100% { rotate: 0deg; }
-    }
-
-    @keyframes heroHandHoverWave {
       0% { rotate: 0deg; }
       20% { rotate: 10deg; }
       40% { rotate: -8deg; }
@@ -392,6 +381,8 @@
     }
 
     .header__actions {
+      grid-column: 1 / -1;
+      justify-self: center;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -531,6 +522,7 @@
     }
 
     .hero {
+      grid-column: 1 / -1;
       position: static;
       width: 100%;
       margin-top: 30px;
@@ -539,7 +531,7 @@
 
     .hero__title {
       margin: 0 auto;
-      max-width: 760px;
+      max-width: none;
       font-family: var(--font-main);
       font-size: 17px;
       line-height: 1.2;
@@ -1345,7 +1337,7 @@
     @media (min-width: 901px) {
       .site .header {
         top: calc(50svh - var(--hero-visual-center-shift)); /**/
-        transform: translate(-50%, -50%);
+        transform: translateY(-50%);
       }
 
       .site .hero-hand {
@@ -2096,9 +2088,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .hero-screen.is-hand-waving .hero-hand,
-      .brand:hover .hero-hand,
-      .hero-hand:hover {
+      .hero-screen.is-hand-waving .hero-hand {
         animation: none;
       }
 
@@ -3213,7 +3203,7 @@
 
     @media (min-width: 1601px) {
       :root {
-        --page-x: calc((100vw - 1552px) / 2);
+        --page-x: 24px;
       }
     }
 
@@ -3465,7 +3455,7 @@
 
       .site .header {
         top: calc(50svh - var(--hero-visual-center-shift));
-        transform: translate(-50%, -50%);
+        transform: translateY(-50%);
       }
 
       .site .hero-hand {
@@ -3970,48 +3960,26 @@
 
   
 
-    /* Final hero hand: appears in place + peace-style pivot.
-       Rotation center is 10% above the bottom edge: 90% from the top. */
+    /* Final hero hand: moves from the hero center, then gives one soft wave after the intro. */
     .site .hero-hand {
-      transform-origin: 50% 90% !important;
-      transform: translateY(0) scale(0.96) !important;
-      rotate: -7deg;
-      opacity: 0;
+      transform-origin: 50% 90%;
+      rotate: 0deg;
       transition:
-        opacity 0.34s ease,
-        transform 0.46s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.32s ease,
+        transform 0.78s cubic-bezier(0.22, 1, 0.36, 1),
         rotate 0.46s cubic-bezier(0.22, 1, 0.36, 1);
       will-change: opacity, transform, rotate;
     }
 
-    .site .hero-screen.is-hand-visible .hero-hand,
-    .site .hero-screen.is-hand-settled .hero-hand {
-      opacity: 1;
-      transform: translateY(0) scale(1) !important;
-    }
-
     .site .hero-screen.is-hand-waving .hero-hand {
-      animation: heroHandPeaceIntro 760ms cubic-bezier(0.22, 1, 0.36, 1) both !important;
+      animation: heroHandSoftWave 920ms cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
-    .site .brand:hover .hero-hand,
-    .site .hero-hand:hover {
-      animation: heroHandPeaceHover 720ms cubic-bezier(0.22, 1, 0.36, 1) both !important;
-    }
-
-    @keyframes heroHandPeaceIntro {
-      0% { rotate: -7deg; }
-      34% { rotate: 10deg; }
-      56% { rotate: 3deg; }
-      76% { rotate: 7deg; }
-      100% { rotate: 0deg; }
-    }
-
-    @keyframes heroHandPeaceHover {
+    @keyframes heroHandSoftWave {
       0% { rotate: 0deg; }
-      34% { rotate: 10deg; }
-      58% { rotate: 3deg; }
-      78% { rotate: 7deg; }
+      24% { rotate: 8deg; }
+      48% { rotate: -5deg; }
+      72% { rotate: 3deg; }
       100% { rotate: 0deg; }
     }
 
@@ -4020,7 +3988,7 @@
       .site .hero-screen.is-hand-visible .hero-hand,
       .site .hero-screen.is-hand-settled .hero-hand {
         opacity: 1;
-        transform: translateY(0) scale(1) !important;
+        transform: translateY(0) scale(1);
         rotate: 0deg;
         transition: none;
         animation: none !important;
@@ -4056,6 +4024,70 @@
       color: #4267ff !important;
       border-color: #4267ff !important;
       text-decoration-color: #4267ff !important;
+    }
+
+    @media (min-width: 901px) {
+      .site .case-preview {
+        padding-right: var(--page-x);
+        padding-left: var(--page-x);
+      }
+
+      .site .case-preview__content {
+        width: 100%;
+        max-width: none;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        column-gap: 20px;
+      }
+
+      .site .case-preview__info {
+        grid-column: 1 / span 3;
+        justify-self: stretch;
+        min-width: 0;
+        text-align: left;
+      }
+
+      .site .case-preview__title,
+      .site .case-preview__description,
+      .site .case-preview__details,
+      .site .case-preview__bullets,
+      .site .case-preview__bullets li,
+      .site .case-preview__year {
+        text-align: left;
+      }
+
+      .site .case-preview__description,
+      .site .case-preview__details {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .site .case-preview__button {
+        justify-self: start;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .site .case-preview__media {
+        grid-column: 4 / -1;
+        justify-self: end;
+        width: 100%;
+        max-width: var(--case-cover-max);
+        min-width: 0;
+      }
+
+      .site .case-preview__image,
+      .site .case-animated-media__fallback,
+      .site .case-animated-media__video {
+        width: 100%;
+      }
+
+      .site .contacts__intro {
+        text-align: left;
+      }
+
+      .site .contacts__tagline {
+        text-align: right;
+      }
     }
 
 </style>
@@ -4417,6 +4449,10 @@
       const addHeroIntroClass = (className) => {
         heroIntroScreen.classList.add(className);
       };
+      const waveHeroHandOnce = () => {
+        addHeroIntroClass('is-hand-waving');
+        window.setTimeout(() => heroIntroScreen.classList.remove('is-hand-waving'), 980);
+      };
 
       if (reduceHeroMotion) {
         heroIntroScreen.classList.add(...introSteps);
@@ -4424,15 +4460,14 @@
       } else {
         window.setTimeout(() => {
           addHeroIntroClass('is-hand-visible');
-          window.setTimeout(() => {
-            addHeroIntroClass('is-hand-waving');
-            window.setTimeout(() => heroIntroScreen.classList.remove('is-hand-waving'), 900);
-          }, 150);
           window.setTimeout(() => addHeroIntroClass('is-hand-settled'), 300);
           window.setTimeout(() => addHeroIntroClass('is-brand-visible'), 620);
           window.setTimeout(() => addHeroIntroClass('is-hero-text-visible'), 760);
           window.setTimeout(() => addHeroIntroClass('is-actions-visible'), 920);
-          window.setTimeout(showAvalikeIntroCase, 1160);
+          window.setTimeout(() => {
+            showAvalikeIntroCase();
+            window.setTimeout(waveHeroHandOnce, 900);
+          }, 1160);
         }, 0);
       }
     }

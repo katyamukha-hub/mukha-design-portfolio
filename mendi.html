@@ -36,6 +36,7 @@
       --link-hover: #454b4f;
       --page-x: 24px;
       --grid-gap: 20px;
+      --case-content-max: 1444px;
       --block-gap: 80px;
       --text-to-media-gap: 32px;
       --jtbd-bg: #fff;
@@ -322,6 +323,16 @@
 
     .case-hero__grid {
       align-items: start;
+    }
+
+    .case-hero__grid,
+    .case-text-section__grid,
+    .case-image-section__grid,
+    .case-section-heading__grid,
+    .jtbd-section__grid {
+      width: 100%;
+      max-width: var(--case-content-max);
+      margin-inline: auto;
     }
 
     .case-nav {
@@ -664,7 +675,7 @@
     }
 
     .case-image-section--main-scenarios {
-      padding-right: 0;
+      padding-right: var(--page-x);
       padding-bottom: calc(var(--block-gap) + 20px);
     }
 
@@ -673,13 +684,11 @@
     }
 
     .case-image-section--main-scenarios .case-image-section__content {
-      width: calc(100vw - var(--page-x));
+      width: 100%;
       overflow-x: auto;
       overflow-y: visible;
-      padding-left: calc(
-        ((100vw - var(--page-x) * 2 - var(--grid-gap) * 11) / 12) * 2 + var(--grid-gap) * 2
-      );
-      padding-right: var(--page-x);
+      padding-right: 0;
+      padding-left: 0;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
     }
