@@ -124,11 +124,7 @@
     }
 
     .custom-cursor.is-case-hover::before {
-      content: "";
-      flex: 0 0 auto;
-      width: 15px;
-      height: 11px;
-      background: url("assets/images/eye.svg") center / contain no-repeat;
+      content: none;
     }
 
     .custom-cursor.is-case-hover::after {
@@ -381,7 +377,7 @@
       width: auto;
       padding: 0 20px 2px;
       border-radius: 999px;
-      background: #E5E6EB;
+      background: #EFEFF1;
       color: var(--blue);
       font-family: var(--font-main);
       font-size: 17px;
@@ -401,7 +397,7 @@
 
     .telegram-link:hover {
       color: var(--link-hover);
-      background: #E5E6EB;
+      background: #EFEFF1;
       text-decoration: none;
       transform: scale(0.98);
     }
@@ -453,7 +449,7 @@
       font-family: var(--font-main);
       font-size: 14px;
       font-weight: 420;
-      background: #E5E6EB;
+      background: #EFEFF1;
       color: var(--blue);
     }
 
@@ -474,7 +470,7 @@
 
     .case-preview__button:hover {
       color: var(--link-hover);
-      background: #E5E6EB;
+      background: #EFEFF1;
       transform: scale(0.98);
       border: 0;
       outline: 0;
@@ -825,10 +821,10 @@
     }
 
     .case-preview__title {
-      margin: 0 0 19px;
+      margin: 0 0 8px;
       font-family: var(--font-main);
       font-size: 56px;
-      line-height: 0.95;
+      line-height: 60px;
       font-weight: 100;
       color: var(--blue);
       white-space: nowrap;
@@ -845,10 +841,10 @@
     }
 
     .case-preview__description {
-      margin: 0 0 56px;
+      margin: 0 0 32px;
       font-family: var(--font-main);
       font-size: 16px;
-      line-height: calc(1.15em + 2px);
+      line-height: 115%;
       font-weight: 400;
       color: var(--blue);
     }
@@ -1044,7 +1040,7 @@
     .photo-project__description {
       grid-column: 1 / span 6;
       grid-row: 2;
-      margin: 19px 0 0;
+      margin: 48px 0 0;
       max-width: none;
       font-family: var(--font-main);
       font-size: 16px;
@@ -1076,7 +1072,7 @@
       justify-content: space-between;
       column-gap: 0;
       row-gap: 134px;
-      margin-top: 108px;
+      margin-top: 64px;
       overflow: visible;
     }
 
@@ -1268,7 +1264,7 @@
 
     .case-preview {
       min-height: auto;
-      padding: 36px var(--page-x) 56px;
+      padding: 36px var(--page-x) 76px;
     }
 
     .case-preview--avalike {
@@ -1893,7 +1889,7 @@
       height: 52px;
       padding: 0 20px 2px;
       border-radius: 999px;
-      background: #E5E6EB;
+      background: #EFEFF1;
       color: var(--blue);
       font-family: var(--font-main);
       font-size: 17px;
@@ -1909,18 +1905,14 @@
     }
 
     .site .case-preview__button::after {
-      content: "";
-      width: 15px;
-      height: 11px;
-      flex: 0 0 auto;
-      background: currentColor;
-      -webkit-mask: url("assets/images/eye.svg") center / contain no-repeat;
-      mask: url("assets/images/eye.svg") center / contain no-repeat;
+      content: "→";
+      font-size: 0.94em;
+      line-height: 1;
       transform: translateY(1px);
     }
 
     .site .case-preview__button:hover {
-      background: #E5E6EB;
+      background: #EFEFF1;
       color: var(--link-hover);
       transform: scale(0.98);
       border: 0;
@@ -1960,22 +1952,23 @@
 
   
     /* Final case meta layout for first three cases */
-    .site .case-preview:not(.case-preview--friends) {
-      --case-text-line-height: 20px;
+    .site .case-preview {
+      --case-text-line-height: 18.4px;
     }
 
     .site .case-preview:not(.case-preview--friends) .case-preview__description {
-      margin-bottom: var(--case-text-line-height);
-      line-height: var(--case-text-line-height);
+      margin: 0 0 32px;
+      font-size: 16px;
+      line-height: 115%;
       color: var(--blue);
     }
 
-    .site .case-preview:not(.case-preview--friends) .case-preview__details {
+    .site .case-preview__details {
       max-width: 250px;
-      margin: 0 0 56px;
+      margin: 40px 0 0;
       font-family: var(--font-main);
       font-size: 16px;
-      line-height: var(--case-text-line-height);
+      line-height: 115%;
       font-weight: 400;
       color: var(--blue);
     }
@@ -1984,14 +1977,19 @@
       list-style: none;
       padding: 0;
       margin: 0 0 1em;
+      opacity: 0.6;
     }
 
     .site .case-preview__bullets li {
       margin: 0;
     }
 
+    .site .case-preview__bullets .case-preview__bullet-year {
+      margin-top: var(--case-text-line-height);
+    }
+
     .site .case-preview__bullets li::before {
-      content: "- ";
+      content: "• ";
     }
 
     .site .case-preview:not(.case-preview--friends) .case-preview__year {
@@ -2036,10 +2034,9 @@
     }
 
   
-    /* Final case title position:
-       case section top padding 36px + info padding-top 24px = title starts at 60px */
+    /* Final case title position */
     .site .case-preview__info {
-      padding-top: 24px;
+      padding-top: 0;
     }
 
   
@@ -2075,7 +2072,7 @@
   
     /* Final case meta vertical offset */
     .site .case-preview:not(.case-preview--friends) .case-preview__description {
-      margin-bottom: var(--case-text-line-height);
+      margin-bottom: 32px;
     }
 
   
@@ -2424,7 +2421,7 @@
       .site .case-preview--avalike::after,
       .site .case-preview--skillshare::after,
       .site .case-preview--mendi::after {
-        content: "2025 - 2026";
+        content: "2025/26";
       }
 
       .site .case-preview__content {
@@ -2688,7 +2685,7 @@
       .site .case-preview--avalike::after,
       .site .case-preview--skillshare::after,
       .site .case-preview--mendi::after {
-        content: "2025 - 2026";
+        content: "2025/26";
       }
 
       .site .case-preview--friends::after {
@@ -2767,7 +2764,7 @@
       .site .case-preview--avalike::after,
       .site .case-preview--skillshare::after,
       .site .case-preview--mendi::after {
-        content: "2025 - 2026";
+        content: "2025/26";
       }
 
       .site .case-preview__content {
@@ -3542,7 +3539,7 @@
       }
 
       .site .contacts__telegram-button {
-        background: #E5E6EB;
+        background: #EFEFF1;
         color: var(--blue);
       }
 
@@ -3646,9 +3643,12 @@
       text-decoration-color: #4267ff !important;
     }
 
-    .site .facts-section__grid,
-    .site .photo-project__grid {
+    .site .facts-section__grid {
       margin-top: 180px;
+    }
+
+    .site .photo-project__grid {
+      margin-top: 64px;
     }
 
     .site .case-preview--friends .case-preview__image {
@@ -3667,6 +3667,46 @@
       .site .photo-project__item:nth-child(7n + 1):hover .photo-project__image,
       .site .photo-project__item:nth-child(7n):hover .photo-project__image {
         transform: none !important;
+      }
+    }
+
+    @media (min-width: 901px) {
+      .site .case-preview {
+        padding-bottom: 76px;
+      }
+
+      .site .case-preview__info {
+        padding-top: 0;
+      }
+
+      .site .case-preview__title {
+        margin-bottom: 8px;
+        font-size: 56px;
+        line-height: 60px;
+      }
+
+      .site .case-preview__description {
+        margin: 0 0 32px;
+        font-size: 16px;
+        line-height: 115%;
+      }
+
+      .site .case-preview__details {
+        margin: 40px 0 0;
+        font-size: 16px;
+        line-height: 115%;
+      }
+
+      .site .photo-project__description {
+        margin-top: 48px;
+      }
+
+      .site .photo-project__grid {
+        margin-top: 64px;
+      }
+
+      .site .contacts__details {
+        row-gap: 36px;
       }
     }
 
@@ -3710,6 +3750,10 @@
     .site .hero__title,
     .site .hero__title * {
       font-weight: 400 !important;
+    }
+
+    .site .contacts__item--email .contacts__value {
+      font-weight: 100 !important;
     }
 
   </style>
@@ -3758,14 +3802,15 @@
         <div class="case-preview__info">
           <h2 class="case-preview__title" id="avalike-title"><a class="case-preview__title-link" href="avalike.html">avalike —</a></h2>
           <p class="case-preview__description">Платформа для создания, поиска и&nbsp;монетизации AI-агентов</p>
+          <a class="case-preview__button" href="avalike.html">Смотреть&nbsp;кейс</a>
           <div class="case-preview__details">
             <ul class="case-preview__bullets">
-              <li>Product Designer,</li>
-              <li>web&nbsp;+&nbsp;mobile,</li>
-              <li>end-to-end core flows</li>
+              <li>product designer</li>
+              <li>web&nbsp;+&nbsp;mobile</li>
+              <li>end-to-end, core flows</li>
+              <li class="case-preview__bullet-year">2025/26</li>
             </ul>
           </div>
-          <a class="case-preview__button" href="avalike.html">Смотреть&nbsp;кейс</a>
         </div>
 
         <a class="case-preview__media" href="avalike.html" aria-label="Открыть кейс Avalike">
@@ -3789,14 +3834,15 @@
         <div class="case-preview__info">
           <h2 class="case-preview__title" id="skillshare-title">skillshare —</h2>
           <p class="case-preview__description">Приложение для поиска хобби</p>
+          <a class="case-preview__button" href="skillshare.html">Смотреть&nbsp;кейс</a>
           <div class="case-preview__details">
             <ul class="case-preview__bullets">
-              <li>Product Designer,</li>
-              <li>web&nbsp;+&nbsp;mobile,</li>
-              <li>end-to-end core flows</li>
+              <li>product designer</li>
+              <li>web&nbsp;+&nbsp;mobile</li>
+              <li>end-to-end, core flows</li>
+              <li class="case-preview__bullet-year">2025/26</li>
             </ul>
           </div>
-          <a class="case-preview__button" href="#">Смотреть&nbsp;кейс</a>
         </div>
 
         <div class="case-preview__media">
@@ -3820,14 +3866,15 @@
         <div class="case-preview__info">
           <h2 class="case-preview__title" id="mendi-title"><a class="case-preview__title-link" href="mendi.html">mendi —</a></h2>
           <p class="case-preview__description">Приложение, которое помогает следить за&nbsp;приёмом лекарств</p>
+          <a class="case-preview__button" href="mendi.html">Смотреть&nbsp;кейс</a>
           <div class="case-preview__details">
             <ul class="case-preview__bullets">
-              <li>Product Designer,</li>
-              <li>web&nbsp;+&nbsp;mobile,</li>
-              <li>end-to-end core flows</li>
+              <li>product designer</li>
+              <li>web&nbsp;+&nbsp;mobile</li>
+              <li>end-to-end, core flows</li>
+              <li class="case-preview__bullet-year">2025/26</li>
             </ul>
           </div>
-          <a class="case-preview__button" href="mendi.html">Смотреть&nbsp;кейс</a>
         </div>
 
         <a class="case-preview__media" href="mendi.html" aria-label="Открыть кейс Mendi">
@@ -3851,6 +3898,11 @@
         <div class="case-preview__info">
           <h2 class="case-preview__title" id="friends-title">дружи<br />со мной<br />нет —</h2>
           <p class="case-preview__description">Постеры для&nbsp;короткого метра</p>
+          <div class="case-preview__details">
+            <ul class="case-preview__bullets">
+              <li>2025</li>
+            </ul>
+          </div>
         </div>
 
         <div class="case-preview__media">
