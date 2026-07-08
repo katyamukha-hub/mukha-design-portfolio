@@ -3940,49 +3940,138 @@
 
   
 
-    /* Final hero hand: appears in place + peace-style pivot.
-       Rotation center is 10% above the bottom edge: 90% from the top. */
+    /* Final hero hand: appears in the middle, then moves straight up.
+       Hover wave is only on the hand itself, with bracket-like motion marks. */
+    .site .hero-hand-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 48px;
+      isolation: isolate;
+    }
+
     .site .hero-hand {
+      --hero-hand-start-y: calc(50svh - var(--hero-visual-center-shift) - var(--hero-hand-center-y));
+      position: relative;
+      z-index: 2;
+      margin-bottom: 0 !important;
       transform-origin: 50% 90% !important;
-      transform: translateY(0) scale(0.96) !important;
-      rotate: -7deg;
+      transform: translateY(var(--hero-hand-start-y)) scale(0.96) !important;
+      rotate: 0deg;
       opacity: 0;
       transition:
-        opacity 0.34s ease,
-        transform 0.46s cubic-bezier(0.22, 1, 0.36, 1),
-        rotate 0.46s cubic-bezier(0.22, 1, 0.36, 1);
+        opacity 0.28s ease,
+        transform 0.82s cubic-bezier(0.22, 1, 0.36, 1),
+        rotate 0.2s ease;
       will-change: opacity, transform, rotate;
     }
 
-    .site .hero-screen.is-hand-visible .hero-hand,
+    .site .hero-screen.is-hand-visible .hero-hand {
+      opacity: 1;
+      transform: translateY(var(--hero-hand-start-y)) scale(1) !important;
+    }
+
     .site .hero-screen.is-hand-settled .hero-hand {
       opacity: 1;
       transform: translateY(0) scale(1) !important;
     }
 
-    .site .hero-screen.is-hand-waving .hero-hand {
-      animation: heroHandPeaceIntro 760ms cubic-bezier(0.22, 1, 0.36, 1) both !important;
+    .site .brand:hover .hero-hand {
+      animation: none;
     }
 
-    .site .brand:hover .hero-hand,
+    .site .hero-hand-wrap:hover .hero-hand,
     .site .hero-hand:hover {
-      animation: heroHandPeaceHover 720ms cubic-bezier(0.22, 1, 0.36, 1) both !important;
+      animation: heroHandWaveHover 860ms cubic-bezier(0.22, 1, 0.36, 1) infinite;
     }
 
-    @keyframes heroHandPeaceIntro {
-      0% { rotate: -7deg; }
-      34% { rotate: 10deg; }
-      56% { rotate: 3deg; }
-      76% { rotate: 7deg; }
-      100% { rotate: 0deg; }
+    .site .hero-hand-mark {
+      position: absolute;
+      top: 50%;
+      z-index: 1;
+      display: block;
+      font-family: "CoFo Sans Mono Trial", "Courier New", monospace;
+      font-size: 20px;
+      line-height: 1;
+      color: #111111;
+      opacity: 0;
+      pointer-events: none;
+      white-space: nowrap;
+      transition: opacity 0.18s ease;
+      will-change: opacity, transform;
     }
 
-    @keyframes heroHandPeaceHover {
+    .site .hero-hand-mark--left {
+      left: -34px;
+      transform: translateY(-50%) translateX(8px) rotate(-10deg);
+    }
+
+    .site .hero-hand-mark--right {
+      right: -34px;
+      transform: translateY(-50%) translateX(-8px) rotate(10deg);
+    }
+
+    .site .hero-hand-wrap:hover .hero-hand-mark,
+    .site .hero-hand:hover ~ .hero-hand-mark {
+      opacity: 1;
+    }
+
+    .site .hero-hand-wrap:hover .hero-hand-mark--left,
+    .site .hero-hand:hover ~ .hero-hand-mark--left {
+      animation: heroHandMarkLeft 740ms ease-in-out infinite;
+    }
+
+    .site .hero-hand-wrap:hover .hero-hand-mark--right,
+    .site .hero-hand:hover ~ .hero-hand-mark--right {
+      animation: heroHandMarkRight 740ms ease-in-out infinite;
+    }
+
+    @keyframes heroHandWaveHover {
       0% { rotate: 0deg; }
-      34% { rotate: 10deg; }
-      58% { rotate: 3deg; }
-      78% { rotate: 7deg; }
+      18% { rotate: 12deg; }
+      40% { rotate: -8deg; }
+      58% { rotate: 10deg; }
+      76% { rotate: -5deg; }
       100% { rotate: 0deg; }
+    }
+
+    @keyframes heroHandMarkLeft {
+      0%, 100% { transform: translateY(-50%) translateX(8px) rotate(-10deg); opacity: 0.22; }
+      50% { transform: translateY(-50%) translateX(0) rotate(-16deg); opacity: 1; }
+    }
+
+    @keyframes heroHandMarkRight {
+      0%, 100% { transform: translateY(-50%) translateX(-8px) rotate(10deg); opacity: 0.22; }
+      50% { transform: translateY(-50%) translateX(0) rotate(16deg); opacity: 1; }
+    }
+
+    @media (max-width: 900px) {
+      .site .hero-hand-wrap {
+        margin-bottom: 50px;
+      }
+
+      .site .hero-hand {
+        --hero-hand-start-y: calc(50svh - 72px - var(--hero-hand-center-y));
+      }
+    }
+
+    @media (min-width: 360px) and (max-width: 480px) {
+      .site .hero-hand-wrap {
+        margin-bottom: 38px;
+      }
+
+      .site .hero-hand-mark {
+        font-size: 18px;
+      }
+
+      .site .hero-hand-mark--left {
+        left: -28px;
+      }
+
+      .site .hero-hand-mark--right {
+        right: -28px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -3995,37 +4084,58 @@
         transition: none;
         animation: none !important;
       }
+
+      .site .hero-hand-mark {
+        display: none;
+      }
     }
 
-    /* Photo project links: blue hover + cursor grows, but link text is not inverted inside the cursor mask. */
-    .site .photo-project__more {
+    /* Accent links: photo-project links + e-mail.
+       On hover the cursor grows, becomes semi-transparent, and the link keeps the brand blue inside the cursor mask. */
+    .site .photo-project__more,
+    .site .contacts__item--email .contacts__value {
       transition:
         color 0.2s ease,
         opacity 0.2s ease,
-        transform 0.2s ease;
+        transform 0.2s ease,
+        text-decoration-color 0.2s ease;
     }
 
     .site .photo-project__more:hover,
-    .site .photo-project__more:focus-visible {
+    .site .photo-project__more:focus-visible,
+    .site .contacts__item--email .contacts__value:hover,
+    .site .contacts__item--email .contacts__value:focus-visible {
       color: #4267ff !important;
       text-decoration-color: #4267ff !important;
     }
 
-    .custom-cursor.is-visible.is-photo-link-hover {
+    .custom-cursor.is-visible.is-accent-link-hover {
       opacity: 0.3;
       transform: translate(-50%, -50%) scale(1.2);
     }
 
-    .cursor-text-mask.is-on-photo-link {
+    .cursor-text-mask.is-on-accent-link {
       clip-path: circle(12px at var(--cursor-x, -100px) var(--cursor-y, -100px));
     }
 
-    .cursor-text-mask.is-on-photo-link .photo-project__more,
-    .cursor-text-mask.is-on-photo-link .photo-project__more:hover,
-    .cursor-text-mask.is-on-photo-link .photo-project__more:focus-visible {
+    .cursor-text-mask.is-on-accent-link .photo-project__more,
+    .cursor-text-mask.is-on-accent-link .photo-project__more:hover,
+    .cursor-text-mask.is-on-accent-link .photo-project__more:focus-visible,
+    .cursor-text-mask.is-on-accent-link .contacts__item--email .contacts__value,
+    .cursor-text-mask.is-on-accent-link .contacts__item--email .contacts__value:hover,
+    .cursor-text-mask.is-on-accent-link .contacts__item--email .contacts__value:focus-visible {
       color: #4267ff !important;
       border-color: #4267ff !important;
       text-decoration-color: #4267ff !important;
+    }
+
+
+    /* Baumanka fact image final size */
+    .site .fact-card--left .fact-card__image {
+      width: 217px !important;
+      height: 145px !important;
+      object-fit: cover !important;
+      border-radius: 4px;
     }
 
 </style>
@@ -4038,7 +4148,7 @@
     <section id="screen-hero" class="hero-screen" aria-label="Первый экран">
       <header class="header" aria-label="Главный экран">
         <div class="brand" aria-label="Катя Мукха — Product Designer">
-          <img class="hero-hand" src="assets/images/hand.svg" alt="" aria-hidden="true" decoding="async" />
+          <span class="hero-hand-wrap" aria-hidden="true"><img class="hero-hand" src="assets/images/hand.svg" alt="" aria-hidden="true" decoding="async" /><span class="hero-hand-mark hero-hand-mark--left" aria-hidden="true">((</span><span class="hero-hand-mark hero-hand-mark--right" aria-hidden="true">))</span></span>
           <div class="brand__text">
             <p class="brand__name">Катя Мукха</p>
             <p class="brand__role">Product Designer</p>
@@ -4284,7 +4394,7 @@
 
       <div class="contacts__details" aria-label="Контактная информация">
         <p class="contacts__item contacts__item--email">
-          <span class="contacts__label">Email</span>
+          <span class="contacts__label">e-mail</span>
           <a class="contacts__value" href="mailto:katya@mukha.design" title="Написать на email">katya@mukha.design</a>
         </p>
 
@@ -4385,15 +4495,11 @@
       } else {
         window.setTimeout(() => {
           addHeroIntroClass('is-hand-visible');
-          window.setTimeout(() => {
-            addHeroIntroClass('is-hand-waving');
-            window.setTimeout(() => heroIntroScreen.classList.remove('is-hand-waving'), 900);
-          }, 150);
-          window.setTimeout(() => addHeroIntroClass('is-hand-settled'), 300);
-          window.setTimeout(() => addHeroIntroClass('is-brand-visible'), 620);
-          window.setTimeout(() => addHeroIntroClass('is-hero-text-visible'), 760);
-          window.setTimeout(() => addHeroIntroClass('is-actions-visible'), 920);
-          window.setTimeout(showAvalikeIntroCase, 1160);
+          window.setTimeout(() => addHeroIntroClass('is-hand-settled'), 160);
+          window.setTimeout(() => addHeroIntroClass('is-brand-visible'), 980);
+          window.setTimeout(() => addHeroIntroClass('is-hero-text-visible'), 1120);
+          window.setTimeout(() => addHeroIntroClass('is-actions-visible'), 1280);
+          window.setTimeout(showAvalikeIntroCase, 1520);
         }, 0);
       }
     }
@@ -4626,15 +4732,15 @@
         const isOnCaseMedia = caseMedia && !caseMedia.closest('.case-preview--friends');
         const isOnContacts = elementUnderCursor && elementUnderCursor.closest('.contacts-section');
         const isOnLightControl = elementUnderCursor && elementUnderCursor.closest('.cv-button, .language-switch, .telegram-link, .case-preview__button');
-        const isOnPhotoProjectLink = elementUnderCursor && elementUnderCursor.closest('.photo-project__more');
+        const isOnAccentLink = elementUnderCursor && elementUnderCursor.closest('.photo-project__more, .contacts__item--email .contacts__value');
 
         customCursor.classList.toggle('is-case-hover', Boolean(isOnCaseMedia));
         customCursor.classList.toggle('is-on-contacts', Boolean(isOnContacts));
         customCursor.classList.toggle('is-on-light-control', Boolean(isOnLightControl));
-        customCursor.classList.toggle('is-photo-link-hover', Boolean(isOnPhotoProjectLink));
+        customCursor.classList.toggle('is-accent-link-hover', Boolean(isOnAccentLink));
         cursorTextMask.classList.toggle('is-on-contacts', Boolean(isOnContacts));
         cursorTextMask.classList.toggle('is-on-light-control', Boolean(isOnLightControl));
-        cursorTextMask.classList.toggle('is-on-photo-link', Boolean(isOnPhotoProjectLink));
+        cursorTextMask.classList.toggle('is-on-accent-link', Boolean(isOnAccentLink));
         cursorTextMask.classList.toggle('is-hidden-on-media', Boolean(isOnCaseMedia));
         cursorTextMask.style.setProperty('--cursor-x', `${event.clientX}px`);
         cursorTextMask.style.setProperty('--cursor-y', `${event.clientY}px`);
@@ -4643,8 +4749,8 @@
       });
 
       document.addEventListener('pointerleave', () => {
-        customCursor.classList.remove('is-visible', 'is-avatar-hover', 'is-case-hover', 'is-on-contacts', 'is-on-light-control', 'is-photo-link-hover');
-        cursorTextMask.classList.remove('is-visible', 'is-hidden-on-avatar', 'is-hidden-on-media', 'is-on-contacts', 'is-on-light-control', 'is-on-photo-link');
+        customCursor.classList.remove('is-visible', 'is-avatar-hover', 'is-case-hover', 'is-on-contacts', 'is-on-light-control', 'is-accent-link-hover');
+        cursorTextMask.classList.remove('is-visible', 'is-hidden-on-avatar', 'is-hidden-on-media', 'is-on-contacts', 'is-on-light-control', 'is-on-accent-link');
 
         if (hoverAvatar) {
           hoverAvatar.classList.remove('is-visible');
