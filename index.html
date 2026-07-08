@@ -42,9 +42,6 @@
       --graphite: #2f3437;
       --text: #111111;
       --page-x: 24px;
-      --page-max: 1600px;
-      --content-max: calc(var(--page-max) - 48px);
-      --cover-max: 1444px;
       --header-top: clamp(20px, 3.5svh, 28px);
       --hero-top: clamp(280px, 38svh, 345px);
       --bottom-offset: clamp(24px, 5svh, 40px);
@@ -860,7 +857,6 @@
 
     .case-preview__media {
       grid-column: 4 / -1;
-      max-width: var(--cover-max);
       overflow: visible;
     }
 
@@ -3217,7 +3213,7 @@
 
     @media (min-width: 1601px) {
       :root {
-        --page-x: calc((100vw - var(--content-max)) / 2);
+        --page-x: calc((100vw - 1552px) / 2);
       }
     }
 

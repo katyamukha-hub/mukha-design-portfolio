@@ -32,8 +32,6 @@
       --bg: #f4f4f4;
       --blue: #111111;
       --page-x: 24px;
-      --page-max: 1600px;
-      --content-max: calc(var(--page-max) - 48px);
       --font-main: "CoFo Sans", Arial, Helvetica, sans-serif;
     }
 
@@ -160,12 +158,6 @@
       .custom-cursor,
       .cursor-text-mask {
         display: none;
-      }
-    }
-
-    @media (min-width: 1601px) {
-      :root {
-        --page-x: calc((100vw - var(--content-max)) / 2);
       }
     }
 
