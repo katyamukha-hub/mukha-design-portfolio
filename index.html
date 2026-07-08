@@ -44,6 +44,7 @@
       --page-x: 24px;
       --page-max: 1600px;
       --content-max: calc(var(--page-max) - 48px);
+      --cover-max: 1444px;
       --header-top: clamp(20px, 3.5svh, 28px);
       --hero-top: clamp(280px, 38svh, 345px);
       --bottom-offset: clamp(24px, 5svh, 40px);
@@ -859,7 +860,13 @@
 
     .case-preview__media {
       grid-column: 4 / -1;
+      max-width: var(--cover-max);
       overflow: visible;
+    }
+
+    .case-animated-media {
+      position: relative;
+      isolation: isolate;
     }
 
     .case-preview__title {
@@ -913,6 +920,31 @@
     .case-preview:not(.case-preview--friends) .case-preview__media:hover .case-preview__image {
       transform: scale(0.985);
       filter: saturate(1.04);
+    }
+
+    .case-animated-media__fallback {
+      position: relative;
+      z-index: 0;
+    }
+
+    .case-animated-media__video {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.24s ease, filter 0.24s ease;
+    }
+
+    .case-animated-media.is-video-ready .case-animated-media__video {
+      opacity: 1;
+    }
+
+    .case-animated-media.is-video-failed .case-animated-media__video {
+      display: none;
     }
 
     .case-preview--avalike .case-preview__image {
@@ -4087,9 +4119,18 @@
           </div>
         </div>
 
-        <a class="case-preview__media" href="/avalike" aria-label="Открыть кейс Avalike">
+        <a class="case-preview__media case-animated-media" href="/avalike" aria-label="Открыть кейс Avalike">
+          <video
+            class="case-preview__image case-preview__video case-animated-media__video"
+            data-src="assets/images/avalike/avalike-cover.mp4"
+            muted
+            loop
+            playsinline
+            preload="none"
+            aria-label="Анимированная обложка Avalike"
+          ></video>
           <img
-            class="case-preview__image"
+            class="case-preview__image case-animated-media__fallback"
             src="assets/images/avalike/avalike-cover-960.webp"
             srcset="assets/images/avalike/avalike-cover-480.webp 480w, assets/images/avalike/avalike-cover-960.webp 960w, assets/images/avalike/avalike-cover-1440.webp 1440w, assets/images/avalike/avalike-cover-1920.webp 1920w"
             sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 75vw"
@@ -4401,6 +4442,30 @@
     }
 
     const deferredMedia = document.querySelectorAll('.site [data-src]');
+    const markAnimatedVideoReady = (video) => {
+      const animatedMedia = video.closest('.case-animated-media');
+      if (animatedMedia) {
+        animatedMedia.classList.add('is-video-ready');
+        animatedMedia.classList.remove('is-video-failed');
+      }
+    };
+
+    const markAnimatedVideoFailed = (video) => {
+      const animatedMedia = video.closest('.case-animated-media');
+      if (animatedMedia) {
+        animatedMedia.classList.remove('is-video-ready');
+        animatedMedia.classList.add('is-video-failed');
+      }
+    };
+
+    deferredMedia.forEach((asset) => {
+      if (asset.tagName !== 'VIDEO') return;
+
+      asset.addEventListener('loadeddata', () => markAnimatedVideoReady(asset), { once: true });
+      asset.addEventListener('canplay', () => markAnimatedVideoReady(asset), { once: true });
+      asset.addEventListener('error', () => markAnimatedVideoFailed(asset), { once: true });
+    });
+
     const loadDeferredMedia = (asset) => {
       if (asset.dataset.poster && !asset.getAttribute('poster')) {
         asset.setAttribute('poster', asset.dataset.poster);

@@ -38,6 +38,7 @@
       --page-max: 1600px;
       --content-max: calc(var(--page-max) - 48px);
       --grid-gap: 20px;
+      --cover-max: 1444px;
       --block-gap: 80px;
       --text-to-media-gap: 32px;
     }
@@ -554,6 +555,12 @@
 
     .case-hero__media {
       grid-column: 1 / -1;
+      max-width: var(--cover-max);
+    }
+
+    .case-animated-media {
+      position: relative;
+      isolation: isolate;
     }
 
     .case-hero__title {
@@ -706,6 +713,31 @@
 
     .case-video {
       height: auto;
+    }
+
+    .case-animated-media__fallback {
+      position: relative;
+      z-index: 0;
+    }
+
+    .case-animated-media__video {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .case-animated-media.is-video-ready .case-animated-media__video {
+      opacity: 1;
+    }
+
+    .case-animated-media.is-video-failed .case-animated-media__video {
+      display: none;
     }
 
     .case-section-heading {
@@ -1672,6 +1704,11 @@
       color: var(--blue);
     }
 
+    .page > .contacts-section::before {
+      content: none;
+      display: none;
+    }
+
     .page .contacts__tagline {
       display: none;
       font-family: var(--font-main);
@@ -2065,9 +2102,18 @@
             <h1 class="case-hero__title" id="case-title">Проектирование продукта, где пользователи создают, находят и&nbsp;монетизируют AI-персонажей</h1>
           </div>
 
-          <div class="case-hero__media">
+          <div class="case-hero__media case-animated-media">
+            <video
+              class="case-hero__image case-hero__video case-animated-media__video"
+              data-src="assets/images/avalike/avalike-case-hero.mp4"
+              muted
+              loop
+              playsinline
+              preload="none"
+              aria-label="Анимированная обложка Avalike"
+            ></video>
             <img
-              class="case-hero__image"
+              class="case-hero__image case-animated-media__fallback"
               src="assets/images/avalike/avalike-case-hero.png"
               alt="Интерфейс платформы Avalike"
               decoding="async"
@@ -2111,9 +2157,18 @@
 
     <section class="case-image-section" aria-label="Мобильные экраны Avalike">
       <div class="case-image-section__grid">
-        <div class="case-image-section__content">
+        <div class="case-image-section__content case-animated-media">
+          <video
+            class="case-video case-animated-media__video"
+            data-src="assets/images/avalike/avalike-mobile-screens.mp4"
+            muted
+            loop
+            playsinline
+            preload="none"
+            aria-label="Анимация мобильных экранов Avalike"
+          ></video>
           <img
-            class="case-image"
+            class="case-image case-animated-media__fallback"
             src="assets/images/avalike/avalike-mobile-screens.png"
             alt="Мобильные экраны платформы Avalike"
             loading="lazy"
@@ -2133,9 +2188,18 @@
 
     <section class="case-image-section" aria-label="Double Diamond процесс Avalike">
       <div class="case-image-section__grid">
-        <div class="case-image-section__content">
+        <div class="case-image-section__content case-animated-media">
+          <video
+            class="case-video case-animated-media__video"
+            data-src="assets/images/avalike/avalike-double-diamond.mp4"
+            muted
+            loop
+            playsinline
+            preload="none"
+            aria-label="Анимация схемы Double Diamond Avalike"
+          ></video>
           <img
-            class="case-image"
+            class="case-image case-animated-media__fallback"
             src="assets/images/avalike/avalike-double-diamond.png"
             alt="Схема Double Diamond для&nbsp;проекта Avalike"
             loading="lazy"
@@ -2610,6 +2674,28 @@
     }
 
     const lazyVideos = document.querySelectorAll('video[data-src]');
+    const markAnimatedVideoReady = (video) => {
+      const animatedMedia = video.closest('.case-animated-media');
+      if (animatedMedia) {
+        animatedMedia.classList.add('is-video-ready');
+        animatedMedia.classList.remove('is-video-failed');
+      }
+    };
+
+    const markAnimatedVideoFailed = (video) => {
+      const animatedMedia = video.closest('.case-animated-media');
+      if (animatedMedia) {
+        animatedMedia.classList.remove('is-video-ready');
+        animatedMedia.classList.add('is-video-failed');
+      }
+    };
+
+    lazyVideos.forEach((video) => {
+      video.addEventListener('loadeddata', () => markAnimatedVideoReady(video), { once: true });
+      video.addEventListener('canplay', () => markAnimatedVideoReady(video), { once: true });
+      video.addEventListener('error', () => markAnimatedVideoFailed(video), { once: true });
+    });
+
     const loadLazyVideo = (video) => {
       if (!video.getAttribute('src')) {
         video.setAttribute('src', video.dataset.src);
