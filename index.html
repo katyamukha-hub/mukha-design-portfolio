@@ -34,6 +34,14 @@
       font-display: swap;
     }
 
+    @font-face {
+      font-family: "CoFo Sans";
+      src: url("assets/fonts/cofosanspro-bold-trial.woff") format("woff");
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
 :root {
       --bg: #fff;
       --blue: #111111;
@@ -535,9 +543,12 @@
       font-family: var(--font-main);
       font-size: 17px;
       line-height: 1.2;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0;
       text-align: center;
+      -webkit-font-smoothing: auto;
+      -moz-osx-font-smoothing: auto;
+      text-rendering: optimizeLegibility;
       overflow: visible;
     }
 
@@ -3815,7 +3826,10 @@
 
     .site .hero__title,
     .site .hero__title * {
-      font-weight: 500 !important;
+      font-weight: 600 !important;
+      -webkit-font-smoothing: auto;
+      -moz-osx-font-smoothing: auto;
+      text-rendering: optimizeLegibility;
     }
 
     .telegram-link {
@@ -4355,7 +4369,7 @@
 
       <div class="contacts__details" aria-label="Контактная информация">
         <p class="contacts__item contacts__item--email">
-          <span class="contacts__label">Email</span>
+          <span class="contacts__label">email</span>
           <a class="contacts__value" href="mailto:katya@mukha.design" title="Написать на email">katya@mukha.design</a>
         </p>
 
@@ -4422,6 +4436,7 @@
     });
 
     const heroIntroScreen = document.querySelector('.hero-screen');
+    const heroHand = heroIntroScreen ? heroIntroScreen.querySelector('.hero-hand') : null;
 
     const updateHeroClock = () => {
       const now = new Date();
@@ -4449,9 +4464,13 @@
       const addHeroIntroClass = (className) => {
         heroIntroScreen.classList.add(className);
       };
+      let heroHandWaveResetTimer = 0;
       const waveHeroHandOnce = () => {
+        window.clearTimeout(heroHandWaveResetTimer);
+        heroIntroScreen.classList.remove('is-hand-waving');
+        void heroIntroScreen.offsetWidth;
         addHeroIntroClass('is-hand-waving');
-        window.setTimeout(() => heroIntroScreen.classList.remove('is-hand-waving'), 980);
+        heroHandWaveResetTimer = window.setTimeout(() => heroIntroScreen.classList.remove('is-hand-waving'), 980);
       };
 
       if (reduceHeroMotion) {
@@ -4469,6 +4488,19 @@
             window.setTimeout(waveHeroHandOnce, 900);
           }, 1160);
         }, 0);
+      }
+
+      if (heroHand && !reduceHeroMotion) {
+        let heroHandHoverTimer = 0;
+        const cancelHeroHandHover = () => window.clearTimeout(heroHandHoverTimer);
+        const scheduleHeroHandHover = () => {
+          cancelHeroHandHover();
+          heroHandHoverTimer = window.setTimeout(waveHeroHandOnce, 4000);
+        };
+
+        heroHand.addEventListener('pointerenter', scheduleHeroHandHover);
+        heroHand.addEventListener('pointerleave', cancelHeroHandHover);
+        heroHand.addEventListener('pointercancel', cancelHeroHandHover);
       }
     }
 

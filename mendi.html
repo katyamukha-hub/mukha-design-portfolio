@@ -37,6 +37,10 @@
       --page-x: 24px;
       --grid-gap: 20px;
       --case-content-max: 1444px;
+      --case-content-frame: min(var(--case-content-max), calc(100vw - var(--page-x) * 2));
+      --case-content-gutter: calc((100vw - var(--case-content-frame)) / 2);
+      --case-content-column: calc((var(--case-content-frame) - var(--grid-gap) * 11) / 12);
+      --case-content-offset: calc(var(--case-content-column) * 2 + var(--grid-gap) * 2);
       --block-gap: 80px;
       --text-to-media-gap: 32px;
       --jtbd-bg: #fff;
@@ -703,6 +707,14 @@
       max-width: none;
       height: 600px;
       object-fit: contain;
+    }
+
+    @media (min-width: 901px) {
+      .case-image-section--main-scenarios .case-image-section__content {
+        width: calc(100vw - var(--case-content-gutter) - var(--case-content-offset));
+        margin-left: var(--case-content-offset);
+        padding-left: 0;
+      }
     }
 
     .case-image-section--release {
@@ -2154,7 +2166,7 @@
 
       <div class="contacts__details" aria-label="Контактная информация">
         <p class="contacts__item contacts__item--email">
-          <span class="contacts__label">Email</span>
+          <span class="contacts__label">email</span>
           <a class="contacts__value" href="mailto:katya@mukha.design" title="Написать на email">katya@mukha.design</a>
         </p>
 
