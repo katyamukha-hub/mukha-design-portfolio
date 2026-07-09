@@ -100,6 +100,12 @@
       opacity: 0.5;
     }
 
+    .custom-cursor.is-on-hyperlink {
+      width: 24px;
+      height: 24px;
+      opacity: 0.5;
+    }
+
     .custom-cursor.is-on-light-control {
       background: #fff;
     }
@@ -120,6 +126,10 @@
     }
 
     .cursor-text-mask.is-on-section-link {
+      clip-path: circle(12px at var(--cursor-x, -100px) var(--cursor-y, -100px));
+    }
+
+    .cursor-text-mask.is-on-hyperlink {
       clip-path: circle(12px at var(--cursor-x, -100px) var(--cursor-y, -100px));
     }
 
@@ -1796,6 +1806,10 @@
       font-weight: 100 !important;
     }
 
+    .page .contacts__item--email .contacts__label {
+      font-weight: 400 !important;
+    }
+
     .telegram-link {
       position: relative;
       isolation: isolate;
@@ -2459,11 +2473,15 @@
         const elementUnderCursor = document.elementFromPoint(event.clientX, event.clientY);
         const isOnSectionLink = elementUnderCursor && elementUnderCursor.closest('.case-section-nav__link, .case-nav__link');
         const isOnLightControl = elementUnderCursor && elementUnderCursor.closest('.cv-button, .telegram-link');
+        const hyperlink = elementUnderCursor && elementUnderCursor.closest('a[href]');
+        const isOnHyperlink = Boolean(hyperlink);
 
         customCursor.classList.toggle('is-on-section-link', Boolean(isOnSectionLink));
         customCursor.classList.toggle('is-on-light-control', Boolean(isOnLightControl));
+        customCursor.classList.toggle('is-on-hyperlink', isOnHyperlink);
         cursorTextMask.classList.toggle('is-on-section-link', Boolean(isOnSectionLink));
         cursorTextMask.classList.toggle('is-on-light-control', Boolean(isOnLightControl));
+        cursorTextMask.classList.toggle('is-on-hyperlink', isOnHyperlink);
         cursorTextMask.style.setProperty('--cursor-x', `${event.clientX}px`);
         cursorTextMask.style.setProperty('--cursor-y', `${event.clientY}px`);
         cursorTextMask.classList.add('is-visible');
@@ -2471,8 +2489,8 @@
       });
 
       document.addEventListener('pointerleave', () => {
-        customCursor.classList.remove('is-visible', 'is-on-section-link', 'is-on-light-control');
-        cursorTextMask.classList.remove('is-visible', 'is-on-section-link', 'is-on-light-control');
+        customCursor.classList.remove('is-visible', 'is-on-section-link', 'is-on-light-control', 'is-on-hyperlink');
+        cursorTextMask.classList.remove('is-visible', 'is-on-section-link', 'is-on-light-control', 'is-on-hyperlink');
       });
 
       window.addEventListener('scroll', syncMaskScroll, { passive: true });

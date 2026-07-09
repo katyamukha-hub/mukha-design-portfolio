@@ -3972,6 +3972,10 @@
       font-weight: 100 !important;
     }
 
+    .site .contacts__item--email .contacts__label {
+      font-weight: 400 !important;
+    }
+
   
 
     /* Final hero hand: moves from the hero center, then gives one soft wave after the intro. */
@@ -4024,11 +4028,22 @@
     }
 
     .custom-cursor.is-visible.is-photo-link-hover {
-      opacity: 0.3;
+      opacity: 0.5;
       transform: translate(-50%, -50%) scale(1.2);
     }
 
     .cursor-text-mask.is-on-photo-link {
+      clip-path: circle(12px at var(--cursor-x, -100px) var(--cursor-y, -100px));
+    }
+
+    .custom-cursor.is-visible.is-on-hyperlink {
+      width: 24px;
+      height: 24px;
+      opacity: 0.5;
+      transform: translate(-50%, -50%);
+    }
+
+    .cursor-text-mask.is-on-hyperlink {
       clip-path: circle(12px at var(--cursor-x, -100px) var(--cursor-y, -100px));
     }
 
@@ -4761,14 +4776,18 @@
         const isOnContacts = elementUnderCursor && elementUnderCursor.closest('.contacts-section');
         const isOnLightControl = elementUnderCursor && elementUnderCursor.closest('.cv-button, .language-switch, .telegram-link, .case-preview__button');
         const isOnPhotoProjectLink = elementUnderCursor && elementUnderCursor.closest('.photo-project__more');
+        const hyperlink = elementUnderCursor && elementUnderCursor.closest('a[href]');
+        const isOnHyperlink = hyperlink && !hyperlink.closest('.case-preview__media');
 
         customCursor.classList.toggle('is-case-hover', Boolean(isOnCaseMedia));
         customCursor.classList.toggle('is-on-contacts', Boolean(isOnContacts));
         customCursor.classList.toggle('is-on-light-control', Boolean(isOnLightControl));
         customCursor.classList.toggle('is-photo-link-hover', Boolean(isOnPhotoProjectLink));
+        customCursor.classList.toggle('is-on-hyperlink', Boolean(isOnHyperlink));
         cursorTextMask.classList.toggle('is-on-contacts', Boolean(isOnContacts));
         cursorTextMask.classList.toggle('is-on-light-control', Boolean(isOnLightControl));
         cursorTextMask.classList.toggle('is-on-photo-link', Boolean(isOnPhotoProjectLink));
+        cursorTextMask.classList.toggle('is-on-hyperlink', Boolean(isOnHyperlink));
         cursorTextMask.classList.toggle('is-hidden-on-media', Boolean(isOnCaseMedia));
         cursorTextMask.style.setProperty('--cursor-x', `${event.clientX}px`);
         cursorTextMask.style.setProperty('--cursor-y', `${event.clientY}px`);
@@ -4777,8 +4796,8 @@
       });
 
       document.addEventListener('pointerleave', () => {
-        customCursor.classList.remove('is-visible', 'is-avatar-hover', 'is-case-hover', 'is-on-contacts', 'is-on-light-control', 'is-photo-link-hover');
-        cursorTextMask.classList.remove('is-visible', 'is-hidden-on-avatar', 'is-hidden-on-media', 'is-on-contacts', 'is-on-light-control', 'is-on-photo-link');
+        customCursor.classList.remove('is-visible', 'is-avatar-hover', 'is-case-hover', 'is-on-contacts', 'is-on-light-control', 'is-photo-link-hover', 'is-on-hyperlink');
+        cursorTextMask.classList.remove('is-visible', 'is-hidden-on-avatar', 'is-hidden-on-media', 'is-on-contacts', 'is-on-light-control', 'is-on-photo-link', 'is-on-hyperlink');
 
         if (hoverAvatar) {
           hoverAvatar.classList.remove('is-visible');
