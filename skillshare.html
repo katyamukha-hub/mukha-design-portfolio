@@ -778,6 +778,25 @@
       font-weight: 400 !important;
     }
 
+    .page a:not(.brand):not(.cv-button):not(.telegram-link) {
+      transition:
+        color 0.2s ease,
+        text-decoration-color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .page a:not(.brand):not(.cv-button):not(.telegram-link):hover,
+    .page a:not(.brand):not(.cv-button):not(.telegram-link):focus-visible {
+      color: #4267ff !important;
+      text-decoration-color: #4267ff !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .page .contacts__item--email .contacts__value {
+      font-weight: 100 !important;
+    }
+
     .telegram-link {
       position: relative;
       isolation: isolate;
