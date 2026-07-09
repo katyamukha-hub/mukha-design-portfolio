@@ -572,6 +572,10 @@
 
     .case-hero__media {
       grid-column: 1 / -1;
+      aspect-ratio: 1440 / 754;
+      overflow: hidden;
+      border-radius: 8px;
+      background: rgba(17, 17, 17, 0.08);
     }
 
     .case-animated-media {
@@ -616,9 +620,10 @@
 
     .case-hero__image {
       width: 100%;
+      height: 100%;
       display: block;
-      border-radius: 8px;
-      background: rgba(17, 17, 17, 0.08);
+      border-radius: inherit;
+      background: transparent;
       object-fit: cover;
     }
 
@@ -2161,7 +2166,7 @@
           <div class="case-hero__media case-animated-media">
             <video
               class="case-hero__image case-hero__video case-animated-media__video"
-              data-src="assets/images/avalike/avalike-case-hero.mp4"
+              data-src="assets/images/avalike/avalike-case-hero.webm"
               muted
               loop
               playsinline
