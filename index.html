@@ -57,7 +57,7 @@
       --hero-visual-center-shift: 64px;
       --section-heading-size: 56px;
       --section-heading-line-height: 0.95;
-      --case-cover-max: 1444px;
+      --case-cover-max: 1440px;
       --font-main: "CoFo Sans", Arial, Helvetica, sans-serif;
     }
 
@@ -4066,10 +4066,11 @@
         max-width: none;
         grid-template-columns: repeat(12, minmax(0, 1fr));
         column-gap: 20px;
+        align-items: start;
       }
 
       .site .case-preview__info {
-        grid-column: 1 / span 3;
+        grid-column: 1 / span 2;
         justify-self: stretch;
         width: 100%;
         max-width: none;
@@ -4102,16 +4103,21 @@
       .site .case-preview__media {
         grid-column: 4 / -1;
         justify-self: end;
-        width: 100%;
-        max-width: var(--case-cover-max);
+        align-self: start;
+        width: var(--case-cover-max) !important;
+        max-width: 100% !important;
         min-width: 0;
       }
 
       .site .case-preview__image,
       .site .case-animated-media__fallback,
       .site .case-animated-media__video {
-        width: 100%;
-        max-width: 100%;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
+      .site .case-animated-media__video {
+        height: 100% !important;
       }
 
       .site .contacts__intro {
@@ -4194,7 +4200,7 @@
             class="case-preview__image case-animated-media__fallback"
             src="assets/images/avalike/avalike-cover-960.webp"
             srcset="assets/images/avalike/avalike-cover-480.webp 480w, assets/images/avalike/avalike-cover-960.webp 960w, assets/images/avalike/avalike-cover-1440.webp 1440w, assets/images/avalike/avalike-cover-1920.webp 1920w"
-            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 75vw"
+            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 1440px"
             width="1920"
             height="1061"
             alt="Интерфейс платформы Avalike"
@@ -4226,7 +4232,7 @@
             class="case-preview__image"
             src="assets/images/skillshare/skillshare-cover-960.webp"
             srcset="assets/images/skillshare/skillshare-cover-480.webp 480w, assets/images/skillshare/skillshare-cover-960.webp 960w, assets/images/skillshare/skillshare-cover-1440.webp 1440w, assets/images/skillshare/skillshare-cover-1920.webp 1920w"
-            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 75vw"
+            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 1440px"
             width="1920"
             height="1227"
             alt="Интерфейс приложения Skillshare"
@@ -4258,7 +4264,7 @@
             class="case-preview__image"
             src="assets/images/mendi/mendi-cover-960.webp"
             srcset="assets/images/mendi/mendi-cover-480.webp 480w, assets/images/mendi/mendi-cover-960.webp 960w, assets/images/mendi/mendi-cover-1440.webp 1440w, assets/images/mendi/mendi-cover-1920.webp 1920w"
-            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 75vw"
+            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 1440px"
             width="1920"
             height="1222"
             alt="Интерфейс приложения Mendi"
@@ -4286,7 +4292,7 @@
             class="case-preview__image"
             src="assets/images/friends/friends-cover-960.webp"
             srcset="assets/images/friends/friends-cover-480.webp 480w, assets/images/friends/friends-cover-960.webp 960w, assets/images/friends/friends-cover-1440.webp 1440w, assets/images/friends/friends-cover-1920.webp 1920w"
-            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 75vw"
+            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 1440px"
             width="1920"
             height="870"
             alt="Постеры к фильму Дружи со мной нет"
