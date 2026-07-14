@@ -4251,6 +4251,31 @@
       margin-top: 32px;
     }
 
+
+    /* Final Avalike cover radius */
+    .site .case-preview--avalike .case-preview__media,
+    .site .case-preview--avalike .case-preview__image,
+    .site .case-preview--avalike .case-animated-media__fallback,
+    .site .case-preview--avalike .case-animated-media__video {
+      border-radius: 8px !important;
+    }
+
+    .site .case-preview--avalike .case-preview__media {
+      overflow: hidden;
+    }
+
+
+    /* Align the incoming hover arrow with the default arrow. */
+    .site .case-preview__button .case-preview__button-arrow {
+      transform: translateX(-10px) translateY(-50%) translateY(2px);
+    }
+
+    .site .case-preview__button:hover .case-preview__button-arrow,
+    .site .case-preview__button:focus-visible .case-preview__button-arrow,
+    .cursor-text-mask.is-on-light-control .case-preview__button-arrow {
+      transform: translateX(0) translateY(-50%) translateY(2px);
+    }
+
 </style>
 </head>
 <body>
@@ -4358,7 +4383,8 @@
             width="1920"
             height="1227"
             alt="Интерфейс приложения Skillshare"
-            loading="lazy"
+            loading="eager"
+            fetchpriority="low"
             decoding="async"
           />
         </a>
@@ -4390,7 +4416,8 @@
             width="1920"
             height="1222"
             alt="Интерфейс приложения Mendi"
-            loading="lazy"
+            loading="eager"
+            fetchpriority="low"
             decoding="async"
           />
         </a>
@@ -4418,7 +4445,8 @@
             width="1920"
             height="870"
             alt="Постеры к фильму Дружи со мной нет"
-            loading="lazy"
+            loading="eager"
+            fetchpriority="low"
             decoding="async"
           />
         </div>
@@ -4651,6 +4679,11 @@
     }
 
     const deferredMedia = document.querySelectorAll('.site [data-src]');
+    const avalikeAnimatedMedia = document.querySelector('.case-preview--avalike .case-animated-media');
+    const avalikeVideo = avalikeAnimatedMedia?.querySelector('.case-animated-media__video') || null;
+    const avalikeFallback = avalikeAnimatedMedia?.querySelector('.case-animated-media__fallback') || null;
+    const postalImages = Array.from(document.querySelectorAll('.photo-project__image[data-src]'));
+
     const markAnimatedVideoReady = (video) => {
       const animatedMedia = video.closest('.case-animated-media');
       if (animatedMedia) {
@@ -4764,6 +4797,10 @@
       deferredMedia.forEach((asset) => {
         if (asset.dataset.loaded === 'true' || asset.dataset.loaded === 'loading' || asset.dataset.loaded === 'failed') return;
 
+        // AvaLike video and post-office images have their own independent loaders.
+        // They must not wait for this viewport-based check.
+        if (asset === avalikeVideo || asset.classList.contains('photo-project__image')) return;
+
         const rect = asset.getBoundingClientRect();
         const preloadOffset = asset.closest('.case-preview--skillshare') ? 280 : 160;
         const isNearViewport = rect.top <= window.innerHeight + preloadOffset && rect.bottom >= -preloadOffset;
@@ -4773,6 +4810,70 @@
         }
       });
     };
+
+    const startAvalikeVideoAfterFallback = () => {
+      if (!avalikeVideo) return;
+
+      let hasStarted = false;
+      const startVideoDownload = () => {
+        if (hasStarted) return;
+        hasStarted = true;
+
+        // Start the WebM immediately after its PNG fallback is ready.
+        // loadDeferredMedia downloads the video independently and never blocks images.
+        loadDeferredMedia(avalikeVideo);
+      };
+
+      if (!avalikeFallback) {
+        startVideoDownload();
+        return;
+      }
+
+      if (avalikeFallback.complete && avalikeFallback.naturalWidth > 0) {
+        if (typeof avalikeFallback.decode === 'function') {
+          avalikeFallback.decode().catch(() => {}).finally(startVideoDownload);
+        } else {
+          startVideoDownload();
+        }
+        return;
+      }
+
+      avalikeFallback.addEventListener('load', startVideoDownload, { once: true });
+      avalikeFallback.addEventListener('error', startVideoDownload, { once: true });
+    };
+
+    const startPostalImagesInBackground = () => {
+      if (!postalImages.length) return;
+
+      let nextIndex = 0;
+      const batchSize = 4;
+
+      const loadNextBatch = () => {
+        const batch = postalImages.slice(nextIndex, nextIndex + batchSize);
+        nextIndex += batch.length;
+
+        batch.forEach((image) => {
+          image.loading = 'eager';
+          image.fetchPriority = 'low';
+          loadDeferredMedia(image);
+        });
+
+        if (nextIndex >= postalImages.length) return;
+
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(loadNextBatch, { timeout: 700 });
+        } else {
+          window.setTimeout(loadNextBatch, 140);
+        }
+      };
+
+      // Begin shortly after the critical AvaLike PNG has been requested.
+      // Small low-priority batches prevent dozens of photos from starving the video.
+      window.setTimeout(loadNextBatch, 250);
+    };
+
+    startAvalikeVideoAfterFallback();
+    startPostalImagesInBackground();
 
     window.addEventListener('pagehide', () => {
       deferredMedia.forEach((asset) => {
