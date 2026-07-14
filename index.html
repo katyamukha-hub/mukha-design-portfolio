@@ -57,7 +57,7 @@
       --hero-visual-center-shift: 64px;
       --section-heading-size: 56px;
       --section-heading-line-height: 0.95;
-      --case-cover-max: 1440px;
+      --case-cover-max: 1200px;
       --font-main: "CoFo Sans", Arial, Helvetica, sans-serif;
     }
 
@@ -4104,8 +4104,10 @@
         grid-column: 4 / -1;
         justify-self: end;
         align-self: start;
-        width: var(--case-cover-max) !important;
-        max-width: 100% !important;
+        width: min(100%, 1200px) !important;
+        max-width: 1200px !important;
+        inline-size: min(100%, 1200px) !important;
+        max-inline-size: 1200px !important;
         min-width: 0;
       }
 
@@ -4113,7 +4115,9 @@
       .site .case-animated-media__fallback,
       .site .case-animated-media__video {
         width: 100% !important;
-        max-width: 100% !important;
+        max-width: 1200px !important;
+        inline-size: 100% !important;
+        max-inline-size: 1200px !important;
       }
 
       .site .case-animated-media__video {
@@ -4126,6 +4130,83 @@
 
       .site .contacts__tagline {
         text-align: right;
+      }
+    }
+
+
+
+    /* Large screens: use 100% leading for all display headings. */
+    @media (min-width: 1441px) {
+      .site .brand__name,
+      .site .brand__role,
+      .site .case-preview__title,
+      .site .facts-section__title,
+      .site .fact-card__title,
+      .site .photo-project__title,
+      .site .contacts__title {
+        line-height: 1 !important;
+      }
+    }
+
+
+    /* Final case-card spacing: 8px tighter around the CTA on desktop. */
+    @media (min-width: 901px) {
+      .site .case-preview:not(.case-preview--friends) .case-preview__description {
+        margin-bottom: 24px;
+      }
+
+      .site .case-preview:not(.case-preview--friends) .case-preview__details {
+        margin-top: 32px;
+      }
+    }
+
+    /* Final desktop contacts composition. */
+    @media (min-width: 901px) {
+      .site > .contacts-section {
+        position: relative;
+        padding-top: 20px;
+      }
+
+      .site .contacts__title {
+        display: none;
+      }
+
+      .site .contacts__intro {
+        position: absolute;
+        top: 20px;
+        right: var(--page-x);
+        left: auto;
+        width: max-content;
+        max-width: 340px;
+        margin: 0;
+        text-align: right !important;
+      }
+
+      .site .contacts__details {
+        position: absolute;
+        top: 40px;
+        left: var(--page-x);
+        right: auto;
+        width: max-content;
+        max-width: calc(100% - var(--page-x) * 2);
+        display: grid;
+        grid-template-columns: max-content;
+        column-gap: 0;
+        row-gap: 36px;
+        margin: 0;
+      }
+
+      .site .contacts__item--email,
+      .site .contacts__item--cv {
+        grid-column: 1;
+        grid-row: auto;
+        justify-self: start;
+        transform: none;
+      }
+
+      .site .contacts__actions {
+        justify-content: flex-start;
+        margin-top: 0;
       }
     }
 
@@ -4189,7 +4270,8 @@
         <a class="case-preview__media case-animated-media" href="/avalike" aria-label="Открыть кейс Avalike">
           <video
             class="case-preview__image case-preview__video case-animated-media__video"
-            data-src="assets/images/avalike/avalike-cover.mp4"
+            data-src="assets/images/avalike/avalike-case-hero.webm"
+            data-wait-for-full-load="true"
             muted
             loop
             playsinline
@@ -4198,9 +4280,8 @@
           ></video>
           <img
             class="case-preview__image case-animated-media__fallback"
-            src="assets/images/avalike/avalike-cover-960.webp"
-            srcset="assets/images/avalike/avalike-cover-480.webp 480w, assets/images/avalike/avalike-cover-960.webp 960w, assets/images/avalike/avalike-cover-1440.webp 1440w, assets/images/avalike/avalike-cover-1920.webp 1920w"
-            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 1440px"
+            src="assets/images/avalike/avalike-case-hero.png"
+            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 1200px"
             width="1920"
             height="1061"
             alt="Интерфейс платформы Avalike"
@@ -4232,7 +4313,7 @@
             class="case-preview__image"
             src="assets/images/skillshare/skillshare-cover-960.webp"
             srcset="assets/images/skillshare/skillshare-cover-480.webp 480w, assets/images/skillshare/skillshare-cover-960.webp 960w, assets/images/skillshare/skillshare-cover-1440.webp 1440w, assets/images/skillshare/skillshare-cover-1920.webp 1920w"
-            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 1440px"
+            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 1200px"
             width="1920"
             height="1227"
             alt="Интерфейс приложения Skillshare"
@@ -4264,7 +4345,7 @@
             class="case-preview__image"
             src="assets/images/mendi/mendi-cover-960.webp"
             srcset="assets/images/mendi/mendi-cover-480.webp 480w, assets/images/mendi/mendi-cover-960.webp 960w, assets/images/mendi/mendi-cover-1440.webp 1440w, assets/images/mendi/mendi-cover-1920.webp 1920w"
-            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 1440px"
+            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 1200px"
             width="1920"
             height="1222"
             alt="Интерфейс приложения Mendi"
@@ -4292,7 +4373,7 @@
             class="case-preview__image"
             src="assets/images/friends/friends-cover-960.webp"
             srcset="assets/images/friends/friends-cover-480.webp 480w, assets/images/friends/friends-cover-960.webp 960w, assets/images/friends/friends-cover-1440.webp 1440w, assets/images/friends/friends-cover-1920.webp 1920w"
-            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 1440px"
+            sizes="(max-width: 480px) calc(100vw - 24px), (max-width: 900px) calc(100vw - 40px), 1200px"
             width="1920"
             height="870"
             alt="Постеры к фильму Дружи со мной нет"
@@ -4386,8 +4467,7 @@
       </div>
     </section>
 
-    <footer id="screen-contacts" class="contacts-section" aria-labelledby="contacts-title">
-      <h2 class="contacts__title" id="contacts-title">контакты</h2>
+    <footer id="screen-contacts" class="contacts-section" aria-label="Контакты">
       <p class="contacts__intro">
         Открыта к сотрудничеству<br />в Москве или удалённо
       </p>
@@ -4554,19 +4634,51 @@
       asset.addEventListener('error', () => markAnimatedVideoFailed(asset), { once: true });
     });
 
-    const loadDeferredMedia = (asset) => {
+    const loadDeferredMedia = async (asset) => {
+      if (asset.dataset.loaded === 'true' || asset.dataset.loaded === 'loading') return;
+
       if (asset.dataset.poster && !asset.getAttribute('poster')) {
         asset.setAttribute('poster', asset.dataset.poster);
       }
 
-      if (!asset.getAttribute('src')) {
-        const preferredSrc = window.matchMedia('(max-width: 760px)').matches && asset.dataset.srcMobile
-          ? asset.dataset.srcMobile
-          : asset.dataset.src;
+      const preferredSrc = window.matchMedia('(max-width: 760px)').matches && asset.dataset.srcMobile
+        ? asset.dataset.srcMobile
+        : asset.dataset.src;
 
-        if (preferredSrc) {
-          asset.setAttribute('src', preferredSrc);
+      if (!preferredSrc) return;
+
+      if (asset.tagName === 'VIDEO' && asset.dataset.waitForFullLoad === 'true') {
+        asset.dataset.loaded = 'loading';
+
+        try {
+          const response = await fetch(preferredSrc, { cache: 'force-cache' });
+
+          if (!response.ok) {
+            throw new Error(`Не удалось загрузить видео: ${response.status}`);
+          }
+
+          const videoBlob = await response.blob();
+          const videoObjectUrl = URL.createObjectURL(videoBlob);
+          asset.dataset.objectUrl = videoObjectUrl;
+          asset.setAttribute('src', videoObjectUrl);
+          asset.load();
+
+          const playPromise = asset.play();
+          if (playPromise) {
+            await playPromise;
+          }
+
+          asset.dataset.loaded = 'true';
+        } catch (error) {
+          asset.dataset.loaded = 'failed';
+          markAnimatedVideoFailed(asset);
         }
+
+        return;
+      }
+
+      if (!asset.getAttribute('src')) {
+        asset.setAttribute('src', preferredSrc);
       }
 
       asset.dataset.loaded = 'true';
@@ -4583,7 +4695,7 @@
 
     const loadVisibleDeferredMedia = () => {
       deferredMedia.forEach((asset) => {
-        if (asset.dataset.loaded === 'true') return;
+        if (asset.dataset.loaded === 'true' || asset.dataset.loaded === 'loading' || asset.dataset.loaded === 'failed') return;
 
         const rect = asset.getBoundingClientRect();
         const preloadOffset = asset.closest('.case-preview--skillshare') ? 280 : 160;
@@ -4594,6 +4706,14 @@
         }
       });
     };
+
+    window.addEventListener('pagehide', () => {
+      deferredMedia.forEach((asset) => {
+        if (asset.dataset.objectUrl) {
+          URL.revokeObjectURL(asset.dataset.objectUrl);
+        }
+      });
+    });
 
     if (deferredMedia.length) {
       let lazyMediaTicking = false;
