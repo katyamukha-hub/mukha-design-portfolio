@@ -4280,6 +4280,43 @@
       transform: translateX(0) translateY(-50%) translateY(2px);
     }
 
+    @media (min-width: 901px) {
+      .site .header {
+        left: var(--page-x);
+        right: var(--page-x);
+        width: auto;
+        margin: 0;
+      }
+    }
+
+    @media (min-width: 761px) and (max-width: 900px) {
+      .site .brand__name,
+      .site .brand__role,
+      .site .header.is-scrolled .brand__name,
+      .site .header.is-scrolled .brand__role {
+        font-size: 64px;
+        line-height: 48px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .site .case-preview__description,
+      .site .case-preview__details {
+        font-family: var(--font-main);
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 400;
+      }
+
+      .site .case-preview__description {
+        margin-bottom: 0;
+      }
+
+      .site .case-preview__details {
+        margin-top: 0;
+      }
+    }
+
 </style>
 </head>
 <body>
