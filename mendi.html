@@ -797,12 +797,12 @@
     .hypotheses-card {
       position: relative;
       min-height: 124px;
-      padding: 18px 18px 20px;
-      border-radius: 8px;
+      padding: 20px 32px 20px 24px;
+      border-radius: 14px;
       background: #fff;
       color: var(--blue);
       font-size: 15px;
-      line-height: 1.28;
+      line-height: 128%;
       font-weight: 400;
     }
 
@@ -810,55 +810,24 @@
       margin: 0;
     }
 
-    .hypotheses-card::after,
-    .hypotheses-card::before {
+    .hypotheses-card__icon {
       position: absolute;
-      top: -12px;
-      right: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      min-width: 24px;
-      max-width: 24px;
-      height: 24px;
-      min-height: 24px;
-      max-height: 24px;
-      padding: 0;
-      aspect-ratio: 1 / 1;
-      border-radius: 999px;
-      box-sizing: border-box;
-      flex: 0 0 24px;
+      top: 8px;
+      right: 8px;
+      display: block;
+      width: 16px;
+      height: 16px;
     }
 
-    .hypotheses-card::after {
-      content: "";
-    }
-
-    .hypotheses-card::before {
-      z-index: 1;
-      color: #fff;
-      font-size: 18px;
-      line-height: 24px;
+    .hypotheses-card__label {
+      display: block;
+      margin-bottom: 8px;
+      font-family: "CoFo Sans Medium", "CoFo Sans", Arial, Helvetica, sans-serif;
       font-weight: 400;
-      pointer-events: none;
     }
 
-    .hypotheses-card--positive::after {
-      background: #57c878;
-    }
-
-    .hypotheses-card--positive::before {
-      content: "✓";
-    }
-
-    .hypotheses-card--negative::after {
-      background: #ff8a2a;
-    }
-
-    .hypotheses-card--negative::before {
-      content: "−";
-      transform: translateY(-1px);
+    .hypotheses-card__status {
+      margin: 8px 0 0;
     }
 
     @media (max-width: 760px) {
@@ -869,22 +838,9 @@
 
       .hypotheses-card {
         min-height: 124px;
-        padding: 18px 18px 20px;
+        padding: 20px 32px 20px 24px;
         font-size: 15px;
-        line-height: 1.28;
-      }
-
-      .hypotheses-card::after,
-      .hypotheses-card::before {
-        top: -12px;
-        right: 16px;
-        width: 24px;
-        min-width: 24px;
-        max-width: 24px;
-        height: 24px;
-        min-height: 24px;
-        max-height: 24px;
-        font-size: 18px;
+        line-height: 128%;
       }
     }
 
@@ -2090,6 +2046,19 @@
       }
     }
 
+    @media (max-width: 1100px) and (min-width: 761px) {
+      .case-image-section__content,
+      .jtbd-section__content {
+        grid-column: 3 / span 8;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .case-image-section--main-scenarios .case-image--main-scenarios {
+        height: 250px;
+      }
+    }
+
     @media (min-width: 761px) and (max-width: 1000px) {
       .case-hero__title {
         font-size: 40px;
@@ -2250,23 +2219,38 @@
         <div class="case-image-section__content">
           <div class="hypotheses-board" aria-label="Карточки гипотез Mendi">
             <article class="hypotheses-card hypotheses-card--negative">
+              <span class="hypotheses-card__label">Гипотеза №1</span>
               <p>Мы полагаем, что пользователю важно хранить полный список когда-либо принятых лекарств, чтобы если будет нужно повторить курс</p>
+              <p class="hypotheses-card__status">Не подтвердилась.</p>
+              <img class="hypotheses-card__icon" src="assets/images/minus.svg" alt="Гипотеза не подтвердилась" />
             </article>
 
             <article class="hypotheses-card hypotheses-card--negative">
+              <span class="hypotheses-card__label">Гипотеза №2</span>
               <p>Мы полагаем, что пользователю важно иметь точные данные о&nbsp;приеме лекарств, чтобы отслеживать влияние улучшения и&nbsp;предоставлять точные данные лечащему врачу</p>
+              <p class="hypotheses-card__status">Не подтвердилась.</p>
+              <img class="hypotheses-card__icon" src="assets/images/minus.svg" alt="Гипотеза не подтвердилась" />
             </article>
 
             <article class="hypotheses-card hypotheses-card--positive">
+              <span class="hypotheses-card__label">Гипотеза №3</span>
               <p>Мы полагаем, что пользователю важно видеть список необходимых к&nbsp;приему лекарств с&nbsp;указанием дозировки и&nbsp;времени приема, чтобы ничего не&nbsp;перепутать</p>
+              <p class="hypotheses-card__status">Подтвердилась.</p>
+              <img class="hypotheses-card__icon" src="assets/images/check.svg" alt="Гипотеза подтвердилась" />
             </article>
 
             <article class="hypotheses-card hypotheses-card--positive">
+              <span class="hypotheses-card__label">Гипотеза №4</span>
               <p>Мы полагаем, что пользователю важно, чтобы процесс отмечания лекарств был простым и&nbsp;интуитивным</p>
+              <p class="hypotheses-card__status">Подтвердилась.</p>
+              <img class="hypotheses-card__icon" src="assets/images/check.svg" alt="Гипотеза подтвердилась" />
             </article>
 
             <article class="hypotheses-card hypotheses-card--negative">
+              <span class="hypotheses-card__label">Гипотеза №5</span>
               <p>Мы полагаем, что пользователю важно видеть прогресс по&nbsp;принимаемым лекарствам, чтобы понимать, какая часть курса уже пройдена</p>
+              <p class="hypotheses-card__status">Не подтвердилась.</p>
+              <img class="hypotheses-card__icon" src="assets/images/minus.svg" alt="Гипотеза не подтвердилась" />
             </article>
           </div>
         </div>

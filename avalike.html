@@ -44,7 +44,7 @@
       --link-hover: #454b4f;
       --page-x: 24px;
       --grid-gap: 20px;
-      --case-content-max: 1600px;
+      --case-content-max: 1444px;
       --case-content-frame: min(var(--case-content-max), calc(100vw - var(--page-x) * 2));
       --case-content-gutter: calc((100vw - var(--case-content-frame)) / 2);
       --case-content-column: calc((var(--case-content-frame) - var(--grid-gap) * 11) / 12);
@@ -2286,6 +2286,19 @@
       .case-nav,
       .case-section-nav {
         display: none !important;
+      }
+    }
+
+    @media (max-width: 1100px) and (min-width: 761px) {
+      .case-image-section__content,
+      .jtbd-section__content {
+        grid-column: 3 / span 8;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .case-image-section--main-scenarios .case-image--main-scenarios {
+        height: 300px;
       }
     }
 
