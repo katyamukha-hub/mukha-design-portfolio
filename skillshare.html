@@ -613,7 +613,7 @@
     }
 
     .case-hero__description--under-media {
-      margin: 24px 0 0;
+      margin: 32px 0 0;
     }
 
     .case-hero__image,
@@ -647,16 +647,20 @@
 
     .case-results-showcase__media {
       grid-column: 3 / span 3;
+      width: 301px;
     }
 
     .case-results-showcase__image {
-      width: 100%;
+      width: 301px;
+      height: 592px;
       display: block;
       border-radius: 8px;
+      object-fit: cover;
     }
 
     .case-results-showcase__content {
       grid-column: 6 / span 5;
+      margin-left: 28px;
     }
 
     .case-text-section,
@@ -895,6 +899,106 @@
       transform: translateY(-1px);
     }
 
+    .skillshare-hypotheses-section {
+      padding: 0 var(--page-x) 80px;
+      background: var(--bg);
+    }
+
+    .skillshare-hypotheses-section__inner {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--grid-gap);
+      width: var(--case-content-frame);
+      margin: 0 auto;
+    }
+
+    .skillshare-hypotheses-section__title {
+      grid-column: 3 / span 8;
+      margin: 0 0 32px;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-size: 48px;
+      line-height: 1.1;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .skillshare-hypotheses-grid {
+      grid-column: 3 / span 8;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .skillshare-hypothesis {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .skillshare-hypothesis__card {
+      position: relative;
+      padding: 20px 32px 20px 24px;
+      border-radius: 14px;
+      background: #fff;
+      color: var(--blue);
+      font-size: 15px;
+      line-height: 128%;
+      font-weight: 400;
+    }
+
+    .skillshare-hypothesis__card p {
+      margin: 0;
+    }
+
+    .skillshare-hypothesis__label {
+      display: block;
+      margin-bottom: 8px;
+      font-family: "CoFo Sans Medium", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-weight: 400;
+    }
+
+    .skillshare-hypothesis__result {
+      min-height: 120px;
+      padding-right: 40px;
+      background: #fff;
+      color: var(--blue);
+    }
+
+    .skillshare-hypothesis__icon {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    @media (max-width: 760px) {
+      .skillshare-hypotheses-section {
+        padding-bottom: 56px;
+      }
+
+      .skillshare-hypotheses-section__title {
+        grid-column: 1 / -1;
+        font-size: 32px;
+      }
+
+      .skillshare-hypotheses-grid {
+        grid-column: 1 / -1;
+        grid-template-columns: 1fr;
+      }
+
+      .skillshare-hypothesis__card {
+        font-size: 15px;
+        line-height: 128%;
+      }
+
+      .skillshare-hypothesis {
+        gap: 4px;
+      }
+    }
+
     @media (max-width: 760px) {
       .hypotheses-board {
         grid-template-columns: 1fr;
@@ -1123,6 +1227,16 @@
 
       .case-results-showcase__media {
         max-width: 420px;
+        width: auto;
+      }
+
+      .case-results-showcase__image {
+        width: 100%;
+        height: auto;
+      }
+
+      .case-results-showcase__content {
+        margin-left: 0;
       }
 
       .case-hero__title {
@@ -2012,6 +2126,7 @@
             <li><a class="case-section-nav__link" href="#double-diamond-title" data-section-target="double-diamond-title">Double Diamond</a></li>
             <li><a class="case-section-nav__link" href="#interviews-title" data-section-target="interviews-title">Глубинные интервью</a></li>
             <li><a class="case-section-nav__link" href="#competitive-title" data-section-target="competitive-title">Конкурентный анализ</a></li>
+            <li><a class="case-section-nav__link" href="#hypotheses-title" data-section-target="hypotheses-title">Проверка гипотез</a></li>
             <li><a class="case-section-nav__link" href="#journey-title" data-section-target="journey-title">User Journey Map</a></li>
             <li><a class="case-section-nav__link" href="#wireframes-title" data-section-target="wireframes-title">Вайрфреймы</a></li>
           </ul>
@@ -2050,7 +2165,7 @@
     <section class="case-results-showcase" aria-labelledby="results-title">
       <div class="case-results-showcase__grid">
         <div class="case-results-showcase__media">
-          <img class="case-results-showcase__image" src="assets/images/skillshare/skillshare-cover-960.png" alt="Экраны приложения Skillshare" loading="lazy" decoding="async" />
+          <img class="case-results-showcase__image" src="assets/images/skillshare/skillshare-results.png" alt="Результаты проекта Skillshare" loading="lazy" decoding="async" />
         </div>
 
         <div class="case-results-showcase__content">
@@ -2124,6 +2239,81 @@
       <div class="case-image-section__grid">
         <div class="case-image-section__content">
           <img class="case-image case-image--competitive-analysis" src="assets/images/skillshare/skillshare-competitive-analysis.png" alt="Конкурентный анализ Skillshare" loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </section>
+
+    <section class="skillshare-hypotheses-section" aria-labelledby="hypotheses-title">
+      <div class="skillshare-hypotheses-section__inner">
+        <h2 class="skillshare-hypotheses-section__title" id="hypotheses-title">Проверка гипотез</h2>
+
+        <div class="skillshare-hypotheses-grid">
+          <article class="skillshare-hypothesis">
+            <div class="skillshare-hypothesis__card">
+              <span class="skillshare-hypothesis__label">Гипотеза №1</span>
+              <p>Если дать пользователям большой выбор мастер-классов по разным хобби, у них появится мотивация пробовать новые занятия и развивать свои навыки.</p>
+            </div>
+            <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
+              <img class="skillshare-hypothesis__icon" src="assets/images/check.svg" alt="Гипотеза подтверждена" />
+              <p>Подтвердилась. Обычно у пользователей уже есть конкретный запрос и они ищут, где его реализовать. Но кто-то ждет, пока его «зацепит», и это вполне может произойти в каталоге такого приложения. И чем больше выбор курсов, тем больше шансов, что человек подберет то, что ему интересно.</p>
+            </div>
+          </article>
+
+          <article class="skillshare-hypothesis">
+            <div class="skillshare-hypothesis__card">
+              <span class="skillshare-hypothesis__label">Гипотеза №2</span>
+              <p>Если придумать, как отслеживать прогресс и достижения, у пользователей появится мотивация заниматься хобби и достигать новых результатов.</p>
+            </div>
+            <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
+              <img class="skillshare-hypothesis__icon" src="assets/images/check.svg" alt="Гипотеза подтверждена" />
+              <p>Подтвердилась. Оценка своего прогресса важна для пользователей.</p>
+            </div>
+          </article>
+
+          <article class="skillshare-hypothesis">
+            <div class="skillshare-hypothesis__card">
+              <span class="skillshare-hypothesis__label">Гипотеза №3</span>
+              <p>Если создать возможность обмениваться навыками и своей экспертностью, пользователи начнут предлагать онлайн-уроки по интересным для себя темам.</p>
+            </div>
+            <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
+              <img class="skillshare-hypothesis__icon" src="assets/images/check.svg" alt="Гипотеза подтверждена" />
+              <p>Подтвердилась, но с оговорками. В основном пользователи готовы тратить время на то, чтобы делиться своими навыками, когда четко понимают, что за это получат (деньги, рекламу, новые полезные знакомства, какое-то иное весомое поощрение).</p>
+            </div>
+          </article>
+
+          <article class="skillshare-hypothesis">
+            <div class="skillshare-hypothesis__card">
+              <span class="skillshare-hypothesis__label">Гипотеза №4</span>
+              <p>Если дать возможность участвовать в групповых занятиях, удастся вовлечь пользователей в обучение, они будут обмениваться опытом и создавать сообщества по интересам.</p>
+            </div>
+            <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
+              <img class="skillshare-hypothesis__icon" src="assets/images/check.svg" alt="Гипотеза подтверждена" />
+              <p>Подтвердилась. Для пользователя важна обратная связь от других пользователей, возможность коммуникации и наличие комьюнити, где можно обсудить свои интересы и задать вопросы.</p>
+            </div>
+          </article>
+
+          <article class="skillshare-hypothesis">
+            <div class="skillshare-hypothesis__card">
+              <span class="skillshare-hypothesis__label">Гипотеза №5</span>
+              <p>Если пользователи будут видеть наглядный результат, который можно достичь, пройдя мастер-класс (в виде примеров работ преподавателя и студентов), то он с большей вероятностью захочет им воспользоваться.</p>
+            </div>
+            <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
+              <img class="skillshare-hypothesis__icon" src="assets/images/check.svg" alt="Гипотеза подтверждена" />
+              <p>Подтвердилась. Пользователю важно видеть результаты работы других пользователей до покупки курса. Это может послужить источником вдохновения, и мотивацией пройти курс.</p>
+            </div>
+          </article>
+
+          <article class="skillshare-hypothesis">
+            <div class="skillshare-hypothesis__card">
+              <span class="skillshare-hypothesis__label">Гипотеза №6</span>
+              <p>Если помочь пользователю понять, что ему подойдет (например, с помощью теста на тип личности), он быстрее и с большей вероятностью найдет для себя что-то интересное.</p>
+            </div>
+            <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
+              <img class="skillshare-hypothesis__icon" src="assets/images/minus.svg" alt="Гипотеза не подтвердилась" />
+              <p>Скорее не подтвердилась — пользователь приходит в приложение на платформу уже с довольно четким запросом и не чувствует потребности в тестах/подсказках.</p>
+            </div>
+          </article>
+
         </div>
       </div>
     </section>
