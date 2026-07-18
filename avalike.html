@@ -625,6 +625,7 @@
 
     .case-hero__description--under-media {
       margin: 24px 0 0;
+      grid-column: 1 / -1;
     }
 
     .case-hero__image {
@@ -1997,7 +1998,7 @@
     }
 
     .case-section-heading--research .case-section-heading__content {
-      grid-column: 3 / span 8;
+      grid-column: 3 / span 6;
     }
 
     .case-section-heading--research .case-section-heading__title {
@@ -2259,6 +2260,49 @@
       margin-top: 20px;
     }
 
+    .case-hero {
+      min-height: auto;
+      padding-bottom: 32px;
+    }
+
+    .case-section-heading--research .case-section-heading__content {
+      justify-self: start;
+      margin-left: 0;
+      transform: none;
+    }
+
+    .case-split-section__title {
+      margin: 0 0 20px;
+      font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-size: 36px;
+      line-height: 1;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    @media (max-width: 760px) {
+      .case-split-section__title {
+        font-size: 36px;
+        line-height: 1;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .case-split-section__title {
+        font-size: 28px;
+        line-height: 1;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .case-text-section,
+      .case-section-heading,
+      .case-image-section,
+      .jtbd-section {
+        padding-bottom: 32px;
+      }
+    }
+
     @media (min-width: 761px) and (max-width: 1200px) {
       .case-text-section__content,
       .case-section-heading__content,
@@ -2299,6 +2343,18 @@
     @media (max-width: 760px) {
       .case-image-section--main-scenarios .case-image--main-scenarios {
         height: 300px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .case-section-heading--research .case-section-heading__content {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 800px) {
+      :root {
+        --page-x: 16px;
       }
     }
 
@@ -2362,8 +2418,6 @@
           </ul>
         </nav>
 
-        <button class="back-to-top" type="button" aria-label="Наверх">↑</button>
-
         <div class="case-hero__content">
           <div class="case-hero__text case-hero__text--title-only">
             <p class="case-hero__eyebrow">Avalike • AI characters platform • 2025/26</p>
@@ -2389,10 +2443,11 @@
               fetchpriority="high"
             />
 
-            <p class="case-hero__description case-hero__description--under-media">
-              Avalike — ранний стартап и&nbsp;маркетплейс AI-персонажей: пользователи находят и&nbsp;общаются с&nbsp;персонажами в&nbsp;чате, а&nbsp;креаторы создают, публикуют и&nbsp;монетизируют их.
-            </p>
           </div>
+
+          <p class="case-hero__description case-hero__description--under-media">
+            Avalike — ранний стартап и&nbsp;маркетплейс AI-персонажей: пользователи находят и&nbsp;общаются с&nbsp;персонажами в&nbsp;чате, а&nbsp;креаторы создают, публикуют и&nbsp;монетизируют их.
+          </p>
         </div>
       </div>
     </section>
