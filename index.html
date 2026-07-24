@@ -541,8 +541,8 @@
       margin: 0 auto;
       max-width: none;
       font-family: var(--font-main);
-      font-size: 17px;
-      line-height: 1.2;
+      font-size: 18px;
+      line-height: 120%;
       font-weight: 600;
       letter-spacing: 0;
       text-align: center;
@@ -1575,8 +1575,8 @@
       }
 
       .hero__title {
-        font-size: 17px;
-        line-height: 1.2;
+        font-size: 18px;
+        line-height: 120%;
       }
 
       .hero__meta {
@@ -1962,6 +1962,12 @@
       height: 52px;
     }
 
+    .site .cv-button,
+    .site .telegram-link,
+    .site .case-preview__button {
+      font-size: 16px;
+    }
+
     .site .case-preview__button {
       display: inline-flex;
       align-items: center;
@@ -2049,6 +2055,7 @@
     .site .case-preview__details {
       max-width: 250px;
       margin: 40px 0 0;
+      position: relative;
       font-family: var(--font-main);
       font-size: 16px;
       line-height: 115%;
@@ -2056,11 +2063,20 @@
       color: var(--blue);
     }
 
+    .site .case-preview__description {
+      transform: translateY(8px);
+    }
+
+    .site .case-preview__info {
+      transform: translateY(8px);
+    }
+
     .site .case-preview__bullets {
       list-style: none;
       padding: 0;
       margin: 0 0 1em;
       opacity: 0.5;
+      transform: translateY(-8px);
     }
 
     .site .case-preview__bullets li {
@@ -3767,7 +3783,7 @@
       }
 
       .site .case-preview__media {
-        grid-column: 5 / -1;
+        grid-column: 4 / -1;
       }
 
       .site .case-preview__info {
@@ -3776,7 +3792,7 @@
 
       .site .case-preview__title {
         margin-bottom: 8px;
-        font-size: 56px;
+        font-size: 48px;
         line-height: 60px;
       }
 
@@ -3914,7 +3930,7 @@
     .site .case-preview__button:focus-visible .case-preview__button-arrow,
     .cursor-text-mask.is-on-light-control .case-preview__button-arrow {
       opacity: 1;
-      transform: translateX(0) translateY(-50%) translateY(-1px);
+      transform: translateX(0) translateY(-50%) translateY(-2px);
     }
 
     .telegram-link__text,
@@ -3947,7 +3963,7 @@
       opacity: 1;
       font-size: 0.94em;
       line-height: 1;
-      transform: translateX(0) translateY(1px);
+      transform: translateX(0) translateY(0);
       transition:
         opacity 0.32s ease,
         transform 0.46s cubic-bezier(0.22, 1, 0.36, 1);
@@ -4128,7 +4144,7 @@
       }
 
       .site .case-preview__media {
-        grid-column: 5 / -1;
+        grid-column: 4 / -1;
         justify-self: end;
         align-self: start;
         width: min(100%, 1200px) !important;
@@ -4183,11 +4199,11 @@
       }
 
       .site .case-preview:not(.case-preview--friends) .case-preview__details {
-        margin-top: 40px;
+        margin-top: 36px;
       }
 
       .site .case-preview:not(.case-preview--friends) .case-preview__button {
-        margin-top: 40px;
+        margin-top: 36px;
       }
     }
 
@@ -4262,13 +4278,13 @@
     }
 
     .site .case-preview__button::after {
-      transform: translateX(0) translateY(2px);
+      transform: translateX(0) translateY(1px);
     }
 
     .site .case-preview__button:hover::after,
     .site .case-preview__button:focus-visible::after,
     .cursor-text-mask.is-on-light-control .case-preview__button::after {
-      transform: translateX(10px) translateY(2px);
+      transform: translateX(10px) translateY(1px);
     }
 
     .site .case-preview:not(.case-preview--friends) .case-preview__details {
@@ -4280,7 +4296,7 @@
     }
 
     .site .case-preview:not(.case-preview--friends) .case-preview__button {
-      margin-top: 40px;
+      margin-top: 36px;
     }
 
 
@@ -4294,18 +4310,31 @@
 
     .site .case-preview--avalike .case-preview__media {
       overflow: hidden;
+      clip-path: inset(0 round 8px);
+    }
+
+    .site .case-preview--avalike .case-preview__media > *,
+    .site .case-preview--avalike .case-preview__media picture {
+      border-radius: 8px !important;
+      overflow: hidden;
+      clip-path: inset(0 round 8px);
+    }
+
+    .site .case-preview:not(.case-preview--friends) .case-preview__button {
+      position: relative;
+      left: -4px;
     }
 
 
     /* Align the incoming hover arrow with the default arrow. */
     .site .case-preview__button .case-preview__button-arrow {
-      transform: translateX(-10px) translateY(-50%) translateY(-1px);
+      transform: translateX(-10px) translateY(-50%) translateY(-2px);
     }
 
     .site .case-preview__button:hover .case-preview__button-arrow,
     .site .case-preview__button:focus-visible .case-preview__button-arrow,
     .cursor-text-mask.is-on-light-control .case-preview__button-arrow {
-      transform: translateX(0) translateY(-50%) translateY(-1px);
+      transform: translateX(0) translateY(-50%) translateY(-2px);
     }
 
     @media (min-width: 901px) {
