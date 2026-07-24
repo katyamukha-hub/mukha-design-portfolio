@@ -2043,7 +2043,7 @@
       font-size: 0.94em;
       line-height: 1;
       pointer-events: none;
-      transform: translateX(-10px) translateY(-50%) translateY(1px);
+      transform: translateX(-10px) translateY(-50%) translateY(-1px);
       transition:
         opacity 0.32s ease,
         transform 0.46s cubic-bezier(0.22, 1, 0.36, 1);
@@ -2053,18 +2053,19 @@
     .telegram-link:focus-visible .telegram-link__arrow,
     .cursor-text-mask.is-on-light-control .telegram-link__arrow {
       opacity: 1;
-      transform: translateX(0) translateY(-50%) translateY(1px);
+      transform: translateX(0) translateY(-50%) translateY(-1px);
     }
 
     .telegram-link__text {
       display: inline-block;
+      transform: translateY(-1px);
       transition: transform 0.46s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .telegram-link:hover .telegram-link__text,
     .telegram-link:focus-visible .telegram-link__text,
     .cursor-text-mask.is-on-light-control .telegram-link__text {
-      transform: translateX(calc(0.94em + 8px));
+      transform: translateX(calc(0.94em + 8px)) translateY(-1px);
     }
 
     .telegram-link::after {

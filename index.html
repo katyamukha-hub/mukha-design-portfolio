@@ -3763,6 +3763,14 @@
       }
 
       .site .case-preview__info {
+        grid-column: 1 / span 3;
+      }
+
+      .site .case-preview__media {
+        grid-column: 5 / -1;
+      }
+
+      .site .case-preview__info {
         padding-top: 0;
       }
 
@@ -3773,7 +3781,7 @@
       }
 
       .site .case-preview__description {
-        margin: 0 0 32px;
+        margin: 0;
         font-size: 16px;
         line-height: 115%;
       }
@@ -3782,6 +3790,10 @@
         margin: 40px 0 0;
         font-size: 16px;
         line-height: 115%;
+      }
+
+      .site .case-preview:not(.case-preview--friends) .case-preview__button {
+        margin-top: 36px;
       }
 
       .site .photo-project__description {
@@ -3889,7 +3901,7 @@
       font-size: 0.94em;
       line-height: 1;
       pointer-events: none;
-      transform: translateX(-10px) translateY(-50%) translateY(1px);
+      transform: translateX(-10px) translateY(-50%) translateY(-1px);
       transition:
         opacity 0.32s ease,
         transform 0.46s cubic-bezier(0.22, 1, 0.36, 1);
@@ -3902,12 +3914,13 @@
     .site .case-preview__button:focus-visible .case-preview__button-arrow,
     .cursor-text-mask.is-on-light-control .case-preview__button-arrow {
       opacity: 1;
-      transform: translateX(0) translateY(-50%) translateY(1px);
+      transform: translateX(0) translateY(-50%) translateY(-1px);
     }
 
     .telegram-link__text,
     .case-preview__button-text {
       display: inline-block;
+      transform: translateY(-1px);
       transition: transform 0.46s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
@@ -3917,7 +3930,7 @@
     .site .case-preview__button:hover .case-preview__button-text,
     .site .case-preview__button:focus-visible .case-preview__button-text,
     .cursor-text-mask.is-on-light-control .case-preview__button-text {
-      transform: translateX(calc(0.94em + 8px));
+      transform: translateX(calc(0.94em + 8px)) translateY(-1px);
     }
 
     .site .case-preview__button::before {
@@ -3951,6 +3964,10 @@
         color 0.2s ease,
         background-color 0.2s ease,
         transform 0.2s ease;
+    }
+
+    .site .case-preview--friends .case-preview__title {
+      line-height: 0.855;
     }
 
     .site .case-preview__button::after {
@@ -4080,7 +4097,7 @@
       }
 
       .site .case-preview__info {
-        grid-column: 1 / span 2;
+        grid-column: 1 / span 3;
         justify-self: stretch;
         width: 100%;
         max-width: none;
@@ -4111,7 +4128,7 @@
       }
 
       .site .case-preview__media {
-        grid-column: 4 / -1;
+        grid-column: 5 / -1;
         justify-self: end;
         align-self: start;
         width: min(100%, 1200px) !important;
@@ -4162,11 +4179,22 @@
     /* Final case-card spacing: 8px tighter around the CTA on desktop. */
     @media (min-width: 901px) {
       .site .case-preview:not(.case-preview--friends) .case-preview__description {
-        margin-bottom: 24px;
+        margin-bottom: 0;
       }
 
       .site .case-preview:not(.case-preview--friends) .case-preview__details {
-        margin-top: 32px;
+        margin-top: 40px;
+      }
+
+      .site .case-preview:not(.case-preview--friends) .case-preview__button {
+        margin-top: 40px;
+      }
+    }
+
+    @media (min-width: 901px) and (max-width: 1200px) {
+      .site .case-preview__title {
+        font-size: 48px;
+        line-height: 0.95;
       }
     }
 
@@ -4224,13 +4252,13 @@
 
     /* Final case CTA order and optical alignment. */
     .site .case-preview__button-text {
-      transform: translateY(1px);
+      transform: translateY(-1px);
     }
 
     .site .case-preview__button:hover .case-preview__button-text,
     .site .case-preview__button:focus-visible .case-preview__button-text,
     .cursor-text-mask.is-on-light-control .case-preview__button-text {
-      transform: translateX(calc(0.94em + 8px)) translateY(1px);
+      transform: translateX(calc(0.94em + 8px)) translateY(-1px);
     }
 
     .site .case-preview__button::after {
@@ -4244,7 +4272,7 @@
     }
 
     .site .case-preview:not(.case-preview--friends) .case-preview__details {
-      margin-top: 0;
+      margin-top: 40px;
     }
 
     .site .case-preview:not(.case-preview--friends) .case-preview__bullets {
@@ -4252,7 +4280,7 @@
     }
 
     .site .case-preview:not(.case-preview--friends) .case-preview__button {
-      margin-top: 32px;
+      margin-top: 40px;
     }
 
 
@@ -4271,13 +4299,13 @@
 
     /* Align the incoming hover arrow with the default arrow. */
     .site .case-preview__button .case-preview__button-arrow {
-      transform: translateX(-10px) translateY(-50%) translateY(2px);
+      transform: translateX(-10px) translateY(-50%) translateY(-1px);
     }
 
     .site .case-preview__button:hover .case-preview__button-arrow,
     .site .case-preview__button:focus-visible .case-preview__button-arrow,
     .cursor-text-mask.is-on-light-control .case-preview__button-arrow {
-      transform: translateX(0) translateY(-50%) translateY(2px);
+      transform: translateX(0) translateY(-50%) translateY(-1px);
     }
 
     @media (min-width: 901px) {
@@ -4407,6 +4435,7 @@
         <div class="case-preview__info">
           <h2 class="case-preview__title" id="avalike-title"><a class="case-preview__title-link" href="/avalike">avalike —</a></h2>
           <p class="case-preview__description">Платформа для создания, поиска и&nbsp;монетизации AI-агентов</p>
+          <a class="case-preview__button" href="/avalike"><span class="case-preview__button-arrow" aria-hidden="true">→</span><span class="case-preview__button-text">Смотреть&nbsp;кейс</span></a>
           <div class="case-preview__details">
             <ul class="case-preview__bullets">
               <li>product designer</li>
@@ -4415,7 +4444,6 @@
               <li class="case-preview__bullet-year">2025/26</li>
             </ul>
           </div>
-          <a class="case-preview__button" href="/avalike"><span class="case-preview__button-arrow" aria-hidden="true">→</span><span class="case-preview__button-text">Смотреть&nbsp;кейс</span></a>
         </div>
 
         <a class="case-preview__media case-animated-media" href="/avalike" aria-label="Открыть кейс Avalike">
@@ -4448,6 +4476,7 @@
         <div class="case-preview__info">
           <h2 class="case-preview__title" id="skillshare-title"><a class="case-preview__title-link" href="/skillshare">skillshare —</a></h2>
           <p class="case-preview__description">Приложение для поиска хобби</p>
+          <a class="case-preview__button" href="/skillshare"><span class="case-preview__button-arrow" aria-hidden="true">→</span><span class="case-preview__button-text">Смотреть&nbsp;кейс</span></a>
           <div class="case-preview__details">
             <ul class="case-preview__bullets">
               <li>product designer</li>
@@ -4456,7 +4485,6 @@
               <li class="case-preview__bullet-year">2025/26</li>
             </ul>
           </div>
-          <a class="case-preview__button" href="/skillshare"><span class="case-preview__button-arrow" aria-hidden="true">→</span><span class="case-preview__button-text">Смотреть&nbsp;кейс</span></a>
         </div>
 
         <a class="case-preview__media" href="/skillshare" aria-label="Открыть кейс Skillshare">
@@ -4481,6 +4509,7 @@
         <div class="case-preview__info">
           <h2 class="case-preview__title" id="mendi-title"><a class="case-preview__title-link" href="/mendi">mendi —</a></h2>
           <p class="case-preview__description">Приложение, которое помогает следить за&nbsp;приёмом лекарств</p>
+          <a class="case-preview__button" href="/mendi"><span class="case-preview__button-arrow" aria-hidden="true">→</span><span class="case-preview__button-text">Смотреть&nbsp;кейс</span></a>
           <div class="case-preview__details">
             <ul class="case-preview__bullets">
               <li>product designer</li>
@@ -4489,7 +4518,6 @@
               <li class="case-preview__bullet-year">2025/26</li>
             </ul>
           </div>
-          <a class="case-preview__button" href="/mendi"><span class="case-preview__button-arrow" aria-hidden="true">→</span><span class="case-preview__button-text">Смотреть&nbsp;кейс</span></a>
         </div>
 
         <a class="case-preview__media" href="/mendi" aria-label="Открыть кейс Mendi">
