@@ -799,7 +799,7 @@
       min-height: 124px;
       padding: 20px 32px 20px 24px;
       border-radius: 14px;
-      background: #fff;
+      background: var(--bg);
       color: var(--blue);
       font-size: 15px;
       line-height: 128%;
@@ -1832,7 +1832,7 @@
       font-size: 0.94em;
       line-height: 1;
       pointer-events: none;
-      transform: translateX(-10px) translateY(-50%) translateY(-2px);
+      transform: translateX(-10px) translateY(-50%) translateY(1px);
       transition:
         opacity 0.32s ease,
         transform 0.46s cubic-bezier(0.22, 1, 0.36, 1);
@@ -1842,19 +1842,18 @@
     .telegram-link:focus-visible .telegram-link__arrow,
     .cursor-text-mask.is-on-light-control .telegram-link__arrow {
       opacity: 1;
-      transform: translateX(0) translateY(-50%) translateY(-2px);
+      transform: translateX(0) translateY(-50%) translateY(1px);
     }
 
     .telegram-link__text {
       display: inline-block;
-      transform: translateY(-1px);
       transition: transform 0.46s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .telegram-link:hover .telegram-link__text,
     .telegram-link:focus-visible .telegram-link__text,
     .cursor-text-mask.is-on-light-control .telegram-link__text {
-      transform: translateX(calc(0.94em + 8px)) translateY(-1px);
+      transform: translateX(calc(0.94em + 8px));
     }
 
     .telegram-link::after {
@@ -1866,7 +1865,7 @@
       opacity: 1;
       font-size: 0.94em;
       line-height: 1;
-      transform: translateX(0) translateY(0);
+      transform: translateX(0) translateY(1px);
       transition:
         opacity 0.32s ease,
         transform 0.46s cubic-bezier(0.22, 1, 0.36, 1);
@@ -2073,20 +2072,199 @@
       }
     }
 
-    .cv-button,
++    .cv-button,
     .telegram-link {
       height: 49px;
     }
 
-</style>
-    <style>
-      .cv-button,
-      .case-preview__button,
-      .telegram-link {
-        font-size: 15px !important;
+  </style>
+  <style>
+    .cv-button,
+    .case-preview__button,
+    .telegram-link {
+      font-size: 15px !important;
+    }
+
+    /* Footer copied from the home page. */
+    .page > .contacts-section {
+      position: relative;
+      min-height: auto;
+      padding: 8px var(--page-x) 20px;
+      background: var(--bg);
+      color: var(--blue);
+    }
+
+    .page > .contacts-section::before,
+    .page .contacts__item--tel {
+      display: none;
+      content: none;
+    }
+
+    .page .contacts__details {
+      position: static;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: auto;
+      max-width: none;
+      margin: 40px 0 0;
+      row-gap: 0;
+    }
+
+    .page .contacts__item,
+    .page .contacts__item--email,
+    .page .contacts__item--cv {
+      grid-column: auto;
+      grid-row: auto;
+      margin: 0;
+      transform: none;
+    }
+
+    .page .contacts__item--email .contacts__value {
+      position: relative;
+      top: 0;
+      left: 0;
+      display: inline-block;
+      font-family: var(--font-main);
+      font-size: 42px;
+      line-height: 0.95;
+      font-weight: 100 !important;
+      letter-spacing: 0;
+      color: var(--blue);
+      white-space: nowrap;
+    }
+
+    .page .contacts__details .contacts__intro {
+      position: static;
+      inset: auto;
+      width: auto;
+      max-width: 340px;
+      margin: 16px 0 0;
+      font-family: var(--font-main);
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 400;
+      color: var(--blue);
+      text-align: left;
+    }
+
+    .page .contacts__details .contacts__actions {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 8px;
+      margin-top: 36px;
+    }
+
+    .page .contacts__cv-button,
+    .page .contacts__telegram-button {
+      height: 56px;
+    }
+
+    .page .contacts__telegram-button {
+      background: #fff;
+    }
+
+    .page .contacts__year,
+    .page .contacts__tagline {
+      position: static;
+      display: block;
+      margin-top: 40px;
+      font-family: var(--font-main);
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 400;
+      color: var(--blue);
+      text-align: left;
+    }
+
+    .page .contacts__tagline {
+      margin-top: 8px;
+    }
+
+    @media (min-width: 1001px) {
+      .page > .contacts-section {
+        height: 494px;
+        min-height: 494px;
+        padding-top: 20px;
+        padding-bottom: 16px;
       }
-    </style>
-  </head>
+
+      .page .contacts__details {
+        position: absolute;
+        top: 40px;
+        left: var(--page-x);
+        right: auto;
+        width: max-content;
+        max-width: calc(100% - var(--page-x) * 2);
+        margin: 0;
+      }
+
+      .page .contacts__item--email .contacts__value {
+        font-size: 48px;
+        line-height: 60px;
+      }
+
+      .page .contacts__cv-button,
+      .page .contacts__telegram-button {
+        height: 52px;
+      }
+
+      .page .contacts__year,
+      .page .contacts__tagline {
+        position: absolute;
+        bottom: 16px;
+        margin: 0;
+      }
+
+      .page .contacts__year {
+        left: var(--page-x);
+      }
+
+      .page .contacts__tagline {
+        right: var(--page-x);
+        text-align: right;
+      }
+    }
+
+    @media (min-width: 540px) and (max-width: 1000px) {
+      .page .contacts__item--email .contacts__value {
+        font-size: 48px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page > .contacts-section {
+        padding-right: 12px;
+        padding-left: 12px;
+      }
+    }
+
+    @media (max-width: 439.98px) {
+      .page .contacts__item--email .contacts__value {
+        font-size: 32px;
+      }
+    }
+
+    @media (max-width: 319.98px) {
+      .page .contacts__item--email .contacts__value {
+        font-size: 28px;
+      }
+    }
+
+    @media (max-width: 279.98px) {
+      .page .contacts__item--email .contacts__value {
+        font-size: 20px;
+        font-weight: 400 !important;
+      }
+
+      .page .contacts__details .contacts__actions {
+        flex-direction: column;
+      }
+    }
+
+  </style>
+</head>
 <body>
   <div class="custom-cursor" aria-hidden="true"></div>
   <div class="cursor-text-mask" aria-hidden="true"></div>
@@ -2133,6 +2311,8 @@
             <li><a class="case-section-nav__link" href="#final-title" data-section-target="final-title">Результат</a></li>
           </ul>
         </nav>
+
+        <button class="back-to-top" type="button" aria-label="Наверх">↑</button>
 
         <div class="case-hero__content">
           <div class="case-hero__text">
@@ -2391,15 +2571,14 @@
         </div>
       </div>
     </section>
-+    <footer id="screen-contacts" class="contacts-section" aria-label="Контакты">
-      <p class="contacts__intro">
-        Открыта к сотрудничеству<br />в Москве или удалённо
-      </p>
-
+    <footer id="screen-contacts" class="contacts-section" aria-label="Контакты">
       <div class="contacts__details" aria-label="Контактная информация">
         <p class="contacts__item contacts__item--email">
-          <span class="contacts__label">email</span>
-          <a class="contacts__value" href="mailto:katya@mukha.design" title="Написать на email">katya@mukha.design</a>
+          <a class="contacts__value shared-case-heading" href="mailto:katya@mukha.design" title="Написать на email">katya@mukha.design</a>
+        </p>
+
+        <p class="contacts__intro">
+          Открыта к сотрудничеству<br />в Москве или удалённо
         </p>
 
         <p class="contacts__item contacts__item--tel">

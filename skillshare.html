@@ -634,35 +634,6 @@
       border-radius: 0;
     }
 
-    .case-results-showcase {
-      padding: 0 var(--page-x) var(--block-gap);
-    }
-
-    .case-results-showcase__grid {
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      column-gap: var(--grid-gap);
-      align-items: center;
-    }
-
-    .case-results-showcase__media {
-      grid-column: 3 / span 3;
-      width: 301px;
-    }
-
-    .case-results-showcase__image {
-      width: 301px;
-      height: 592px;
-      display: block;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-
-    .case-results-showcase__content {
-      grid-column: 6 / span 5;
-      margin-left: 28px;
-    }
-
     .case-text-section,
     .case-section-heading,
     .jtbd-section {
@@ -837,7 +808,7 @@
       min-height: 124px;
       padding: 18px 18px 20px;
       border-radius: 8px;
-      background: #fff;
+      background: var(--bg);
       color: var(--blue);
       font-size: 15px;
       line-height: 1.28;
@@ -2043,7 +2014,7 @@
       font-size: 0.94em;
       line-height: 1;
       pointer-events: none;
-      transform: translateX(-10px) translateY(-50%) translateY(-2px);
+      transform: translateX(-10px) translateY(-50%) translateY(1px);
       transition:
         opacity 0.32s ease,
         transform 0.46s cubic-bezier(0.22, 1, 0.36, 1);
@@ -2053,19 +2024,18 @@
     .telegram-link:focus-visible .telegram-link__arrow,
     .cursor-text-mask.is-on-light-control .telegram-link__arrow {
       opacity: 1;
-      transform: translateX(0) translateY(-50%) translateY(-2px);
+      transform: translateX(0) translateY(-50%) translateY(1px);
     }
 
     .telegram-link__text {
       display: inline-block;
-      transform: translateY(-1px);
       transition: transform 0.46s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .telegram-link:hover .telegram-link__text,
     .telegram-link:focus-visible .telegram-link__text,
     .cursor-text-mask.is-on-light-control .telegram-link__text {
-      transform: translateX(calc(0.94em + 8px)) translateY(-1px);
+      transform: translateX(calc(0.94em + 8px));
     }
 
     .telegram-link::after {
@@ -2077,7 +2047,7 @@
       opacity: 1;
       font-size: 0.94em;
       line-height: 1;
-      transform: translateX(0) translateY(0);
+      transform: translateX(0) translateY(1px);
       transition:
         opacity 0.32s ease,
         transform 0.46s cubic-bezier(0.22, 1, 0.36, 1);
@@ -2247,20 +2217,199 @@
       }
     }
 
-    .cv-button,
++    .cv-button,
     .telegram-link {
       height: 49px;
     }
 
-</style>
-    <style>
-      .cv-button,
-      .case-preview__button,
-      .telegram-link {
-        font-size: 15px !important;
+  </style>
+  <style>
+    .cv-button,
+    .case-preview__button,
+    .telegram-link {
+      font-size: 15px !important;
+    }
+
+    /* Footer copied from the home page. */
+    .page > .contacts-section {
+      position: relative;
+      min-height: auto;
+      padding: 8px var(--page-x) 20px;
+      background: var(--bg);
+      color: var(--blue);
+    }
+
+    .page > .contacts-section::before,
+    .page .contacts__item--tel {
+      display: none;
+      content: none;
+    }
+
+    .page .contacts__details {
+      position: static;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: auto;
+      max-width: none;
+      margin: 40px 0 0;
+      row-gap: 0;
+    }
+
+    .page .contacts__item,
+    .page .contacts__item--email,
+    .page .contacts__item--cv {
+      grid-column: auto;
+      grid-row: auto;
+      margin: 0;
+      transform: none;
+    }
+
+    .page .contacts__item--email .contacts__value {
+      position: relative;
+      top: 0;
+      left: 0;
+      display: inline-block;
+      font-family: var(--font-main);
+      font-size: 42px;
+      line-height: 0.95;
+      font-weight: 100 !important;
+      letter-spacing: 0;
+      color: var(--blue);
+      white-space: nowrap;
+    }
+
+    .page .contacts__details .contacts__intro {
+      position: static;
+      inset: auto;
+      width: auto;
+      max-width: 340px;
+      margin: 16px 0 0;
+      font-family: var(--font-main);
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 400;
+      color: var(--blue);
+      text-align: left;
+    }
+
+    .page .contacts__details .contacts__actions {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 8px;
+      margin-top: 36px;
+    }
+
+    .page .contacts__cv-button,
+    .page .contacts__telegram-button {
+      height: 56px;
+    }
+
+    .page .contacts__telegram-button {
+      background: #fff;
+    }
+
+    .page .contacts__year,
+    .page .contacts__tagline {
+      position: static;
+      display: block;
+      margin-top: 40px;
+      font-family: var(--font-main);
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 400;
+      color: var(--blue);
+      text-align: left;
+    }
+
+    .page .contacts__tagline {
+      margin-top: 8px;
+    }
+
+    @media (min-width: 1001px) {
+      .page > .contacts-section {
+        height: 494px;
+        min-height: 494px;
+        padding-top: 20px;
+        padding-bottom: 16px;
       }
-    </style>
-  </head>
+
+      .page .contacts__details {
+        position: absolute;
+        top: 40px;
+        left: var(--page-x);
+        right: auto;
+        width: max-content;
+        max-width: calc(100% - var(--page-x) * 2);
+        margin: 0;
+      }
+
+      .page .contacts__item--email .contacts__value {
+        font-size: 48px;
+        line-height: 60px;
+      }
+
+      .page .contacts__cv-button,
+      .page .contacts__telegram-button {
+        height: 52px;
+      }
+
+      .page .contacts__year,
+      .page .contacts__tagline {
+        position: absolute;
+        bottom: 16px;
+        margin: 0;
+      }
+
+      .page .contacts__year {
+        left: var(--page-x);
+      }
+
+      .page .contacts__tagline {
+        right: var(--page-x);
+        text-align: right;
+      }
+    }
+
+    @media (min-width: 540px) and (max-width: 1000px) {
+      .page .contacts__item--email .contacts__value {
+        font-size: 48px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page > .contacts-section {
+        padding-right: 12px;
+        padding-left: 12px;
+      }
+    }
+
+    @media (max-width: 439.98px) {
+      .page .contacts__item--email .contacts__value {
+        font-size: 32px;
+      }
+    }
+
+    @media (max-width: 319.98px) {
+      .page .contacts__item--email .contacts__value {
+        font-size: 28px;
+      }
+    }
+
+    @media (max-width: 279.98px) {
+      .page .contacts__item--email .contacts__value {
+        font-size: 20px;
+        font-weight: 400 !important;
+      }
+
+      .page .contacts__details .contacts__actions {
+        flex-direction: column;
+      }
+    }
+
+  </style>
+</head>
 <body>
   <div class="custom-cursor" aria-hidden="true"></div>
   <div class="cursor-text-mask" aria-hidden="true"></div>
@@ -2303,6 +2452,8 @@
           </ul>
         </nav>
 
+        <button class="back-to-top" type="button" aria-label="Наверх">↑</button>
+
         <div class="case-hero__content">
           <div class="case-hero__text case-hero__text--title-only">
             <p class="case-hero__eyebrow">Skillshare • Product designer • iOS, core flows</p>
@@ -2331,9 +2482,9 @@
       </div>
     </section>
 
-    <section class="case-results-showcase" aria-labelledby="results-title">
-      <div class="case-results-showcase__grid">
-        <div class="case-results-showcase__content">
+    <section class="case-text-section case-text-section--before-media" aria-labelledby="results-title">
+      <div class="case-text-section__grid">
+        <div class="case-text-section__content">
           <h2 class="case-text-section__title" id="results-title">Результаты</h2>
 
           <p class="case-text-section__text">
@@ -2348,11 +2499,11 @@
           </ul>
 
           <p class="case-text-section__text">
-            Параллельно сделала мобильную адаптацию основных сценариев и&nbsp;собрала основу визуальной системы, логотип и&nbsp;принципы визуального стиля.
+            Спроектировала основные сценарии для приложения. На&nbsp;этапе исследования работала в&nbsp;команде из&nbsp;пяти человек, а&nbsp;на&nbsp;этапе разработки&nbsp;— как единственный дизайнер.
           </p>
 
           <p class="case-text-section__text">
-            Работала как единственный дизайнер в&nbsp;связке с&nbsp;продуктом и&nbsp;разработкой.
+            Мы&nbsp;провели глубинные интервью, чтобы проверить продуктовые гипотезы, и&nbsp;конкурентный анализ, чтобы выявить повторяющиеся UX- и&nbsp;UI-паттерны. Затем протестировали вайрфреймы и&nbsp;подготовили финальные макеты.
           </p>
         </div>
       </div>
@@ -2378,7 +2529,7 @@
       <div class="case-section-heading__grid">
         <div class="case-section-heading__content">
           <h2 class="case-section-heading__title" id="interviews-title">Глубинные интервью</h2>
-          <p class="case-section-heading__caption">Вместе с&nbsp;командой провели глубинные интервью с&nbsp;пользователями похожих приложений, чтобы проверить гипотезы и&nbsp;понять, как люди выбирают мастер&#8209;классы.</p>
+          <p class="case-section-heading__caption">Вместе с&nbsp;командой провели 8&nbsp;глубинных интервью, чтобы проверить продуктовые гипотезы и&nbsp;понять мотивацию пользователей. Результаты систематизировали, выделили ключевые барьеры и&nbsp;использовали при проектировании основных сценариев.</p>
         </div>
       </div>
     </section>
@@ -2387,6 +2538,16 @@
       <div class="case-image-section__grid">
         <div class="case-image-section__content">
           <img class="case-image" src="assets/images/skillshare/skillshare-interview.png" alt="Материалы глубинных интервью Skillshare" loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </section>
+
+    <section class="case-text-section" aria-label="Выводы глубинных интервью">
+      <div class="case-text-section__grid">
+        <div class="case-text-section__content">
+          <p class="case-text-section__text">Пользователям сложно оценить качество курса без отзывов, информации о&nbsp;преподавателе и&nbsp;возможности задать ему вопрос. Длинные занятия, отсутствие обратной связи и&nbsp;персонализации снижают мотивацию, а&nbsp;навязчивые продажи и&nbsp;избыточная геймификация подрывают доверие.</p>
+
+          <p class="case-text-section__text">Пользователи приходят с&nbsp;конкретной задачей и&nbsp;хотят заранее понимать, какого результата смогут достичь. Их&nbsp;поддерживают короткие структурированные уроки, видимый прогресс, обратная связь от&nbsp;эксперта и&nbsp;безопасное сообщество, где можно обсуждать работы и&nbsp;делиться результатами.</p>
         </div>
       </div>
     </section>
@@ -2509,22 +2670,38 @@
       </div>
     </section>
 
-    <section class="case-image-section case-image-section--release" aria-label="Вайрфреймы Skillshare">
+    <section class="case-image-section" aria-label="Вайрфреймы Skillshare">
       <div class="case-image-section__grid">
         <div class="case-image-section__content">
           <img class="case-image" src="assets/images/skillshare/skillshare-wireframes.png" alt="Вайрфреймы Skillshare" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
-+    <footer id="screen-contacts" class="contacts-section" aria-label="Контакты">
-      <p class="contacts__intro">
-        Открыта к сотрудничеству<br />в Москве или удалённо
-      </p>
 
+    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="final-results-title">
+      <div class="case-section-heading__grid">
+        <div class="case-section-heading__content">
+          <h2 class="case-section-heading__title" id="final-results-title">Результаты</h2>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-image-section case-image-section--release" aria-label="Финальный дизайн Skillshare">
+      <div class="case-image-section__grid">
+        <div class="case-image-section__content">
+          <img class="case-image" src="assets/images/skillshare/skillshare-final-design.png" alt="Skillshare Final Design" loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </section>
+
+    <footer id="screen-contacts" class="contacts-section" aria-label="Контакты">
       <div class="contacts__details" aria-label="Контактная информация">
         <p class="contacts__item contacts__item--email">
-          <span class="contacts__label">email</span>
-          <a class="contacts__value" href="mailto:katya@mukha.design" title="Написать на email">katya@mukha.design</a>
+          <a class="contacts__value shared-case-heading" href="mailto:katya@mukha.design" title="Написать на email">katya@mukha.design</a>
+        </p>
+
+        <p class="contacts__intro">
+          Открыта к сотрудничеству<br />в Москве или удалённо
         </p>
 
         <p class="contacts__item contacts__item--tel">
