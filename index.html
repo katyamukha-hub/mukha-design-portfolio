@@ -40,6 +40,10 @@
       --font-primary-size: 22px;
       --font-primary-line-height: 28px;
       --font-primary-letter-spacing: -0.03em;
+      --hero-intro-size: 26.4px;
+      --hero-intro-line-height: 33.6px;
+      --case-heading-height: 38.62px;
+      --friends-heading-height: 101.91px;
     }
 
     * {
@@ -235,9 +239,9 @@
       left: 277px;
       width: max-content;
       font-family: "CoFo Sans Trial", Arial, sans-serif;
-      font-size: 29.76px;
+      font-size: var(--hero-intro-size);
       font-weight: 300;
-      line-height: 35.616px;
+      line-height: var(--hero-intro-line-height);
       letter-spacing: -0.03em;
       font-synthesis: none;
       font-variant-ligatures: common-ligatures contextual;
@@ -387,10 +391,8 @@
     .hero__intro em {
       color: #424242;
       font-family: "CoFo Sans Trial", Arial, sans-serif;
-      font-size: 29.76px;
       font-style: normal;
       font-weight: 300;
-      line-height: 35.616px;
       letter-spacing: -0.03em;
       font-synthesis: none;
     }
@@ -464,6 +466,14 @@
       background: var(--background);
     }
 
+    .facts-screen__gallery {
+      grid-template-rows: repeat(4, auto);
+    }
+
+    .facts-screen__gallery img:nth-child(n + 29) {
+      display: none;
+    }
+
     #case-avalike .case-screen__info {
       top: 106.5px;
     }
@@ -509,20 +519,22 @@
 
     .facts-screen__title {
       display: block;
-      width: 645.61px;
-      height: auto;
+      width: auto;
+      height: var(--case-heading-height);
     }
 
-    #skillshare-title {
-      width: 312.33px;
-    }
-
-    #mendi-title {
-      width: 180px;
+    #avalike-title,
+    #skillshare-title,
+    #mendi-title,
+    #facts-title,
+    #contacts-title {
+      width: auto;
+      height: var(--case-heading-height);
     }
 
     #friends-title {
-      width: 261px;
+      width: auto;
+      height: var(--friends-heading-height);
     }
 
     .facts-screen__portrait {
@@ -742,9 +754,7 @@
     }
 
     .contacts-screen__email {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      display: block;
       margin: 0;
       color: #000;
       font-family: var(--font-primary-family);
@@ -755,9 +765,15 @@
     }
 
     .contacts-screen__email {
-      width: 602px;
+      width: auto;
       max-width: calc(100vw - (2 * var(--page-padding)));
-      height: auto;
+      height: var(--case-heading-height);
+    }
+
+    #contacts-title {
+      display: block;
+      width: auto;
+      height: var(--case-heading-height) !important;
     }
 
     .contacts-screen__links {
@@ -1054,15 +1070,6 @@
         height: auto;
       }
 
-      @media (min-width: 500px) {
-        .hero__intro,
-        .hero__intro em {
-          font-size: 22px;
-          line-height: 28px;
-          letter-spacing: -0.03em;
-        }
-      }
-
       .case-screen {
         display: block;
         height: auto;
@@ -1071,11 +1078,18 @@
         padding: 10px 20px;
       }
 
+      .case-screen:not(#case-friends) {
+        margin-bottom: 32px;
+      }
+
       .case-screen__info {
         position: relative;
         top: auto;
         left: auto;
-        width: auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-rows: auto auto auto;
+        width: 100%;
       }
 
       #case-avalike .case-screen__info,
@@ -1085,7 +1099,40 @@
       }
 
       .case-screen__logo {
+        grid-column: 1;
+        grid-row: 1;
         width: 220px;
+      }
+
+      .case-screen__index {
+        grid-column: 2;
+        grid-row: 1;
+        align-self: end;
+        justify-self: end;
+        margin: 0;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        letter-spacing: inherit;
+        text-align: right;
+        transform: translateY(-12px);
+      }
+
+      .case-screen__description {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        width: 100%;
+        max-width: none;
+      }
+
+      .case-screen__description br {
+        display: none;
+      }
+
+      .case-screen__rule {
+        grid-column: 1 / -1;
+        grid-row: 3;
       }
 
       .case-screen__visual {
@@ -1106,6 +1153,7 @@
       .case-screen__content {
         display: block;
         width: 100%;
+        max-width: 100%;
         margin: 0;
       }
 
@@ -1122,10 +1170,18 @@
         bottom: auto;
         margin-top: 16px;
         width: 100%;
+        max-width: 100%;
         visibility: visible;
         gap: 16px;
         font-size: 16px;
         line-height: 22px;
+      }
+
+      .facts-screen__fact--one strong,
+      .facts-screen__fact--two strong,
+      .facts-screen__fact--three strong {
+        font-size: 30.4px;
+        line-height: 30.4px;
       }
 
       .hero__fly-wrap {
@@ -1244,15 +1300,6 @@
       }
     }
 
-    @media (min-width: 701px) and (max-width: 1000px) {
-      .hero__intro,
-      .hero__intro em {
-        font-size: 22px;
-        line-height: 28px;
-        letter-spacing: -0.03em;
-      }
-    }
-
     @media (min-width: 441px) and (max-width: 700px) {
       .hero__nav {
         max-width: none;
@@ -1267,28 +1314,13 @@
     }
 
     @media (max-width: 1159px) {
+      :root {
+        --case-heading-height: 30.896px;
+        --friends-heading-height: 81.528px;
+      }
+
       .case-screen {
         min-height: 50svh;
-      }
-
-      #avalike-title {
-        width: 174.4px !important;
-      }
-
-      #skillshare-title {
-        width: 249.864px !important;
-      }
-
-      #mendi-title {
-        width: 144px !important;
-      }
-
-      #friends-title {
-        width: 208.8px !important;
-      }
-
-      .facts-screen__title {
-        width: 516.488px !important;
       }
 
       .facts-screen__fact--three {
@@ -1300,10 +1332,6 @@
       .facts-screen {
         min-height: 0;
         padding: 40px var(--page-padding);
-      }
-
-      .facts-screen__title {
-        width: min(100%, 516.488px) !important;
       }
 
       .facts-screen__portrait {
@@ -1345,47 +1373,30 @@
     }
 
     @media (max-width: 840px) {
-      #avalike-title {
-        width: 139.52px !important;
+      :root {
+        --case-heading-height: 24.7168px;
+        --friends-heading-height: 65.2224px;
       }
 
-      #skillshare-title {
-        width: 199.8912px !important;
-      }
+    }
 
-      #mendi-title {
-        width: 115.2px !important;
+    @media (max-width: 353px) {
+      :root {
+        --case-heading-height: min(24.7168px, calc(7.8947vw - 3.1579px));
+        --friends-heading-height: min(65.2224px, calc(20.827vw - 8.33px));
       }
-
-      #friends-title {
-        width: 167.04px !important;
-      }
-
-      .facts-screen__title {
-        width: min(100%, 413.1904px) !important;
-      }
-
     }
 
     @media (max-width: 799px) {
       :root {
         --font-primary-size: 18px;
         --font-primary-line-height: 23px;
+        --hero-intro-size: 21.6px;
+        --hero-intro-line-height: 27.6px;
       }
 
       .hero__header,
-      .hero__intro,
-      .hero__intro em,
       .hero__status {
-        font-size: var(--font-primary-size);
-        line-height: var(--font-primary-line-height);
-        letter-spacing: var(--font-primary-letter-spacing);
-      }
-    }
-
-    @media (max-width: 499px) {
-
-      .hero__header {
         font-size: var(--font-primary-size);
         line-height: var(--font-primary-line-height);
         letter-spacing: var(--font-primary-letter-spacing);
@@ -1393,6 +1404,15 @@
 
       .hero__intro,
       .hero__intro em {
+        font-size: var(--hero-intro-size);
+        line-height: var(--hero-intro-line-height);
+        letter-spacing: var(--font-primary-letter-spacing);
+      }
+    }
+
+    @media (max-width: 499px) {
+
+      .hero__header {
         font-size: var(--font-primary-size);
         line-height: var(--font-primary-line-height);
         letter-spacing: var(--font-primary-letter-spacing);
@@ -1666,7 +1686,15 @@
   </main>
   <script>
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    const navigationEntry = performance.getEntriesByType("navigation")[0];
+    const isPageReload = navigationEntry?.type === "reload";
+    if (isPageReload && window.location.hash) {
+      history.replaceState(history.state, "", `${window.location.pathname}${window.location.search}`);
+    }
     window.scrollTo(0, 0);
+    if (isPageReload) {
+      window.addEventListener("pageshow", () => window.scrollTo(0, 0), { once: true });
+    }
 
     const emailButton = document.querySelector(".hero__email");
     const email = "katya@mukha.design";
