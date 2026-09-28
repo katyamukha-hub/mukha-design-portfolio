@@ -35,6 +35,11 @@
       --text: #424242;
       --page-padding: 36px;
       --grid-gutter: 20px;
+      --font-primary-family: "CoFo Sans Trial", Arial, sans-serif;
+      --font-primary-weight: 300;
+      --font-primary-size: 22px;
+      --font-primary-line-height: 28px;
+      --font-primary-letter-spacing: -0.03em;
     }
 
     * {
@@ -51,11 +56,11 @@
       min-height: 100%;
       background: var(--background);
       color: var(--text);
-      font-family: "CoFo Sans Trial", Arial, sans-serif;
-      font-size: 22px;
-      font-weight: 300;
-      line-height: 28px;
-      letter-spacing: -0.03em;
+      font-family: var(--font-primary-family);
+      font-size: var(--font-primary-size);
+      font-weight: var(--font-primary-weight);
+      line-height: var(--font-primary-line-height);
+      letter-spacing: var(--font-primary-letter-spacing);
       font-synthesis: none;
       -webkit-font-smoothing: antialiased;
     }
@@ -132,11 +137,11 @@
       align-items: flex-start;
       justify-content: space-between;
       gap: 32px;
-      font-family: "CoFo Sans Trial", Arial, sans-serif;
-      font-size: 22px;
-      font-weight: 300;
-      line-height: 28px;
-      letter-spacing: -0.03em;
+      font-family: var(--font-primary-family);
+      font-size: var(--font-primary-size);
+      font-weight: var(--font-primary-weight);
+      line-height: var(--font-primary-line-height);
+      letter-spacing: var(--font-primary-letter-spacing);
     }
 
     .hero__nav {
@@ -269,6 +274,21 @@
       transition: opacity 180ms ease;
     }
 
+    /* Effect preset: "закрашивание мушки" — toggle .hero__mukha-overlay on to restore. */
+    .hero__mukha-overlay {
+      position: absolute;
+      z-index: 1;
+      pointer-events: none;
+      background: rgb(230 57 70 / 30%);
+      outline: 1px solid #e63946;
+      opacity: 0;
+      transition: opacity 180ms ease;
+    }
+
+    .hero__mukha-overlay.is-fill-effect {
+      opacity: 1;
+    }
+
     .loader-screen {
       position: fixed;
       z-index: 99;
@@ -301,7 +321,7 @@
       visibility: visible;
     }
 
-    body.is-loaded .loader-screen {
+    body.is-fly-complete .loader-screen {
       opacity: 0;
     }
 
@@ -326,11 +346,11 @@
     }
 
     .loader-fly.is-loaded {
-      top: 99px;
-      left: 94px;
+      top: 193px;
+      left: 175.5px;
       width: 163px;
       height: 188px;
-      transform: none;
+      transform: translate(-50%, -50%) rotate(0deg);
       animation: none;
     }
 
@@ -345,7 +365,7 @@
       }
     }
 
-    body.is-loaded .hero__mukha {
+    body.is-fly-complete .hero__mukha {
       opacity: 1;
     }
 
@@ -381,8 +401,8 @@
     .hero__email,
     .case-screen,
     .facts-screen {
-      font-family: "CoFo Sans Trial", Arial, sans-serif;
-      font-weight: 300;
+      font-family: var(--font-primary-family);
+      font-weight: var(--font-primary-weight);
       font-synthesis: none;
     }
 
@@ -409,11 +429,11 @@
       bottom: 16px;
       width: auto;
       text-align: left;
-      font-family: "CoFo Sans Trial", Arial, sans-serif;
-      font-size: 22px;
-      font-weight: 300;
-      line-height: 28px;
-      letter-spacing: -0.03em;
+      font-family: var(--font-primary-family);
+      font-size: var(--font-primary-size);
+      font-weight: var(--font-primary-weight);
+      line-height: var(--font-primary-line-height);
+      letter-spacing: var(--font-primary-letter-spacing);
     }
 
     .hero__katya {
@@ -423,8 +443,7 @@
       display: block;
       width: min(852px, calc(100vw - 32px));
       height: auto;
-      aspect-ratio: 852 / 168;
-      object-fit: fill;
+      max-width: 100%;
     }
 
     .hero__email--bottom {
@@ -439,36 +458,23 @@
       grid-template-columns: repeat(12, minmax(0, 1fr));
       column-gap: var(--grid-gutter);
       height: auto;
-      min-height: calc(100svh + 100px);
+      min-height: calc(100svh + 25px);
       overflow: visible;
       padding: 0 var(--page-padding);
       background: var(--background);
     }
 
-    #case-avalike {
-      outline: none;
-    }
-
     #case-avalike .case-screen__info {
-      top: 213px;
+      top: 106.5px;
     }
 
-    #case-avalike .case-screen__footer {
-      transform: translateY(60px);
-    }
-
-    #case-avalike .case-screen__visual {
-      margin-top: 145px;
+    #case-avalike .case-screen__content {
+      margin-top: 72.5px;
     }
 
     #case-skillshare .case-screen__info,
     #case-mendi .case-screen__info {
-      top: 253px;
-    }
-
-    #case-skillshare .case-screen__footer,
-    #case-mendi .case-screen__footer {
-      transform: translateY(60px);
+      top: 126.5px;
     }
 
     #case-mendi .case-screen__index {
@@ -654,7 +660,7 @@
     }
 
     .facts-screen__fact p {
-      font-family: "CoFo Sans Trial", Arial, sans-serif;
+      font-family: var(--font-primary-family) !important;
       font-size: 22px !important;
       font-weight: 300 !important;
       line-height: 28px !important;
@@ -741,11 +747,11 @@
       gap: 8px;
       margin: 0;
       color: #000;
-      font-family: "CoFo Sans Trial", Arial, sans-serif;
-      font-size: 22px;
-      font-weight: 300;
-      line-height: 28px;
-      letter-spacing: -0.03em;
+      font-family: var(--font-primary-family);
+      font-size: var(--font-primary-size);
+      font-weight: var(--font-primary-weight);
+      line-height: var(--font-primary-line-height);
+      letter-spacing: var(--font-primary-letter-spacing);
     }
 
     .contacts-screen__email {
@@ -759,11 +765,11 @@
       display: flex;
       gap: 34px;
       margin-top: 34px;
-      font-family: "CoFo Sans Trial", Arial, sans-serif;
-      font-size: 22px;
-      font-weight: 300;
-      line-height: 28px;
-      letter-spacing: -0.03em;
+      font-family: var(--font-primary-family);
+      font-size: var(--font-primary-size);
+      font-weight: var(--font-primary-weight);
+      line-height: var(--font-primary-line-height);
+      letter-spacing: var(--font-primary-letter-spacing);
     }
 
     .contacts-screen__copy {
@@ -925,13 +931,17 @@
       grid-row: 1;
       align-self: start;
       width: 100%;
-      margin: 185px 0 0;
+      margin: 0;
       cursor: none;
+      display: flex;
+      justify-content: flex-end;
     }
 
     .case-screen__visual img {
       display: block;
-      width: 100%;
+      width: auto;
+      max-width: 100%;
+      max-height: 562px;
       height: auto;
       cursor: none;
     }
@@ -944,8 +954,15 @@
     .case-screen__content {
       grid-column: 5 / span 8;
       grid-row: 1;
-      margin: 0;
+      width: fit-content;
+      max-width: 100%;
+      margin: 92.5px 0 0 auto;
       cursor: auto;
+    }
+
+    .case-screen__visual {
+      width: fit-content;
+      max-width: 100%;
     }
 
     .case-screen__footer {
@@ -960,7 +977,9 @@
       letter-spacing: 0;
       font-synthesis: none;
       color: #000;
-      margin-top: 16px;
+      margin-top: 24px;
+      position: relative;
+      top: 0;
     }
 
     .case-screen__caption,
@@ -1036,12 +1055,21 @@
         height: auto;
       }
 
+      @media (min-width: 500px) {
+        .hero__intro,
+        .hero__intro em {
+          font-size: 22px;
+          line-height: 28px;
+          letter-spacing: -0.03em;
+        }
+      }
+
       .case-screen {
         display: block;
         height: auto;
         min-height: 100svh;
         overflow: visible;
-        padding: 20px;
+        padding: 10px 20px;
       }
 
       .case-screen__info {
@@ -1063,11 +1091,17 @@
         top: auto;
         right: auto;
         width: 100%;
-        margin-top: 48px;
+        margin-top: 24px;
+      }
+
+      .case-screen__visual img {
+        width: 100%;
       }
 
       .case-screen__content {
         display: block;
+        width: 100%;
+        margin: 0;
       }
 
       .case-screen__footer {
@@ -1121,6 +1155,216 @@
         left: min(78vw, 500px);
       }
     }
+
+    @media (min-width: 1000px) {
+      .hero__katya {
+        left: auto;
+        right: var(--page-padding);
+        margin-right: 0;
+        width: 852px;
+      }
+    }
+
+    @media (min-width: 701px) and (max-width: 999px) {
+      .hero__intro {
+        left: calc(16.6667vw + 27.333px);
+      }
+    }
+
+    @media (min-width: 701px) and (max-width: 999px) {
+      .hero__mukha {
+        left: auto;
+        right: calc(83.3333vw - 7.333px);
+        width: 146.7px;
+        height: 169.2px;
+        translate: 24px 0;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .hero__intro {
+        left: var(--page-padding);
+        width: calc(100vw - (2 * var(--page-padding)));
+      }
+    }
+
+    @media (max-width: 700px) {
+      .hero__intro {
+        top: max(32svh, 215px);
+      }
+
+      .hero__mukha {
+        top: calc(max(32svh, 215px) - 118px);
+        left: var(--page-padding);
+        right: auto;
+        translate: -24px 0;
+      }
+    }
+
+    @media (max-width: 999px) {
+      .hero__mukha {
+        width: 130.4px;
+        height: 150.4px;
+        clip-path: inset(0 5% 0 8%);
+      }
+
+      .loader-fly {
+        width: 65.2px;
+        height: 75.2px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .hero__mukha {
+        width: 104.32px;
+        height: 120.32px;
+      }
+    }
+
+    @media (min-width: 1000px) {
+      .hero__mukha {
+        top: 99px;
+        left: 94px;
+        right: auto;
+        width: 163px;
+        height: 188px;
+      }
+    }
+
+    @media (min-width: 1000px) and (max-width: 1444px) {
+      .case-screen {
+        min-height: 100svh;
+      }
+    }
+
+    @media (min-width: 701px) and (max-width: 1000px) {
+      .hero__intro,
+      .hero__intro em {
+        font-size: 22px;
+        line-height: 28px;
+        letter-spacing: -0.03em;
+      }
+    }
+
+    @media (min-width: 441px) and (max-width: 700px) {
+      .hero__nav {
+        max-width: none;
+        flex-wrap: nowrap;
+      }
+    }
+
+    @media (min-width: 501px) and (max-width: 699px) {
+      .hero__top-links {
+        gap: 22.5px;
+      }
+    }
+
+    @media (max-width: 1159px) {
+      .case-screen {
+        min-height: 50svh;
+      }
+
+      #avalike-title {
+        width: 174.4px !important;
+      }
+
+      #skillshare-title {
+        width: 249.864px !important;
+      }
+
+      #mendi-title {
+        width: 144px !important;
+      }
+
+      #friends-title {
+        width: 208.8px !important;
+      }
+
+      .facts-screen__title {
+        width: 516.488px !important;
+      }
+
+      .contacts-screen__email {
+        width: 481.6px !important;
+      }
+
+      .facts-screen__fact--three {
+        top: 1090px;
+      }
+    }
+
+    @media (max-width: 499px) {
+      :root {
+        --font-primary-size: 18px;
+        --font-primary-line-height: 23px;
+      }
+
+      .hero__header {
+        font-size: var(--font-primary-size);
+        line-height: var(--font-primary-line-height);
+        letter-spacing: var(--font-primary-letter-spacing);
+      }
+
+      .hero__intro,
+      .hero__intro em {
+        font-size: var(--font-primary-size);
+        line-height: var(--font-primary-line-height);
+        letter-spacing: var(--font-primary-letter-spacing);
+      }
+
+      .hero__status {
+        font-size: var(--font-primary-size);
+        line-height: var(--font-primary-line-height);
+        letter-spacing: var(--font-primary-letter-spacing);
+      }
+
+      .hero__top-links {
+        gap: 15px;
+      }
+
+      .hero__link-arrow {
+        width: 11.45px;
+        height: 10.64px;
+      }
+
+      .hero__top-links a:first-child .hero__link-arrow {
+        margin-right: 3.27px;
+      }
+
+      .hero__top-links a:nth-child(2) .hero__link-arrow {
+        margin-right: 4.5px;
+      }
+    }
+
+    @media (max-width: 440px) {
+      .hero__nav {
+        max-width: 155px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+      }
+    }
+
+    @media (max-width: 379px) {
+      .hero__status {
+        bottom: 16px;
+      }
+
+      .hero__email--bottom {
+        top: auto;
+        right: auto;
+        bottom: 43px;
+        left: var(--page-padding);
+      }
+
+      .hero__katya {
+        right: 16px;
+        bottom: 50px;
+        width: calc(100vw - 32px);
+        transform: translateY(-26px);
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -1135,6 +1379,7 @@
   <main>
     <section class="hero" aria-labelledby="hero-title">
       <img class="hero__mukha" src="mukha.png" alt="">
+      <span class="hero__mukha-overlay" aria-hidden="true"></span>
       <img class="hero__katya" src="Katya.svg" alt="Katya Mukha">
       <header class="hero__header">
         <nav class="hero__nav" aria-label="Основная навигация">
@@ -1336,8 +1581,19 @@
     const contactsScreen = document.querySelector(".contacts-screen");
     const contactsEmail = document.querySelector(".contacts-screen__email");
     const contactsCopyCursor = document.querySelector(".contacts-copy-cursor");
+    const getCaseVisualHoverBounds = (caseScreen) => {
+      const imageBounds = caseScreen.querySelector(".case-screen__visual img").getBoundingClientRect();
+      const captionBounds = caseScreen.querySelector(".case-screen__footer").getBoundingClientRect();
+      return {
+        left: imageBounds.left,
+        right: imageBounds.right,
+        top: imageBounds.top,
+        bottom: captionBounds.bottom
+      };
+    };
 
     const heroScreen = document.querySelector(".hero");
+    const heroFly = document.querySelector(".hero__mukha");
     const parallaxGroups = [
       { elements: heroScreen.querySelectorAll(".hero__intro"), speed: 0.1 },
       { elements: heroScreen.querySelectorAll(".hero__katya"), speed: 0.18 },
@@ -1371,41 +1627,42 @@
     heroObserver.observe(heroScreen);
 
     const loaderFly = document.querySelector(".loader-fly");
-    window.addEventListener("load", () => {
+    window.setTimeout(() => {
+      loaderFly.classList.add("is-ready");
       window.setTimeout(() => {
-        loaderFly.classList.add("is-ready");
+        const target = heroFly.getBoundingClientRect();
+        loaderFly.style.top = `${target.top + target.height / 2}px`;
+        loaderFly.style.left = `${target.left + target.width / 2}px`;
+        loaderFly.style.width = `${target.width}px`;
+        loaderFly.style.height = `${target.height}px`;
+        loaderFly.style.transform = "translate(-50%, -50%) rotate(0deg)";
+        loaderFly.classList.add("is-loaded");
+      }, 20);
+      document.body.classList.add("is-loaded");
+      window.setTimeout(() => {
+        document.body.classList.add("is-fly-complete");
         window.setTimeout(() => {
-          loaderFly.style.top = "99px";
-          loaderFly.style.left = "94px";
-          loaderFly.style.width = "163px";
-          loaderFly.style.height = "188px";
-          loaderFly.style.transform = "none";
-          loaderFly.classList.add("is-loaded");
-        }, 20);
-      }, 1500);
-      window.setTimeout(() => {
-        document.body.classList.add("is-loaded");
-      }, 2160);
-      window.setTimeout(() => {
-        loaderFly.closest(".loader-screen").remove();
-      }, 2760);
-    });
+          loaderFly.closest(".loader-screen").remove();
+        }, 180);
+      }, 620);
+    }, 1500);
 
     document.addEventListener("pointermove", (event) => {
       let activeCase = null;
 
       caseScreens.forEach((caseScreen) => {
-        const caseBounds = caseScreen.getBoundingClientRect();
-        const caseVisual = caseScreen.querySelector(".case-screen__visual");
-        const visualBounds = caseVisual.getBoundingClientRect();
-        const isOnCaseCover =
-          event.clientX >= caseBounds.left &&
-          event.clientX <= caseBounds.right &&
-          event.clientY >= visualBounds.top &&
-          event.clientY <= visualBounds.bottom;
+        const caseInfo = caseScreen.querySelector(".case-screen__info");
+        const isInside = (bounds) =>
+          event.clientX >= bounds.left &&
+          event.clientX <= bounds.right &&
+          event.clientY >= bounds.top &&
+          event.clientY <= bounds.bottom;
+        const isOnCaseInfo = isInside(caseInfo.getBoundingClientRect());
+        const isOnCaseVisual = isInside(getCaseVisualHoverBounds(caseScreen));
+        const isOnCaseArea = isOnCaseInfo || isOnCaseVisual;
 
-        caseScreen.classList.toggle("is-case-hover-area", isOnCaseCover);
-        if (isOnCaseCover) activeCase = caseScreen;
+        caseScreen.classList.toggle("is-case-hover-area", isOnCaseArea);
+        if (isOnCaseArea) activeCase = caseScreen;
       });
 
       const isOnCaseCover = Boolean(activeCase);
@@ -1439,13 +1696,13 @@
 
     caseScreens.forEach((caseScreen) => {
       caseScreen.addEventListener("click", (event) => {
-        const visualBounds = caseScreen.querySelector(".case-screen__visual").getBoundingClientRect();
-        const isOnCaseCover =
-          event.clientX >= visualBounds.left &&
-          event.clientX <= visualBounds.right &&
-          event.clientY >= visualBounds.top &&
-          event.clientY <= visualBounds.bottom;
-        if (!isOnCaseCover) return;
+        const contentBounds = getCaseVisualHoverBounds(caseScreen);
+        const isOnCaseContent =
+          event.clientX >= contentBounds.left &&
+          event.clientX <= contentBounds.right &&
+          event.clientY >= contentBounds.top &&
+          event.clientY <= contentBounds.bottom;
+        if (!isOnCaseContent) return;
         const page = casePages[caseScreen.id];
         if (page) window.location.href = page;
       });
