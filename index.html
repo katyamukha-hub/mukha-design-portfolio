@@ -443,7 +443,7 @@
       display: block;
       width: min(852px, calc(100vw - 32px));
       height: auto;
-      max-width: 100%;
+      max-width: calc(100vw - 32px);
     }
 
     .hero__email--bottom {
@@ -661,10 +661,10 @@
 
     .facts-screen__fact p {
       font-family: var(--font-primary-family) !important;
-      font-size: 22px !important;
-      font-weight: 300 !important;
-      line-height: 28px !important;
-      letter-spacing: -0.03em !important;
+      font-size: var(--font-primary-size) !important;
+      font-weight: var(--font-primary-weight) !important;
+      line-height: var(--font-primary-line-height) !important;
+      letter-spacing: var(--font-primary-letter-spacing) !important;
     }
 
     .facts-screen__gallery {
@@ -756,9 +756,8 @@
 
     .contacts-screen__email {
       width: 602px;
-      height: 51px;
-      object-fit: contain;
-      object-position: left center;
+      max-width: calc(100vw - (2 * var(--page-padding)));
+      height: auto;
     }
 
     .contacts-screen__links {
@@ -904,9 +903,9 @@
     .case-screen__description {
       max-width: 280px;
       margin: 0;
-      font-family: "CoFo Sans Trial", Arial, sans-serif;
+      font-family: var(--font-primary-family);
       font-size: 19.6px;
-      font-weight: 300;
+      font-weight: var(--font-primary-weight);
       line-height: 23.4px;
       letter-spacing: -0.03em;
       font-synthesis: none;
@@ -1079,6 +1078,12 @@
         width: auto;
       }
 
+      #case-avalike .case-screen__info,
+      #case-skillshare .case-screen__info,
+      #case-mendi .case-screen__info {
+        top: auto;
+      }
+
       .case-screen__logo {
         width: 220px;
       }
@@ -1102,6 +1107,10 @@
         display: block;
         width: 100%;
         margin: 0;
+      }
+
+      #case-avalike .case-screen__content {
+        margin-top: 0;
       }
 
       .case-screen__footer {
@@ -1145,8 +1154,6 @@
       }
 
       .contacts-screen__email {
-        width: min(602px, calc(100vw - 40px));
-        height: auto;
         font-size: 22px;
       }
 
@@ -1161,7 +1168,7 @@
         left: auto;
         right: var(--page-padding);
         margin-right: 0;
-        width: 852px;
+        width: min(852px, calc(100vw - 32px));
       }
     }
 
@@ -1284,20 +1291,99 @@
         width: 516.488px !important;
       }
 
-      .contacts-screen__email {
-        width: 481.6px !important;
-      }
-
       .facts-screen__fact--three {
         top: 1090px;
       }
     }
 
-    @media (max-width: 499px) {
+    @media (max-width: 999px) {
+      .facts-screen {
+        min-height: 0;
+        padding: 40px var(--page-padding);
+      }
+
+      .facts-screen__title {
+        width: min(100%, 516.488px) !important;
+      }
+
+      .facts-screen__portrait {
+        position: relative;
+        top: auto;
+        left: auto;
+        display: block;
+        margin: 72px auto 32px;
+        transform: none;
+      }
+
+      .facts-screen__fact,
+      .facts-screen__fact--one,
+      .facts-screen__fact--two,
+      .facts-screen__fact--three {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        max-width: 520px;
+        margin: 0 0 32px;
+      }
+
+      .facts-screen__fact--three {
+        max-width: 900px;
+      }
+
+      .facts-screen__gallery {
+        position: relative;
+        inset: auto;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        column-gap: 12px;
+        row-gap: 32px;
+        margin-top: 32px;
+      }
+
+      .facts-screen__gallery img {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 840px) {
+      #avalike-title {
+        width: 139.52px !important;
+      }
+
+      #skillshare-title {
+        width: 199.8912px !important;
+      }
+
+      #mendi-title {
+        width: 115.2px !important;
+      }
+
+      #friends-title {
+        width: 167.04px !important;
+      }
+
+      .facts-screen__title {
+        width: min(100%, 413.1904px) !important;
+      }
+
+    }
+
+    @media (max-width: 799px) {
       :root {
         --font-primary-size: 18px;
         --font-primary-line-height: 23px;
       }
+
+      .hero__header,
+      .hero__intro,
+      .hero__intro em,
+      .hero__status {
+        font-size: var(--font-primary-size);
+        line-height: var(--font-primary-line-height);
+        letter-spacing: var(--font-primary-letter-spacing);
+      }
+    }
+
+    @media (max-width: 499px) {
 
       .hero__header {
         font-size: var(--font-primary-size);
@@ -1333,6 +1419,14 @@
 
       .hero__top-links a:nth-child(2) .hero__link-arrow {
         margin-right: 4.5px;
+      }
+    }
+
+    @media (max-width: 319px) {
+      .contacts-screen__links {
+        width: calc(100vw - (2 * var(--page-padding)));
+        justify-content: space-between;
+        gap: 0;
       }
     }
 
