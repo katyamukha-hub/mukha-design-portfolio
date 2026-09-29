@@ -518,31 +518,6 @@
       font-style: normal;
     }
 
-    .hero__photo-cue-note {
-      position: absolute;
-      bottom: calc(100% - 1px);
-      left: 0;
-      display: inline-flex;
-      align-items: center;
-      white-space: nowrap;
-    }
-
-    .hero__photo-cue-label {
-      max-width: 0;
-      overflow: hidden;
-      opacity: 0;
-      white-space: nowrap;
-      font-size: 14px;
-      line-height: 18px;
-      transition: max-width 240ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
-    }
-
-    .hero__photo-trigger:hover .hero__photo-cue-label,
-    .hero__photo-trigger:focus-visible .hero__photo-cue-label {
-      max-width: 80px;
-      opacity: 1;
-    }
-
     .hero__photo-thumbs {
       display: inline-flex;
       align-items: center;
@@ -1383,21 +1358,31 @@
 
     @media (max-width: 700px) {
       .hero__intro {
-        left: calc(var(--page-padding) - 40px);
+        left: var(--page-padding);
         width: calc(100vw - (2 * var(--page-padding)));
       }
     }
 
     @media (max-width: 700px) {
       .hero__intro {
-        top: calc(max(32svh, 215px) + 50px);
+        top: calc(max(32svh, 215px) + 30px);
       }
 
       .hero__mukha {
-        top: calc(max(32svh, 215px) - 68px);
+        top: calc(max(32svh, 215px) - 88px);
         left: var(--page-padding);
         right: auto;
         translate: -14px 0;
+      }
+    }
+
+    @media (max-width: 399px) {
+      .hero__intro {
+        top: calc(max(32svh, 215px) + 10px);
+      }
+
+      .hero__mukha {
+        top: calc(max(32svh, 215px) - 108px);
       }
     }
 
@@ -1719,7 +1704,7 @@
         <p id="hero-title">
           <span class="hero__line">привет, я&nbsp;Катя <img class="hero__arrow" src="assets/Icons/arrow.svg" alt=""> продуктовый дизайнер</span>
           <span class="hero__line">с&nbsp;инженерной базой и&nbsp;17-летним опытом</span>
-          <span class="hero__line">в&nbsp;<em class="hero__photo-trigger" tabindex="0">документальной фотографии<span class="hero__photo-cue" aria-hidden="true"><span class="hero__photo-cue-note"><span class="hero__photo-cue-label">смотреть</span></span><span class="hero__photo-thumbs"><img src="assets/photo/3.png" alt=""><img src="assets/photo/4.png" alt=""><img src="assets/photo/5.png" alt=""></span></span></em></span>
+          <span class="hero__line">в&nbsp;<em class="hero__photo-trigger" tabindex="0">документальной фотографии<span class="hero__photo-cue" aria-hidden="true"><span class="hero__photo-thumbs"><img src="assets/photo/3.png" alt=""><img src="assets/photo/4.png" alt=""><img src="assets/photo/5.png" alt=""></span></span></em></span>
         </p>
         <div class="hero__top-links">
           <a href="assets/files/katya-mukha-cv.pdf" target="_blank" rel="noreferrer"><img class="hero__link-arrow" src="assets/Icons/arrow.svg" alt="">cv</a>
