@@ -23,6 +23,14 @@
     }
 
     @font-face {
+      font-family: "CoFo Sans Pro";
+      src: url("assets/fonts/CoFoSansPro-RegularItalic-Trial.woff") format("woff");
+      font-weight: 400;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    @font-face {
       font-family: "CoFo Sans Trial";
       src: url("assets/fonts/cofosans-regular-trial.woff2") format("woff2");
       font-weight: 400;
@@ -40,8 +48,8 @@
       --font-primary-size: 22px;
       --font-primary-line-height: 28px;
       --font-primary-letter-spacing: -0.03em;
-      --hero-intro-size: 26.4px;
-      --hero-intro-line-height: 33.6px;
+      --hero-intro-size: var(--font-primary-size);
+      --hero-intro-line-height: var(--font-primary-line-height);
       --case-heading-height: 38.62px;
       --friends-heading-height: 101.91px;
     }
@@ -155,12 +163,11 @@
       left: var(--page-padding);
       display: flex;
       align-items: flex-start;
-      gap: 0;
+      gap: 20px;
       height: 28px;
     }
 
     .hero__nav a:first-of-type {
-      margin-right: 38px;
       transition:
         top 300ms ease,
         font-size 300ms ease,
@@ -168,23 +175,28 @@
         letter-spacing 300ms ease;
     }
 
-    .hero__nav a:nth-of-type(2) {
-      margin-right: 38px;
-    }
-
     .hero__nav-toggle {
       display: none;
     }
 
     .hero__top-links {
-      position: fixed;
-      top: 18px;
-      right: var(--page-padding);
       display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 45px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
       font: inherit;
+    }
+
+    .hero__intro .hero__top-links {
+      margin-top: 44px;
+      margin-left: 9px;
+    }
+
+    .hero__intro .hero__top-links a {
+      display: flex;
+      align-items: center;
+      height: var(--font-primary-line-height);
+      line-height: var(--font-primary-line-height);
     }
 
     .hero__email {
@@ -212,9 +224,10 @@
 
     .hero__copy-icon {
       display: block;
-      width: 26px;
-      height: 26px;
-      flex: 0 0 26px;
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      transform: translateY(2px);
     }
 
     .hero__copy-confirmation {
@@ -234,19 +247,19 @@
 
     .hero__email:hover .hero__copy-icon,
     .hero__email:focus-visible .hero__copy-icon {
-      content: url("Icons/copy icon_hover.svg");
+      content: url("assets/Icons/copy icon_hover.svg");
     }
 
     .hero__intro {
       position: absolute;
-      top: 208px;
-      left: 277px;
+      top: 258px;
+      left: 237px;
       width: max-content;
       font-family: "CoFo Sans Trial", Arial, sans-serif;
       font-size: var(--hero-intro-size);
       font-weight: 300;
       line-height: var(--hero-intro-line-height);
-      letter-spacing: -0.03em;
+      letter-spacing: var(--font-primary-letter-spacing);
       font-synthesis: none;
       font-variant-ligatures: common-ligatures contextual;
       font-feature-settings: "liga" 1, "calt" 1;
@@ -271,11 +284,11 @@
 
     .hero__mukha {
       position: absolute;
-      top: 99px;
-      left: 94px;
+      top: 149px;
+      left: 104px;
       display: block;
-      width: 163px;
-      height: 188px;
+      width: 130.4px;
+      height: 150.4px;
       object-fit: contain;
       mix-blend-mode: darken;
       opacity: 0;
@@ -385,20 +398,93 @@
     }
 
     .hero__top-links a:first-child .hero__link-arrow {
-      margin-right: 4px;
+      margin-right: 6px;
     }
 
     .hero__top-links a:nth-child(2) .hero__link-arrow {
-      margin-right: 5.5px;
+      margin-right: 7.5px;
     }
 
     .hero__intro em {
       color: #424242;
-      font-family: "CoFo Sans Trial", Arial, sans-serif;
-      font-style: normal;
-      font-weight: 300;
-      letter-spacing: -0.03em;
+      font-family: "CoFo Sans Pro", Arial, sans-serif;
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: -0.02em;
       font-synthesis: none;
+    }
+
+    .hero__photo-trigger {
+      cursor: pointer;
+    }
+
+    .hero__photo-stack {
+      position: absolute;
+      z-index: 50;
+      top: calc(50% + 20px);
+      left: 50%;
+      width: calc(100% - 2 * var(--page-padding));
+      height: min(58svh, 430px);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero__photo-stack.is-open {
+      pointer-events: auto;
+      cursor: default;
+    }
+
+    .hero__photo-stack img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: block;
+      width: auto;
+      height: clamp(150px, 18vw, 270px);
+      max-height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transform: translate(-50%, -50%) translate(var(--fan-x, 0px), var(--fan-y, 0px)) scale(var(--photo-scale, 1));
+      transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1), height 800ms cubic-bezier(0.22, 1, 0.36, 1), opacity 320ms ease;
+      will-change: transform, height, opacity;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+
+    .hero__photo-stack.is-open img {
+      opacity: 1;
+    }
+
+    .hero__photo-stack.is-resetting img {
+      transition: none;
+    }
+
+    .hero__photo-stack.is-closing {
+      pointer-events: none;
+    }
+
+    .hero__photo-stack img.is-loop-clone {
+      opacity: 0;
+    }
+
+    .hero__photo-stack.is-open.is-looping img.is-loop-clone {
+      opacity: 1;
+    }
+
+    .hero__photo-stack.is-open.is-closing img {
+      opacity: var(--closing-opacity, 1);
+      transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1), height 800ms cubic-bezier(0.22, 1, 0.36, 1), opacity var(--closing-fade-duration, 800ms) ease;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero__photo-stack,
+      .hero__photo-stack img { transition-duration: 0ms; }
+    }
+
+    @media (max-width: 999px) {
+      .hero__photo-stack { display: none; }
+      .hero__photo-trigger { cursor: auto; }
     }
 
     .hero__nav,
@@ -422,19 +508,65 @@
       opacity: 1;
     }
 
-    .hero__footnote {
-      font-variant-position: super;
-      font-feature-settings: "sups" 1;
-      font-size: inherit;
-      line-height: inherit;
+    .hero__photo-cue {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      margin-left: 10px;
+      vertical-align: -4px;
+      font-family: var(--font-primary-family);
+      font-style: normal;
+    }
+
+    .hero__photo-cue-note {
+      position: absolute;
+      bottom: calc(100% - 1px);
+      left: 0;
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .hero__photo-cue-label {
+      max-width: 0;
+      overflow: hidden;
+      opacity: 0;
+      white-space: nowrap;
+      font-size: 14px;
+      line-height: 18px;
+      transition: max-width 240ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
+    }
+
+    .hero__photo-trigger:hover .hero__photo-cue-label,
+    .hero__photo-trigger:focus-visible .hero__photo-cue-label {
+      max-width: 80px;
+      opacity: 1;
+    }
+
+    .hero__photo-thumbs {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      transform: translateY(-2px);
+    }
+
+    .hero__photo-thumbs img {
+      display: block;
+      width: auto;
+      height: 20px;
+      object-fit: contain;
+    }
+
+    .hero__photo-trigger.is-photos-open .hero__photo-thumbs img {
+      visibility: hidden;
     }
 
     .hero__status {
       position: absolute;
-      left: var(--page-padding);
+      right: var(--page-padding);
       bottom: 16px;
       width: auto;
-      text-align: left;
+      text-align: right;
       font-family: var(--font-primary-family);
       font-size: var(--font-primary-size);
       font-weight: var(--font-primary-weight);
@@ -445,17 +577,18 @@
     .hero__katya {
       position: absolute;
       right: 16px;
-      bottom: 50px;
+      bottom: 42px;
       display: block;
-      width: min(852px, calc(100vw - 32px));
+      width: min(681.6px, calc(80vw - 25.6px));
       height: auto;
       max-width: calc(100vw - 32px);
     }
 
     .hero__email--bottom {
       position: absolute;
+      top: 18px;
       right: var(--page-padding);
-      bottom: 16px;
+      bottom: auto;
     }
 
     .case-screen {
@@ -491,6 +624,10 @@
       top: 126.5px;
     }
 
+    #case-friends .case-screen__info {
+      top: 92.5px;
+    }
+
     .case-screen__text-logo {
       max-width: 300px;
       margin: 0 0 16px;
@@ -513,6 +650,23 @@
       height: var(--case-heading-height);
     }
 
+    .facts-screen__marker {
+      position: absolute;
+      z-index: 2;
+      top: calc(52px + var(--case-heading-height) + var(--marker-y));
+      left: calc(36px + var(--marker-x));
+      font-family: var(--font-primary-family);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 16px;
+      color: #424242;
+      pointer-events: none;
+    }
+
+    @media (max-width: 999px) {
+      .facts-screen__marker { display: none; }
+    }
+
     #avalike-title,
     #skillshare-title,
     #mendi-title,
@@ -529,21 +683,20 @@
 
     .facts-screen__portrait {
       position: absolute;
-      top: 175px;
-      left: 50%;
+      top: calc(52px + var(--case-heading-height) + 47px);
+      left: calc(36px + 39.8611vw);
       width: 162px;
-      height: 208px;
-      object-fit: cover;
+      height: auto;
       filter: grayscale(1);
-      transform: translateX(-50%);
+      transform: none;
     }
 
     .facts-screen__fact {
       position: absolute;
       max-width: 520px;
-      font-size: 22px;
-      line-height: 28px;
-      letter-spacing: -0.03em;
+      font-size: var(--font-primary-size);
+      line-height: var(--font-primary-line-height);
+      letter-spacing: var(--font-primary-letter-spacing);
     }
 
     .facts-screen__fact strong {
@@ -814,20 +967,39 @@
 
     .contacts-screen__links a::after {
       position: absolute;
-      right: 0;
-      bottom: 0;
+      top: 0;
       left: 0;
-      height: 1.3px;
-      content: "";
-      background: currentColor;
-      transform: scaleX(0);
-      transform-origin: left center;
-      transition: transform 220ms ease;
+      width: max-content;
+      color: transparent;
+      content: attr(data-underline);
+      font: inherit;
+      letter-spacing: inherit;
+      line-height: inherit;
+      white-space: nowrap;
+      text-decoration-line: underline;
+      text-decoration-color: var(--text);
+      text-decoration-thickness: 1.4px;
+      text-underline-offset: 3px;
+      text-decoration-skip-ink: auto;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 220ms cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
     }
 
     .contacts-screen__links a:hover::after,
     .contacts-screen__links a:focus-visible::after {
-      transform: scaleX(1);
+      clip-path: inset(0 0 0 0);
+    }
+
+    .contacts-screen__links a[href*="t.me"]::after {
+      text-underline-offset: 2px;
+      transform: translateX(-1px);
+      clip-path: inset(0 100% 0 1px);
+    }
+
+    .contacts-screen__links a[href*="t.me"]:hover::after,
+    .contacts-screen__links a[href*="t.me"]:focus-visible::after {
+      clip-path: inset(0 0 0 1px);
     }
 
     .contacts-screen__links a:hover,
@@ -1015,8 +1187,8 @@
         left: var(--page-padding);
         width: calc(100vw - var(--page-padding) * 2);
         margin-top: 0;
-        font-size: 21.12px;
-        line-height: 24.96px;
+        font-size: var(--hero-intro-size);
+        line-height: var(--hero-intro-line-height);
       }
 
       .hero__line {
@@ -1030,8 +1202,8 @@
       .hero__status {
         position: absolute;
         top: auto;
-        right: auto;
-        left: var(--page-padding);
+        right: var(--page-padding);
+        left: auto;
         bottom: 16px;
         width: auto;
         margin-top: 0;
@@ -1041,8 +1213,8 @@
 
       .hero__katya {
         right: 16px;
-        bottom: 50px;
-        width: calc(100vw - 32px);
+        bottom: 42px;
+        width: calc(80vw - 25.6px);
         height: auto;
       }
 
@@ -1070,7 +1242,8 @@
 
       #case-avalike .case-screen__info,
       #case-skillshare .case-screen__info,
-      #case-mendi .case-screen__info {
+      #case-mendi .case-screen__info,
+      #case-friends .case-screen__info {
         top: auto;
       }
 
@@ -1188,50 +1361,50 @@
         left: auto;
         right: var(--page-padding);
         margin-right: 0;
-        width: min(852px, calc(100vw - 32px));
+        width: min(681.6px, calc(80vw - 25.6px));
       }
     }
 
     @media (min-width: 701px) and (max-width: 999px) {
       .hero__intro {
-        left: calc(16.6667vw + 27.333px);
+        left: calc(16.6667vw - 12.667px);
       }
     }
 
     @media (min-width: 701px) and (max-width: 999px) {
       .hero__mukha {
         left: auto;
-        right: calc(83.3333vw - 7.333px);
-        width: 146.7px;
-        height: 169.2px;
-        translate: 24px 0;
+        right: calc(83.3333vw - 27.333px);
+        width: 117.36px;
+        height: 135.36px;
+        translate: 14px 0;
       }
     }
 
     @media (max-width: 700px) {
       .hero__intro {
-        left: var(--page-padding);
+        left: calc(var(--page-padding) - 40px);
         width: calc(100vw - (2 * var(--page-padding)));
       }
     }
 
     @media (max-width: 700px) {
       .hero__intro {
-        top: max(32svh, 215px);
+        top: calc(max(32svh, 215px) + 50px);
       }
 
       .hero__mukha {
-        top: calc(max(32svh, 215px) - 118px);
+        top: calc(max(32svh, 215px) - 68px);
         left: var(--page-padding);
         right: auto;
-        translate: -24px 0;
+        translate: -14px 0;
       }
     }
 
     @media (max-width: 999px) {
       .hero__mukha {
-        width: 130.4px;
-        height: 150.4px;
+        width: 104.32px;
+        height: 120.32px;
         clip-path: inset(0 5% 0 8%);
       }
 
@@ -1243,22 +1416,28 @@
 
     @media (max-width: 700px) {
       .hero__mukha {
-        width: 104.32px;
-        height: 120.32px;
+        width: 83.456px;
+        height: 96.256px;
       }
     }
 
     @media (min-width: 1000px) {
       .hero__mukha {
-        top: 99px;
-        left: 94px;
+        top: 149px;
+        left: 104px;
         right: auto;
-        width: 163px;
-        height: 188px;
+        width: 130.4px;
+        height: 150.4px;
       }
     }
 
+    /* Стандартный десктоп: 1000–1444 px. */
     @media (min-width: 1000px) and (max-width: 1444px) {
+      .hero__mukha {
+        width: 104.32px;
+        height: 120.32px;
+      }
+
       .case-screen {
         min-height: 100svh;
       }
@@ -1273,7 +1452,7 @@
 
     @media (min-width: 501px) and (max-width: 699px) {
       .hero__top-links {
-        gap: 22.5px;
+        gap: 0;
       }
     }
 
@@ -1355,8 +1534,6 @@
       :root {
         --font-primary-size: 18px;
         --font-primary-line-height: 23px;
-        --hero-intro-size: 21.6px;
-        --hero-intro-line-height: 27.6px;
       }
 
       .hero__header,
@@ -1366,11 +1543,14 @@
         letter-spacing: var(--font-primary-letter-spacing);
       }
 
-      .hero__intro,
-      .hero__intro em {
+      .hero__intro {
         font-size: var(--hero-intro-size);
         line-height: var(--hero-intro-line-height);
         letter-spacing: var(--font-primary-letter-spacing);
+      }
+
+      .hero__intro em {
+        letter-spacing: -0.02em;
       }
     }
 
@@ -1381,11 +1561,11 @@
       }
 
       .hero__top-links a:first-child .hero__link-arrow {
-        margin-right: 3.27px;
+        margin-right: 5.27px;
       }
 
       .hero__top-links a:nth-child(2) .hero__link-arrow {
-        margin-right: 4.5px;
+        margin-right: 6.5px;
       }
     }
 
@@ -1404,7 +1584,7 @@
       }
 
       .hero__top-links {
-        gap: 15px;
+        gap: 0;
       }
     }
 
@@ -1470,32 +1650,51 @@
     }
 
     @media (max-width: 379px) {
-      .hero__status {
-        bottom: 16px;
-      }
-
-      .hero__email--bottom {
-        top: auto;
-        right: auto;
-        bottom: 43px;
-        left: var(--page-padding);
-      }
-
       .hero__katya {
         right: 16px;
-        bottom: 50px;
-        width: calc(100vw - 32px);
+        bottom: 42px;
+        width: calc(80vw - 25.6px);
         transform: translateY(-26px);
       }
+    }
+
+    .hero__top-links.hero__top-links--floating {
+      position: fixed;
+      margin: 0;
+      z-index: 40;
+      top: 18px;
+      right: var(--page-padding);
+      left: auto;
+      flex-direction: row;
+      align-items: center;
+      gap: 45px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 250ms ease, visibility 250ms ease;
+    }
+
+    body.case-active .hero__top-links--floating {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    @media (min-width: 501px) and (max-width: 699px) {
+      .hero__top-links.hero__top-links--floating { gap: 22.5px; }
+    }
+
+    @media (max-width: 500px) {
+      .hero__top-links.hero__top-links--floating { gap: 15px; }
     }
 
   </style>
 </head>
 <body>
-  <div class="case-hover-cursor" aria-hidden="true"><img src="Icons/coursor.svg" alt=""></div>
+  <div class="case-hover-cursor" aria-hidden="true"><img src="assets/Icons/coursor.svg" alt=""></div>
   <div class="contacts-copy-cursor" aria-hidden="true">
-    <img class="is-copy-icon" src="Icons/copy_coursor.svg" alt="">
-    <img class="is-copied-icon" src="Icons/copied_coursor.svg" alt="">
+    <img class="is-copy-icon" src="assets/Icons/copy_coursor.svg" alt="">
+    <img class="is-copied-icon" src="assets/Icons/copied_coursor.svg" alt="">
   </div>
   <div class="loader-screen" aria-hidden="true">
     <img class="loader-fly" src="mukha.png" alt="">
@@ -1514,19 +1713,27 @@
           <a href="#facts">обо мне,</a>
           <a href="#contacts">контакты</a>
         </nav>
-        <div class="hero__top-links">
-          <a href="assets/files/katya-mukha-cv.pdf" target="_blank" rel="noreferrer"><img class="hero__link-arrow" src="Icons/arrow.svg" alt="">cv</a>
-          <a href="https://t.me/katyamukha" target="_blank" rel="noreferrer"><img class="hero__link-arrow" src="Icons/arrow.svg" alt="">telegram</a>
-        </div>
       </header>
 
       <div class="hero__intro">
         <p id="hero-title">
-          <span class="hero__line">привет, я&nbsp;Катя —</span>
-          <span class="hero__line">продуктовый дизайнер с&nbsp;инженерной</span>
-          <span class="hero__line">базой и&nbsp;17-летним опытом</span>
-          <span class="hero__line">в&nbsp;<em>документальной фотографии</em></span>
+          <span class="hero__line">привет, я&nbsp;Катя <img class="hero__arrow" src="assets/Icons/arrow.svg" alt=""> продуктовый дизайнер</span>
+          <span class="hero__line">с&nbsp;инженерной базой и&nbsp;17-летним опытом</span>
+          <span class="hero__line">в&nbsp;<em class="hero__photo-trigger" tabindex="0">документальной фотографии<span class="hero__photo-cue" aria-hidden="true"><span class="hero__photo-cue-note"><span class="hero__photo-cue-label">смотреть</span></span><span class="hero__photo-thumbs"><img src="assets/photo/3.png" alt=""><img src="assets/photo/4.png" alt=""><img src="assets/photo/5.png" alt=""></span></span></em></span>
         </p>
+        <div class="hero__top-links">
+          <a href="assets/files/katya-mukha-cv.pdf" target="_blank" rel="noreferrer"><img class="hero__link-arrow" src="assets/Icons/arrow.svg" alt="">cv</a>
+          <a href="https://t.me/katyamukha" target="_blank" rel="noreferrer"><img class="hero__link-arrow" src="assets/Icons/arrow.svg" alt="">telegram</a>
+        </div>
+      </div>
+
+      <div class="hero__photo-stack" role="region" aria-label="Документальные фотографии" aria-hidden="true" tabindex="-1">
+        <img src="assets/photo/1.png" alt="">
+        <img src="assets/photo/2.png" alt="">
+        <img src="assets/photo/3.png" alt="">
+        <img src="assets/photo/4.png" alt="">
+        <img src="assets/photo/5.png" alt="">
+        <img src="assets/photo/6.png" alt="">
       </div>
 
       <div class="hero__status" aria-label="Доступна для работы в Москве">
@@ -1534,7 +1741,7 @@
       </div>
       <button class="hero__email hero__email--bottom" type="button" aria-label="Скопировать email katya@mukha.design">
         <span class="hero__email-text">katya@mukha.design</span>
-        <img class="hero__copy-icon" src="Icons/copy icon.svg" alt="">
+        <img class="hero__copy-icon" src="assets/Icons/copy icon.svg" alt="">
         <span class="hero__copy-confirmation" aria-live="polite">✓ скопировано</span>
       </button>
     </section>
@@ -1620,6 +1827,14 @@
 
     <section class="facts-screen" id="facts" aria-labelledby="facts-title">
       <img class="facts-screen__title" id="facts-title" src="facts.svg" alt="Пара фактов обо мне">
+      <span class="facts-screen__marker" style="--marker-x:30.4167vw;--marker-y:122px">1</span>
+      <span class="facts-screen__marker" style="--marker-x:42.7778vw;--marker-y:74px">2</span>
+      <span class="facts-screen__marker" style="--marker-x:25.2083vw;--marker-y:103px">3</span>
+      <span class="facts-screen__marker" style="--marker-x:54.375vw;--marker-y:58px">4</span>
+      <span class="facts-screen__marker" style="--marker-x:41.0417vw;--marker-y:177px">6</span>
+      <span class="facts-screen__marker" style="--marker-x:9.3056vw;--marker-y:683px">13</span>
+      <span class="facts-screen__marker" style="--marker-x:58.5417vw;--marker-y:205px">16</span>
+      <span class="facts-screen__marker" style="--marker-x:68.8194vw;--marker-y:205px">24</span>
       <img class="facts-screen__portrait" src="katya.png" alt="Катя Муха">
       <article class="facts-screen__fact facts-screen__fact--one">
         <span>факт (1 — 3)</span>
@@ -1677,17 +1892,21 @@
       <div class="contacts-screen__content">
         <img class="contacts-screen__email" id="contacts-title" src="mail.svg" alt="katya@mukha.design">
         <button class="contacts-screen__copy" type="button" aria-label="Скопировать email">
-          <img src="Icons/copy_coursor.svg" alt="copy">
+          <img src="assets/Icons/copy_coursor.svg" alt="copy">
         </button>
         <nav class="contacts-screen__links" aria-label="Контакты">
-          <a href="https://www.linkedin.com/in/katya-mukha-598907429/" target="_blank" rel="noreferrer">linkedin</a>
-          <a href="https://t.me/katyamukha">telegram</a>
-          <a href="assets/files/katya-mukha-cv.pdf">cv</a>
-          <a href="https://www.instagram.com/katya.mukha/" target="_blank" rel="noreferrer">inst</a>
+          <a href="https://www.linkedin.com/in/katya-mukha-598907429/" target="_blank" rel="noreferrer" data-underline="linkedin">linkedin</a>
+          <a href="https://t.me/katyamukha" data-underline="telegram">telegram</a>
+          <a href="assets/files/katya-mukha-cv.pdf" data-underline="cv">cv</a>
+          <a href="https://www.instagram.com/katya.mukha/" target="_blank" rel="noreferrer" data-underline="inst">inst</a>
         </nav>
       </div>
     </section>
   </main>
+  <nav class="hero__top-links hero__top-links--floating" aria-label="CV и Telegram при прокрутке">
+    <a href="assets/files/katya-mukha-cv.pdf" target="_blank" rel="noreferrer"><img class="hero__link-arrow" src="assets/Icons/arrow.svg" alt="">cv</a>
+    <a href="https://t.me/katyamukha" target="_blank" rel="noreferrer"><img class="hero__link-arrow" src="assets/Icons/arrow.svg" alt="">telegram</a>
+  </nav>
   <script>
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     const navigationEntry = performance.getEntriesByType("navigation")[0];
@@ -1771,6 +1990,210 @@
 
     const heroScreen = document.querySelector(".hero");
     const heroFly = document.querySelector(".hero__mukha");
+    const photoTrigger = document.querySelector(".hero__photo-trigger");
+    const photoStack = document.querySelector(".hero__photo-stack");
+    const heroPhotos = [...photoStack.querySelectorAll("img")];
+    const makePhotoClone = (photo) => {
+      const clone = photo.cloneNode();
+      clone.classList.add("is-loop-clone");
+      clone.setAttribute("aria-hidden", "true");
+      return clone;
+    };
+    photoStack.prepend(...heroPhotos.map(makePhotoClone));
+    photoStack.append(...heroPhotos.map(makePhotoClone));
+    const loopPhotos = [...photoStack.querySelectorAll("img")];
+    const photoThumbs = [...document.querySelectorAll(".hero__photo-thumbs img")];
+    let lastViewedPhoto = 2;
+    let previewPhotoIndices = [2, 3, 4];
+    let activePhoto = heroPhotos.length + lastViewedPhoto;
+    let photoHoverReadyAt = 0;
+    let photoCloseTimer;
+    let photoRevealTimer;
+    let photoRebaseTimer;
+
+    const renderPhotoFan = () => {
+      const photoHeight = Math.max(150, Math.min(window.innerWidth * 0.18, 270));
+      const photoGap = Math.max(24, Math.min(window.innerWidth * 0.04, 64));
+      const heights = loopPhotos.map((_, index) => photoHeight * (index === activePhoto ? 1.2 : 1));
+      const widths = loopPhotos.map((photo, index) => heights[index] * (photo.naturalWidth && photo.naturalHeight ? photo.naturalWidth / photo.naturalHeight : 1));
+      loopPhotos.forEach((photo, index) => {
+        let offset = 0;
+        if (index > activePhoto) {
+          for (let step = activePhoto; step < index; step++) offset += (widths[step] + widths[step + 1]) / 2 + photoGap;
+        } else if (index < activePhoto) {
+          for (let step = index; step < activePhoto; step++) offset -= (widths[step] + widths[step + 1]) / 2 + photoGap;
+        }
+        photo.style.height = `${heights[index]}px`;
+        photo.style.setProperty("--fan-x", `${offset}px`);
+        photo.style.setProperty("--fan-y", "0px");
+        photo.style.setProperty("--photo-scale", "1");
+        photo.style.zIndex = "";
+      });
+      photoStack.setAttribute("aria-label", `Документальные фотографии: фото ${activePhoto % heroPhotos.length + 1} из ${heroPhotos.length}`);
+    };
+
+    heroPhotos.forEach((photo) => photo.addEventListener("load", () => {
+      if (photoStack.classList.contains("is-open") && !photoStack.classList.contains("is-closing")) renderPhotoFan();
+    }));
+
+    const updatePhotoThumbs = (center) => {
+      const count = heroPhotos.length;
+      previewPhotoIndices = [(center - 1 + count) % count, center, (center + 1) % count];
+      photoThumbs.forEach((thumb, index) => {
+        const source = heroPhotos[previewPhotoIndices[index]];
+        if (source.naturalWidth && source.naturalHeight) thumb.style.width = `${20 * source.naturalWidth / source.naturalHeight}px`;
+        thumb.src = source.getAttribute("src");
+      });
+    };
+
+    const collapsePhotosToThumbs = () => {
+      const stackBounds = photoStack.getBoundingClientRect();
+      const centerX = stackBounds.left + stackBounds.width / 2;
+      const centerY = stackBounds.top + stackBounds.height / 2;
+      heroPhotos.forEach((photo, index) => {
+        const closestThumb = previewPhotoIndices.reduce((closest, photoIndex, thumbIndex) => {
+          const distance = Math.min((index - photoIndex + heroPhotos.length) % heroPhotos.length, (photoIndex - index + heroPhotos.length) % heroPhotos.length);
+          return distance < closest.distance ? { thumbIndex, distance } : closest;
+        }, { thumbIndex: 0, distance: Infinity }).thumbIndex;
+        const thumb = photoThumbs[closestThumb].getBoundingClientRect();
+        const photoWidth = parseFloat(getComputedStyle(photo).width);
+        photo.style.setProperty("--fan-x", `${thumb.left + thumb.width / 2 - centerX}px`);
+        photo.style.setProperty("--fan-y", `${thumb.top + thumb.height / 2 - centerY}px`);
+        photo.style.setProperty("--photo-scale", String(thumb.width / photoWidth));
+      });
+    };
+
+    const closePhotoFan = () => {
+      const stackBounds = photoStack.getBoundingClientRect();
+      const centerX = stackBounds.left + stackBounds.width / 2;
+      const centerY = stackBounds.top + stackBounds.height / 2;
+      const middleThumb = photoThumbs[1].getBoundingClientRect();
+      loopPhotos.forEach((photo, index) => {
+        const isPreview = Math.abs(index - activePhoto) <= 1;
+        if (!isPreview) {
+          // Only the two outer visible photos collapse behind the middle miniature.
+          if (Math.abs(index - activePhoto) === 2) {
+            photo.style.setProperty("--fan-x", `${middleThumb.left + middleThumb.width / 2 - centerX}px`);
+            photo.style.setProperty("--fan-y", `${middleThumb.top + middleThumb.height / 2 - centerY}px`);
+            photo.style.setProperty("--photo-scale", "0");
+            photo.style.setProperty("--closing-opacity", "0");
+            photo.style.setProperty("--closing-fade-duration", "400ms");
+            photo.style.zIndex = "1";
+          }
+          return;
+        }
+        const thumb = photoThumbs[index - activePhoto + 1].getBoundingClientRect();
+        const photoWidth = parseFloat(getComputedStyle(photo).width);
+        photo.style.setProperty("--fan-x", `${thumb.left + thumb.width / 2 - centerX}px`);
+        photo.style.setProperty("--fan-y", `${thumb.top + thumb.height / 2 - centerY}px`);
+        photo.style.setProperty("--photo-scale", String(thumb.width / photoWidth));
+        photo.style.setProperty("--closing-opacity", "1");
+        photo.style.setProperty("--closing-fade-duration", "800ms");
+        photo.style.zIndex = "2";
+      });
+    };
+
+    const rebasePhotoFan = () => {
+      if (activePhoto >= heroPhotos.length && activePhoto < heroPhotos.length * 2) return;
+      photoStack.classList.add("is-resetting");
+      activePhoto = heroPhotos.length + ((activePhoto % heroPhotos.length) + heroPhotos.length) % heroPhotos.length;
+      renderPhotoFan();
+      photoStack.offsetWidth;
+      photoStack.classList.remove("is-resetting");
+    };
+
+    const selectPhoto = (index) => {
+      if (index < 0 || index >= loopPhotos.length) return;
+      if (index === activePhoto) return;
+      activePhoto = index;
+      photoHoverReadyAt = performance.now() + 830;
+      renderPhotoFan();
+      window.clearTimeout(photoRebaseTimer);
+      photoRebaseTimer = window.setTimeout(rebasePhotoFan, 820);
+    };
+
+    const stopHeroPhotos = () => {
+      if (!photoStack.classList.contains("is-open")) return;
+      window.clearTimeout(photoRevealTimer);
+      window.clearTimeout(photoRebaseTimer);
+      lastViewedPhoto = activePhoto % heroPhotos.length;
+      updatePhotoThumbs(lastViewedPhoto);
+      photoStack.classList.add("is-closing");
+      closePhotoFan();
+      photoStack.setAttribute("aria-hidden", "true");
+      photoStack.tabIndex = -1;
+      window.clearTimeout(photoCloseTimer);
+      photoCloseTimer = window.setTimeout(() => {
+        photoStack.classList.add("is-resetting");
+        photoStack.classList.remove("is-open", "is-closing", "is-looping");
+        photoTrigger.classList.remove("is-photos-open");
+        photoStack.offsetWidth;
+        photoStack.classList.remove("is-resetting");
+      }, 820);
+    };
+
+    const startHeroPhotos = () => {
+      if (window.innerWidth < 1000 || (photoStack.classList.contains("is-open") && !photoStack.classList.contains("is-closing"))) return;
+      window.clearTimeout(photoCloseTimer);
+      window.clearTimeout(photoRebaseTimer);
+      activePhoto = heroPhotos.length + lastViewedPhoto;
+      photoStack.classList.add("is-resetting");
+      photoStack.classList.remove("is-looping");
+      renderPhotoFan();
+      collapsePhotosToThumbs();
+      photoStack.classList.add("is-open");
+      photoStack.offsetWidth;
+      photoTrigger.classList.add("is-photos-open");
+      photoStack.classList.remove("is-resetting");
+      photoStack.classList.remove("is-closing");
+      photoHoverReadyAt = performance.now() + 850;
+      photoStack.setAttribute("aria-hidden", "false");
+      photoStack.tabIndex = 0;
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (photoStack.classList.contains("is-open") && !photoStack.classList.contains("is-closing")) renderPhotoFan();
+      }));
+      photoRevealTimer = window.setTimeout(() => {
+        if (photoStack.classList.contains("is-open") && !photoStack.classList.contains("is-closing")) photoStack.classList.add("is-looping");
+      }, 800);
+    };
+
+    photoTrigger.addEventListener("pointerenter", startHeroPhotos);
+    photoTrigger.addEventListener("focus", startHeroPhotos);
+    photoStack.addEventListener("pointermove", (event) => {
+      if (!photoStack.classList.contains("is-open") || event.pointerType !== "mouse" || performance.now() < photoHoverReadyAt) return;
+      const stackBounds = photoStack.getBoundingClientRect();
+      if (event.clientX < stackBounds.left + 32) {
+        selectPhoto(activePhoto - 1);
+        return;
+      }
+      if (event.clientX > stackBounds.right - 32) {
+        selectPhoto(activePhoto + 1);
+        return;
+      }
+      const nextPhoto = loopPhotos.reduce((closest, photo, index) => {
+        const bounds = photo.getBoundingClientRect();
+        if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) return closest;
+        const distance = Math.abs(event.clientX - (bounds.left + bounds.width / 2));
+        return distance < closest.distance ? { index, distance } : closest;
+      }, { index: -1, distance: Infinity }).index;
+      if (nextPhoto >= 0 && nextPhoto !== activePhoto) selectPhoto(nextPhoto);
+    });
+    const handlePhotoKeys = (event) => {
+      if (!photoStack.classList.contains("is-open")) return;
+      if (event.key === "ArrowRight") { event.preventDefault(); selectPhoto(activePhoto + 1); }
+      if (event.key === "ArrowLeft") { event.preventDefault(); selectPhoto(activePhoto - 1); }
+      if (event.key === "Escape") stopHeroPhotos();
+    };
+    photoTrigger.addEventListener("keydown", handlePhotoKeys);
+    photoStack.addEventListener("keydown", handlePhotoKeys);
+    heroScreen.addEventListener("pointerdown", (event) => {
+      if (!photoTrigger.contains(event.target) && !photoStack.contains(event.target)) stopHeroPhotos();
+    });
+    heroScreen.addEventListener("pointerleave", stopHeroPhotos);
+    window.addEventListener("resize", () => {
+      if (window.innerWidth < 1000) stopHeroPhotos();
+      else if (photoStack.classList.contains("is-open")) renderPhotoFan();
+    });
     const parallaxGroups = [
       { elements: heroScreen.querySelectorAll(".hero__intro"), speed: 0.1 },
       { elements: heroScreen.querySelectorAll(".hero__katya"), speed: 0.18 },
@@ -1791,17 +2214,11 @@
 
     window.addEventListener("scroll", () => {
       if (!parallaxFrame) parallaxFrame = window.requestAnimationFrame(updateHeroParallax);
+      document.body.classList.toggle("case-active", window.scrollY > 80);
     }, { passive: true });
 
     updateHeroParallax();
-
-    const heroObserver = new IntersectionObserver(
-      ([entry]) => {
-        document.body.classList.toggle("case-active", !entry.isIntersecting);
-      },
-      { threshold: 0 }
-    );
-    heroObserver.observe(heroScreen);
+    document.body.classList.toggle("case-active", window.scrollY > 80);
 
     const loaderFly = document.querySelector(".loader-fly");
     window.setTimeout(() => {
