@@ -563,6 +563,8 @@
         -webkit-user-drag: none;
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
+        image-rendering: auto;
+        border-radius: 2px;
       }
 
       .mobile-photo-viewer__card.is-active {
@@ -2578,14 +2580,10 @@
     mobilePhotoViewer.setAttribute("role", "dialog");
     mobilePhotoViewer.setAttribute("aria-modal", "true");
     mobilePhotoViewer.setAttribute("aria-label", "Документальные фотографии");
-    mobilePhotoViewer.innerHTML = `
-      <button class="mobile-photo-viewer__close" type="button" aria-label="Закрыть галерею">×</button>
-      <div class="mobile-photo-viewer__deck"></div>
-    `;
+    mobilePhotoViewer.innerHTML = '<div class="mobile-photo-viewer__deck"></div>';
     document.body.appendChild(mobilePhotoViewer);
 
     const mobilePhotoDeck = mobilePhotoViewer.querySelector(".mobile-photo-viewer__deck");
-    const mobilePhotoClose = mobilePhotoViewer.querySelector(".mobile-photo-viewer__close");
     const mobilePhotoCards = heroPhotos.map((photo) => {
       const card = document.createElement("img");
       card.className = "mobile-photo-viewer__card";
@@ -2626,6 +2624,7 @@
     const closeMobilePhotoViewer = () => {
       if (!mobilePhotoViewer.classList.contains("is-open")) return;
       mobilePhotoViewer.classList.remove("is-open");
+      mobilePhotoIndex = 0;
       document.body.style.overflow = mobilePhotoPreviousOverflow;
       window.clearTimeout(mobilePhotoCloseTimer);
       mobilePhotoCloseTimer = window.setTimeout(() => {
@@ -2636,7 +2635,7 @@
     const openMobilePhotoViewer = (index) => {
       if (!isMobilePhotoViewer()) return;
       window.clearTimeout(mobilePhotoCloseTimer);
-      mobilePhotoIndex = (index + mobilePhotoCards.length) % mobilePhotoCards.length;
+      mobilePhotoIndex = 0;
       mobilePhotoPreviousOverflow = document.body.style.overflow;
       mobilePhotoViewer.hidden = false;
       const previewBounds = document.querySelector(".hero__photo-thumbs").getBoundingClientRect();
@@ -2659,7 +2658,6 @@
           mobilePhotoCards.forEach((card) => { card.style.transitionDelay = "0ms"; });
         }, 720);
       });
-      mobilePhotoClose.focus({ preventScroll: true });
     };
 
     const finishMobilePhotoDrag = (event) => {
@@ -2679,13 +2677,13 @@
         return;
       }
 
-      const exitDirection = deltaX > 0 ? -1 : 1;
+      const exitDirection = deltaX < 0 ? -1 : 1;
       const rotation = mobilePhotoRotations[mobilePhotoIndex] + exitDirection * 8;
       card.classList.add("is-exiting");
       card.style.transform = `translate3d(calc(-50% + ${exitDirection * 120}vw), -50%, 0) rotate(${rotation}deg) scale(1)`;
       card.style.opacity = "0";
       window.setTimeout(() => {
-        mobilePhotoIndex = (mobilePhotoIndex + (deltaX > 0 ? 1 : -1) + mobilePhotoCards.length) % mobilePhotoCards.length;
+        mobilePhotoIndex = (mobilePhotoIndex + (deltaX < 0 ? 1 : -1) + mobilePhotoCards.length) % mobilePhotoCards.length;
         card.classList.remove("is-exiting");
         renderMobilePhotoDeck();
       }, 250);
@@ -2704,7 +2702,7 @@
       card.addEventListener("pointermove", (event) => {
         if (!mobilePhotoDragging || event.pointerId !== mobilePhotoPointerId) return;
         const deltaX = event.clientX - mobilePhotoStartX;
-        const dragX = -deltaX;
+        const dragX = deltaX;
         const direction = dragX < 0 ? -1 : 1;
         const progress = Math.min(Math.abs(dragX) / 180, 1);
         const rotation = mobilePhotoRotations[mobilePhotoIndex] + direction * progress * 8;
@@ -2722,7 +2720,6 @@
       const index = Math.max(0, heroPhotos.findIndex((photo) => photo.getAttribute("src") === source));
       openMobilePhotoViewer(index);
     });
-    mobilePhotoClose.addEventListener("click", closeMobilePhotoViewer);
     mobilePhotoViewer.addEventListener("pointerdown", (event) => {
       if (event.target !== mobilePhotoViewer && event.target !== mobilePhotoDeck) return;
       const visibleCards = mobilePhotoCards.filter((card) => Number(card.style.opacity || getComputedStyle(card).opacity) > 0);
