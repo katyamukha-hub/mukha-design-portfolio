@@ -36,6 +36,14 @@
       font-display: swap;
     }
 
+    @font-face {
+      font-family: "CoFo Sans Trial";
+      src: url("assets/fonts/CoFoSans-Light-Trial.otf") format("opentype");
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
 :root {
       --font-main: "CoFo Sans", Arial, Helvetica, sans-serif;
       --bg: #f4f4f4;
@@ -73,127 +81,6 @@
     a {
       color: inherit;
       text-decoration: none;
-    }
-
-    .custom-cursor {
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 20px;
-      height: 20px;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #4267ff;
-      border: 0;
-      border-radius: 50%;
-      pointer-events: none;
-      opacity: 0;
-      transform: translate(-50%, -50%);
-      z-index: 9998;
-      overflow: hidden;
-      white-space: nowrap;
-      transition: opacity 0.15s ease, transform 0.15s ease, width 0.18s ease, height 0.18s ease, background-color 0.18s ease;
-    }
-
-    .custom-cursor.is-visible {
-      opacity: 1;
-    }
-
-    .custom-cursor.is-on-section-link {
-      width: 24px;
-      height: 24px;
-      opacity: 0.5;
-    }
-
-    .custom-cursor.is-on-hyperlink {
-      width: 24px;
-      height: 24px;
-      opacity: 0.5;
-    }
-
-    .custom-cursor.is-on-light-control {
-      background: #fff;
-    }
-
-    .cursor-text-mask {
-      position: fixed;
-      inset: 0;
-      z-index: 10000;
-      pointer-events: none;
-      color: #fff;
-      opacity: 0;
-      clip-path: circle(10px at var(--cursor-x, -100px) var(--cursor-y, -100px));
-      transition: opacity 0.15s ease;
-    }
-
-    .cursor-text-mask.is-visible {
-      opacity: 1;
-    }
-
-    .cursor-text-mask.is-on-section-link {
-      clip-path: circle(12px at var(--cursor-x, -100px) var(--cursor-y, -100px));
-    }
-
-    .cursor-text-mask.is-on-hyperlink {
-      clip-path: circle(12px at var(--cursor-x, -100px) var(--cursor-y, -100px));
-    }
-
-    .cursor-text-mask *,
-    .cursor-text-mask .case-section-nav__link::before {
-      color: #fff !important;
-      border-color: #fff !important;
-      text-decoration-color: #fff !important;
-      box-shadow: none !important;
-    }
-
-    .cursor-text-mask.is-on-light-control * {
-      color: #4267ff !important;
-      border-color: #4267ff !important;
-      text-decoration-color: #4267ff !important;
-    }
-
-    .cursor-text-mask,
-    .cursor-text-mask *,
-    .cursor-text-mask .page,
-    .cursor-text-mask .case-hero,
-    .cursor-text-mask .case-text-section,
-    .cursor-text-mask .case-image-section,
-    .cursor-text-mask .case-section-heading,
-    .cursor-text-mask .jtbd-section,
-    .cursor-text-mask .contacts-section {
-      background: transparent !important;
-      background-color: transparent !important;
-      background-image: none !important;
-    }
-
-    .cursor-text-mask img,
-    .cursor-text-mask video,
-    .cursor-text-mask picture {
-      visibility: hidden !important;
-    }
-
-    .cursor-text-mask .custom-cursor,
-    .cursor-text-mask .cursor-text-mask {
-      visibility: hidden !important;
-    }
-
-    @media (pointer: fine) {
-      html,
-      body,
-      a,
-      button,
-      .case-section-nav__link {
-        cursor: none;
-      }
-    }
-
-    @media (pointer: coarse) {
-      .custom-cursor,
-      .cursor-text-mask {
-        display: none;
-      }
     }
 
     .page {
@@ -1974,15 +1861,15 @@
       transform: none !important;
     }
 
-    .page a:not(.brand):not(.cv-button):not(.telegram-link) {
+    .page a:not(.brand):not(.cv-button):not(.telegram-link):not(.portfolio-header__nav a):not(.portfolio-header__action):not(.portfolio-footer__links a) {
       transition:
         color 0.2s ease,
         text-decoration-color 0.2s ease,
         transform 0.2s ease;
     }
 
-    .page a:not(.brand):not(.cv-button):not(.telegram-link):hover,
-    .page a:not(.brand):not(.cv-button):not(.telegram-link):focus-visible {
+    .page a:not(.brand):not(.cv-button):not(.telegram-link):not(.portfolio-header__nav a):not(.portfolio-header__action):not(.portfolio-footer__links a):hover,
+    .page a:not(.brand):not(.cv-button):not(.telegram-link):not(.portfolio-header__nav a):not(.portfolio-header__action):not(.portfolio-footer__links a):focus-visible {
       color: #4267ff !important;
       text-decoration-color: #4267ff !important;
       opacity: 1 !important;
@@ -2073,8 +1960,7 @@
     }
 
     .telegram-link:hover .telegram-link__arrow,
-    .telegram-link:focus-visible .telegram-link__arrow,
-    .cursor-text-mask.is-on-light-control .telegram-link__arrow {
+    .telegram-link:focus-visible .telegram-link__arrow {
       opacity: 1;
       transform: translateX(0) translateY(-50%) translateY(1px);
     }
@@ -2085,8 +1971,7 @@
     }
 
     .telegram-link:hover .telegram-link__text,
-    .telegram-link:focus-visible .telegram-link__text,
-    .cursor-text-mask.is-on-light-control .telegram-link__text {
+    .telegram-link:focus-visible .telegram-link__text {
       transform: translateX(calc(0.94em + 8px));
     }
 
@@ -2106,8 +1991,7 @@
     }
 
     .telegram-link:hover::after,
-    .telegram-link:focus-visible::after,
-    .cursor-text-mask.is-on-light-control .telegram-link::after {
+    .telegram-link:focus-visible::after {
       opacity: 0;
       transform: translateX(10px) translateY(1px);
     }
@@ -2549,23 +2433,251 @@
     }
 
   </style>
+  <style>
+    :root {
+      --bg: #f5f2f2;
+      --blue: #424242;
+      --font-primary-family: "CoFo Sans Trial", Arial, sans-serif;
+      --font-primary-size: 22px;
+      --font-primary-line-height: 28px;
+      --font-primary-letter-spacing: -0.03em;
+    }
+
+    html, body, .page {
+      background: var(--bg);
+      color: var(--blue);
+    }
+
+    body {
+      font-family: var(--font-primary-family);
+      font-size: var(--font-primary-size);
+      font-weight: 300;
+      line-height: var(--font-primary-line-height);
+      letter-spacing: var(--font-primary-letter-spacing);
+    }
+
+    .case-hero__description,
+    .case-text-section__text,
+    .case-text-section__list,
+    .case-section-heading__caption,
+    .case-section-heading__list,
+    .case-section-heading__link,
+    .case-split-section__caption,
+    .case-split-section__list {
+      font-family: var(--font-primary-family);
+      font-size: var(--font-primary-size);
+      font-weight: 300;
+      line-height: var(--font-primary-line-height);
+      letter-spacing: var(--font-primary-letter-spacing);
+    }
+
+    .portfolio-header {
+      position: fixed;
+      z-index: 100;
+      top: 18px;
+      left: 36px;
+      font-family: var(--font-primary-family);
+      font-size: var(--font-primary-size);
+      font-weight: 300;
+      line-height: var(--font-primary-line-height);
+      letter-spacing: var(--font-primary-letter-spacing);
+    }
+
+    .portfolio-header__nav {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .portfolio-header__actions {
+      position: fixed;
+      top: 18px;
+      right: 36px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 45px;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .portfolio-header__action {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: var(--font-primary-line-height);
+      color: var(--blue);
+    }
+
+    .portfolio-header__action::after {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 1.3px;
+      background: currentColor;
+      content: "";
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 220ms ease;
+    }
+
+    .portfolio-header__action:hover::after,
+    .portfolio-header__action:focus-visible::after { transform: scaleX(1); }
+
+    .portfolio-header__action[href*="t.me"]::after {
+      background: linear-gradient(to right, currentColor 0 52%, transparent 52% 66%, currentColor 66% 100%);
+    }
+
+    .portfolio-header__arrow {
+      display: inline-block;
+      width: 14px;
+      height: 13px;
+      margin-right: 6px;
+      vertical-align: -1px;
+    }
+
+    .portfolio-header__action[href*="t.me"] .portfolio-header__arrow { margin-right: 7.5px; }
+
+    .portfolio-header__nav a,
+    .portfolio-footer a,
+    .portfolio-footer__email {
+      cursor: pointer;
+    }
+
+    .portfolio-header__nav a:hover,
+    .portfolio-header__nav a:focus-visible,
+    .portfolio-footer a:hover,
+    .portfolio-footer a:focus-visible {
+      color: var(--blue) !important;
+      opacity: 1 !important;
+    }
+
+    .portfolio-header__toggle { display: none; }
+
+    .page > .portfolio-footer {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-height: 50svh;
+      height: auto;
+      padding: 52px 36px;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--blue);
+    }
+
+    .page > .portfolio-footer::before { display: none; }
+
+    .portfolio-footer__content { position: relative; }
+
+    .portfolio-footer__email {
+      display: block;
+      width: auto;
+      max-width: calc(100vw - 72px);
+      height: 38.62px;
+    }
+
+    .portfolio-footer__links {
+      display: flex;
+      gap: 34px;
+      margin-top: 34px;
+      font-family: var(--font-primary-family);
+      font-size: var(--font-primary-size);
+      font-weight: 300;
+      line-height: var(--font-primary-line-height);
+      letter-spacing: var(--font-primary-letter-spacing);
+    }
+
+    .portfolio-footer__links a { position: relative; }
+
+    .portfolio-footer__links a::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: max-content;
+      color: transparent;
+      content: attr(data-underline);
+      font: inherit;
+      letter-spacing: inherit;
+      line-height: inherit;
+      white-space: nowrap;
+      text-decoration-line: underline;
+      text-decoration-color: var(--blue);
+      text-decoration-thickness: 1.4px;
+      text-underline-offset: 4px;
+      text-decoration-skip-ink: auto;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 220ms cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+
+    .portfolio-footer__links a:hover::after,
+    .portfolio-footer__links a:focus-visible::after { clip-path: inset(0 0 0 0); }
+
+    .portfolio-footer__links a[href*="t.me"]::after {
+      text-underline-offset: 3px;
+      transform: translateX(-1px);
+      clip-path: inset(0 100% 0 1px);
+    }
+
+    .portfolio-footer__links a[href*="t.me"]:hover::after,
+    .portfolio-footer__links a[href*="t.me"]:focus-visible::after {
+      clip-path: inset(0 0 0 1px);
+    }
+
+    @media (pointer: fine) {
+      .portfolio-header a, .portfolio-header button, .portfolio-footer a, .portfolio-footer__email { cursor: pointer; }
+    }
+
+    @media (max-width: 799px) {
+      :root { --font-primary-size: 18px; --font-primary-line-height: 23px; }
+    }
+
+    @media (max-width: 700px) {
+      .portfolio-header { left: 20px; }
+      .portfolio-header__actions { right: 20px; gap: 22.5px; }
+      .portfolio-header__arrow { width: 11.45px; height: 10.64px; margin-right: 5.27px; }
+      .portfolio-header__action[href*="t.me"] .portfolio-header__arrow { margin-right: 6.5px; }
+      .page > .portfolio-footer { padding-inline: 20px; }
+      .portfolio-footer__email { max-width: calc(100vw - 40px); height: 24.7168px; }
+      .portfolio-footer__links { gap: 20px; flex-wrap: wrap; }
+    }
+
+    @media (max-width: 479px) {
+      .portfolio-header__actions { gap: 15px; }
+      .portfolio-header__toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 28px;
+        height: 24px;
+        padding: 3px 2px;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+      }
+      .portfolio-header__toggle span { display: block; width: 24px; height: 1.5px; background: var(--blue); }
+      .portfolio-header__nav { display: none; flex-direction: column; gap: 10px; }
+      .portfolio-header.is-open { padding: 8px 10px 12px; background: var(--bg); }
+      .portfolio-header.is-open .portfolio-header__nav { display: flex; margin-top: 10px; }
+      .portfolio-footer__links { justify-content: space-between; gap: 8px; width: calc(100vw - 40px); }
+    }
+  </style>
 </head>
 <body>
-  <div class="custom-cursor" aria-hidden="true"></div>
-  <div class="cursor-text-mask" aria-hidden="true"></div>
   <main class="page">
-    <header class="topbar" aria-label="Верхняя навигация">
-      <a class="brand" href="/" aria-label="На главную">
-        <img class="brand__avatar" src="assets/images/avatar_for_header.png" alt="" decoding="async" />
-        <span class="brand__text">
-          <span class="brand__name">Катя Мукха</span>
-          <span class="brand__role">Product Designer</span>
-        </span>
-      </a>
-
-      <nav class="topbar__actions" aria-label="Контакты и резюме">
-        <a class="telegram-link" href="https://t.me/katyamukha" target="_blank" rel="noopener noreferrer"><span class="telegram-link__arrow" aria-hidden="true">→</span><span class="telegram-link__text">Telegram</span></a>
-        <a class="cv-button" href="assets/files/katya-mukha-cv.pdf" download>Скачать CV</a>
+    <header class="portfolio-header" aria-label="Верхняя навигация">
+      <button class="portfolio-header__toggle" type="button" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span><span></span></button>
+      <nav class="portfolio-header__nav" aria-label="Основная навигация">
+        <a href="index.html#case-avalike">работы,</a>
+        <a href="index.html#facts">обо мне,</a>
+        <a href="index.html#contacts">контакты</a>
+      </nav>
+      <nav class="portfolio-header__actions" aria-label="CV и Telegram">
+        <a class="portfolio-header__action" href="assets/files/katya-mukha-cv.pdf" target="_blank" rel="noreferrer"><img class="portfolio-header__arrow" src="assets/Icons/arrow.svg" alt="">cv</a>
+        <a class="portfolio-header__action" href="https://t.me/katyamukha" target="_blank" rel="noreferrer"><img class="portfolio-header__arrow" src="assets/Icons/arrow.svg" alt="">telegram</a>
       </nav>
     </header>
 
@@ -2965,29 +3077,16 @@
       </div>
     </section>
 
-    <footer id="screen-contacts" class="contacts-section" aria-label="Контакты">
-      <div class="contacts__details" aria-label="Контактная информация">
-        <p class="contacts__item contacts__item--email">
-          <a class="contacts__value shared-case-heading" href="mailto:katya@mukha.design" title="Написать на email">katya@mukha.design</a>
-        </p>
-
-        <p class="contacts__intro">
-          Открыта к сотрудничеству<br />в Москве или удалённо
-        </p>
-
-        <p class="contacts__item contacts__item--tel">
-          <span class="contacts__label">Tel</span>
-          <a class="contacts__value" href="tel:+79852399132" title="Позвонить">+7 (985) 239 91 32</a>
-        </p>
-
-        <nav class="contacts__item contacts__item--cv contacts__actions" aria-label="Контакты и резюме">
-          <a class="cv-button contacts__cv-button" href="assets/files/katya-mukha-cv.pdf" download title="Скачать CV">Скачать&nbsp;CV</a>
-          <a class="telegram-link contacts__telegram-button" href="https://t.me/katyamukha" target="_blank" rel="noopener noreferrer"><span class="telegram-link__arrow" aria-hidden="true">→</span><span class="telegram-link__text">Telegram</span></a>
+    <footer id="screen-contacts" class="contacts-section portfolio-footer" aria-label="Контакты">
+      <div class="portfolio-footer__content">
+        <img class="portfolio-footer__email" src="mail.svg" alt="katya@mukha.design" role="button" aria-label="Скопировать почту katya@mukha.design" tabindex="0">
+        <nav class="portfolio-footer__links" aria-label="Контакты">
+          <a href="https://www.linkedin.com/in/katya-mukha-598907429/" target="_blank" rel="noreferrer" data-underline="linkedin">linkedin</a>
+          <a href="https://t.me/katyamukha" target="_blank" rel="noreferrer" data-underline="telegram">telegram</a>
+          <a href="assets/files/katya-mukha-cv.pdf" data-underline="cv">cv</a>
+          <a href="https://www.instagram.com/katya.mukha/" target="_blank" rel="noreferrer" data-underline="inst">inst</a>
         </nav>
       </div>
-
-      <div class="contacts__year">© 2026 Катя Мукха. Все права защищены.</div>
-      <div class="contacts__tagline">Lets design!</div>
     </footer>
   </main>
 
@@ -3252,79 +3351,37 @@
 
   </script>
   <script>
-    (() => {
-      const customCursor = document.querySelector('.custom-cursor');
-      const cursorTextMask = document.querySelector('.cursor-text-mask');
-      const page = document.querySelector('.page');
+    const portfolioHeader = document.querySelector('.portfolio-header');
+    const portfolioMenuToggle = portfolioHeader.querySelector('.portfolio-header__toggle');
+    portfolioMenuToggle.addEventListener('click', () => {
+      const isOpen = portfolioHeader.classList.toggle('is-open');
+      portfolioMenuToggle.setAttribute('aria-expanded', String(isOpen));
+      portfolioMenuToggle.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+    });
 
-      if (!customCursor || !cursorTextMask || !page || !window.matchMedia('(pointer: fine)').matches) return;
+    const portfolioEmail = document.querySelector('.portfolio-footer__email');
+    portfolioEmail.addEventListener('click', async () => {
+      const address = 'katya@mukha.design';
+      try {
+        await navigator.clipboard.writeText(address);
+      } catch {
+        const input = document.createElement('textarea');
+        input.value = address;
+        input.style.position = 'fixed';
+        input.style.opacity = '0';
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        input.remove();
+      }
+    });
+    portfolioEmail.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        portfolioEmail.click();
+      }
+    });
 
-      const pageClone = page.cloneNode(true);
-
-      pageClone.querySelectorAll('img, source, video').forEach((asset) => {
-        asset.setAttribute('aria-hidden', 'true');
-      });
-
-      cursorTextMask.appendChild(pageClone);
-
-      const syncCursorTextMask = () => {
-        const syncClassList = (selector) => {
-          const sourceItems = page.querySelectorAll(selector);
-          const cloneItems = pageClone.querySelectorAll(selector);
-
-          sourceItems.forEach((sourceItem, index) => {
-            const cloneItem = cloneItems[index];
-
-            if (cloneItem) {
-              cloneItem.className = sourceItem.className;
-            }
-          });
-        };
-
-        pageClone.className = page.className;
-        syncClassList('.case-nav');
-        syncClassList('.case-section-nav');
-        syncClassList('.case-section-nav__link');
-        syncClassList('.back-to-top');
-      };
-
-      const syncMaskScroll = () => {
-        pageClone.style.transform = `translateY(${-window.scrollY}px)`;
-        syncCursorTextMask();
-      };
-
-      document.addEventListener('pointermove', (event) => {
-        customCursor.style.left = `${event.clientX}px`;
-        customCursor.style.top = `${event.clientY}px`;
-        customCursor.classList.add('is-visible');
-
-        const elementUnderCursor = document.elementFromPoint(event.clientX, event.clientY);
-        const isOnSectionLink = elementUnderCursor && elementUnderCursor.closest('.case-section-nav__link, .case-nav__link');
-        const isOnLightControl = elementUnderCursor && elementUnderCursor.closest('.cv-button, .telegram-link');
-        const hyperlink = elementUnderCursor && elementUnderCursor.closest('a[href]');
-        const isOnHyperlink = Boolean(hyperlink);
-
-        customCursor.classList.toggle('is-on-section-link', Boolean(isOnSectionLink));
-        customCursor.classList.toggle('is-on-light-control', Boolean(isOnLightControl));
-        customCursor.classList.toggle('is-on-hyperlink', isOnHyperlink);
-        cursorTextMask.classList.toggle('is-on-section-link', Boolean(isOnSectionLink));
-        cursorTextMask.classList.toggle('is-on-light-control', Boolean(isOnLightControl));
-        cursorTextMask.classList.toggle('is-on-hyperlink', isOnHyperlink);
-        cursorTextMask.style.setProperty('--cursor-x', `${event.clientX}px`);
-        cursorTextMask.style.setProperty('--cursor-y', `${event.clientY}px`);
-        cursorTextMask.classList.add('is-visible');
-        syncMaskScroll();
-      });
-
-      document.addEventListener('pointerleave', () => {
-        customCursor.classList.remove('is-visible', 'is-on-section-link', 'is-on-light-control', 'is-on-hyperlink');
-        cursorTextMask.classList.remove('is-visible', 'is-on-section-link', 'is-on-light-control', 'is-on-hyperlink');
-      });
-
-      window.addEventListener('scroll', syncMaskScroll, { passive: true });
-      window.addEventListener('resize', syncMaskScroll);
-      syncMaskScroll();
-    })();
   </script>
 </body>
 </html>
