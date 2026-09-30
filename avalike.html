@@ -462,12 +462,12 @@
 
     .case-hero__text--title-only {
       grid-column: 1 / -1;
-      margin-bottom: 32px;
+      margin-bottom: 20px;
     }
 
     .case-hero__media {
       grid-column: 1 / -1;
-      aspect-ratio: 1440 / 754;
+      height: auto;
       overflow: hidden;
       border-radius: 8px;
       background: rgba(17, 17, 17, 0.08);
@@ -481,16 +481,16 @@
     .case-hero__title {
       margin: 0 0 20px;
       font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
-      font-size: 48px;
+      font-size: 35px;
       line-height: 1.1;
       font-weight: 400;
       letter-spacing: 0;
     }
 
     .case-hero__eyebrow {
-      margin: 0 0 8px;
+      margin: 0 0 4px;
       font-family: "CoFo Sans Mono Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
-      font-size: 16px;
+      font-size: 14px;
       line-height: 24px;
       font-weight: 400;
       letter-spacing: 0;
@@ -515,13 +515,18 @@
       grid-column: 1 / -1;
     }
 
+    .case-hero__text--title-only .case-hero__description {
+      max-width: 100%;
+      margin: 20px 0 0;
+    }
+
     .case-hero__image {
       width: 100%;
-      height: 100%;
+      height: auto;
       display: block;
       border-radius: inherit;
       background: transparent;
-      object-fit: cover;
+      object-fit: contain;
     }
 
     .case-text-section {
@@ -545,7 +550,7 @@
     .case-text-section__title {
       margin: 0 0 20px;
       font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
-      font-size: 36px;
+      font-size: 30px;
       line-height: 1;
       font-weight: 400;
       letter-spacing: 0;
@@ -702,7 +707,7 @@
     .case-section-heading__title {
       margin: 0 0 20px;
       font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
-      font-size: 36px;
+      font-size: 30px;
       line-height: 1;
       font-weight: 400;
       letter-spacing: 0;
@@ -791,7 +796,7 @@
     .case-split-section__title {
       margin: 0 0 20px;
       font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
-      font-size: 36px;
+      font-size: 30px;
       line-height: 1;
       font-weight: 400;
       letter-spacing: 0;
@@ -845,7 +850,7 @@
     .jtbd-section__title {
       margin: 0 0 52px;
       font-family: "CoFo Sans", Arial, Helvetica, sans-serif;
-      font-size: 36px;
+      font-size: 30px;
       line-height: 1;
       font-weight: 400;
       letter-spacing: 0;
@@ -855,14 +860,14 @@
     .jtbd-board {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
+      gap: 4px;
     }
 
     .jtbd-card {
       min-height: 124px;
-      padding: 18px 18px 20px;
-      border-radius: 8px;
-      background: var(--bg);
+      padding: 24px;
+      border-radius: 32px;
+      background: #fff;
       color: var(--blue);
       font-size: 15px;
       line-height: 1.28;
@@ -991,7 +996,7 @@
       }
 
       .case-hero__title {
-        font-size: 48px;
+        font-size: 35px;
       }
     }
 
@@ -1091,7 +1096,7 @@
       .case-section-heading__title,
       .case-split-section__title,
       .jtbd-section__title {
-        font-size: 36px;
+        font-size: 30px;
         font-weight: 400;
       }
 
@@ -1889,7 +1894,7 @@
     }
 
     .case-section-heading--research .case-section-heading__title {
-      white-space: normal;
+      white-space: nowrap;
     }
 
     .case-image--competitive-analysis {
@@ -2096,7 +2101,7 @@
 
     /* Shared case spacing aligned with Skillshare. */
     .case-hero__eyebrow {
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
 
     .case-hero__description,
@@ -2172,8 +2177,8 @@
       }
 
       .case-hero__title {
-        font-size: 44px;
-        line-height: 48px;
+        font-size: 35px;
+        line-height: 39px;
       }
     }
 
@@ -2229,8 +2234,8 @@
 
     @media (min-width: 761px) and (max-width: 1000px) {
       .case-hero__title {
-        font-size: 40px;
-        line-height: 44px;
+        font-size: 35px;
+        line-height: 39px;
       }
     }
 
@@ -2437,10 +2442,14 @@
     :root {
       --bg: #f5f2f2;
       --blue: #424242;
+      --page-x: 36px;
+      --grid-gap: 20px;
+      --case-content-max: calc(100vw - (2 * var(--page-x)));
       --font-primary-family: "CoFo Sans Trial", Arial, sans-serif;
-      --font-primary-size: 22px;
-      --font-primary-line-height: 28px;
+      --font-primary-size: 15.84px;
+      --font-primary-line-height: 20.16px;
       --font-primary-letter-spacing: -0.03em;
+      --section-gap: calc(3 * var(--font-primary-line-height));
     }
 
     html, body, .page {
@@ -2454,6 +2463,147 @@
       font-weight: 300;
       line-height: var(--font-primary-line-height);
       letter-spacing: var(--font-primary-letter-spacing);
+    }
+
+    .case-hero__description,
+    .case-text-section__text,
+    .case-text-section__list,
+    .case-section-heading__caption,
+    .case-section-heading__list,
+    .case-split-section__caption,
+    .case-split-section__list {
+      width: min(100%, 650px);
+      max-width: 650px;
+    }
+
+    .case-hero__text--title-only .case-hero__description {
+      width: min(100%, 610px);
+      max-width: 610px;
+    }
+
+    @media (min-width: 701px) {
+      .case-text-section[aria-labelledby="research-results-title"] .case-text-section__content {
+        grid-column: 3 / span 7;
+      }
+
+      .case-text-section[aria-labelledby="research-results-title"] .case-text-section__text {
+        width: min(100%, 610px);
+        max-width: 610px;
+      }
+    }
+
+    .case-section-heading[aria-labelledby="wireframes-title"] .case-section-heading__caption,
+    .case-section-heading[aria-labelledby="moodboard-title"] .case-section-heading__caption {
+      width: min(100%, 610px);
+      max-width: 610px;
+    }
+
+    .case-section-heading[aria-labelledby="moodboard-title"] .case-section-heading__caption {
+      width: min(100%, 610px);
+      max-width: 610px;
+    }
+
+    .case-section-heading[aria-labelledby="visual-design-title"] .case-section-heading__caption {
+      width: min(100%, 610px);
+      max-width: 610px;
+    }
+
+    .case-text-section__text,
+    .case-text-section__list,
+    .case-section-heading__caption,
+    .case-section-heading__list,
+    .case-split-section__caption,
+    .case-split-section__list {
+      margin-bottom: 0;
+    }
+
+    .case-text-section__content > :is(p, ul) + :is(p, ul),
+    .case-section-heading__content > :is(p, ul) + :is(p, ul),
+    .case-split-section__text > :is(p, ul) + :is(p, ul) {
+      margin-top: 0.5lh;
+    }
+
+    .case-text-section__content > p + ul,
+    .case-section-heading__content > p + ul,
+    .case-split-section__text > p + ul {
+      margin-top: 8px;
+    }
+
+    .case-text-section__list li,
+    .case-section-heading__list li,
+    .case-split-section__list li {
+      margin-block: 0;
+      line-height: inherit;
+    }
+
+    .case-section-heading__body .case-section-heading__list {
+      margin-top: 0;
+    }
+
+    .case-text-section__body > :is(p, ul) + :is(p, ul),
+    .case-split-section__body > :is(p, ul) + :is(p, ul) {
+      margin-top: 0.5lh;
+    }
+
+    .case-text-section__body > p + ul {
+      margin-top: 0;
+    }
+
+    .case-text-section[aria-labelledby="handoff-title"] .case-text-section__text {
+      margin-bottom: 0;
+    }
+
+    .case-text-section[aria-labelledby="handoff-title"] .case-text-section__list {
+      margin-top: 0 !important;
+    }
+
+    .jtbd-card,
+    .jtbd-card p {
+      font-family: var(--font-primary-family);
+      font-size: 15px;
+      font-weight: 300;
+      line-height: var(--font-primary-line-height);
+      letter-spacing: var(--font-primary-letter-spacing);
+      font-synthesis: none;
+    }
+
+    .jtbd-card {
+      display: block;
+      visibility: visible;
+      opacity: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .jtbd-card p {
+      display: block;
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .case-hero,
+    .case-text-section,
+    .case-image-section,
+    .case-section-heading,
+    .case-split-section,
+    .jtbd-section {
+      padding-bottom: var(--section-gap);
+    }
+
+    .case-hero__text--title-only {
+      margin-bottom: var(--font-primary-line-height);
+    }
+
+    .case-text-section--before-media,
+    .case-section-heading--before-media,
+    .case-section-heading--double-diamond,
+    .case-section-heading--interviews,
+    .case-section-heading--main-scenarios,
+    .case-section-heading--research,
+    .case-section-heading--prototype,
+    .case-section-heading--visual-design,
+    .case-section-heading--wireframes {
+      padding-bottom: var(--font-primary-line-height);
     }
 
     .case-hero__description,
@@ -2487,6 +2637,40 @@
       display: flex;
       gap: 20px;
       align-items: flex-start;
+    }
+
+    .case-nav,
+    .case-section-nav {
+      font-family: var(--font-primary-family);
+      font-size: var(--font-primary-size);
+      font-weight: 300;
+      line-height: var(--font-primary-line-height);
+      letter-spacing: var(--font-primary-letter-spacing);
+      font-synthesis: none;
+      text-transform: lowercase;
+    }
+
+    .case-section-nav {
+      color: rgba(66, 66, 66, 0.4);
+      top: calc(18px + 6.5 * 22.4px);
+    }
+
+    .portfolio-header,
+    .case-nav,
+    .case-section-nav,
+    .portfolio-footer {
+      font-size: 17.6px;
+      line-height: 22.4px;
+    }
+
+    @media (max-width: 799px) {
+      .portfolio-header,
+      .case-nav,
+      .case-section-nav,
+      .portfolio-footer {
+        font-size: 14.4px;
+        line-height: 18.4px;
+      }
     }
 
     .portfolio-header__actions {
@@ -2570,13 +2754,43 @@
 
     .page > .portfolio-footer::before { display: none; }
 
-    .portfolio-footer__content { position: relative; }
+    .portfolio-footer__content {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 40px;
+      width: 100%;
+    }
 
     .portfolio-footer__email {
       display: block;
       width: auto;
       max-width: calc(100vw - 72px);
       height: 38.62px;
+    }
+
+    .portfolio-footer__brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      width: min(50%, 426px);
+      margin-left: auto;
+      order: 2;
+    }
+
+    .portfolio-footer__katya {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      object-position: left center;
+    }
+
+    .portfolio-footer__availability {
+      margin: 0;
+      font: inherit;
+      text-transform: none;
     }
 
     .portfolio-footer__links {
@@ -2589,6 +2803,8 @@
       line-height: var(--font-primary-line-height);
       letter-spacing: var(--font-primary-letter-spacing);
     }
+
+    .portfolio-footer__email-group { order: 1; }
 
     .portfolio-footer__links a { position: relative; }
 
@@ -2632,10 +2848,14 @@
     }
 
     @media (max-width: 799px) {
-      :root { --font-primary-size: 18px; --font-primary-line-height: 23px; }
+      :root { --font-primary-size: 12.96px; --font-primary-line-height: 16.56px; }
     }
 
     @media (max-width: 700px) {
+      :root {
+        --page-x: 20px;
+        --grid-gap: 12px;
+      }
       .portfolio-header { left: 20px; }
       .portfolio-header__actions { right: 20px; gap: 22.5px; }
       .portfolio-header__arrow { width: 11.45px; height: 10.64px; margin-right: 5.27px; }
@@ -2663,6 +2883,8 @@
       .portfolio-header.is-open { padding: 8px 10px 12px; background: var(--bg); }
       .portfolio-header.is-open .portfolio-header__nav { display: flex; margin-top: 10px; }
       .portfolio-footer__links { justify-content: space-between; gap: 8px; width: calc(100vw - 40px); }
+      .portfolio-footer__content { align-items: flex-start; }
+      .portfolio-footer__brand { width: min(50%, 300px); }
     }
   </style>
 </head>
@@ -2672,7 +2894,7 @@
       <button class="portfolio-header__toggle" type="button" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span><span></span></button>
       <nav class="portfolio-header__nav" aria-label="Основная навигация">
         <a href="index.html#case-avalike">работы,</a>
-        <a href="index.html#facts">обо мне,</a>
+        <a href="index.html#facts">обо&nbsp;мне,</a>
         <a href="index.html#contacts">контакты</a>
       </nav>
       <nav class="portfolio-header__actions" aria-label="CV и Telegram">
@@ -2715,34 +2937,25 @@
 
         <div class="case-hero__content">
           <div class="case-hero__text case-hero__text--title-only">
-            <p class="case-hero__eyebrow">Avalike • AI characters platform • 2025/26</p>
+            <p class="case-hero__eyebrow">Avalike • AI characters platform • 2025—2026</p>
 
-            <h1 class="case-hero__title" id="case-title">Проектирование продукта, где пользователи создают, находят и&nbsp;монетизируют AI-персонажей</h1>
+            <h1 class="case-hero__title" id="case-title">Проектирование платформы, где пользователи создают, находят и&nbsp;монетизируют AI-персонажей</h1>
+
+            <p class="case-hero__description">
+              Avalike — ранний стартап и&nbsp;маркетплейс AI-персонажей: пользователи находят и&nbsp;общаются с&nbsp;персонажами в&nbsp;чате, а&nbsp;креаторы создают, публикуют и&nbsp;монетизируют их.
+            </p>
           </div>
 
           <div class="case-hero__media case-animated-media">
-            <video
-              class="case-hero__image case-hero__video case-animated-media__video"
-              data-src="assets/images/avalike/avalike-case-hero.webm"
-              muted
-              loop
-              playsinline
-              preload="none"
-              aria-label="Анимированная обложка Avalike"
-            ></video>
             <img
-              class="case-hero__image case-animated-media__fallback"
-              src="assets/images/avalike/avalike-case-hero.png"
+              class="case-hero__image"
+              src="assets/images/avalike/avalike-results-cover.png"
               alt="Интерфейс платформы Avalike"
               decoding="async"
               fetchpriority="high"
             />
 
           </div>
-
-          <p class="case-hero__description case-hero__description--under-media">
-            Avalike — ранний стартап и&nbsp;маркетплейс AI-персонажей: пользователи находят и&nbsp;общаются с&nbsp;персонажами в&nbsp;чате, а&nbsp;креаторы создают, публикуют и&nbsp;монетизируют их.
-          </p>
         </div>
       </div>
     </section>
@@ -2752,47 +2965,47 @@
         <div class="case-text-section__content">
           <h2 class="case-text-section__title" id="results-title">Результаты</h2>
 
-          <p class="case-text-section__text">
-            Протестировала ключевые сценарии платформы:
-          </p>
+          <div class="case-text-section__body">
+            <p class="case-text-section__text">
+              Протестировала ключевые сценарии платформы:
+            </p>
 
-          <ul class="case-text-section__list">
-            <li>Маркетплейс;</li>
-            <li>Страница агента;</li>
-            <li>Токены;</li>
-            <li>Кабинет креатора.</li>
-          </ul>
+            <ul class="case-text-section__list">
+              <li>маркетплейс</li>
+              <li>страница агента</li>
+              <li>токены</li>
+              <li>кабинет креатора</li>
+            </ul>
 
-          <p class="case-text-section__text">
-            Параллельно сделала мобильную адаптацию основных сценариев, собрала дизайн&#8209;систему, логотип и&nbsp;принципы визуального стиля.
-          </p>
-
-          <p class="case-text-section__text">
-            Работала как единственный дизайнер в&nbsp;связке с&nbsp;продуктом и&nbsp;разработкой.
-          </p>
+            <p class="case-text-section__text">
+              Параллельно сделала мобильную адаптацию основных сценариев, собрала дизайн&#8209;систему, логотип и&nbsp;принципы визуального стиля. Работала как единственный дизайнер в&nbsp;связке с&nbsp;продуктом и&nbsp;разработкой.
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="case-image-section" aria-label="Мобильные экраны Avalike">
+    <section class="case-image-section" aria-label="Обложка кейса Avalike">
       <div class="case-image-section__grid">
-        <div class="case-image-section__content case-animated-media">
-          <video
-            class="case-video case-animated-media__video"
-            data-src="assets/images/avalike/avalike-mobile-screens.mp4"
-            muted
-            loop
-            playsinline
-            preload="none"
-            aria-label="Анимация мобильных экранов Avalike"
-          ></video>
-          <img
-            class="case-image case-animated-media__fallback"
-            src="assets/images/avalike/avalike-mobile-screens.png"
-            alt="Мобильные экраны платформы Avalike"
-            loading="lazy"
-            decoding="async"
-          />
+        <div class="case-image-section__content">
+          <div class="case-animated-media">
+            <video
+              class="case-video case-animated-media__video"
+              data-src="assets/images/avalike/avalike-case-hero.webm"
+              muted
+              loop
+              playsinline
+              preload="none"
+              aria-label="Анимированная обложка Avalike"
+            ></video>
+            <img
+              class="case-image case-animated-media__fallback"
+              src="assets/images/avalike/avalike-case-hero.png"
+              alt="Интерфейс платформы Avalike"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -2833,11 +3046,13 @@
         <div class="case-text-section__content">
           <h2 class="case-text-section__title" id="research-stages-title">Исследование / этапы</h2>
 
-          <ul class="case-text-section__list">
-            <li>Интервью со&nbsp;стейкхолдерами;</li>
-            <li>Анализ конкурентов;</li>
-            <li>Интервью с&nbsp;пользователями.</li>
-          </ul>
+          <div class="case-text-section__body">
+            <ul class="case-text-section__list">
+              <li>интервью со&nbsp;стейкхолдерами</li>
+              <li>анализ конкурентов</li>
+              <li>интервью с&nbsp;пользователями</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -2872,13 +3087,15 @@
         <div class="case-text-section__content">
           <h2 class="case-text-section__title" id="research-results-title">Исследование / результаты</h2>
 
-          <p class="case-text-section__text">
-            Мы&nbsp;увидели, что большинство платформ с&nbsp;AI-агентами — например, ChatGPT — визуально и&nbsp;сценарно довольно утилитарны: они сфокусированы на&nbsp;пользе и&nbsp;решении задач.
-          </p>
+          <div class="case-text-section__body">
+            <p class="case-text-section__text">
+              Мы&nbsp;увидели, что большинство платформ с&nbsp;AI-агентами — например, ChatGPT — визуально и&nbsp;сценарно довольно утилитарны: они сфокусированы на&nbsp;пользе и&nbsp;решении задач.
+            </p>
 
-          <p class="case-text-section__text">
-            Мы&nbsp;предположили, что можно объединить два сценария: эмоционально вовлекающее общение с&nbsp;персонажами и&nbsp;полезные агентские функции. Персонажи могут привлекать дополнительный трафик на&nbsp;платформу, а&nbsp;агентские возможности — создавать основу для&nbsp;монетизации.
-          </p>
+            <p class="case-text-section__text">
+              Мы&nbsp;предположили, что можно объединить два сценария: эмоционально вовлекающее общение с&nbsp;персонажами и&nbsp;полезные агентские функции. Персонажи могут привлекать дополнительный трафик на&nbsp;платформу, а&nbsp;агентские возможности — создавать основу для&nbsp;монетизации.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -2939,7 +3156,7 @@
       <div class="case-section-heading__grid">
         <div class="case-section-heading__content">
           <h2 class="case-section-heading__title" id="moodboard-title">Мудборд градиентный</h2>
-          <p class="case-section-heading__caption">Для выбора визуального решения составила градиентный мудборд, с&nbsp;помощью которого мы с&nbsp;командой выбирали дальнейшее визуальное направление.</p>
+          <p class="case-section-heading__caption">Для&nbsp;выбора визуального решения составила градиентный мудборд, с&nbsp;помощью которого мы с&nbsp;командой выбирали дальнейшее визуальное направление.</p>
         </div>
       </div>
     </section>
@@ -2973,13 +3190,15 @@
       <div class="case-section-heading__grid">
         <div class="case-section-heading__content">
           <h2 class="case-section-heading__title" id="interviews-title">Пользовательские интервью</h2>
-          <p class="case-section-heading__caption">По&nbsp;итогам исследований внесла изменения в&nbsp;ключевые сценарии:</p>
+          <div class="case-section-heading__body">
+            <p class="case-section-heading__caption">По&nbsp;итогам исследований внесла изменения в&nbsp;ключевые сценарии:</p>
 
-          <ul class="case-section-heading__list">
-            <li>Усилила и&nbsp;сделала заметнее точку входа в&nbsp;создание персонажа для&nbsp;новых пользователей;</li>
-            <li>Сделала более понятным путь взаимодействия с&nbsp;агентами и&nbsp;персонажами;</li>
-            <li>Упростила выбор базы знаний, чтобы снизить сложность этого шага.</li>
-          </ul>
+            <ul class="case-section-heading__list">
+              <li>усилила и&nbsp;сделала заметнее точку входа в&nbsp;создание персонажа для&nbsp;новых пользователей</li>
+              <li>сделала более понятным путь взаимодействия с&nbsp;агентами и&nbsp;персонажами</li>
+              <li>упростила выбор базы знаний, чтобы снизить сложность этого шага</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -2997,16 +3216,18 @@
         <div class="case-text-section__content">
           <h2 class="case-text-section__title" id="handoff-title">Hand-off</h2>
 
-          <p class="case-text-section__text">
-            Передала в&nbsp;разработку:
-          </p>
+          <div class="case-text-section__body">
+            <p class="case-text-section__text">
+              Передала в&nbsp;разработку:
+            </p>
 
-          <ul class="case-text-section__list">
-            <li>Дизайн&#8209;систему;</li>
-            <li>Прототипы и&nbsp;видео;</li>
-            <li>Сетки;</li>
-            <li>Компоненты.</li>
-          </ul>
+            <ul class="case-text-section__list">
+              <li>дизайн&#8209;систему</li>
+              <li>прототипы и&nbsp;видео</li>
+              <li>сетки</li>
+              <li>компоненты</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -3015,7 +3236,6 @@
       <div class="case-section-heading__grid">
         <div class="case-section-heading__content">
           <h2 class="case-section-heading__title" id="prototype-title">Прототип</h2>
-          <a class="case-section-heading__link" href="#" target="_blank" rel="noopener noreferrer">Смотреть прототип</a>
         </div>
       </div>
     </section>
@@ -3032,9 +3252,11 @@
       <div class="case-split-section__grid">
         <div class="case-split-section__text">
           <h2 class="case-split-section__title" id="components-title">Компоненты</h2>
-          <p class="case-split-section__caption">Собрала дизайн-систему, которой команда могла пользоваться при дальнейшей сборке интерфейса: кнопки, инпуты, селекты, типографику и&nbsp;цветовые стили.</p>
+          <div class="case-split-section__body">
+            <p class="case-split-section__caption">Собрала дизайн-систему, которой команда могла пользоваться при&nbsp;дальнейшей сборке интерфейса: кнопки, инпуты, селекты, типографику и&nbsp;цветовые стили.</p>
 
-          <p class="case-split-section__caption case-split-section__caption--secondary">Структурировала элементы по&nbsp;принципу атомарного дизайна: атомы, молекулы, организмы, шаблоны и&nbsp;страницы — без отдельной документации и&nbsp;фреймворков, но&nbsp;с&nbsp;понятной логикой для работы в&nbsp;макетах.</p>
+            <p class="case-split-section__caption case-split-section__caption--secondary">Структурировала элементы по&nbsp;принципу атомарного дизайна: атомы, молекулы, организмы, шаблоны и&nbsp;страницы — без&nbsp;отдельной документации и&nbsp;фреймворков, но&nbsp;с&nbsp;понятной логикой для&nbsp;работы в&nbsp;макетах.</p>
+          </div>
         </div>
 
         <div class="case-split-section__media">
@@ -3060,32 +3282,40 @@
       <div class="case-section-heading__grid">
         <div class="case-section-heading__content">
           <h2 class="case-section-heading__title" id="release-title">Релиз</h2>
-          <p class="case-section-heading__caption">В&nbsp;результате мы&nbsp;выпустили beta-версию платформы, снизили барьеры входа в&nbsp;ключевые сценарии и&nbsp;внедрили сценарий монетизации.</p>
+          <div class="case-section-heading__body">
+            <p class="case-section-heading__caption">В&nbsp;результате мы&nbsp;выпустили beta-версию платформы, снизили барьеры входа в&nbsp;ключевые сценарии и&nbsp;внедрили сценарий монетизации.</p>
 
-          <ul class="case-section-heading__list">
-            <li>6 ключевых продуктовых флоу</li>
-            <li>140+ адаптивных дизайн-макетов</li>
-            <li>35+ reusable UI components</li>
-            <li>3 основные зоны продукта: marketplace, creator flow, creator dashboard</li>
-            <li>−40% — сокращение во времени создания персонажа</li>
-            <li>+25–30% — рост завершения флоу создания персонажа</li>
-            <li>Появились первые платные пользователи</li>
-          </ul>
+            <ul class="case-section-heading__list">
+              <li>6 ключевых продуктовых флоу</li>
+              <li>140+ адаптивных дизайн-макетов</li>
+              <li>35+ reusable UI components</li>
+              <li>3 основные зоны продукта: marketplace, creator flow, creator dashboard</li>
+              <li>−40% — сокращение во&nbsp;времени создания персонажа</li>
+              <li>+25–30% — рост завершения флоу создания персонажа</li>
+              <li>появились первые платные пользователи</li>
+            </ul>
 
-          <a class="case-section-heading__link case-section-heading__link--release photo-project__more" href="https://avalike.ru" target="_blank" rel="noopener noreferrer">Смотреть Avalike</a>
+            <a class="case-section-heading__link case-section-heading__link--release photo-project__more" href="https://avalike.ru" target="_blank" rel="noopener noreferrer">Смотреть Avalike</a>
+          </div>
         </div>
       </div>
     </section>
 
     <footer id="screen-contacts" class="contacts-section portfolio-footer" aria-label="Контакты">
       <div class="portfolio-footer__content">
-        <img class="portfolio-footer__email" src="mail.svg" alt="katya@mukha.design" role="button" aria-label="Скопировать почту katya@mukha.design" tabindex="0">
-        <nav class="portfolio-footer__links" aria-label="Контакты">
-          <a href="https://www.linkedin.com/in/katya-mukha-598907429/" target="_blank" rel="noreferrer" data-underline="linkedin">linkedin</a>
-          <a href="https://t.me/katyamukha" target="_blank" rel="noreferrer" data-underline="telegram">telegram</a>
-          <a href="assets/files/katya-mukha-cv.pdf" data-underline="cv">cv</a>
-          <a href="https://www.instagram.com/katya.mukha/" target="_blank" rel="noreferrer" data-underline="inst">inst</a>
-        </nav>
+        <div class="portfolio-footer__email-group">
+          <img class="portfolio-footer__email" src="mail.svg" alt="katya@mukha.design" role="button" tabindex="0" aria-label="Скопировать email katya@mukha.design">
+          <nav class="portfolio-footer__links" aria-label="Контакты">
+            <a href="https://www.linkedin.com/in/katya-mukha-598907429/" target="_blank" rel="noreferrer" data-underline="linkedin">linkedin</a>
+            <a href="https://t.me/katyamukha" target="_blank" rel="noreferrer" data-underline="telegram">telegram</a>
+            <a href="assets/files/katya-mukha-cv.pdf" data-underline="cv">cv</a>
+            <a href="https://www.instagram.com/katya.mukha/" target="_blank" rel="noreferrer" data-underline="inst">inst</a>
+          </nav>
+        </div>
+        <div class="portfolio-footer__brand">
+          <img class="portfolio-footer__katya" src="Katya.svg" alt="Katya Mukha">
+          <span class="portfolio-footer__availability">available in MSK</span>
+        </div>
       </div>
     </footer>
   </main>
