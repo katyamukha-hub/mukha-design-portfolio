@@ -509,7 +509,7 @@
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        background: var(--background);
+        background: transparent;
         opacity: 0;
         visibility: hidden;
         transition: opacity 260ms ease, visibility 0s linear 260ms;
@@ -557,10 +557,12 @@
         transform: translate3d(-50%, -50%, 0) rotate(var(--card-rotation)) scale(var(--card-scale));
         transform-origin: center center;
         opacity: var(--card-opacity);
-        transition: transform 380ms cubic-bezier(.22,.75,.25,1), opacity 300ms ease;
+        transition: transform 520ms cubic-bezier(.22,.75,.25,1), opacity 420ms ease;
         will-change: transform, opacity;
         pointer-events: none;
         -webkit-user-drag: none;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
       }
 
       .mobile-photo-viewer__card.is-active {
@@ -574,7 +576,7 @@
       }
 
       .mobile-photo-viewer__card.is-exiting {
-        transition: transform 360ms cubic-bezier(.22,.75,.25,1), opacity 300ms ease;
+        transition: transform 250ms cubic-bezier(.22,.75,.25,1), opacity 220ms ease;
       }
     }
 
@@ -2609,9 +2611,9 @@
       mobilePhotoCards.forEach((card, index) => {
         const position = (index - mobilePhotoIndex + count) % count;
         const visiblePosition = Math.min(position, 4);
-        const offsetX = visiblePosition * 8;
-        const offsetY = visiblePosition * 10;
-        const scale = 1 - visiblePosition * 0.035;
+        const offsetX = 0;
+        const offsetY = visiblePosition * -24;
+        const scale = 1 - visiblePosition * 0.06;
         card.style.setProperty("--card-rotation", `${mobilePhotoRotations[index]}deg`);
         card.style.setProperty("--card-scale", String(scale));
         card.style.setProperty("--card-opacity", position < 5 ? "1" : "0");
@@ -2637,9 +2639,26 @@
       mobilePhotoIndex = (index + mobilePhotoCards.length) % mobilePhotoCards.length;
       mobilePhotoPreviousOverflow = document.body.style.overflow;
       mobilePhotoViewer.hidden = false;
-      renderMobilePhotoDeck();
+      const previewBounds = document.querySelector(".hero__photo-thumbs").getBoundingClientRect();
+      const originX = previewBounds.left + previewBounds.width / 2 - window.innerWidth / 2;
+      const originY = previewBounds.top + previewBounds.height / 2 - window.innerHeight / 2;
+      mobilePhotoCards.forEach((card, cardIndex) => {
+        card.style.transitionDelay = `${cardIndex * 38}ms`;
+        card.style.opacity = "0";
+        card.style.transform = `translate3d(calc(-50% + ${originX}px), calc(-50% + ${originY}px), 0) rotate(0deg) scale(.25)`;
+      });
       document.body.style.overflow = "hidden";
       mobilePhotoViewer.classList.add("is-open");
+      mobilePhotoViewer.offsetWidth;
+      requestAnimationFrame(() => {
+        mobilePhotoCards.forEach((card) => {
+          card.style.opacity = "";
+        });
+        renderMobilePhotoDeck();
+        window.setTimeout(() => {
+          mobilePhotoCards.forEach((card) => { card.style.transitionDelay = "0ms"; });
+        }, 720);
+      });
       mobilePhotoClose.focus({ preventScroll: true });
     };
 
@@ -2660,16 +2679,16 @@
         return;
       }
 
-      const direction = deltaX < 0 ? -1 : 1;
-      const rotation = mobilePhotoRotations[mobilePhotoIndex] + direction * 8;
+      const exitDirection = deltaX > 0 ? -1 : 1;
+      const rotation = mobilePhotoRotations[mobilePhotoIndex] + exitDirection * 8;
       card.classList.add("is-exiting");
-      card.style.transform = `translate3d(calc(-50% + ${direction * 120}vw), -50%, 0) rotate(${rotation}deg) scale(1)`;
+      card.style.transform = `translate3d(calc(-50% + ${exitDirection * 120}vw), -50%, 0) rotate(${rotation}deg) scale(1)`;
       card.style.opacity = "0";
       window.setTimeout(() => {
-        mobilePhotoIndex = (mobilePhotoIndex + 1) % mobilePhotoCards.length;
+        mobilePhotoIndex = (mobilePhotoIndex + (deltaX > 0 ? 1 : -1) + mobilePhotoCards.length) % mobilePhotoCards.length;
         card.classList.remove("is-exiting");
         renderMobilePhotoDeck();
-      }, 360);
+      }, 250);
     };
 
     mobilePhotoCards.forEach((card) => {
@@ -2685,10 +2704,11 @@
       card.addEventListener("pointermove", (event) => {
         if (!mobilePhotoDragging || event.pointerId !== mobilePhotoPointerId) return;
         const deltaX = event.clientX - mobilePhotoStartX;
-        const direction = deltaX < 0 ? -1 : 1;
-        const progress = Math.min(Math.abs(deltaX) / 180, 1);
+        const dragX = -deltaX;
+        const direction = dragX < 0 ? -1 : 1;
+        const progress = Math.min(Math.abs(dragX) / 180, 1);
         const rotation = mobilePhotoRotations[mobilePhotoIndex] + direction * progress * 8;
-        card.style.transform = `translate3d(calc(-50% + ${deltaX}px), -50%, 0) rotate(${rotation}deg) scale(1)`;
+        card.style.transform = `translate3d(calc(-50% + ${dragX}px), -50%, 0) rotate(${rotation}deg) scale(1)`;
       });
       card.addEventListener("pointerup", finishMobilePhotoDrag);
       card.addEventListener("pointercancel", finishMobilePhotoDrag);
@@ -2704,7 +2724,12 @@
     });
     mobilePhotoClose.addEventListener("click", closeMobilePhotoViewer);
     mobilePhotoViewer.addEventListener("pointerdown", (event) => {
-      if (event.target === mobilePhotoViewer) closeMobilePhotoViewer();
+      if (event.target !== mobilePhotoViewer && event.target !== mobilePhotoDeck) return;
+      const visibleCards = mobilePhotoCards.filter((card) => Number(card.style.opacity || getComputedStyle(card).opacity) > 0);
+      const bounds = visibleCards.map((card) => card.getBoundingClientRect());
+      const top = Math.min(...bounds.map((item) => item.top));
+      const bottom = Math.max(...bounds.map((item) => item.bottom));
+      if (event.clientY < top || event.clientY > bottom) closeMobilePhotoViewer();
     });
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") closeMobilePhotoViewer();
