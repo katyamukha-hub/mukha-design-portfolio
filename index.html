@@ -497,6 +497,87 @@
       .hero__photo-trigger { cursor: auto; }
     }
 
+    .mobile-photo-viewer {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      .mobile-photo-viewer {
+        position: fixed;
+        z-index: 1000;
+        inset: 0;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: var(--background);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 260ms ease, visibility 0s linear 260ms;
+      }
+
+      .mobile-photo-viewer.is-open {
+        display: flex;
+        opacity: 1;
+        visibility: visible;
+        transition-delay: 0s;
+      }
+
+      .mobile-photo-viewer__close {
+        position: absolute;
+        z-index: 20;
+        top: 16px;
+        left: 16px;
+        display: grid;
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        place-items: center;
+        color: var(--blue);
+        font: 300 28px/1 var(--font-primary-family);
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+      }
+
+      .mobile-photo-viewer__deck {
+        position: relative;
+        width: 100%;
+        height: 78dvh;
+        touch-action: pan-y;
+        user-select: none;
+      }
+
+      .mobile-photo-viewer__card {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 82vw;
+        max-height: 73dvh;
+        object-fit: contain;
+        transform: translate3d(-50%, -50%, 0) rotate(var(--card-rotation)) scale(var(--card-scale));
+        transform-origin: center center;
+        opacity: var(--card-opacity);
+        transition: transform 380ms cubic-bezier(.22,.75,.25,1), opacity 300ms ease;
+        will-change: transform, opacity;
+        pointer-events: none;
+        -webkit-user-drag: none;
+      }
+
+      .mobile-photo-viewer__card.is-active {
+        pointer-events: auto;
+        cursor: grab;
+      }
+
+      .mobile-photo-viewer__card.is-dragging {
+        cursor: grabbing;
+        transition: none;
+      }
+
+      .mobile-photo-viewer__card.is-exiting {
+        transition: transform 360ms cubic-bezier(.22,.75,.25,1), opacity 300ms ease;
+      }
+    }
+
     .hero__nav,
     .hero__top-links,
     .hero__status,
@@ -540,6 +621,97 @@
       width: auto;
       height: 20px;
       object-fit: contain;
+      transition: transform 250ms cubic-bezier(.22,.75,.25,1);
+      will-change: transform;
+    }
+
+    @media (min-width: 768px) {
+      .hero__photo-thumbs:hover img:nth-child(1) { transform: translate(-7px, 1px) rotate(-3deg) scale(1.03); }
+      .hero__photo-thumbs:hover img:nth-child(2) { transform: translate(0, -4px) rotate(1deg) scale(1.03); }
+      .hero__photo-thumbs:hover img:nth-child(3) { transform: translate(7px, 2px) rotate(3deg) scale(1.03); }
+      .hero__photo-thumbs img { cursor: pointer; }
+
+      .desktop-photo-composition {
+        position: fixed;
+        z-index: 900;
+        inset: 0;
+        overflow: hidden;
+        background: rgba(245, 242, 242, .06);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 280ms ease, visibility 0s linear 680ms;
+      }
+
+      .desktop-photo-composition.is-open {
+        opacity: 1;
+        visibility: visible;
+        transition-delay: 0s;
+      }
+
+      .desktop-photo-composition__card {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: block;
+        width: var(--photo-width);
+        max-width: 38vw;
+        max-height: 72vh;
+        object-fit: contain;
+        opacity: 0;
+        transform: translate3d(var(--origin-x), var(--origin-y), 0) rotate(0deg) scale(.32);
+        transform-origin: center center;
+        transition: transform 760ms cubic-bezier(.16,1,.3,1), opacity 520ms ease;
+        will-change: transform, opacity;
+        user-select: none;
+        -webkit-user-drag: none;
+        cursor: zoom-in;
+      }
+
+      .desktop-photo-composition.is-open .desktop-photo-composition__card {
+        opacity: 1;
+        transform: translate3d(calc(-50% + var(--layout-x) + var(--parallax-x)), calc(-50% + var(--layout-y) + var(--parallax-y)), 0) rotate(var(--layout-rotation)) scale(1);
+        transition-delay: var(--stagger);
+      }
+
+      .desktop-photo-composition__card.is-hovered {
+        z-index: 20 !important;
+        transform: translate3d(calc(-50% + var(--layout-x) + var(--parallax-x)), calc(-50% + var(--layout-y) + var(--parallax-y) - 4px), 0) rotate(0deg) scale(1.035) !important;
+      }
+
+      .desktop-photo-composition.is-focused .desktop-photo-composition__card:not(.is-focused) { opacity: .2; }
+      .desktop-photo-composition__card.is-focused {
+        z-index: 40 !important;
+        width: 80vw;
+        max-width: 80vw;
+        max-height: 82vh;
+        transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(1) !important;
+      }
+
+      .desktop-photo-composition.is-closing .desktop-photo-composition__card {
+        opacity: 0;
+        transform: translate3d(var(--origin-x), var(--origin-y), 0) rotate(0deg) scale(.32);
+        transition-duration: 480ms;
+        transition-delay: 0ms;
+      }
+
+      .desktop-photo-composition__close {
+        position: absolute;
+        z-index: 50;
+        top: 18px;
+        left: 20px;
+        padding: 4px 8px;
+        color: var(--blue);
+        font: 300 28px/1 var(--font-primary-family);
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+      }
+    }
+
+    @media (min-width: 768px) and (prefers-reduced-motion: reduce) {
+      .desktop-photo-composition,
+      .desktop-photo-composition__card { transition-duration: 180ms; }
+      .desktop-photo-composition__card { transition-property: opacity; }
     }
 
     .hero__photo-trigger.is-photos-open .hero__photo-thumbs img {
@@ -2211,8 +2383,12 @@
       }, 800);
     };
 
-    photoTrigger.addEventListener("pointerenter", startHeroPhotos);
-    photoTrigger.addEventListener("focus", startHeroPhotos);
+    photoTrigger.addEventListener("pointerenter", () => {
+      if (window.innerWidth < 768) startHeroPhotos();
+    });
+    photoTrigger.addEventListener("focus", () => {
+      if (window.innerWidth < 768) startHeroPhotos();
+    });
     photoStack.addEventListener("pointermove", (event) => {
       if (!photoStack.classList.contains("is-open") || event.pointerType !== "mouse" || performance.now() < photoHoverReadyAt) return;
       const stackBounds = photoStack.getBoundingClientRect();
@@ -2248,6 +2424,295 @@
       if (window.innerWidth < 1000) stopHeroPhotos();
       else if (photoStack.classList.contains("is-open")) renderPhotoFan();
     });
+
+    const desktopPhotoLayout = [
+      { x: "-30vw", y: "-25vh", width: "23vw", rotation: -3, depth: .65 },
+      { x: "6vw", y: "-31vh", width: "29vw", rotation: 2, depth: 1 },
+      { x: "30vw", y: "-12vh", width: "18vw", rotation: -2, depth: .45 },
+      { x: "-35vw", y: "17vh", width: "17vw", rotation: 3, depth: .35 },
+      { x: "-2vw", y: "8vh", width: "34vw", rotation: -1, depth: 1 },
+      { x: "29vw", y: "23vh", width: "21vw", rotation: 4, depth: .55 }
+    ];
+    const desktopPhotoComposition = document.createElement("div");
+    desktopPhotoComposition.className = "desktop-photo-composition";
+    desktopPhotoComposition.setAttribute("role", "dialog");
+    desktopPhotoComposition.setAttribute("aria-modal", "true");
+    desktopPhotoComposition.setAttribute("aria-label", "Документальные фотографии");
+    desktopPhotoComposition.innerHTML = '<button class="desktop-photo-composition__close" type="button" aria-label="Закрыть галерею">×</button>';
+    document.body.appendChild(desktopPhotoComposition);
+    const desktopPhotoClose = desktopPhotoComposition.querySelector(".desktop-photo-composition__close");
+    const desktopPhotoCards = heroPhotos.map((photo, index) => {
+      const card = document.createElement("img");
+      const layout = desktopPhotoLayout[index];
+      card.className = "desktop-photo-composition__card";
+      card.src = photo.getAttribute("src");
+      card.alt = photo.alt;
+      card.draggable = false;
+      card.style.setProperty("--photo-width", layout.width);
+      card.style.setProperty("--layout-x", layout.x);
+      card.style.setProperty("--layout-y", layout.y);
+      card.style.setProperty("--layout-rotation", `${layout.rotation}deg`);
+      card.style.setProperty("--photo-depth", String(layout.depth));
+      card.style.setProperty("--stagger", `${index * 55}ms`);
+      desktopPhotoComposition.appendChild(card);
+      return card;
+    });
+    let desktopPhotoState = "closed";
+    let desktopPhotoFocused = null;
+    let desktopParallaxTarget = { x: 0, y: 0 };
+    let desktopParallaxCurrent = { x: 0, y: 0 };
+    let desktopParallaxFrame = 0;
+    let desktopPhotoCloseTimer;
+    let desktopPhotoPreviousOverflow = "";
+
+    const setDesktopPhotoOrigins = () => {
+      const bounds = document.querySelector(".hero__photo-thumbs").getBoundingClientRect();
+      const originX = bounds.left + bounds.width / 2 - window.innerWidth / 2;
+      const originY = bounds.top + bounds.height / 2 - window.innerHeight / 2;
+      desktopPhotoCards.forEach((card) => {
+        card.style.setProperty("--origin-x", `${originX}px`);
+        card.style.setProperty("--origin-y", `${originY}px`);
+      });
+    };
+
+    const updateDesktopParallax = () => {
+      desktopParallaxCurrent.x += (desktopParallaxTarget.x - desktopParallaxCurrent.x) * .08;
+      desktopParallaxCurrent.y += (desktopParallaxTarget.y - desktopParallaxCurrent.y) * .08;
+      desktopPhotoCards.forEach((card) => {
+        const depth = Number(card.style.getPropertyValue("--photo-depth")) || 0;
+        card.style.setProperty("--parallax-x", `${desktopParallaxCurrent.x * depth}px`);
+        card.style.setProperty("--parallax-y", `${desktopParallaxCurrent.y * depth}px`);
+      });
+      desktopParallaxFrame = requestAnimationFrame(updateDesktopParallax);
+    };
+
+    const renderDesktopComposition = () => {
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      desktopPhotoCards.forEach((card, index) => {
+        card.style.setProperty("--stagger", reducedMotion ? "0ms" : `${index * 55}ms`);
+        card.style.setProperty("--parallax-x", "0px");
+        card.style.setProperty("--parallax-y", "0px");
+        card.style.zIndex = String(5 + index);
+      });
+    };
+
+    const closeDesktopComposition = () => {
+      if (desktopPhotoState === "closed" || desktopPhotoState === "closing") return;
+      desktopPhotoState = "closing";
+      desktopPhotoFocused = null;
+      desktopPhotoComposition.classList.remove("is-focused");
+      desktopPhotoCards.forEach((card) => card.classList.remove("is-focused", "is-hovered"));
+      desktopPhotoComposition.classList.add("is-closing");
+      window.cancelAnimationFrame(desktopParallaxFrame);
+      window.clearTimeout(desktopPhotoCloseTimer);
+      desktopPhotoCloseTimer = window.setTimeout(() => {
+        desktopPhotoComposition.classList.remove("is-open", "is-closing");
+        desktopPhotoState = "closed";
+        document.body.style.overflow = desktopPhotoPreviousOverflow;
+      }, 500);
+    };
+
+    const openDesktopComposition = (index) => {
+      if (window.innerWidth < 768) return;
+      window.clearTimeout(desktopPhotoCloseTimer);
+      desktopPhotoState = "opening";
+      desktopPhotoPreviousOverflow = document.body.style.overflow;
+      setDesktopPhotoOrigins();
+      renderDesktopComposition();
+      desktopPhotoComposition.classList.remove("is-closing");
+      desktopPhotoComposition.classList.add("is-open");
+      document.body.style.overflow = "hidden";
+      desktopPhotoState = "open";
+      desktopParallaxFrame = requestAnimationFrame(updateDesktopParallax);
+      if (desktopPhotoCards[index]) desktopPhotoCards[index].style.zIndex = "15";
+    };
+
+    photoTrigger.addEventListener("click", (event) => {
+      if (window.innerWidth < 768) return;
+      const thumb = event.target.closest(".hero__photo-thumbs img");
+      if (!thumb) return;
+      event.preventDefault();
+      const index = heroPhotos.findIndex((photo) => photo.getAttribute("src") === thumb.getAttribute("src"));
+      openDesktopComposition(Math.max(0, index));
+    });
+    desktopPhotoCards.forEach((card) => {
+      card.addEventListener("pointerenter", () => {
+        if (!desktopPhotoFocused) card.classList.add("is-hovered");
+      });
+      card.addEventListener("pointerleave", () => card.classList.remove("is-hovered"));
+      card.addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (desktopPhotoFocused === card) {
+          desktopPhotoFocused = null;
+          desktopPhotoComposition.classList.remove("is-focused");
+          card.classList.remove("is-focused");
+          return;
+        }
+        desktopPhotoFocused?.classList.remove("is-focused");
+        desktopPhotoFocused = card;
+        desktopPhotoComposition.classList.add("is-focused");
+        card.classList.add("is-focused");
+      });
+    });
+    desktopPhotoComposition.addEventListener("pointermove", (event) => {
+      if (desktopPhotoState !== "open" || desktopPhotoFocused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      desktopParallaxTarget.x = (event.clientX / window.innerWidth * 2 - 1) * 12;
+      desktopParallaxTarget.y = (event.clientY / window.innerHeight * 2 - 1) * 8;
+    });
+    desktopPhotoComposition.addEventListener("pointerleave", () => { desktopParallaxTarget = { x: 0, y: 0 }; });
+    desktopPhotoComposition.addEventListener("click", (event) => {
+      if (event.target === desktopPhotoComposition) closeDesktopComposition();
+    });
+    desktopPhotoClose.addEventListener("click", closeDesktopComposition);
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && desktopPhotoState !== "closed") closeDesktopComposition();
+    });
+    window.addEventListener("resize", () => {
+      if (window.innerWidth < 768 && desktopPhotoState !== "closed") closeDesktopComposition();
+    });
+
+    const mobilePhotoViewer = document.createElement("div");
+    mobilePhotoViewer.className = "mobile-photo-viewer";
+    mobilePhotoViewer.setAttribute("role", "dialog");
+    mobilePhotoViewer.setAttribute("aria-modal", "true");
+    mobilePhotoViewer.setAttribute("aria-label", "Документальные фотографии");
+    mobilePhotoViewer.innerHTML = `
+      <button class="mobile-photo-viewer__close" type="button" aria-label="Закрыть галерею">×</button>
+      <div class="mobile-photo-viewer__deck"></div>
+    `;
+    document.body.appendChild(mobilePhotoViewer);
+
+    const mobilePhotoDeck = mobilePhotoViewer.querySelector(".mobile-photo-viewer__deck");
+    const mobilePhotoClose = mobilePhotoViewer.querySelector(".mobile-photo-viewer__close");
+    const mobilePhotoCards = heroPhotos.map((photo) => {
+      const card = document.createElement("img");
+      card.className = "mobile-photo-viewer__card";
+      card.src = photo.getAttribute("src");
+      card.alt = photo.alt;
+      card.draggable = false;
+      mobilePhotoDeck.appendChild(card);
+      return card;
+    });
+    const mobilePhotoRotations = [-3, 2.5, -1.5, 3.5, -2, 1];
+    let mobilePhotoIndex = 0;
+    let mobilePhotoPointerId = null;
+    let mobilePhotoStartX = 0;
+    let mobilePhotoStartTime = 0;
+    let mobilePhotoDragging = false;
+    let mobilePhotoPreviousOverflow = "";
+    let mobilePhotoCloseTimer;
+
+    const isMobilePhotoViewer = () => window.matchMedia("(max-width: 767px)").matches;
+
+    const renderMobilePhotoDeck = () => {
+      const count = mobilePhotoCards.length;
+      mobilePhotoCards.forEach((card, index) => {
+        const position = (index - mobilePhotoIndex + count) % count;
+        const visiblePosition = Math.min(position, 4);
+        const offsetX = visiblePosition * 8;
+        const offsetY = visiblePosition * 10;
+        const scale = 1 - visiblePosition * 0.035;
+        card.style.setProperty("--card-rotation", `${mobilePhotoRotations[index]}deg`);
+        card.style.setProperty("--card-scale", String(scale));
+        card.style.setProperty("--card-opacity", position < 5 ? "1" : "0");
+        card.style.transform = `translate3d(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px), 0) rotate(${mobilePhotoRotations[index]}deg) scale(${scale})`;
+        card.style.zIndex = String(count - position);
+        card.classList.toggle("is-active", position === 0);
+      });
+    };
+
+    const closeMobilePhotoViewer = () => {
+      if (!mobilePhotoViewer.classList.contains("is-open")) return;
+      mobilePhotoViewer.classList.remove("is-open");
+      document.body.style.overflow = mobilePhotoPreviousOverflow;
+      window.clearTimeout(mobilePhotoCloseTimer);
+      mobilePhotoCloseTimer = window.setTimeout(() => {
+        mobilePhotoViewer.hidden = true;
+      }, 280);
+    };
+
+    const openMobilePhotoViewer = (index) => {
+      if (!isMobilePhotoViewer()) return;
+      window.clearTimeout(mobilePhotoCloseTimer);
+      mobilePhotoIndex = (index + mobilePhotoCards.length) % mobilePhotoCards.length;
+      mobilePhotoPreviousOverflow = document.body.style.overflow;
+      mobilePhotoViewer.hidden = false;
+      renderMobilePhotoDeck();
+      document.body.style.overflow = "hidden";
+      mobilePhotoViewer.classList.add("is-open");
+      mobilePhotoClose.focus({ preventScroll: true });
+    };
+
+    const finishMobilePhotoDrag = (event) => {
+      if (!mobilePhotoDragging || event.pointerId !== mobilePhotoPointerId) return;
+      const card = mobilePhotoCards[mobilePhotoIndex];
+      const deltaX = event.clientX - mobilePhotoStartX;
+      const elapsed = Math.max(1, performance.now() - mobilePhotoStartTime);
+      const velocity = Math.abs(deltaX) / elapsed;
+      const shouldAdvance = Math.abs(deltaX) > 80 || velocity > 0.6;
+      mobilePhotoDragging = false;
+      card.classList.remove("is-dragging");
+      card.releasePointerCapture?.(mobilePhotoPointerId);
+      mobilePhotoPointerId = null;
+
+      if (!shouldAdvance) {
+        renderMobilePhotoDeck();
+        return;
+      }
+
+      const direction = deltaX < 0 ? -1 : 1;
+      const rotation = mobilePhotoRotations[mobilePhotoIndex] + direction * 8;
+      card.classList.add("is-exiting");
+      card.style.transform = `translate3d(calc(-50% + ${direction * 120}vw), -50%, 0) rotate(${rotation}deg) scale(1)`;
+      card.style.opacity = "0";
+      window.setTimeout(() => {
+        mobilePhotoIndex = (mobilePhotoIndex + 1) % mobilePhotoCards.length;
+        card.classList.remove("is-exiting");
+        renderMobilePhotoDeck();
+      }, 360);
+    };
+
+    mobilePhotoCards.forEach((card) => {
+      card.addEventListener("pointerdown", (event) => {
+        if (!isMobilePhotoViewer() || !card.classList.contains("is-active")) return;
+        mobilePhotoPointerId = event.pointerId;
+        mobilePhotoStartX = event.clientX;
+        mobilePhotoStartTime = performance.now();
+        mobilePhotoDragging = true;
+        card.classList.add("is-dragging");
+        card.setPointerCapture(event.pointerId);
+      });
+      card.addEventListener("pointermove", (event) => {
+        if (!mobilePhotoDragging || event.pointerId !== mobilePhotoPointerId) return;
+        const deltaX = event.clientX - mobilePhotoStartX;
+        const direction = deltaX < 0 ? -1 : 1;
+        const progress = Math.min(Math.abs(deltaX) / 180, 1);
+        const rotation = mobilePhotoRotations[mobilePhotoIndex] + direction * progress * 8;
+        card.style.transform = `translate3d(calc(-50% + ${deltaX}px), -50%, 0) rotate(${rotation}deg) scale(1)`;
+      });
+      card.addEventListener("pointerup", finishMobilePhotoDrag);
+      card.addEventListener("pointercancel", finishMobilePhotoDrag);
+    });
+
+    photoTrigger.addEventListener("click", (event) => {
+      if (!isMobilePhotoViewer()) return;
+      event.preventDefault();
+      const thumb = event.target.closest(".hero__photo-thumbs img");
+      const source = thumb?.getAttribute("src");
+      const index = Math.max(0, heroPhotos.findIndex((photo) => photo.getAttribute("src") === source));
+      openMobilePhotoViewer(index);
+    });
+    mobilePhotoClose.addEventListener("click", closeMobilePhotoViewer);
+    mobilePhotoViewer.addEventListener("pointerdown", (event) => {
+      if (event.target === mobilePhotoViewer) closeMobilePhotoViewer();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMobilePhotoViewer();
+    });
+    window.addEventListener("resize", () => {
+      if (!isMobilePhotoViewer()) closeMobilePhotoViewer();
+    });
+
     const parallaxGroups = [
       { elements: heroScreen.querySelectorAll(".hero__intro"), speed: 0.1 },
       { elements: heroScreen.querySelectorAll(".hero__katya"), speed: 0.18 },
