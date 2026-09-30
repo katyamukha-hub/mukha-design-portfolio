@@ -2601,6 +2601,8 @@
     let mobilePhotoDragging = false;
     let mobilePhotoPreviousOverflow = "";
     let mobilePhotoCloseTimer;
+    let mobilePhotoHistory = [];
+    let mobileEdgePointer = null;
 
     const isMobilePhotoViewer = () => window.matchMedia("(max-width: 767px)").matches;
 
@@ -2625,6 +2627,7 @@
       if (!mobilePhotoViewer.classList.contains("is-open")) return;
       mobilePhotoViewer.classList.remove("is-open");
       mobilePhotoIndex = 0;
+      mobilePhotoHistory = [];
       document.body.style.overflow = mobilePhotoPreviousOverflow;
       window.clearTimeout(mobilePhotoCloseTimer);
       mobilePhotoCloseTimer = window.setTimeout(() => {
@@ -2679,11 +2682,15 @@
 
       const exitDirection = deltaX < 0 ? -1 : 1;
       const rotation = mobilePhotoRotations[mobilePhotoIndex] + exitDirection * 8;
+      mobilePhotoHistory.push({
+        index: mobilePhotoIndex,
+        side: exitDirection > 0 ? "right" : "left"
+      });
       card.classList.add("is-exiting");
       card.style.transform = `translate3d(calc(-50% + ${exitDirection * 120}vw), -50%, 0) rotate(${rotation}deg) scale(1)`;
       card.style.opacity = "0";
       window.setTimeout(() => {
-        mobilePhotoIndex = (mobilePhotoIndex + (deltaX < 0 ? 1 : -1) + mobilePhotoCards.length) % mobilePhotoCards.length;
+        mobilePhotoIndex = (mobilePhotoIndex + (deltaX > 0 ? 1 : -1) + mobilePhotoCards.length) % mobilePhotoCards.length;
         card.classList.remove("is-exiting");
         renderMobilePhotoDeck();
       }, 250);
@@ -2710,6 +2717,50 @@
       });
       card.addEventListener("pointerup", finishMobilePhotoDrag);
       card.addEventListener("pointercancel", finishMobilePhotoDrag);
+    });
+
+    mobilePhotoDeck.addEventListener("pointerdown", (event) => {
+      if (event.target !== mobilePhotoDeck || !isMobilePhotoViewer()) return;
+      const edgeSize = 72;
+      const fromLeft = event.clientX <= edgeSize;
+      const fromRight = event.clientX >= window.innerWidth - edgeSize;
+      if (!fromLeft && !fromRight) return;
+      mobileEdgePointer = {
+        id: event.pointerId,
+        startX: event.clientX,
+        fromLeft,
+        fromRight
+      };
+      mobilePhotoDeck.setPointerCapture(event.pointerId);
+    });
+
+    mobilePhotoDeck.addEventListener("pointerup", (event) => {
+      if (!mobileEdgePointer || event.pointerId !== mobileEdgePointer.id) return;
+      const edgePointer = mobileEdgePointer;
+      mobileEdgePointer = null;
+      mobilePhotoDeck.releasePointerCapture?.(event.pointerId);
+      const deltaX = event.clientX - edgePointer.startX;
+      const movedToCenter = (edgePointer.fromRight && deltaX < -70) || (edgePointer.fromLeft && deltaX > 70);
+      if (!movedToCenter || !mobilePhotoHistory.length) return;
+
+      const lastMove = mobilePhotoHistory[mobilePhotoHistory.length - 1];
+      const matchingSide = (edgePointer.fromRight && lastMove.side === "right") || (edgePointer.fromLeft && lastMove.side === "left");
+      if (!matchingSide) return;
+      mobilePhotoHistory.pop();
+      const previousIndex = lastMove.index;
+      const restoredCard = mobilePhotoCards[previousIndex];
+      const entryX = edgePointer.fromRight ? 110 : -110;
+      restoredCard.style.transition = "none";
+      restoredCard.style.opacity = "0";
+      restoredCard.style.transform = `translate3d(calc(-50% + ${entryX}vw), -50%, 0) rotate(0deg) scale(.96)`;
+      mobilePhotoIndex = previousIndex;
+      mobilePhotoViewer.offsetWidth;
+      restoredCard.style.transition = "transform 360ms cubic-bezier(.22,.75,.25,1), opacity 300ms ease";
+      restoredCard.style.opacity = "";
+      renderMobilePhotoDeck();
+    });
+    mobilePhotoDeck.addEventListener("pointercancel", (event) => {
+      if (mobileEdgePointer?.id === event.pointerId) mobileEdgePointer = null;
     });
 
     photoTrigger.addEventListener("click", (event) => {
