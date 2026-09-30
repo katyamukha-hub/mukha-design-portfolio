@@ -2593,7 +2593,7 @@
       mobilePhotoDeck.appendChild(card);
       return card;
     });
-    const mobilePhotoRotations = [-3, 2.5, -1.5, 3.5, -2, 1];
+    const mobilePhotoRotations = [0, 0, 0, 0, 0, 0];
     let mobilePhotoIndex = 0;
     let mobilePhotoPointerId = null;
     let mobilePhotoStartX = 0;
@@ -2603,6 +2603,7 @@
     let mobilePhotoCloseTimer;
     let mobilePhotoHistory = [];
     let mobileEdgePointer = null;
+    let mobileVerticalGesture = null;
 
     const isMobilePhotoViewer = () => window.matchMedia("(max-width: 767px)").matches;
 
@@ -2762,6 +2763,28 @@
     mobilePhotoDeck.addEventListener("pointercancel", (event) => {
       if (mobileEdgePointer?.id === event.pointerId) mobileEdgePointer = null;
     });
+
+    mobilePhotoViewer.addEventListener("pointerdown", (event) => {
+      if (!isMobilePhotoViewer()) return;
+      mobileVerticalGesture = {
+        id: event.pointerId,
+        startX: event.clientX,
+        startY: event.clientY
+      };
+    });
+    mobilePhotoViewer.addEventListener("pointerup", (event) => {
+      if (!mobileVerticalGesture || event.pointerId !== mobileVerticalGesture.id) return;
+      const gesture = mobileVerticalGesture;
+      mobileVerticalGesture = null;
+      const deltaX = event.clientX - gesture.startX;
+      const deltaY = event.clientY - gesture.startY;
+      if (deltaY > -80 || Math.abs(deltaY) < Math.abs(deltaX)) return;
+      closeMobilePhotoViewer();
+      window.setTimeout(() => {
+        window.scrollBy({ top: Math.min(520, Math.abs(deltaY)), behavior: "smooth" });
+      }, 20);
+    });
+    mobilePhotoViewer.addEventListener("pointercancel", () => { mobileVerticalGesture = null; });
 
     photoTrigger.addEventListener("click", (event) => {
       if (!isMobilePhotoViewer()) return;
