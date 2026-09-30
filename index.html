@@ -497,6 +497,10 @@
       .hero__photo-trigger { cursor: auto; }
     }
 
+    @media (min-width: 768px) {
+      .hero__photo-stack { display: none; }
+    }
+
     .mobile-photo-viewer {
       display: none;
     }
@@ -630,9 +634,9 @@
     }
 
     @media (min-width: 768px) {
-      .hero__photo-thumbs:hover img:nth-child(1) { transform: translate(-7px, 1px) rotate(-3deg) scale(1.03); }
-      .hero__photo-thumbs:hover img:nth-child(2) { transform: translate(0, -4px) rotate(1deg) scale(1.03); }
-      .hero__photo-thumbs:hover img:nth-child(3) { transform: translate(7px, 2px) rotate(3deg) scale(1.03); }
+      .hero__photo-thumbs:hover img:nth-child(1) { transform: translate(-2px, 0) scale(1.01); }
+      .hero__photo-thumbs:hover img:nth-child(2) { transform: translate(0, -2px) scale(1.01); }
+      .hero__photo-thumbs:hover img:nth-child(3) { transform: translate(2px, 0) scale(1.01); }
       .hero__photo-thumbs img { cursor: pointer; }
 
       .desktop-photo-composition {
@@ -709,6 +713,7 @@
         background: transparent;
         border: 0;
         cursor: pointer;
+        display: none;
       }
     }
 
@@ -2430,12 +2435,12 @@
     });
 
     const desktopPhotoLayout = [
-      { x: "-30vw", y: "-25vh", width: "23vw", rotation: -3, depth: .65 },
-      { x: "6vw", y: "-31vh", width: "29vw", rotation: 2, depth: 1 },
-      { x: "30vw", y: "-12vh", width: "18vw", rotation: -2, depth: .45 },
-      { x: "-35vw", y: "17vh", width: "17vw", rotation: 3, depth: .35 },
-      { x: "-2vw", y: "8vh", width: "34vw", rotation: -1, depth: 1 },
-      { x: "29vw", y: "23vh", width: "21vw", rotation: 4, depth: .55 }
+      { x: "-30vw", y: "-25vh", width: "23vw", rotation: 0, depth: .65 },
+      { x: "6vw", y: "-31vh", width: "29vw", rotation: 0, depth: 1 },
+      { x: "30vw", y: "-12vh", width: "18vw", rotation: 0, depth: .45 },
+      { x: "-35vw", y: "17vh", width: "17vw", rotation: 0, depth: .35 },
+      { x: "-2vw", y: "8vh", width: "34vw", rotation: 0, depth: 1 },
+      { x: "29vw", y: "23vh", width: "21vw", rotation: 0, depth: .55 }
     ];
     const desktopPhotoComposition = document.createElement("div");
     desktopPhotoComposition.className = "desktop-photo-composition";
@@ -2506,6 +2511,7 @@
       desktopPhotoFocused = null;
       desktopPhotoComposition.classList.remove("is-focused");
       desktopPhotoCards.forEach((card) => card.classList.remove("is-focused", "is-hovered"));
+      setDesktopPhotoOrigins();
       desktopPhotoComposition.classList.add("is-closing");
       window.cancelAnimationFrame(desktopParallaxFrame);
       window.clearTimeout(desktopPhotoCloseTimer);
@@ -2567,6 +2573,15 @@
     desktopPhotoComposition.addEventListener("click", (event) => {
       if (event.target === desktopPhotoComposition) closeDesktopComposition();
     });
+    desktopPhotoComposition.addEventListener("wheel", (event) => {
+      if (desktopPhotoState !== "open" || event.deltaY <= 0) return;
+      event.preventDefault();
+      const scrollAmount = Math.min(640, Math.max(80, event.deltaY));
+      closeDesktopComposition();
+      document.body.style.overflow = "auto";
+      document.documentElement.style.overflow = "auto";
+      window.scrollBy({ top: scrollAmount, behavior: "auto" });
+    }, { passive: false });
     desktopPhotoClose.addEventListener("click", closeDesktopComposition);
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && desktopPhotoState !== "closed") closeDesktopComposition();
@@ -2811,8 +2826,8 @@
 
     const parallaxGroups = [
       { elements: heroScreen.querySelectorAll(".hero__intro"), speed: 0.1 },
-      { elements: heroScreen.querySelectorAll(".hero__katya"), speed: 0.18 },
-      { elements: heroScreen.querySelectorAll(".hero__status, .hero__email--bottom"), speed: 0.24 }
+      { elements: heroScreen.querySelectorAll(".hero__katya"), speed: 0.24 },
+      { elements: heroScreen.querySelectorAll(".hero__status, .hero__email--bottom"), speed: 0.18 }
     ];
     let parallaxFrame;
 
