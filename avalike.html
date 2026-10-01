@@ -2456,9 +2456,18 @@
       --grid-gap: 20px;
       --case-content-max: calc(100vw - (2 * var(--page-x)));
       --font-primary-family: "CoFo Sans Trial", Arial, sans-serif;
-      --font-primary-size: 22px;
-      --font-primary-line-height: 28px;
+      --font-primary-weight: 300;
+      --font-primary-size: 18px;
+      --font-primary-line-height: 24px;
       --font-primary-letter-spacing: -0.03em;
+      --font-caption-family: var(--font-primary-family);
+      --font-caption-size: 14px;
+      --font-caption-weight: 400;
+      --font-caption-line-height: 18px;
+      --font-caption-letter-spacing: 0;
+      --font-primary-menu-gap: calc(var(--font-primary-line-height) * 0.7142857);
+      --font-primary-link-gap: calc(var(--font-primary-line-height) * 1.2142857);
+      --font-primary-floating-gap: calc(var(--font-primary-line-height) * 1.6071429);
       --section-gap: calc(3 * var(--font-primary-line-height));
     }
 
@@ -2470,7 +2479,7 @@
     body {
       font-family: var(--font-primary-family);
       font-size: var(--font-primary-size);
-      font-weight: 300;
+      font-weight: var(--font-primary-weight);
       line-height: var(--font-primary-line-height);
       letter-spacing: var(--font-primary-letter-spacing);
     }
@@ -2570,9 +2579,9 @@
     .jtbd-card,
     .jtbd-card p {
       font-family: var(--font-primary-family);
-      font-size: 18px;
-      font-weight: 300;
-      line-height: 1.273;
+      font-size: var(--font-primary-size);
+      font-weight: var(--font-primary-weight);
+      line-height: var(--font-primary-line-height);
       letter-spacing: var(--font-primary-letter-spacing);
       font-synthesis: none;
     }
@@ -2626,7 +2635,7 @@
     .case-split-section__list {
       font-family: var(--font-primary-family);
       font-size: var(--font-primary-size);
-      font-weight: 300;
+      font-weight: var(--font-primary-weight);
       line-height: var(--font-primary-line-height);
       letter-spacing: var(--font-primary-letter-spacing);
     }
@@ -2806,9 +2815,9 @@
       gap: 34px;
       margin-top: 34px;
       font-family: var(--font-primary-family);
-      font-size: 22px;
-      font-weight: 300;
-      line-height: 28px;
+      font-size: var(--font-primary-size);
+      font-weight: var(--font-primary-weight);
+      line-height: var(--font-primary-line-height);
       letter-spacing: var(--font-primary-letter-spacing);
     }
 
@@ -2826,19 +2835,18 @@
       bottom: 0;
       left: 0;
       height: 1.3px;
-      background: currentColor;
+      background: var(--blue);
       content: "";
-      transform: scaleX(0);
-      transform-origin: left center;
-      transition: transform 220ms ease;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 220ms ease;
       pointer-events: none;
     }
 
     .portfolio-footer__links a:hover::after,
-    .portfolio-footer__links a:focus-visible::after { transform: scaleX(1); }
+    .portfolio-footer__links a:focus-visible::after { clip-path: inset(0); }
 
     .portfolio-footer__links a[href*="t.me"]::after {
-      background: linear-gradient(to right, currentColor 0 calc(52% - 8px), transparent calc(52% - 8px) calc(66% - 6px), currentColor calc(66% - 6px) 100%);
+      background: linear-gradient(to right, var(--blue) 0 calc(52% - 10px), transparent calc(52% - 10px) calc(66% - 8px), var(--blue) calc(66% - 8px) 100%);
     }
 
     @media (pointer: fine) {
@@ -2846,8 +2854,7 @@
     }
 
     @media (max-width: 799px) {
-      :root { --font-primary-size: 18px; --font-primary-line-height: 23px; }
-      .portfolio-footer__links { font-size: 18px; line-height: 23px; }
+      :root { --font-primary-size: 18px; --font-primary-line-height: 24px; }
     }
 
     @media (max-width: 700px) {
@@ -2902,7 +2909,7 @@
     .case-section-nav__link {
       font-family: var(--font-primary-family);
       font-size: var(--font-primary-size);
-      font-weight: 300;
+      font-weight: var(--font-primary-weight);
       line-height: var(--font-primary-line-height);
       letter-spacing: var(--font-primary-letter-spacing);
       font-synthesis: none;
@@ -2939,6 +2946,14 @@
       position: relative;
       top: 4px;
       letter-spacing: -0.03em;
+    }
+
+    .case-hero__text--title-only .case-hero__eyebrow {
+      margin-bottom: 8px;
+    }
+
+    .case-hero__text--title-only .case-hero__description {
+      margin-top: 36px;
     }
 
     .case-text-section__title,
