@@ -1225,39 +1225,25 @@
 
     .contacts-screen__links a::after {
       position: absolute;
-      top: 0;
+      right: 0;
+      bottom: 0;
       left: 0;
-      width: max-content;
-      color: transparent;
-      content: attr(data-underline);
-      font: inherit;
-      letter-spacing: inherit;
-      line-height: inherit;
-      white-space: nowrap;
-      text-decoration-line: underline;
-      text-decoration-color: var(--text);
-      text-decoration-thickness: 1.4px;
-      text-underline-offset: 4px;
-      text-decoration-skip-ink: auto;
-      clip-path: inset(0 100% 0 0);
-      transition: clip-path 220ms cubic-bezier(0.22, 1, 0.36, 1);
+      height: 1.3px;
+      background: currentColor;
+      content: "";
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 220ms ease;
       pointer-events: none;
     }
 
     .contacts-screen__links a:hover::after,
     .contacts-screen__links a:focus-visible::after {
-      clip-path: inset(0 0 0 0);
+      transform: scaleX(1);
     }
 
     .contacts-screen__links a[href*="t.me"]::after {
-      text-underline-offset: 3px;
-      transform: translateX(-1px);
-      clip-path: inset(0 100% 0 1px);
-    }
-
-    .contacts-screen__links a[href*="t.me"]:hover::after,
-    .contacts-screen__links a[href*="t.me"]:focus-visible::after {
-      clip-path: inset(0 0 0 1px);
+      background: linear-gradient(to right, currentColor 0 52%, transparent 52% calc(66% + 2px), currentColor calc(66% + 2px) 100%);
     }
 
     .contacts-screen__links a:hover,
