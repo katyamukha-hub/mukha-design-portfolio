@@ -2457,8 +2457,8 @@
       --case-content-max: calc(100vw - (2 * var(--page-x)));
       --font-primary-family: "CoFo Sans Trial", Arial, sans-serif;
       --font-primary-weight: 300;
-      --font-primary-size: 18px;
-      --font-primary-line-height: 24px;
+      --font-primary-size: 20px;
+      --font-primary-line-height: 26px;
       --font-primary-letter-spacing: -0.03em;
       --font-caption-family: var(--font-primary-family);
       --font-caption-size: 14px;
@@ -2579,9 +2579,9 @@
     .jtbd-card,
     .jtbd-card p {
       font-family: var(--font-primary-family);
-      font-size: var(--font-primary-size);
+      font-size: 16px;
       font-weight: var(--font-primary-weight);
-      line-height: var(--font-primary-line-height);
+      line-height: calc(var(--font-primary-line-height) * 0.8888889);
       letter-spacing: var(--font-primary-letter-spacing);
       font-synthesis: none;
     }
@@ -2735,8 +2735,8 @@
 
     .portfolio-header__arrow {
       display: inline-block;
-      width: 11.45px;
-      height: 10.64px;
+      width: 12.722px;
+      height: 11.822px;
       margin-right: 6px;
       vertical-align: -1px;
     }
@@ -2783,7 +2783,7 @@
       display: block;
       width: auto;
       max-width: calc(100vw - 72px);
-      height: 38.62px;
+      height: 42.911px;
     }
 
     .portfolio-footer__brand {
@@ -2854,7 +2854,7 @@
     }
 
     @media (max-width: 799px) {
-      :root { --font-primary-size: 18px; --font-primary-line-height: 24px; }
+      :root { --font-primary-size: 20px; --font-primary-line-height: 26px; }
     }
 
     @media (max-width: 700px) {
@@ -2864,10 +2864,10 @@
       }
       .portfolio-header { left: 20px; }
       .portfolio-header__actions { right: 20px; gap: 22.5px; }
-      .portfolio-header__arrow { width: 9.37px; height: 8.71px; margin-right: 5.27px; }
+      .portfolio-header__arrow { width: 10.411px; height: 9.678px; margin-right: 5.27px; }
       .portfolio-header__action[href*="t.me"] .portfolio-header__arrow { margin-right: 6.5px; }
       .page > .portfolio-footer { padding-inline: 20px; }
-      .portfolio-footer__email { max-width: calc(100vw - 40px); height: 24.7168px; }
+      .portfolio-footer__email { max-width: calc(100vw - 40px); height: 27.463px; }
       .portfolio-footer__links { gap: 20px; flex-wrap: wrap; }
     }
 
@@ -2963,6 +2963,23 @@
       font-size: 32px;
       line-height: 38px;
       letter-spacing: -0.03em;
+    }
+
+    @media (min-width: 761px) and (max-width: 1000px) {
+      .case-text-section__grid,
+      .case-section-heading__grid,
+      .case-split-section__grid,
+      .jtbd-section__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .case-text-section__content,
+      .case-section-heading__content,
+      .case-split-section__text,
+      .case-split-section__media,
+      .jtbd-section__content {
+        grid-column: auto;
+      }
     }
 
   </style>
@@ -3402,6 +3419,7 @@
     const caseSectionTargets = caseSectionLinks
       .map((link) => document.getElementById(link.dataset.sectionTarget))
       .filter(Boolean);
+    const caseTitle = document.getElementById('case-title');
     const backToTopButton = document.querySelector('.back-to-top');
     const contactsSection = document.querySelector('.contacts-section');
     let activeCaseSectionId = null;
@@ -3499,9 +3517,20 @@
     const showCaseSectionNav = () => {
       if (!caseSectionNav) return;
 
+      if (!caseTitle || caseTitle.getBoundingClientRect().bottom > 0 || caseSectionNav.classList.contains('is-on-contacts')) {
+        window.clearTimeout(caseSectionNavHideTimer);
+        setCaseSectionNavIdle(true);
+        return;
+      }
+
       window.clearTimeout(caseSectionNavHideTimer);
       caseSectionNav.classList.add('is-visible');
       setCaseSectionNavIdle(false);
+    };
+
+    const hideCaseSectionNav = () => {
+      window.clearTimeout(caseSectionNavHideTimer);
+      setCaseSectionNavIdle(true);
     };
 
     const scheduleCaseSectionNavHide = () => {
@@ -3540,17 +3569,31 @@
     }
 
     window.addEventListener('scroll', () => {
-      showCaseSectionNav();
       updateCaseNavState();
       updateCaseSectionActive();
-      scheduleCaseSectionNavHide();
+      if (caseTitle && caseTitle.getBoundingClientRect().bottom <= 0) {
+        showCaseSectionNav();
+        scheduleCaseSectionNavHide();
+      } else {
+        hideCaseSectionNav();
+      }
     }, { passive: true });
     window.addEventListener('resize', () => {
       updateCaseNavState();
       updateCaseSectionActive();
+      if (caseTitle && caseTitle.getBoundingClientRect().bottom <= 0) {
+        showCaseSectionNav();
+      } else {
+        hideCaseSectionNav();
+      }
     });
     updateCaseNavState();
     updateCaseSectionActive();
+    if (caseTitle && caseTitle.getBoundingClientRect().bottom <= 0) {
+      showCaseSectionNav();
+    } else {
+      hideCaseSectionNav();
+    }
 
     let backToTopHideTimer = null;
 
