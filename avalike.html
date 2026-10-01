@@ -2456,8 +2456,8 @@
       --grid-gap: 20px;
       --case-content-max: calc(100vw - (2 * var(--page-x)));
       --font-primary-family: "CoFo Sans Trial", Arial, sans-serif;
-      --font-primary-size: 15.84px;
-      --font-primary-line-height: 20.16px;
+      --font-primary-size: 22px;
+      --font-primary-line-height: 28px;
       --font-primary-letter-spacing: -0.03em;
       --section-gap: calc(3 * var(--font-primary-line-height));
     }
@@ -2570,7 +2570,7 @@
     .jtbd-card,
     .jtbd-card p {
       font-family: var(--font-primary-family);
-      font-size: 15px;
+      font-size: var(--font-primary-size);
       font-weight: 300;
       line-height: var(--font-primary-line-height);
       letter-spacing: var(--font-primary-letter-spacing);
@@ -2808,9 +2808,9 @@
       gap: 34px;
       margin-top: 34px;
       font-family: var(--font-primary-family);
-      font-size: var(--font-primary-size);
+      font-size: 22px;
       font-weight: 300;
-      line-height: var(--font-primary-line-height);
+      line-height: 28px;
       letter-spacing: var(--font-primary-letter-spacing);
     }
 
@@ -2858,7 +2858,8 @@
     }
 
     @media (max-width: 799px) {
-      :root { --font-primary-size: 12.96px; --font-primary-line-height: 16.56px; }
+      :root { --font-primary-size: 18px; --font-primary-line-height: 23px; }
+      .portfolio-footer__links { font-size: 18px; line-height: 23px; }
     }
 
     @media (max-width: 700px) {
@@ -2895,6 +2896,44 @@
       .portfolio-footer__links { justify-content: space-between; gap: 8px; width: calc(100vw - 40px); }
       .portfolio-footer__content { align-items: flex-start; }
       .portfolio-footer__brand { width: min(50%, 300px); }
+    }
+
+    /* Keep Avalike navigation and body copy on the case's primary type scale. */
+    .portfolio-header,
+    .portfolio-header__nav,
+    .portfolio-header__nav a,
+    .portfolio-header__actions,
+    .portfolio-header__action,
+    .case-nav,
+    .case-nav__home,
+    .case-nav__list,
+    .case-nav__link,
+    .case-nav__current,
+    .case-section-nav,
+    .case-section-nav__list,
+    .case-section-nav__link {
+      font-family: var(--font-primary-family);
+      font-size: var(--font-primary-size);
+      font-weight: 300;
+      line-height: var(--font-primary-line-height);
+      letter-spacing: var(--font-primary-letter-spacing);
+      font-synthesis: none;
+    }
+
+    .case-hero__description,
+    .case-text-section__text,
+    .case-text-section__list,
+    .case-section-heading__caption,
+    .case-section-heading__list,
+    .case-section-heading__link,
+    .case-split-section__caption,
+    .case-split-section__list {
+      font-family: var(--font-primary-family);
+      font-size: var(--font-primary-size);
+      font-weight: 300;
+      line-height: var(--font-primary-line-height);
+      letter-spacing: var(--font-primary-letter-spacing);
+      font-synthesis: none;
     }
   </style>
 </head>
@@ -3321,10 +3360,6 @@
             <a href="assets/files/katya-mukha-cv.pdf" data-underline="cv">cv</a>
             <a href="https://www.instagram.com/katya.mukha/" target="_blank" rel="noreferrer" data-underline="inst">inst</a>
           </nav>
-        </div>
-        <div class="portfolio-footer__brand">
-          <img class="portfolio-footer__katya" src="Katya.svg" alt="Katya Mukha">
-          <span class="portfolio-footer__availability">available in MSK</span>
         </div>
       </div>
     </footer>
