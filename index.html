@@ -66,6 +66,7 @@
       --arrow-width: 13.333px;
       --arrow-height: 12.378px;
       --copy-icon-scale: 0.9090909;
+      --copy-icon-copied-scale: 0.7438016;
       --hero-intro-size: var(--font-primary-size);
       --hero-intro-line-height: var(--font-primary-line-height);
       --font-primary-menu-gap: calc(var(--font-primary-line-height) * 0.7142857);
@@ -258,15 +259,16 @@
     }
 
     .hero__email.is-copied .hero__copy-icon {
-      display: none;
+      content: url("assets/Icons/copy icon_copied.svg");
+      transform: translateY(1px) scale(var(--copy-icon-copied-scale));
     }
 
     .hero__email.is-copied .hero__copy-confirmation {
-      display: inline-flex;
+      display: none;
     }
 
-    .hero__email:hover .hero__copy-icon,
-    .hero__email:focus-visible .hero__copy-icon {
+    .hero__email:not(.is-copied):hover .hero__copy-icon,
+    .hero__email:not(.is-copied):focus-visible .hero__copy-icon {
       content: url("assets/Icons/copy icon_hover.svg");
     }
 
@@ -747,6 +749,7 @@
         left: 50%;
         display: block;
         width: var(--photo-width);
+        height: var(--photo-height);
         max-width: 38vw;
         max-height: 72vh;
         object-fit: contain;
@@ -759,6 +762,8 @@
         -webkit-user-drag: none;
         cursor: zoom-in;
       }
+
+      .desktop-photo-composition__card:nth-child(4) { object-fit: cover; }
 
       .desktop-photo-composition.is-open .desktop-photo-composition__card {
         opacity: 1;
@@ -775,8 +780,10 @@
       .desktop-photo-composition__card.is-focused {
         z-index: 40 !important;
         width: 80vw;
+        height: auto;
         max-width: 80vw;
         max-height: 82vh;
+        object-fit: contain;
         transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(1) !important;
       }
 
@@ -2661,14 +2668,19 @@
       else if (photoStack.classList.contains("is-open")) renderPhotoFan();
     });
 
-    const desktopPhotoLayout = [
-      { x: "-30vw", y: "-25vh", width: "23vw", rotation: 0, depth: .65 },
-      { x: "6vw", y: "-31vh", width: "29vw", rotation: 0, depth: 1 },
-      { x: "30vw", y: "-12vh", width: "18vw", rotation: 0, depth: .45 },
-      { x: "-35vw", y: "17vh", width: "17vw", rotation: 0, depth: .35 },
-      { x: "-2vw", y: "8vh", width: "34vw", rotation: 0, depth: 1 },
-      { x: "29vw", y: "23vh", width: "21vw", rotation: 0, depth: .55 }
-    ];
+    const DESKTOP_GALLERY_REFERENCE = {
+      width: 1440,
+      height: 866,
+      photos: {
+        "1": { left: 1200, top: 70, width: 192, height: 236, zIndex: 3, depth: .45 },
+        "2": { left: 332, top: 12, width: 195, height: 130, zIndex: 3, depth: .30 },
+        "3": { left: 586, top: 175, width: 348, height: 384, zIndex: 4, depth: .80 },
+        "4": { left: 992, top: 486, width: 370, height: 366, zIndex: 5, depth: .70 },
+        "5": { left: 429, top: 677, width: 130, height: 174, zIndex: 3, depth: .25 },
+        "6": { left: 31, top: 528, width: 243, height: 323, zIndex: 3, depth: .50 }
+      }
+    };
+    const desktopPhotoLayout = Object.values(DESKTOP_GALLERY_REFERENCE.photos);
     const desktopPhotoComposition = document.createElement("div");
     desktopPhotoComposition.className = "desktop-photo-composition";
     desktopPhotoComposition.setAttribute("role", "dialog");
@@ -2698,8 +2710,41 @@
     let desktopParallaxTarget = { x: 0, y: 0 };
     let desktopParallaxCurrent = { x: 0, y: 0 };
     let desktopParallaxFrame = 0;
+    let desktopPhotoOpenTimer;
     let desktopPhotoCloseTimer;
     let desktopPhotoPreviousOverflow = "";
+    let desktopWheelIntent = 0;
+    let desktopWheelResetTimer;
+    let desktopWheelCloseHandler = null;
+
+    const removeDesktopWheelClose = () => {
+      if (desktopWheelCloseHandler) {
+        desktopPhotoComposition.removeEventListener("wheel", desktopWheelCloseHandler);
+        desktopWheelCloseHandler = null;
+      }
+      window.clearTimeout(desktopWheelResetTimer);
+      desktopWheelIntent = 0;
+    };
+
+    const installDesktopWheelClose = () => {
+      removeDesktopWheelClose();
+      desktopWheelCloseHandler = (event) => {
+        if (desktopPhotoState !== "open") return;
+        const multiplier = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
+        const deltaY = event.deltaY * multiplier;
+        if (!deltaY) return;
+        desktopWheelIntent += deltaY;
+        window.clearTimeout(desktopWheelResetTimer);
+        desktopWheelResetTimer = window.setTimeout(() => { desktopWheelIntent = 0; }, 140);
+        if (Math.abs(desktopWheelIntent) < 20) return;
+
+        event.preventDefault();
+        const scrollIntent = Math.max(-640, Math.min(640, desktopWheelIntent));
+        removeDesktopWheelClose();
+        closeDesktopComposition(scrollIntent);
+      };
+      desktopPhotoComposition.addEventListener("wheel", desktopWheelCloseHandler, { passive: false });
+    };
 
     const setDesktopPhotoOrigins = () => {
       const bounds = document.querySelector(".hero__photo-thumbs").getBoundingClientRect();
@@ -2712,6 +2757,10 @@
     };
 
     const updateDesktopParallax = () => {
+      if (desktopPhotoState !== "open") {
+        desktopParallaxFrame = 0;
+        return;
+      }
       desktopParallaxCurrent.x += (desktopParallaxTarget.x - desktopParallaxCurrent.x) * .08;
       desktopParallaxCurrent.y += (desktopParallaxTarget.y - desktopParallaxCurrent.y) * .08;
       desktopPhotoCards.forEach((card) => {
@@ -2724,44 +2773,72 @@
 
     const renderDesktopComposition = () => {
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      const scale = Math.min(viewportWidth / DESKTOP_GALLERY_REFERENCE.width, viewportHeight / DESKTOP_GALLERY_REFERENCE.height);
+      const offsetX = (viewportWidth - DESKTOP_GALLERY_REFERENCE.width * scale) / 2;
+      const offsetY = (viewportHeight - DESKTOP_GALLERY_REFERENCE.height * scale) / 2;
       desktopPhotoCards.forEach((card, index) => {
+        const layout = desktopPhotoLayout[index];
+        const photoWidth = layout.width * scale;
+        const photoHeight = layout.height * scale;
+        const photoLeft = offsetX + layout.left * scale;
+        const photoTop = offsetY + layout.top * scale;
+        card.style.setProperty("--photo-width", `${photoWidth}px`);
+        card.style.setProperty("--photo-height", `${photoHeight}px`);
+        card.style.setProperty("--layout-x", `${photoLeft + photoWidth / 2 - viewportWidth / 2}px`);
+        card.style.setProperty("--layout-y", `${photoTop + photoHeight / 2 - viewportHeight / 2}px`);
+        card.style.setProperty("--layout-rotation", "0deg");
         card.style.setProperty("--stagger", reducedMotion ? "0ms" : `${index * 55}ms`);
         card.style.setProperty("--parallax-x", "0px");
         card.style.setProperty("--parallax-y", "0px");
-        card.style.zIndex = String(5 + index);
+        card.style.zIndex = String(layout.zIndex);
       });
     };
 
-    const closeDesktopComposition = () => {
+    const closeDesktopComposition = (scrollIntent = 0) => {
       if (desktopPhotoState === "closed" || desktopPhotoState === "closing") return;
       desktopPhotoState = "closing";
+      desktopParallaxTarget = { x: 0, y: 0 };
       desktopPhotoFocused = null;
       desktopPhotoComposition.classList.remove("is-focused");
       desktopPhotoCards.forEach((card) => card.classList.remove("is-focused", "is-hovered"));
       setDesktopPhotoOrigins();
       desktopPhotoComposition.classList.add("is-closing");
       window.cancelAnimationFrame(desktopParallaxFrame);
+      desktopParallaxFrame = 0;
+      removeDesktopWheelClose();
+      window.clearTimeout(desktopPhotoOpenTimer);
       window.clearTimeout(desktopPhotoCloseTimer);
       desktopPhotoCloseTimer = window.setTimeout(() => {
         desktopPhotoComposition.classList.remove("is-open", "is-closing");
         desktopPhotoState = "closed";
         document.body.style.overflow = desktopPhotoPreviousOverflow;
+        if (scrollIntent) window.scrollBy({ top: scrollIntent, behavior: "auto" });
       }, 500);
     };
 
-    const openDesktopComposition = (index) => {
+    const openDesktopComposition = () => {
       if (window.innerWidth < 768) return;
+      if (desktopPhotoState === "open" || desktopPhotoState === "opening") return;
       window.clearTimeout(desktopPhotoCloseTimer);
+      window.clearTimeout(desktopPhotoOpenTimer);
       desktopPhotoState = "opening";
       desktopPhotoPreviousOverflow = document.body.style.overflow;
+      desktopParallaxTarget = { x: 0, y: 0 };
+      desktopParallaxCurrent = { x: 0, y: 0 };
       setDesktopPhotoOrigins();
       renderDesktopComposition();
       desktopPhotoComposition.classList.remove("is-closing");
       desktopPhotoComposition.classList.add("is-open");
       document.body.style.overflow = "hidden";
-      desktopPhotoState = "open";
-      desktopParallaxFrame = requestAnimationFrame(updateDesktopParallax);
-      if (desktopPhotoCards[index]) desktopPhotoCards[index].style.zIndex = "15";
+      installDesktopWheelClose();
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      desktopPhotoOpenTimer = window.setTimeout(() => {
+        if (desktopPhotoState !== "opening") return;
+        desktopPhotoState = "open";
+        if (!reducedMotion) desktopParallaxFrame = requestAnimationFrame(updateDesktopParallax);
+      }, reducedMotion ? 180 : 760 + (desktopPhotoCards.length - 1) * 55);
     };
 
     photoTrigger.addEventListener("click", (event) => {
@@ -2770,7 +2847,7 @@
       if (!thumb) return;
       event.preventDefault();
       const index = heroPhotos.findIndex((photo) => photo.getAttribute("src") === thumb.getAttribute("src"));
-      openDesktopComposition(Math.max(0, index));
+      openDesktopComposition();
     });
     desktopPhotoCards.forEach((card) => {
       card.addEventListener("pointerenter", () => {
@@ -2793,28 +2870,18 @@
     });
     desktopPhotoComposition.addEventListener("pointermove", (event) => {
       if (desktopPhotoState !== "open" || desktopPhotoFocused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      desktopParallaxTarget.x = (event.clientX / window.innerWidth * 2 - 1) * 12;
-      desktopParallaxTarget.y = (event.clientY / window.innerHeight * 2 - 1) * 8;
+      const nx = (event.clientX / window.innerWidth - .5) * 2;
+      const ny = (event.clientY / window.innerHeight - .5) * 2;
+      desktopParallaxTarget.x = nx * 10;
+      desktopParallaxTarget.y = ny * 7;
     });
     desktopPhotoComposition.addEventListener("pointerleave", () => { desktopParallaxTarget = { x: 0, y: 0 }; });
     desktopPhotoComposition.addEventListener("click", (event) => {
       if (event.target === desktopPhotoComposition) closeDesktopComposition();
     });
-    desktopPhotoComposition.addEventListener("wheel", (event) => {
-      if (desktopPhotoState !== "open" || event.deltaY <= 0) return;
-      event.preventDefault();
-      const scrollAmount = Math.min(640, Math.max(80, event.deltaY));
-      closeDesktopComposition();
-      document.body.style.overflow = "auto";
-      document.documentElement.style.overflow = "auto";
-      window.scrollBy({ top: scrollAmount, behavior: "auto" });
-    }, { passive: false });
-    desktopPhotoClose.addEventListener("click", closeDesktopComposition);
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && desktopPhotoState !== "closed") closeDesktopComposition();
-    });
     window.addEventListener("resize", () => {
       if (window.innerWidth < 768 && desktopPhotoState !== "closed") closeDesktopComposition();
+      else if (desktopPhotoState === "open" || desktopPhotoState === "opening") renderDesktopComposition();
     });
 
     const mobilePhotoViewer = document.createElement("div");
