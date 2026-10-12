@@ -1074,6 +1074,34 @@
       transform: translateX(40px) scale(4.4146);
     }
 
+    @media (min-width: 1000px) {
+      .facts-screen {
+        min-height: 1510px;
+        overflow-x: clip;
+      }
+
+      .facts-screen__gallery {
+        top: 1300px;
+        right: -20px;
+        grid-template-columns: none;
+        grid-template-rows: auto;
+        grid-auto-flow: column;
+        grid-auto-columns: 72px;
+        justify-content: start;
+        column-gap: calc((100% - 504px) / 6);
+        overflow: visible;
+      }
+
+      .facts-screen__gallery img:nth-child(n) {
+        display: block;
+      }
+
+      .facts-screen__gallery img:nth-child(7n + 1):hover,
+      .facts-screen__gallery img:nth-child(7n):hover {
+        transform: scale(4.4146);
+      }
+    }
+
     .contacts-screen {
       position: relative;
       display: flex;
@@ -2166,16 +2194,15 @@
       <article class="facts-screen__fact facts-screen__fact--two">
         <span>факт (2 — 3)</span>
         <strong>веду художественную практику</strong>
-        <p>делаю долгосрочные персональные документальные проекты: исследование, выбор темы, поиск героев, получение доступа, работа в&nbsp;поле, визуальный наратив, публикации, выставки, книги.</p>
-        <p>финалист hellerau portrait award, финалист конкурса журнала «отпечаток»</p>
-        <p>коллективная выставка в&nbsp;дрездене</p>
-        <p>коллективная выставка «фотокнига: документ, объект» в&nbsp;pennlab gallery</p>
-        <p>исследовательская программа музея современного искусства garage</p>
+        <p>Веду долгосрочные персональные документальные фотопроекты.</p>
+        <p>финалист PORTRAITS – Hellerau Photography Award, финалист конкурса журнала «Отпечаток»</p>
+        <p>коллективная выставка финалистов PORTRAITS – Hellerau Photography Award в&nbsp;Дрездене, коллективная выставка «Фотокнига: документ, история, объект» в&nbsp;PENNLAB Gallery</p>
+        <p>исследовательская программа Музея современного искусства «Гараж»</p>
       </article>
       <article class="facts-screen__fact facts-screen__fact--three">
         <span>факт (3 — 3)</span>
         <strong>сняла проект про почту россии</strong>
-        <p>я&nbsp;проехала более 6000 км по россии, сняла 150+ почтовых отделений.<br>проект попал в шорт-лист журнала «отпечаток» и&nbsp;опубликован на ресурсе colta.</p>
+        <p>я&nbsp;проехала более 6000 км по россии, сняла 150+ почтовых отделений.<br>проект попал в шорт-лист журнала «Отпечаток» и&nbsp;опубликован на ресурсе colta.</p>
       </article>
       <div class="facts-screen__gallery" aria-label="Фотографии проекта о почте России">
         <img src="assets/images/post-offices/post-office-12.jpg" alt="">
@@ -2521,7 +2548,7 @@
     });
 
     const DESKTOP_GALLERY_REFERENCE = {
-      width: 1440,
+      width: 1400,
       height: 866,
       photos: {
         "1": { left: 1200, top: 70, width: 192, height: 236, zIndex: 3, depth: .45 },
@@ -2627,19 +2654,26 @@
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
-      const scale = Math.min(viewportWidth / DESKTOP_GALLERY_REFERENCE.width, viewportHeight / DESKTOP_GALLERY_REFERENCE.height);
-      const offsetX = (viewportWidth - DESKTOP_GALLERY_REFERENCE.width * scale) / 2;
+      const isDesktop = viewportWidth >= 1000;
+      const referenceWidth = isDesktop ? DESKTOP_GALLERY_REFERENCE.width : 1440;
+      const scale = Math.min(viewportWidth / referenceWidth, viewportHeight / DESKTOP_GALLERY_REFERENCE.height);
+      const offsetX = (viewportWidth - referenceWidth * scale) / 2;
       const offsetY = (viewportHeight - DESKTOP_GALLERY_REFERENCE.height * scale) / 2;
       desktopPhotoCards.forEach((card, index) => {
         const layout = desktopPhotoLayout[index];
         const photoWidth = layout.width * scale;
         const photoHeight = layout.height * scale;
-        const photoLeft = offsetX + layout.left * scale;
-        const photoTop = offsetY + layout.top * scale;
+        // Anchor each desktop photo by its relative center; preserve its aspect ratio.
+        const centerX = isDesktop
+          ? (layout.left + layout.width / 2) / referenceWidth * viewportWidth
+          : offsetX + (layout.left + layout.width / 2) * scale;
+        const centerY = isDesktop
+          ? (layout.top + layout.height / 2) / DESKTOP_GALLERY_REFERENCE.height * viewportHeight
+          : offsetY + (layout.top + layout.height / 2) * scale;
         card.style.setProperty("--photo-width", `${photoWidth}px`);
         card.style.setProperty("--photo-height", `${photoHeight}px`);
-        card.style.setProperty("--layout-x", `${photoLeft + photoWidth / 2 - viewportWidth / 2}px`);
-        card.style.setProperty("--layout-y", `${photoTop + photoHeight / 2 - viewportHeight / 2}px`);
+        card.style.setProperty("--layout-x", `${centerX - viewportWidth / 2}px`);
+        card.style.setProperty("--layout-y", `${centerY - viewportHeight / 2}px`);
         card.style.setProperty("--layout-rotation", "0deg");
         card.style.setProperty("--stagger", reducedMotion ? "0ms" : `${index * 55}ms`);
         card.style.setProperty("--parallax-x", "0px");
