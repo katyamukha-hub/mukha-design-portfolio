@@ -364,76 +364,6 @@
       visibility: visible;
     }
 
-    @keyframes hero-text-delay-in {
-      from { opacity: 0; transform: scale(.96); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    @keyframes hero-link-word-in {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes hero-link-arrow-in {
-      from { width: 0; margin-left: 0; margin-right: 0; opacity: 0; }
-      to { width: var(--arrow-width); margin-left: 0; margin-right: 4px; opacity: 1; }
-    }
-
-    @keyframes hero-links-container-in {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    body.is-loaded .hero__intro > p {
-      animation: hero-text-delay-in 520ms ease-out 860ms both;
-      transform-origin: 50% 100%;
-    }
-
-    .hero__intro .hero__top-links a span {
-      opacity: 0;
-    }
-
-    .hero__intro .hero__top-links {
-      opacity: 0;
-      animation: hero-links-container-in 260ms ease-out 1480ms both;
-    }
-
-    .hero__intro .hero__top-links a:first-child span {
-      animation: hero-link-word-in 320ms ease-out 1500ms both;
-    }
-
-    .hero__intro .hero__top-links a:nth-child(2) span {
-      animation: hero-link-word-in 320ms ease-out 1740ms both;
-    }
-
-    .hero__intro .hero__top-links a:first-child .hero__link-arrow {
-      width: 0;
-      margin-right: 0;
-      opacity: 0;
-      animation: hero-link-arrow-in 720ms cubic-bezier(.22,.75,.25,1) 1880ms both;
-    }
-
-    .hero__intro .hero__top-links a:nth-child(2) .hero__link-arrow {
-      width: 0;
-      margin-right: 0;
-      opacity: 0;
-      animation: hero-link-arrow-in 720ms cubic-bezier(.22,.75,.25,1) 2320ms both;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      body.is-loaded .hero__intro > p,
-      .hero__intro .hero__top-links,
-      .hero__intro .hero__top-links a span,
-      .hero__intro .hero__top-links a .hero__link-arrow {
-        animation: none;
-        opacity: 1;
-      }
-      .hero__intro .hero__top-links a .hero__link-arrow {
-        width: var(--arrow-width);
-        margin-right: 4px;
-      }
-    }
-
     body.is-fly-complete .loader-screen {
       opacity: 0;
     }
@@ -1731,6 +1661,23 @@
       }
     }
 
+    @media (min-width: 1000px) and (max-width: 1400px) {
+      .hero__katya {
+        bottom: 30px;
+      }
+
+      .hero__intro {
+        top: 198px;
+        left: 205px;
+      }
+
+      .hero__mukha {
+        top: 117px;
+        width: 83.456px;
+        height: 96.256px;
+      }
+    }
+
     @media (min-width: 441px) and (max-width: 700px) {
       .hero__nav {
         max-width: none;
@@ -1997,105 +1944,10 @@
       .hero__top-links.hero__top-links--floating { gap: var(--font-primary-floating-gap); }
     }
 
-    /* Hero entrance sequence: text first, then each link and its arrow. */
-    @keyframes hero-type-sequence {
-      0% { opacity: 0; clip-path: inset(0 100% 0 0); }
-      100% { opacity: 1; clip-path: inset(0 0 0 0); }
-    }
-
-    @keyframes hero-word-sequence {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes hero-link-bounce {
-      0% { opacity: 0; transform: translateX(0); }
-      58% { opacity: 1; transform: translateX(4px); }
-      78% { transform: translateX(-4px); }
-      100% { opacity: 1; transform: translateX(0); }
-    }
-
-    @keyframes hero-arrow-sequence {
-      0% { opacity: 0; transform: translateX(-2px) scaleX(0.15); transform-origin: left center; }
-      58% { opacity: 1; transform: translateX(2px) scaleX(1.04); transform-origin: left center; }
-      78% { transform: translateX(-2px) scaleX(0.98); transform-origin: left center; }
-      100% { opacity: 1; transform: translateX(0) scaleX(1); transform-origin: left center; }
-    }
-
-    @keyframes hero-line-sequence {
-      0% { opacity: 1; clip-path: inset(0 100% 0 0); transform: translateY(2px); }
-      100% { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
-    }
-
-    .hero__intro > p { opacity: 0; }
-    .hero__intro .hero__top-links { opacity: 0; }
-    .hero__intro .hero__top-links a span { opacity: 0; }
+    /* Text and links share the header's entrance through .hero__intro. */
     .hero__intro .hero__top-links .hero__link-arrow {
       width: var(--arrow-width);
       margin-right: 6px;
-      opacity: 0;
-      transform-origin: left center;
-    }
-
-    /* Keep the arrow's space reserved while it animates, so it cannot collapse. */
-    .hero__intro .hero__top-links a:first-child .hero__link-arrow,
-    .hero__intro .hero__top-links a:nth-child(2) .hero__link-arrow {
-      width: var(--arrow-width);
-      margin-right: 6px;
-    }
-
-    body.is-hero-sequence .hero__intro > p {
-      opacity: 1;
-      clip-path: none;
-      animation: none;
-    }
-
-    body.is-hero-sequence .hero__intro .hero__line {
-      opacity: 0;
-      animation: hero-line-sequence 480ms cubic-bezier(.22,.75,.25,1) both;
-    }
-
-    body.is-hero-sequence .hero__intro .hero__line:nth-child(2) {
-      animation-delay: 260ms;
-    }
-
-    body.is-hero-sequence .hero__intro .hero__line:nth-child(3) {
-      animation-delay: 520ms;
-    }
-
-    body.is-hero-sequence .hero__intro .hero__top-links {
-      animation: hero-word-sequence 180ms ease-out 1080ms both;
-    }
-
-    body.is-hero-sequence .hero__intro .hero__top-links a:first-child span {
-      animation: hero-link-bounce 760ms cubic-bezier(.22,.61,.36,1) 1160ms both;
-    }
-
-    body.is-hero-sequence .hero__intro .hero__top-links a:first-child .hero__link-arrow {
-      animation: hero-arrow-sequence 760ms cubic-bezier(.22,.61,.36,1) 1160ms both;
-    }
-
-    body.is-hero-sequence .hero__intro .hero__top-links a:nth-child(2) span {
-      animation: hero-link-bounce 760ms cubic-bezier(.22,.61,.36,1) 1780ms both;
-    }
-
-    body.is-hero-sequence .hero__intro .hero__top-links a:nth-child(2) .hero__link-arrow {
-      animation: hero-arrow-sequence 760ms cubic-bezier(.22,.61,.36,1) 1780ms both;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .hero__intro > p,
-      .hero__intro .hero__top-links,
-      .hero__intro .hero__top-links a span,
-      .hero__intro .hero__top-links .hero__link-arrow {
-        animation: none !important;
-        opacity: 1;
-      }
-      .hero__intro .hero__top-links .hero__link-arrow {
-        width: var(--arrow-width);
-        margin-right: 6px;
-        transform: none;
-      }
     }
 
     /* Supporting copy and navigation use the requested 18px text scale. */
@@ -3161,7 +3013,6 @@
         document.body.classList.add("is-fly-complete");
         window.setTimeout(() => {
           loaderFly.closest(".loader-screen").remove();
-          document.body.classList.add("is-hero-sequence");
         }, 180);
       }, 620);
     }, 1500);
