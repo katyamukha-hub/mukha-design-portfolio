@@ -56,6 +56,8 @@
       --font-primary-family: "CoFo Sans Trial", Arial, sans-serif;
       --font-primary-weight: 300;
       --font-primary-size: 20px;
+      --font-body-size: 18px;
+      --font-body-line-height: 24px;
       --font-primary-line-height: 26px;
       --font-primary-letter-spacing: -0.03em;
       --font-caption-family: var(--font-primary-family);
@@ -72,7 +74,9 @@
       --font-primary-menu-gap: calc(var(--font-primary-line-height) * 0.7142857);
       --font-primary-link-gap: calc(var(--font-primary-line-height) * 1.2142857);
       --font-primary-floating-gap: calc(var(--font-primary-line-height) * 1.6071429);
+      /* Avalike reference: x-height 27.388 in a 39-unit SVG. */
       --case-heading-height: 30.896px;
+      --heading-x-height: calc(var(--case-heading-height) * 0.702256410);
       --friends-heading-height: 90px;
     }
 
@@ -272,9 +276,10 @@
       content: url("assets/Icons/copy icon_hover.svg");
     }
 
+    /* Vertical hero positions scale from a 700px viewport height. */
     .hero__intro {
       position: absolute;
-      top: 258px;
+      top: calc(100svh * 258 / 700);
       left: 237px;
       width: max-content;
       font-family: "CoFo Sans Trial", Arial, sans-serif;
@@ -306,7 +311,7 @@
 
     .hero__mukha {
       position: absolute;
-      top: 149px;
+      top: calc(100svh * 149 / 700);
       left: 104px;
       display: block;
       width: 130.4px;
@@ -428,7 +433,7 @@
     }
 
     .hero__intro em {
-      color: #424242;
+      color: var(--text);
       font-family: "CoFo Sans Pro", Arial, sans-serif;
       font-style: italic;
       font-weight: 400;
@@ -552,7 +557,7 @@
         height: 36px;
         padding: 0;
         place-items: center;
-        color: var(--blue);
+        color: var(--text);
         font: 300 28px/1 var(--font-primary-family);
         background: transparent;
         border: 0;
@@ -730,7 +735,7 @@
         top: 18px;
         left: 20px;
         padding: 4px 8px;
-        color: var(--blue);
+        color: var(--text);
         font: 300 28px/1 var(--font-primary-family);
         background: transparent;
         border: 0;
@@ -853,7 +858,7 @@
       font-size: 14px;
       font-weight: 400;
       line-height: 16px;
-      color: #424242;
+      color: var(--text);
       pointer-events: none;
     }
 
@@ -866,13 +871,30 @@
       .facts-screen__marker:not(.facts-screen__marker--portrait) { display: none; }
     }
 
+    /* Match lowercase height, while retaining each SVG's aspect ratio. */
     #avalike-title,
     #skillshare-title,
     #mendi-title,
     #facts-title,
     #contacts-title {
       width: auto;
+    }
+
+    #avalike-title {
       height: var(--case-heading-height);
+    }
+
+    #skillshare-title,
+    #mendi-title {
+      height: calc(var(--heading-x-height) * 39 / 27.925);
+    }
+
+    #facts-title {
+      height: calc(var(--heading-x-height) * 51 / 28.514);
+    }
+
+    #contacts-title {
+      height: calc(var(--heading-x-height) * 67 / 37.416);
     }
 
     #friends-title {
@@ -904,7 +926,8 @@
       letter-spacing: var(--font-primary-letter-spacing);
     }
 
-    .facts-screen__fact strong {
+    /* Second-level fact headings retain their own 32px / 38px type scale. */
+    .facts-screen__fact h2 {
       display: block;
       margin: 10px 0 24px;
       font-size: 34px;
@@ -926,7 +949,7 @@
       letter-spacing: -0.03em;
     }
 
-    .facts-screen__fact--one strong {
+    .facts-screen__fact--one h2 {
       margin: 4px 0 0;
       font-family: "CoFo Sans Trial", Arial, sans-serif;
       font-size: 32px;
@@ -961,7 +984,7 @@
       letter-spacing: -0.03em;
     }
 
-    .facts-screen__fact--two strong {
+    .facts-screen__fact--two h2 {
       margin: 4px 0 0;
       font-family: "CoFo Sans Trial", Arial, sans-serif;
       font-size: 32px;
@@ -995,7 +1018,7 @@
       max-width: 900px;
     }
 
-    .facts-screen__fact--three strong {
+    .facts-screen__fact--three h2 {
       display: block;
       margin: 4px 0 20px;
       font-size: 32px;
@@ -1021,9 +1044,9 @@
 
     .facts-screen__fact p {
       font-family: var(--font-primary-family) !important;
-      font-size: var(--font-primary-size) !important;
+      font-size: var(--font-body-size) !important;
       font-weight: var(--font-primary-weight) !important;
-      line-height: var(--font-primary-line-height) !important;
+      line-height: var(--font-body-line-height) !important;
       letter-spacing: var(--font-primary-letter-spacing) !important;
     }
 
@@ -1118,7 +1141,7 @@
     .contacts-screen__email {
       display: block;
       margin: 0;
-      color: #000;
+      color: var(--text);
       font-family: var(--font-primary-family);
       font-size: var(--font-primary-size);
       font-weight: var(--font-primary-weight);
@@ -1135,7 +1158,7 @@
     #contacts-title {
       display: block;
       width: auto;
-      height: var(--case-heading-height) !important;
+
     }
 
     .contacts-screen__links {
@@ -1273,7 +1296,7 @@
       line-height: 18px;
       letter-spacing: 0;
       font-synthesis: none;
-      color: #000;
+      color: var(--text);
     }
 
     .case-screen__count {
@@ -1367,7 +1390,7 @@
       line-height: 18px;
       letter-spacing: 0;
       font-synthesis: none;
-      color: #000;
+      color: var(--text);
       margin-top: 20px;
       position: relative;
       top: 0;
@@ -1565,9 +1588,9 @@
         line-height: 22px;
       }
 
-      .facts-screen__fact--one strong,
-      .facts-screen__fact--two strong,
-      .facts-screen__fact--three strong {
+      .facts-screen__fact--one h2,
+      .facts-screen__fact--two h2,
+      .facts-screen__fact--three h2 {
         font-size: 32px;
         line-height: 38px;
       }
@@ -1626,11 +1649,11 @@
 
     @media (max-width: 700px) {
       .hero__intro {
-        top: calc(max(32svh, 215px) + 30px);
+        top: calc(100svh * 254 / 700);
       }
 
       .hero__mukha {
-        top: calc(max(32svh, 215px) - 88px);
+        top: calc(100svh * 136 / 700);
         left: var(--page-padding);
         right: auto;
         translate: -14px 0;
@@ -1639,11 +1662,11 @@
 
     @media (max-width: 399px) {
       .hero__intro {
-        top: calc(max(32svh, 215px) + 10px);
+        top: calc(100svh * 234 / 700);
       }
 
       .hero__mukha {
-        top: calc(max(32svh, 215px) - 108px);
+        top: calc(100svh * 116 / 700);
       }
     }
 
@@ -1669,7 +1692,7 @@
 
     @media (min-width: 1000px) {
       .hero__mukha {
-        top: 149px;
+        top: calc(100svh * 149 / 700);
         left: 104px;
         right: auto;
         width: 130.4px;
@@ -1695,12 +1718,12 @@
       }
 
       .hero__intro {
-        top: 198px;
+        top: calc(100svh * 198 / 700);
         left: 205px;
       }
 
       .hero__mukha {
-        top: 117px;
+        top: calc(100svh * 117 / 700);
         width: 83.456px;
         height: 96.256px;
       }
@@ -2009,6 +2032,12 @@
       letter-spacing: var(--font-caption-letter-spacing);
     }
 
+    .case-screen__description,
+    #case-avalike .case-screen__description {
+      font-size: var(--font-body-size);
+      line-height: var(--font-body-line-height);
+    }
+
     .case-screen__index {
       transform: translateY(12px);
     }
@@ -2187,13 +2216,13 @@
       </div>
       <article class="facts-screen__fact facts-screen__fact--one">
         <span>факт (1 — 3)</span>
-        <strong>окончила мгту им. баумана</strong>
+        <h2>окончила мгту им. баумана</h2>
         <p>изучала теоретическую и&nbsp;прикладную оптику, электронику, прикладную механику, цифровую обработку сигналов и&nbsp;проектирование оптических приборов.</p>
         <img class="facts-screen__baumanka" src="assets/images/baumanka-notes.png" alt="Заметки по инженерному проекту">
       </article>
       <article class="facts-screen__fact facts-screen__fact--two">
         <span>факт (2 — 3)</span>
-        <strong>веду художественную практику</strong>
+        <h2>веду художественную практику</h2>
         <p>Веду долгосрочные персональные документальные фотопроекты.</p>
         <p>финалист PORTRAITS – Hellerau Photography Award, финалист конкурса журнала «Отпечаток»</p>
         <p>коллективная выставка финалистов PORTRAITS – Hellerau Photography Award в&nbsp;Дрездене, коллективная выставка «Фотокнига: документ, история, объект» в&nbsp;PENNLAB Gallery</p>
@@ -2201,7 +2230,7 @@
       </article>
       <article class="facts-screen__fact facts-screen__fact--three">
         <span>факт (3 — 3)</span>
-        <strong>сняла проект про почту россии</strong>
+        <h2>сняла проект про почту россии</h2>
         <p>я&nbsp;проехала более 6000 км по россии, сняла 150+ почтовых отделений.<br>проект попал в шорт-лист журнала «Отпечаток» и&nbsp;опубликован на ресурсе colta.</p>
       </article>
       <div class="facts-screen__gallery" aria-label="Фотографии проекта о почте России">
@@ -2238,7 +2267,7 @@
 
     <section class="contacts-screen" id="contacts" aria-labelledby="contacts-title">
       <div class="contacts-screen__content">
-        <img class="contacts-screen__email" id="contacts-title" src="mail.svg" alt="katya@mukha.design">
+        <img class="contacts-screen__email" id="contacts-title" src="assets/images/mail-text.svg" alt="katya@mukha.design">
         <button class="contacts-screen__copy" type="button" aria-label="Скопировать email">
           <img src="assets/Icons/copy_coursor.svg" alt="copy">
         </button>
