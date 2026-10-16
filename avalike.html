@@ -46,14 +46,6 @@
       font-display: swap;
     }
 
-    @font-face {
-      font-family: "CoFo Sans Trial";
-      src: url("assets/fonts/CoFoSans-Light-Trial.otf") format("opentype");
-      font-weight: 300;
-      font-style: normal;
-      font-display: swap;
-    }
-
 :root {
       --font-main: "CoFo Sans", Arial, Helvetica, sans-serif;
       --bg: #f4f4f4;
@@ -2447,6 +2439,105 @@
       }
     }
 
+    .case-meta {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--grid-gap);
+      padding: 0 var(--page-x) var(--block-gap);
+    }
+
+    .case-meta__grid {
+      grid-column: 3 / span 6;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--grid-gap);
+      margin: 0;
+    }
+
+    .case-meta__item { min-width: 0; }
+    .case-meta__item dt,
+    .case-meta__item dd { margin: 0; }
+    .case-meta__item dt,
+    .case-motion-episode {
+      font-family: "CoFo Sans Mono Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      line-height: 18px;
+      font-weight: 400;
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+    .case-meta__item dd {
+      margin-top: 6px;
+      font: 300 var(--font-primary-size)/var(--font-primary-line-height) var(--font-primary-family);
+    }
+    .case-meta__item dt {
+      font-size: 18px;
+      line-height: 24px;
+    }
+
+    .case-motion-heading { padding-bottom: 24px; }
+    .case-motion-episode { margin: 0 0 8px; }
+    .case-motion-section { padding-top: 0; padding-bottom: var(--section-gap); }
+    .case-motion-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border: 1px solid #d8d5d5;
+      border-radius: 8px;
+      background: #eeecec;
+    }
+    .case-motion-placeholder__video { border-radius: inherit; }
+    .case-motion-placeholder__fallback {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: #777474;
+      font: 300 var(--font-primary-size)/var(--font-primary-line-height) var(--font-primary-family);
+    }
+    .case-motion-placeholder.is-video-ready .case-motion-placeholder__fallback { display: none; }
+    .case-motion-placeholder.is-reduced-motion .case-motion-placeholder__video { display: none; }
+    .case-ai-process__steps {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: 16px;
+      margin-top: var(--text-to-media-gap);
+    }
+    .case-ai-process__step {
+      display: grid;
+      place-items: center;
+      min-height: 180px;
+      padding: 20px;
+      border: 1px solid #d8d5d5;
+      border-radius: 8px;
+      background: #eeecec;
+      color: #777474;
+      text-align: center;
+      font: 300 var(--font-primary-size)/var(--font-primary-line-height) var(--font-primary-family);
+    }
+    .case-ai-process__arrow { color: #777474; }
+
+    @media (min-width: 1001px) and (max-width: 1100px) {
+      .case-meta__grid { grid-column: 3 / span 8; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (min-width: 761px) and (max-width: 1000px) {
+      .case-meta__grid { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .case-meta { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .case-meta__grid { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 22px; }
+      .case-ai-process__steps { grid-template-columns: 1fr; gap: 10px; }
+      .case-ai-process__step { min-height: 110px; }
+      .case-ai-process__arrow { justify-self: center; transform: rotate(90deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .case-motion-placeholder__video { display: none; }
+    }
+
   </style>
   <style>
     :root {
@@ -2609,6 +2700,26 @@
       padding-bottom: var(--section-gap);
     }
 
+    /* Compact spacing only when a heading block directly introduces its media. */
+    .case-section-heading:has(+ .case-image-section) {
+      padding-bottom: 24px;
+    }
+
+    .case-section-heading__title,
+    .case-text-section__title {
+      margin-bottom: 0;
+    }
+
+    .case-section-heading:has(.case-section-heading__caption) .case-section-heading__title,
+    .case-section-heading:has(.case-section-heading__body) .case-section-heading__title,
+    .case-text-section:has(.case-text-section__text) .case-text-section__title {
+      margin-bottom: 12px;
+    }
+
+    .case-image-section {
+      padding-top: 0;
+    }
+
     .case-hero__text--title-only {
       margin-bottom: var(--font-primary-line-height);
     }
@@ -2622,7 +2733,7 @@
     .case-section-heading--prototype,
     .case-section-heading--visual-design,
     .case-section-heading--wireframes {
-      padding-bottom: var(--font-primary-line-height);
+      padding-bottom: 24px;
     }
 
     .case-hero__description,
@@ -2948,6 +3059,18 @@
       letter-spacing: -0.03em;
     }
 
+    .case-nav,
+    .case-nav__home,
+    .case-nav__list,
+    .case-nav__link,
+    .case-nav__current,
+    .case-section-nav,
+    .case-section-nav__list,
+    .case-section-nav__link {
+      font-size: 16px;
+      line-height: 20px;
+    }
+
     .case-hero__text--title-only .case-hero__eyebrow {
       margin-bottom: 8px;
     }
@@ -2983,10 +3106,11 @@
     }
 
   </style>
+  <link rel="stylesheet" href="case-shared.css" />
 </head>
 <body>
   <main class="page">
-    <header class="portfolio-header" aria-label="Верхняя навигация">
+    <header class="portfolio-header case-page-header" aria-label="Верхняя навигация">
       <button class="portfolio-header__toggle" type="button" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span><span></span></button>
       <nav class="portfolio-header__nav" aria-label="Основная навигация">
         <a href="index.html#case-avalike">работы,</a>
@@ -3013,18 +3137,23 @@
         <nav class="case-section-nav" aria-label="Разделы кейса Avalike">
           <ul class="case-section-nav__list">
             <li><a class="case-section-nav__link is-active" href="#results-title" data-section-target="results-title" aria-current="true">Результаты</a></li>
+            <li><a class="case-section-nav__link" href="#product-overview-title" data-section-target="product-overview-title">Обзор продукта</a></li>
             <li><a class="case-section-nav__link" href="#double-diamond-title" data-section-target="double-diamond-title">Double Diamond</a></li>
             <li><a class="case-section-nav__link" href="#research-stages-title" data-section-target="research-stages-title">Исследование / этапы</a></li>
             <li><a class="case-section-nav__link" href="#research-title" data-section-target="research-title">Конкурентный анализ</a></li>
             <li><a class="case-section-nav__link" href="#research-results-title" data-section-target="research-results-title">Результаты исследования</a></li>
             <li><a class="case-section-nav__link" href="#jtbd-title" data-section-target="jtbd-title">JTBD</a></li>
             <li><a class="case-section-nav__link" href="#main-scenarios-title" data-section-target="main-scenarios-title">Основные сценарии</a></li>
+            <li><a class="case-section-nav__link" href="#creator-flow-title" data-section-target="creator-flow-title">Создание агента</a></li>
             <li><a class="case-section-nav__link" href="#wireframes-title" data-section-target="wireframes-title">Вайрфреймы</a></li>
+            <li><a class="case-section-nav__link" href="#agent-groups-title" data-section-target="agent-groups-title">Управление группами агентов</a></li>
+            <li><a class="case-section-nav__link" href="#ai-design-process-title" data-section-target="ai-design-process-title">AI в процессе проектирования</a></li>
             <li><a class="case-section-nav__link" href="#moodboard-title" data-section-target="moodboard-title">Мудборд</a></li>
             <li><a class="case-section-nav__link" href="#visual-design-title" data-section-target="visual-design-title">Визуальный дизайн</a></li>
             <li><a class="case-section-nav__link" href="#interviews-title" data-section-target="interviews-title">Интервью</a></li>
             <li><a class="case-section-nav__link" href="#handoff-title" data-section-target="handoff-title">Hand-off</a></li>
             <li><a class="case-section-nav__link" href="#prototype-title" data-section-target="prototype-title">Прототип</a></li>
+            <li><a class="case-section-nav__link" href="#conversation-experience-title" data-section-target="conversation-experience-title">Взаимодействие с агентом</a></li>
             <li><a class="case-section-nav__link" href="#components-title" data-section-target="components-title">Компоненты</a></li>
             <li><a class="case-section-nav__link" href="#design-review-title" data-section-target="design-review-title">Дизайн-ревью</a></li>
             <li><a class="case-section-nav__link" href="#release-title" data-section-target="release-title">Релиз</a></li>
@@ -3056,51 +3185,67 @@
       </div>
     </section>
 
+    <section class="case-meta" aria-label="Информация о проекте">
+      <dl class="case-meta__grid">
+        <div class="case-meta__item">
+          <dt>Период работы</dt>
+          <dd>октябрь — декабрь 2025</dd>
+        </div>
+        <div class="case-meta__item">
+          <dt>Область работы</dt>
+          <dd>продуктовый дизайн, пользовательские исследования</dd>
+        </div>
+        <div class="case-meta__item">
+          <dt>Команда</dt>
+          <dd>продакт-менеджер, разработчики, дизайнер</dd>
+        </div>
+        <div class="case-meta__item">
+          <dt>Моя роль</dt>
+          <dd>единственный продуктовый дизайнер</dd>
+        </div>
+      </dl>
+    </section>
+
     <section class="case-text-section case-text-section--before-media" aria-labelledby="results-title">
       <div class="case-text-section__grid">
         <div class="case-text-section__content">
-          <h2 class="case-text-section__title" id="results-title">Результаты</h2>
+          <h2 class="case-text-section__title" id="results-title">Ключевые результаты</h2>
 
           <div class="case-text-section__body">
             <p class="case-text-section__text">
-              Протестировала ключевые сценарии платформы:
+              Спроектировала и протестировала ключевые пользовательские сценарии платформы: маркетплейс, взаимодействие с AI-агентами и кабинет креатора.
             </p>
-
-            <ul class="case-text-section__list">
-              <li>маркетплейс</li>
-              <li>страница агента</li>
-              <li>токены</li>
-              <li>кабинет креатора</li>
-            </ul>
 
             <p class="case-text-section__text">
-              Параллельно сделала мобильную адаптацию основных сценариев, собрала дизайн&#8209;систему, логотип и&nbsp;принципы визуального стиля. Работала как единственный дизайнер в&nbsp;связке с&nbsp;продуктом и&nbsp;разработкой.
+              Как единственный дизайнер в команде, работала совместно с продакт-менеджером над пользовательскими сценариями, а с разработчиками — над их реализацией. Отвечала за UX/UI, мобильную адаптацию, дизайн-систему и визуальный язык продукта.
             </p>
+
+            <p class="case-text-section__text"><strong>Результаты</strong></p>
+            <ul class="case-text-section__list case-key-results__metrics">
+              <li><strong>−40%</strong> — время создания персонажа</li>
+              <li><strong>+25–30%</strong> — завершение сценария создания персонажа</li>
+              <li><strong>Первые платные пользователи</strong> после запуска платформы</li>
+            </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="case-image-section" aria-label="Обложка кейса Avalike">
+    <!-- For a real motion asset, set video[data-src] and poster, then replace the neutral fallback with an img poster. -->
+    <section class="case-section-heading case-motion-heading" aria-labelledby="product-overview-title">
+      <div class="case-section-heading__grid">
+        <div class="case-section-heading__content">
+          <p class="case-motion-episode">Motion 01</p>
+          <h2 class="case-section-heading__title" id="product-overview-title">Обзор продукта</h2>
+        </div>
+      </div>
+    </section>
+    <section class="case-image-section case-motion-section" aria-label="Плейсхолдер motion: обзор продукта">
       <div class="case-image-section__grid">
         <div class="case-image-section__content">
-          <div class="case-animated-media">
-            <video
-              class="case-video case-animated-media__video"
-              data-src="assets/images/avalike/avalike-case-hero.webm"
-              muted
-              loop
-              playsinline
-              preload="none"
-              aria-label="Анимированная обложка Avalike"
-            ></video>
-            <img
-              class="case-image case-animated-media__fallback"
-              src="assets/images/avalike/avalike-case-hero.png"
-              alt="Интерфейс платформы Avalike"
-              loading="lazy"
-              decoding="async"
-            />
+          <div class="case-animated-media case-motion-placeholder">
+            <video class="case-video case-animated-media__video case-motion-placeholder__video" data-src="" poster="" autoplay muted playsinline loop preload="none" aria-label="Motion: обзор продукта"></video>
+            <div class="case-motion-placeholder__fallback">Motion placeholder</div>
           </div>
         </div>
       </div>
@@ -3231,6 +3376,25 @@
       </div>
     </section>
 
+    <section class="case-section-heading case-motion-heading" aria-labelledby="creator-flow-title">
+      <div class="case-section-heading__grid">
+        <div class="case-section-heading__content">
+          <p class="case-motion-episode">Motion 02</p>
+          <h2 class="case-section-heading__title" id="creator-flow-title">Создание агента</h2>
+        </div>
+      </div>
+    </section>
+    <section class="case-image-section case-motion-section" aria-label="Плейсхолдер motion: создание агента">
+      <div class="case-image-section__grid">
+        <div class="case-image-section__content">
+          <div class="case-animated-media case-motion-placeholder">
+            <video class="case-video case-animated-media__video case-motion-placeholder__video" data-src="" poster="" autoplay muted playsinline loop preload="none" aria-label="Motion: создание агента"></video>
+            <div class="case-motion-placeholder__fallback">Motion placeholder</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="case-section-heading case-section-heading--wireframes" aria-labelledby="wireframes-title">
       <div class="case-section-heading__grid">
         <div class="case-section-heading__content">
@@ -3244,6 +3408,41 @@
       <div class="case-image-section__grid">
         <div class="case-image-section__content">
           <img class="case-image" src="assets/images/avalike/avalike-wireframes.png" alt="Вайрфреймы платформы Avalike" loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section-heading case-motion-heading" aria-labelledby="agent-groups-title">
+      <div class="case-section-heading__grid">
+        <div class="case-section-heading__content">
+          <p class="case-motion-episode">Motion 03</p>
+          <h2 class="case-section-heading__title" id="agent-groups-title">Управление группами агентов</h2>
+        </div>
+      </div>
+    </section>
+    <section class="case-image-section case-motion-section" aria-label="Плейсхолдер motion: управление группами агентов">
+      <div class="case-image-section__grid">
+        <div class="case-image-section__content">
+          <div class="case-animated-media case-motion-placeholder">
+            <video class="case-video case-animated-media__video case-motion-placeholder__video" data-src="" poster="" autoplay muted playsinline loop preload="none" aria-label="Motion: управление группами агентов"></video>
+            <div class="case-motion-placeholder__fallback">Motion placeholder</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-text-section case-ai-process" aria-labelledby="ai-design-process-title">
+      <div class="case-text-section__grid">
+        <div class="case-text-section__content">
+          <h2 class="case-text-section__title" id="ai-design-process-title">AI в процессе проектирования</h2>
+          <p class="case-text-section__text">Я использовала AI как помощника в проектировании интерфейсных сценариев: передавала готовые экраны и описывала задачи, чтобы исследовать варианты взаимодействия и дорабатывать UX-решения.</p>
+          <div class="case-ai-process__steps" aria-label="Исходный экран, работа с AI, финальное решение">
+            <div class="case-ai-process__step">Исходный экран</div>
+            <span class="case-ai-process__arrow" aria-hidden="true">→</span>
+            <div class="case-ai-process__step">Работа с AI</div>
+            <span class="case-ai-process__arrow" aria-hidden="true">→</span>
+            <div class="case-ai-process__step">Финальное решение</div>
+          </div>
         </div>
       </div>
     </section>
@@ -3344,6 +3543,25 @@
       </div>
     </section>
 
+    <section class="case-section-heading case-motion-heading" aria-labelledby="conversation-experience-title">
+      <div class="case-section-heading__grid">
+        <div class="case-section-heading__content">
+          <p class="case-motion-episode">Motion 04</p>
+          <h2 class="case-section-heading__title" id="conversation-experience-title">Взаимодействие с агентом</h2>
+        </div>
+      </div>
+    </section>
+    <section class="case-image-section case-motion-section" aria-label="Плейсхолдер motion: взаимодействие с агентом">
+      <div class="case-image-section__grid">
+        <div class="case-image-section__content">
+          <div class="case-animated-media case-motion-placeholder">
+            <video class="case-video case-animated-media__video case-motion-placeholder__video" data-src="" poster="" autoplay muted playsinline loop preload="none" aria-label="Motion: взаимодействие с агентом"></video>
+            <div class="case-motion-placeholder__fallback">Motion placeholder</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="case-split-section" aria-labelledby="components-title">
       <div class="case-split-section__grid">
         <div class="case-split-section__text">
@@ -3386,9 +3604,6 @@
               <li>140+ адаптивных дизайн-макетов</li>
               <li>35+ reusable UI components</li>
               <li>3 основные зоны продукта: marketplace, creator flow, creator dashboard</li>
-              <li>−40% — сокращение во&nbsp;времени создания персонажа</li>
-              <li>+25–30% — рост завершения флоу создания персонажа</li>
-              <li>появились первые платные пользователи</li>
             </ul>
 
             <a class="case-section-heading__link case-section-heading__link--release photo-project__more" href="https://avalike.ru" target="_blank" rel="noopener noreferrer">Смотреть Avalike</a>
@@ -3397,7 +3612,7 @@
       </div>
     </section>
 
-    <footer id="screen-contacts" class="contacts-section portfolio-footer" aria-label="Контакты">
+    <footer id="screen-contacts" class="contacts-section portfolio-footer case-page-footer" aria-label="Контакты">
       <div class="portfolio-footer__content">
         <div class="portfolio-footer__email-group">
           <img class="portfolio-footer__email" src="mail.svg" alt="katya@mukha.design" role="button" tabindex="0" aria-label="Скопировать email katya@mukha.design">
@@ -3624,7 +3839,7 @@
       });
     }
 
-    const lazyVideos = document.querySelectorAll('video[data-src]');
+    const lazyVideos = document.querySelectorAll('video[data-src]:not([data-src=""])');
     const markAnimatedVideoReady = (video) => {
       const animatedMedia = video.closest('.case-animated-media');
       if (animatedMedia) {
@@ -3648,13 +3863,21 @@
     });
 
     const loadLazyVideo = (video) => {
+      const source = video.dataset.src?.trim();
+      if (!source) return;
       if (!video.getAttribute('src')) {
-        video.setAttribute('src', video.dataset.src);
+        video.setAttribute('src', source);
         video.load();
       }
     };
     const playLazyVideo = (video) => {
+      const animatedMedia = video.closest('.case-motion-placeholder');
+      if (animatedMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        animatedMedia.classList.add('is-reduced-motion');
+        return;
+      }
       loadLazyVideo(video);
+      if (!video.getAttribute('src')) return;
       const playPromise = video.play();
 
       if (playPromise) {

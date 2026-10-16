@@ -241,6 +241,7 @@
     }
 
     .hero__email {
+      position: relative;
       display: inline-flex;
       align-items: center;
       gap: 1px;
@@ -250,7 +251,9 @@
       white-space: nowrap;
       background: transparent;
       border: 0;
+      border-radius: 3px;
       cursor: pointer;
+      transition: background-color 180ms ease;
     }
 
     .hero__email:hover .hero__email-text,
@@ -260,7 +263,7 @@
 
     .hero__email:hover,
     .hero__email:focus-visible {
-      opacity: 0.8;
+      background-color: color-mix(in srgb, var(--text) 8%, var(--background));
     }
 
     .hero__copy-icon {
@@ -272,10 +275,17 @@
     }
 
     .hero__copy-confirmation {
-      display: none;
-      align-items: center;
-      gap: 4px;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      z-index: 2;
+      padding: 4px 8px;
+      border-radius: 3px;
+      background: var(--background);
+      opacity: 0;
+      visibility: hidden;
       white-space: nowrap;
+      transition: opacity 160ms ease, visibility 160ms ease;
     }
 
     .hero__email.is-copied .hero__copy-icon {
@@ -284,7 +294,8 @@
     }
 
     .hero__email.is-copied .hero__copy-confirmation {
-      display: none;
+      opacity: 1;
+      visibility: visible;
     }
 
     .hero__email:not(.is-copied):hover .hero__copy-icon,
@@ -408,32 +419,24 @@
       pointer-events: none;
       transform: translate(-50%, -50%);
       mix-blend-mode: darken;
-      animation: loader-fly-spin 1500ms linear infinite;
+
       transition:
         top 600ms cubic-bezier(0.65, 0, 0.35, 1),
         left 600ms cubic-bezier(0.65, 0, 0.35, 1),
         width 600ms cubic-bezier(0.65, 0, 0.35, 1),
-        height 600ms cubic-bezier(0.65, 0, 0.35, 1),
-        transform 600ms cubic-bezier(0.65, 0, 0.35, 1);
+        height 600ms cubic-bezier(0.65, 0, 0.35, 1);
     }
 
-    .loader-fly.is-loaded {
-      top: 193px;
-      left: 175.5px;
-      width: 163px;
-      height: 188px;
-      transform: translate(-50%, -50%) rotate(0deg);
-      animation: none;
-    }
-
-    .loader-fly.is-ready {
-      transform: translate(-50%, -50%) rotate(0deg);
-      animation: none;
+    .loader-fly.is-spinning {
+      animation: loader-fly-spin 1500ms linear 1 forwards;
     }
 
     @keyframes loader-fly-spin {
+      from {
+        transform: translate(-50%, -50%) rotate(var(--fly-start-angle));
+      }
       to {
-        transform: translate(-50%, -50%) rotate(360deg);
+        transform: translate(-50%, -50%) rotate(var(--fly-end-angle));
       }
     }
 
@@ -1128,15 +1131,18 @@
       }
 
       .facts-screen__gallery {
-        top: 1300px;
-        right: -20px;
+        top: 1140px;
+        right: 36px;
         grid-template-columns: none;
         grid-template-rows: auto;
         grid-auto-flow: column;
         grid-auto-columns: 72px;
         justify-content: start;
         column-gap: calc((100% - 504px) / 6);
-        overflow: visible;
+        padding-block: 160px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        overscroll-behavior-x: contain;
       }
 
       .facts-screen__gallery img:nth-child(n) {
@@ -1167,6 +1173,25 @@
 
     .contacts-screen__content {
       position: relative;
+    }
+
+    .contacts-screen__copy-confirmation {
+      position: absolute;
+      top: calc(-1 * var(--case-heading-height) - 12px);
+      left: 0;
+      z-index: 2;
+      padding: 4px 8px;
+      border-radius: 3px;
+      background: var(--background);
+      opacity: 0;
+      visibility: hidden;
+      white-space: nowrap;
+      transition: opacity 160ms ease, visibility 160ms ease;
+    }
+
+    .contacts-screen__copy-confirmation.is-visible {
+      opacity: 1;
+      visibility: visible;
     }
 
     .contacts-screen__email {
@@ -1244,6 +1269,13 @@
 
     .contacts-screen__email {
       cursor: none;
+    }
+
+    .contacts-screen__email:hover,
+    .contacts-screen__email:focus-visible,
+    .contacts-screen.is-email-hover .contacts-screen__email {
+      border-radius: 3px;
+      background-color: color-mix(in srgb, var(--text) 8%, var(--background));
     }
 
     .contacts-screen__links a {
@@ -1436,6 +1468,29 @@
       margin-left: auto;
     }
 
+    .case-screen__result {
+      max-width: 760px;
+      margin: 12px 0 0;
+      font-family: var(--font-primary-family);
+      font-size: var(--font-body-size);
+      font-weight: var(--font-primary-weight);
+      line-height: var(--font-body-line-height);
+      letter-spacing: var(--font-primary-letter-spacing);
+      color: var(--text);
+    }
+
+    @media (max-width: 999px) {
+      .case-screen__result {
+        max-width: 100%;
+      }
+    }
+
+    @media (hover: none), (pointer: coarse) {
+      .case-hover-cursor {
+        display: none;
+      }
+    }
+
     @media (max-width: 700px) {
       :root {
         --page-padding: 20px;
@@ -1572,9 +1627,18 @@
         display: none;
       }
 
+      #case-avalike .case-screen__result {
+        grid-column: 1 / -1;
+        grid-row: 3;
+      }
+
       .case-screen__rule {
         grid-column: 1 / -1;
         grid-row: 3;
+      }
+
+      #case-avalike .case-screen__rule {
+        grid-row: 4;
       }
 
       .case-screen__visual {
@@ -2151,7 +2215,7 @@
       <button class="hero__email hero__email--bottom" type="button" aria-label="Скопировать email katya@mukha.design">
         <span class="hero__email-text">katya@mukha.design</span>
         <img class="hero__copy-icon" src="assets/Icons/copy icon.svg" alt="">
-        <span class="hero__copy-confirmation" aria-live="polite">✓ скопировано</span>
+        <span class="hero__copy-confirmation" aria-live="polite">Почта скопирована</span>
       </button>
     </section>
 
@@ -2160,6 +2224,7 @@
         <p class="case-screen__index">(1 — 3)</p>
         <img class="case-screen__logo" id="avalike-title" src="avalike.svg" alt="Avalike">
         <p class="case-screen__description">платформа для создания,<br> поиска и&nbsp;монетизации<br> AI агентов</p>
+        <p class="case-screen__result"><strong>Результат:</strong> запустили бета-версию платформы и монетизацию. Переработка сценария создания персонажа сократила время его прохождения на 40% и увеличила долю завершений на 25–30%. После запуска появились первые платящие пользователи.</p>
         <div class="case-screen__rule" aria-hidden="true"></div>
       </div>
 
@@ -2189,7 +2254,7 @@
         </figure>
 
         <footer class="case-screen__footer">
-          <p class="case-screen__caption">Product Designer, web + mobile, end-to-end core flows</p>
+          <p class="case-screen__caption">Product Designer, iOS, core flows</p>
           <p class="case-screen__count">25/26</p>
         </footer>
       </div>
@@ -2199,7 +2264,7 @@
       <div class="case-screen__info">
         <p class="case-screen__index">(3 — 3)</p>
         <img class="case-screen__logo" id="mendi-title" src="Mendi.svg" alt="Mendi">
-        <p class="case-screen__description">сервис для заботы<br> о&nbsp;ментальном здоровье</p>
+        <p class="case-screen__description">Приложение, которое позволяет следить за приемом лекарств.</p>
         <div class="case-screen__rule" aria-hidden="true"></div>
       </div>
 
@@ -2209,7 +2274,7 @@
         </figure>
 
         <footer class="case-screen__footer">
-          <p class="case-screen__caption">Product Designer, web + mobile, end-to-end core flows</p>
+          <p class="case-screen__caption">Product Designer, iOS, core flows</p>
           <p class="case-screen__count">25/26</p>
         </footer>
       </div>
@@ -2301,6 +2366,7 @@
     <section class="contacts-screen" id="contacts" aria-labelledby="contacts-title">
       <div class="contacts-screen__content">
         <img class="contacts-screen__email" id="contacts-title" src="assets/images/mail-text.svg" alt="katya@mukha.design">
+        <span class="contacts-screen__copy-confirmation" aria-live="polite">Почта скопирована</span>
         <button class="contacts-screen__copy" type="button" aria-label="Скопировать email">
           <img src="assets/Icons/copy_coursor.svg" alt="copy">
         </button>
@@ -3335,46 +3401,33 @@
       }
       return angle;
     };
-    window.setTimeout(async () => {
-      const spinningStyle = getComputedStyle(loaderFly);
-      const spinningTransform = spinningStyle.transform;
-      const currentAngle = getFlyAngle(spinningStyle);
-      const targetAngle = getFlyAngle(getComputedStyle(heroFly));
-      const delta = ((targetAngle - currentAngle + 540) % 360) - 180;
-      const alignedTransform = `translate(-50%, -50%) rotate(${currentAngle + delta}deg)`;
-
-      // Freeze the exact rendered pose before removing the CSS spin animation.
-      loaderFly.style.transition = "none";
-      loaderFly.style.transform = spinningTransform;
-      loaderFly.classList.add("is-ready");
+    // Both elements use the same artwork, so its intrinsic orientation is shared.
+    // Start at the computed final CSS angle, and finish one clockwise turn later.
+    const flyTargetAngle = getFlyAngle(getComputedStyle(heroFly));
+    const flyTurns = 1;
+    const flyEndAngle = flyTargetAngle + 360 * flyTurns;
+    loaderFly.style.setProperty("--fly-start-angle", `${flyTargetAngle}deg`);
+    loaderFly.style.setProperty("--fly-end-angle", `${flyEndAngle}deg`);
+    loaderFly.style.transform = `translate(-50%, -50%) rotate(${flyTargetAngle}deg)`;
+    loaderFly.addEventListener("animationend", (event) => {
+      if (event.animationName !== "loader-fly-spin") return;
+      // Preserve the exact final transform before releasing the filled animation.
+      loaderFly.style.transform = `translate(-50%, -50%) rotate(${flyEndAngle}deg)`;
+      loaderFly.classList.remove("is-spinning");
+      const target = heroFly.getBoundingClientRect();
+      loaderFly.style.top = `${target.top + target.height / 2}px`;
+      loaderFly.style.left = `${target.left + target.width / 2}px`;
+      loaderFly.style.width = `${target.width}px`;
+      loaderFly.style.height = `${target.height}px`;
       document.body.classList.add("is-loaded");
-      const alignment = loaderFly.animate([
-        { transform: spinningTransform },
-        { transform: alignedTransform }
-      ], { duration: 220, easing: "ease-in-out", fill: "forwards" });
-      await alignment.finished;
-      loaderFly.style.transform = alignedTransform;
-      alignment.cancel();
-      // Commit the aligned pose before restoring the original movement transitions.
-      void loaderFly.offsetWidth;
-      loaderFly.style.removeProperty("transition");
-
-      window.setTimeout(() => {
-        const target = heroFly.getBoundingClientRect();
-        loaderFly.style.top = `${target.top + target.height / 2}px`;
-        loaderFly.style.left = `${target.left + target.width / 2}px`;
-        loaderFly.style.width = `${target.width}px`;
-        loaderFly.style.height = `${target.height}px`;
-        // Keep the same angle throughout the original 600ms flight.
-        loaderFly.classList.add("is-loaded");
-      }, 20);
       window.setTimeout(() => {
         document.body.classList.add("is-fly-complete");
         window.setTimeout(() => {
           loaderFly.closest(".loader-screen").remove();
         }, 180);
-      }, 620);
-    }, 1500);
+      }, 600);
+    }, { once: true });
+    loaderFly.classList.add("is-spinning");
 
     document.addEventListener("pointermove", (event) => {
       let activeCase = null;
@@ -3395,10 +3448,11 @@
       });
 
       const isOnCaseCover = Boolean(activeCase);
+      const canShowCaseCursor = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
       caseHoverCursor.style.left = `${event.clientX}px`;
       caseHoverCursor.style.top = `${event.clientY}px`;
-      caseHoverCursor.classList.toggle("is-visible", isOnCaseCover);
-      caseHoverCursor.classList.toggle("is-case-hover", isOnCaseCover);
+      caseHoverCursor.classList.toggle("is-visible", isOnCaseCover && canShowCaseCursor);
+      caseHoverCursor.classList.toggle("is-case-hover", isOnCaseCover && canShowCaseCursor);
 
       const emailBounds = contactsEmail.getBoundingClientRect();
       const isOnContactsEmail =
@@ -3437,46 +3491,46 @@
       });
     });
 
-    emailButton.addEventListener("click", async () => {
+    const copyEmailToClipboard = async (address) => {
       try {
-        await navigator.clipboard.writeText(email);
+        if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
+        await navigator.clipboard.writeText(address);
+        return true;
       } catch {
         const temporaryField = document.createElement("textarea");
-        temporaryField.value = email;
+        temporaryField.value = address;
         temporaryField.setAttribute("readonly", "");
         temporaryField.style.position = "fixed";
         temporaryField.style.opacity = "0";
         document.body.appendChild(temporaryField);
         temporaryField.select();
-        document.execCommand("copy");
+        let copied = false;
+        try { copied = document.execCommand("copy"); } catch { copied = false; }
         temporaryField.remove();
+        return copied;
       }
+    };
 
+    emailButton.addEventListener("click", async () => {
+      if (!await copyEmailToClipboard(email)) return;
       emailButton.classList.add("is-copied");
       window.clearTimeout(emailButton.copyConfirmationTimeout);
       emailButton.copyConfirmationTimeout = window.setTimeout(() => {
         emailButton.classList.remove("is-copied");
-      }, 1500);
+      }, 1800);
     });
 
     const contactsCopyButton = document.querySelector(".contacts-screen__copy");
+    const contactsCopyConfirmation = document.querySelector(".contacts-screen__copy-confirmation");
     const contactsCopyCursorImage = contactsCopyCursor.querySelector(".is-copy-icon");
     const contactsCopiedCursorImage = contactsCopyCursor.querySelector(".is-copied-icon");
     contactsCopyButton.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(email);
-      } catch {
-        const temporaryField = document.createElement("textarea");
-        temporaryField.value = email;
-        temporaryField.setAttribute("readonly", "");
-        temporaryField.style.position = "fixed";
-        temporaryField.style.opacity = "0";
-        document.body.appendChild(temporaryField);
-        temporaryField.select();
-        document.execCommand("copy");
-        temporaryField.remove();
-      }
-
+      if (!await copyEmailToClipboard(email)) return;
+      contactsCopyConfirmation.classList.add("is-visible");
+      window.clearTimeout(contactsCopyConfirmation.hideTimeout);
+      contactsCopyConfirmation.hideTimeout = window.setTimeout(() => {
+        contactsCopyConfirmation.classList.remove("is-visible");
+      }, 1800);
       contactsCopyCursorImage.classList.add("is-copied-icon");
       contactsCopiedCursorImage.classList.remove("is-copied-icon");
       contactsCopyCursor.classList.add("is-copied");
