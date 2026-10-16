@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /index-original.html
+Disallow: /index_.html
+
+Sitemap: https://mukha.design/sitemap.xml
