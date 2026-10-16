@@ -168,6 +168,42 @@ body,
   top: 124px;
 }
 
+/* Keep the lower navigation above page content and reserve room for it. */
+.case-nav {
+  z-index: 30;
+  background-color: var(--case-bg);
+}
+
+.case-section-nav {
+  z-index: 20;
+  max-height: calc(100vh - var(--case-section-nav-top, 124px) - var(--case-section-nav-clearance, 36px));
+  max-height: max(0px, calc(100dvh - var(--case-section-nav-top, 124px) - var(--case-section-nav-clearance, 36px)));
+  min-height: 0;
+}
+
+.case-section-nav__list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+.case-section-nav__list::-webkit-scrollbar {
+  display: none;
+}
+
+.case-section-nav__link {
+  opacity: 0.4;
+}
+
+.case-section-nav__link.is-active,
+.case-section-nav__link:hover,
+.case-section-nav__link:focus-visible {
+  color: var(--case-ink);
+  opacity: 1;
+}
+
 .case-section-nav:not(.is-visible) {
   pointer-events: none;
 }
@@ -248,5 +284,26 @@ body,
   .case-page-footer {
     font-size: 14.4px;
     line-height: 18.4px;
+  }
+}
+
+/* Shared desktop text scale for case content and both case navigation menus. */
+@media (min-width: 901px) {
+  .case-hero__description,
+  .case-text-section__text,
+  .case-text-section__list,
+  .case-section-heading__list,
+  .case-split-section__list,
+  .case-nav,
+  .case-nav__home,
+  .case-nav__list,
+  .case-nav__link,
+  .case-nav__current,
+  .case-section-nav,
+  .case-section-nav__list,
+  .case-section-nav__link {
+    font-family: var(--case-font);
+    font-size: 18px;
+    line-height: 24px;
   }
 }

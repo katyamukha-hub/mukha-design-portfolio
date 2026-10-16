@@ -2471,8 +2471,9 @@
       font: 300 var(--font-primary-size)/var(--font-primary-line-height) var(--font-primary-family);
     }
     .case-meta__item dt {
-      font-size: 18px;
+      font-size: 16px;
       line-height: 24px;
+      opacity: 0.4;
     }
 
     .case-motion-heading { padding-bottom: 24px; }
@@ -3105,8 +3106,72 @@
       }
     }
 
+    /* Shift Avalike case content one grid column right on desktop.
+       Navigation, header, and footer are intentionally outside this rule. */
+    @media (min-width: 761px) {
+      .case-meta {
+        font-size: 18px;
+        line-height: 24px;
+      }
+
+      .case-meta__item dd,
+      .case-section-heading__caption {
+        font-size: 18px;
+        line-height: 24px;
+      }
+    }
+
+    @media (min-width: 1001px) {
+      .case-hero__content,
+      .case-image-section__content,
+      .jtbd-section__content {
+        grid-column: 4 / span 8;
+      }
+
+      .case-text-section__content {
+        grid-column: 4 / span 6;
+      }
+
+      .case-text-section[aria-labelledby="research-results-title"] .case-text-section__content {
+        grid-column: 4 / span 7;
+      }
+
+      .case-section-heading__content {
+        grid-column: 4 / span 6;
+      }
+
+      .case-section-heading--research .case-section-heading__content {
+        grid-column: 4 / span 6;
+      }
+
+      .case-split-section__text {
+        grid-column: 4 / span 3;
+      }
+
+      .case-split-section__media {
+        grid-column: 7 / 12;
+      }
+
+      .case-meta__grid {
+        grid-column: 4 / span 6;
+      }
+
+      .case-image-section--main-scenarios .case-image-section__content {
+        padding-left: calc(var(--case-content-gutter) + var(--case-content-offset) + var(--case-content-column) + var(--grid-gap));
+      }
+    }
+
   </style>
   <link rel="stylesheet" href="case-shared.css" />
+  <style>
+    @media (min-width: 901px) {
+      .case-section-heading__caption {
+        font-size: 18px;
+        line-height: 24px;
+      }
+    }
+  </style>
+  <script src="case-shared.js" defer></script>
 </head>
 <body>
   <main class="page">
