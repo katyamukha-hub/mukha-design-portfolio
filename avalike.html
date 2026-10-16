@@ -2457,8 +2457,7 @@
     .case-meta__item { min-width: 0; }
     .case-meta__item dt,
     .case-meta__item dd { margin: 0; }
-    .case-meta__item dt,
-    .case-motion-episode {
+    .case-meta__item dt {
       font-family: "CoFo Sans Mono Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
       font-size: 12px;
       line-height: 18px;
@@ -2477,7 +2476,6 @@
     }
 
     .case-motion-heading { padding-bottom: 24px; }
-    .case-motion-episode { margin: 0 0 8px; }
     .case-motion-section { padding-top: 0; padding-bottom: var(--section-gap); }
     .case-motion-placeholder {
       width: 100%;
@@ -2521,6 +2519,13 @@
 
     @media (min-width: 1001px) and (max-width: 1100px) {
       .case-meta__grid { grid-column: 3 / span 8; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (min-width: 1101px) {
+      .case-meta__grid {
+        grid-column: 3 / span 8;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
     }
 
     @media (min-width: 761px) and (max-width: 1000px) {
@@ -3106,8 +3111,7 @@
       }
     }
 
-    /* Shift Avalike case content one grid column right on desktop.
-       Navigation, header, and footer are intentionally outside this rule. */
+    /* Desktop typography for Avalike case content. */
     @media (min-width: 761px) {
       .case-meta {
         font-size: 18px;
@@ -3121,49 +3125,22 @@
       }
     }
 
-    @media (min-width: 1001px) {
-      .case-hero__content,
-      .case-image-section__content,
-      .jtbd-section__content {
-        grid-column: 4 / span 8;
-      }
-
-      .case-text-section__content {
-        grid-column: 4 / span 6;
-      }
-
-      .case-text-section[aria-labelledby="research-results-title"] .case-text-section__content {
-        grid-column: 4 / span 7;
-      }
-
-      .case-section-heading__content {
-        grid-column: 4 / span 6;
-      }
-
-      .case-section-heading--research .case-section-heading__content {
-        grid-column: 4 / span 6;
-      }
-
-      .case-split-section__text {
-        grid-column: 4 / span 3;
-      }
-
-      .case-split-section__media {
-        grid-column: 7 / 12;
-      }
-
-      .case-meta__grid {
-        grid-column: 4 / span 6;
-      }
-
-      .case-image-section--main-scenarios .case-image-section__content {
-        padding-left: calc(var(--case-content-gutter) + var(--case-content-offset) + var(--case-content-column) + var(--grid-gap));
-      }
-    }
-
   </style>
   <link rel="stylesheet" href="case-shared.css" />
   <style>
+    .case-text-section[aria-labelledby="results-title"] {
+      padding-bottom: 60px;
+    }
+
+    .case-meta__item dt {
+      font-family: "CoFo Sans Mono Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+      text-transform: uppercase;
+      opacity: 0.4;
+    }
+
     @media (min-width: 901px) {
       .case-section-heading__caption {
         font-size: 18px;
@@ -3202,7 +3179,6 @@
         <nav class="case-section-nav" aria-label="Разделы кейса Avalike">
           <ul class="case-section-nav__list">
             <li><a class="case-section-nav__link is-active" href="#results-title" data-section-target="results-title" aria-current="true">Результаты</a></li>
-            <li><a class="case-section-nav__link" href="#product-overview-title" data-section-target="product-overview-title">Обзор продукта</a></li>
             <li><a class="case-section-nav__link" href="#double-diamond-title" data-section-target="double-diamond-title">Double Diamond</a></li>
             <li><a class="case-section-nav__link" href="#research-stages-title" data-section-target="research-stages-title">Исследование / этапы</a></li>
             <li><a class="case-section-nav__link" href="#research-title" data-section-target="research-title">Конкурентный анализ</a></li>
@@ -3291,26 +3267,6 @@
               <li><strong>+25–30%</strong> — завершение сценария создания персонажа</li>
               <li><strong>Первые платные пользователи</strong> после запуска платформы</li>
             </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- For a real motion asset, set video[data-src] and poster, then replace the neutral fallback with an img poster. -->
-    <section class="case-section-heading case-motion-heading" aria-labelledby="product-overview-title">
-      <div class="case-section-heading__grid">
-        <div class="case-section-heading__content">
-          <p class="case-motion-episode">Motion 01</p>
-          <h2 class="case-section-heading__title" id="product-overview-title">Обзор продукта</h2>
-        </div>
-      </div>
-    </section>
-    <section class="case-image-section case-motion-section" aria-label="Плейсхолдер motion: обзор продукта">
-      <div class="case-image-section__grid">
-        <div class="case-image-section__content">
-          <div class="case-animated-media case-motion-placeholder">
-            <video class="case-video case-animated-media__video case-motion-placeholder__video" data-src="" poster="" autoplay muted playsinline loop preload="none" aria-label="Motion: обзор продукта"></video>
-            <div class="case-motion-placeholder__fallback">Motion placeholder</div>
           </div>
         </div>
       </div>
@@ -3444,7 +3400,6 @@
     <section class="case-section-heading case-motion-heading" aria-labelledby="creator-flow-title">
       <div class="case-section-heading__grid">
         <div class="case-section-heading__content">
-          <p class="case-motion-episode">Motion 02</p>
           <h2 class="case-section-heading__title" id="creator-flow-title">Создание агента</h2>
         </div>
       </div>
@@ -3480,7 +3435,6 @@
     <section class="case-section-heading case-motion-heading" aria-labelledby="agent-groups-title">
       <div class="case-section-heading__grid">
         <div class="case-section-heading__content">
-          <p class="case-motion-episode">Motion 03</p>
           <h2 class="case-section-heading__title" id="agent-groups-title">Управление группами агентов</h2>
         </div>
       </div>
@@ -3611,7 +3565,6 @@
     <section class="case-section-heading case-motion-heading" aria-labelledby="conversation-experience-title">
       <div class="case-section-heading__grid">
         <div class="case-section-heading__content">
-          <p class="case-motion-episode">Motion 04</p>
           <h2 class="case-section-heading__title" id="conversation-experience-title">Взаимодействие с агентом</h2>
         </div>
       </div>
