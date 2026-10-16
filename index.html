@@ -3319,18 +3319,55 @@
     document.body.classList.toggle("case-active", window.scrollY > 80);
 
     const loaderFly = document.querySelector(".loader-fly");
-    window.setTimeout(() => {
+    const getFlyAngle = (style) => {
+      const matrix = new DOMMatrixReadOnly(style.transform === "none" ? undefined : style.transform);
+      let angle = Math.atan2(matrix.b, matrix.a) * 180 / Math.PI;
+      // Include the independent CSS rotate property if it is used on the final fly.
+      const rotation = style.rotate || "none";
+      if (rotation !== "none") {
+        const value = rotation.trim().split(/\s+/).pop();
+        const number = parseFloat(value);
+        if (Number.isFinite(number)) {
+          angle += value.endsWith("grad") ? number * 0.9
+            : value.endsWith("rad") ? number * 180 / Math.PI
+            : value.endsWith("turn") ? number * 360 : number;
+        }
+      }
+      return angle;
+    };
+    window.setTimeout(async () => {
+      const spinningStyle = getComputedStyle(loaderFly);
+      const spinningTransform = spinningStyle.transform;
+      const currentAngle = getFlyAngle(spinningStyle);
+      const targetAngle = getFlyAngle(getComputedStyle(heroFly));
+      const delta = ((targetAngle - currentAngle + 540) % 360) - 180;
+      const alignedTransform = `translate(-50%, -50%) rotate(${currentAngle + delta}deg)`;
+
+      // Freeze the exact rendered pose before removing the CSS spin animation.
+      loaderFly.style.transition = "none";
+      loaderFly.style.transform = spinningTransform;
       loaderFly.classList.add("is-ready");
+      document.body.classList.add("is-loaded");
+      const alignment = loaderFly.animate([
+        { transform: spinningTransform },
+        { transform: alignedTransform }
+      ], { duration: 220, easing: "ease-in-out", fill: "forwards" });
+      await alignment.finished;
+      loaderFly.style.transform = alignedTransform;
+      alignment.cancel();
+      // Commit the aligned pose before restoring the original movement transitions.
+      void loaderFly.offsetWidth;
+      loaderFly.style.removeProperty("transition");
+
       window.setTimeout(() => {
         const target = heroFly.getBoundingClientRect();
         loaderFly.style.top = `${target.top + target.height / 2}px`;
         loaderFly.style.left = `${target.left + target.width / 2}px`;
         loaderFly.style.width = `${target.width}px`;
         loaderFly.style.height = `${target.height}px`;
-        loaderFly.style.transform = "translate(-50%, -50%) rotate(0deg)";
+        // Keep the same angle throughout the original 600ms flight.
         loaderFly.classList.add("is-loaded");
       }, 20);
-      document.body.classList.add("is-loaded");
       window.setTimeout(() => {
         document.body.classList.add("is-fly-complete");
         window.setTimeout(() => {
