@@ -2447,9 +2447,9 @@
     }
 
     .case-meta__grid {
-      grid-column: 3 / span 6;
+      grid-column: 3 / span 8;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--grid-gap);
       margin: 0;
     }
@@ -2518,18 +2518,18 @@
     .case-ai-process__arrow { color: #777474; }
 
     @media (min-width: 1001px) and (max-width: 1100px) {
-      .case-meta__grid { grid-column: 3 / span 8; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .case-meta__grid { grid-column: 3 / span 8; grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
 
     @media (min-width: 1101px) {
       .case-meta__grid {
         grid-column: 3 / span 8;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
 
     @media (min-width: 761px) and (max-width: 1000px) {
-      .case-meta__grid { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .case-meta__grid { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
 
     @media (max-width: 760px) {
@@ -3152,9 +3152,10 @@
 
     .case-meta__item dt {
       font-family: "CoFo Sans Mono Trial", "CoFo Sans", Arial, Helvetica, sans-serif;
-      font-size: 16px;
+      font-size: 14px;
       line-height: 24px;
       font-weight: 400;
+      letter-spacing: 0;
       text-transform: uppercase;
       opacity: 0.4;
     }
@@ -3231,13 +3232,20 @@
           </div>
 
           <div class="case-hero__media case-animated-media">
-            <img
+            <video
               class="case-hero__image"
-              src="assets/images/avalike/avalike-results-cover.png"
-              alt="Интерфейс платформы Avalike"
-              decoding="async"
-              fetchpriority="high"
-            />
+              src="assets/images/avalike/avalike-case-hero.mp4"
+              poster="assets/images/avalike/avalike-results-cover.png"
+              width="1301"
+              height="845"
+              style="aspect-ratio: 1301 / 845;"
+              autoplay
+              muted
+              playsinline
+              loop
+              preload="auto"
+              aria-label="Интерфейс платформы Avalike"
+            ></video>
 
           </div>
         </div>
@@ -3249,10 +3257,6 @@
         <div class="case-meta__item">
           <dt>Период работы</dt>
           <dd>октябрь — декабрь 2025</dd>
-        </div>
-        <div class="case-meta__item">
-          <dt>Область работы</dt>
-          <dd>продуктовый дизайн, пользовательские исследования</dd>
         </div>
         <div class="case-meta__item">
           <dt>Команда</dt>

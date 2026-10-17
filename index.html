@@ -282,6 +282,7 @@
       padding: 4px 8px;
       border-radius: 3px;
       background: var(--background);
+      font-size: 12px;
       opacity: 0;
       visibility: hidden;
       white-space: nowrap;
@@ -1183,6 +1184,7 @@
       padding: 4px 8px;
       border-radius: 3px;
       background: var(--background);
+      font-size: 12px;
       opacity: 0;
       visibility: hidden;
       white-space: nowrap;
@@ -1719,6 +1721,12 @@
       }
     }
 
+    @media (min-width: 1000px) {
+      .hero__katya {
+        width: min(824.736px, calc(96.8vw - 30.976px));
+      }
+    }
+
     @media (min-width: 701px) and (max-width: 999px) {
       .hero__intro {
         left: calc(16.6667vw - 12.667px);
@@ -2155,6 +2163,12 @@
       }
     }
 
+    @media (min-width: 1000px) {
+      #case-avalike .case-screen__description {
+        margin-bottom: 40px;
+      }
+    }
+
     .hero__email {
       line-height: var(--case-heading-height);
     }
@@ -2215,7 +2229,7 @@
       <button class="hero__email hero__email--bottom" type="button" aria-label="Скопировать email katya@mukha.design">
         <span class="hero__email-text">katya@mukha.design</span>
         <img class="hero__copy-icon" src="assets/Icons/copy icon.svg" alt="">
-        <span class="hero__copy-confirmation" aria-live="polite">Почта скопирована</span>
+        <span class="hero__copy-confirmation" aria-live="polite">почта скопирована</span>
       </button>
     </section>
 
@@ -2366,7 +2380,7 @@
     <section class="contacts-screen" id="contacts" aria-labelledby="contacts-title">
       <div class="contacts-screen__content">
         <img class="contacts-screen__email" id="contacts-title" src="assets/images/mail-text.svg" alt="katya@mukha.design">
-        <span class="contacts-screen__copy-confirmation" aria-live="polite">Почта скопирована</span>
+        <span class="contacts-screen__copy-confirmation" aria-live="polite">почта скопирована</span>
         <button class="contacts-screen__copy" type="button" aria-label="Скопировать email">
           <img src="assets/Icons/copy_coursor.svg" alt="copy">
         </button>
