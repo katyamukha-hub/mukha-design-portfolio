@@ -3090,6 +3090,11 @@
       }, 500);
     };
 
+    desktopPhotoClose.addEventListener("click", () => closeDesktopComposition());
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeDesktopComposition();
+    });
+
     const openDesktopComposition = () => {
       if (window.innerWidth < 768) return;
       if (desktopPhotoState === "open" || desktopPhotoState === "opening") return;
@@ -3155,6 +3160,8 @@
       if (window.innerWidth < 768 && desktopPhotoState !== "closed") closeDesktopComposition();
       else if (desktopPhotoState === "open" || desktopPhotoState === "opening") renderDesktopComposition();
     });
+
+    const isMobilePhotoViewer = () => window.matchMedia("(max-width: 767px)").matches;
 
     const createMobilePhotoGallery = ({ photos, thumbnails, label, responsive = false }) => {
     const mobilePhotoViewer = document.createElement("div");
@@ -3267,7 +3274,6 @@
     let mobileEdgePointer = null;
     let mobileVerticalGesture = null;
 
-    const isMobilePhotoViewer = () => window.matchMedia("(max-width: 767px)").matches;
 
     const renderMobilePhotoDeck = (targetIndex = mobilePhotoIndex, exitingCard = null) => {
       const count = mobilePhotoCards.length;
@@ -3627,7 +3633,7 @@
       mobileCaseSections.forEach((item, index) => {
         let offset = 0;
         if (enabled && index + 1 < geometry.length) {
-          const distance = Math.max(0, window.innerHeight / 3 - geometry[index + 1].headingTop);
+          const distance = Math.max(0, window.innerHeight * .4 - geometry[index + 1].headingTop);
           // Freeze at the point where the translated previous section leaves the viewport.
           // Solve t + displacement(t) = its bottom position at activation, without scroll history.
           const exitBudget = Math.max(0, geometry[index].bottom + distance);
