@@ -1936,7 +1936,7 @@
         transform: none;
       }
 
-      .case-screen__logo { translate: 0 var(--mobile-case-offset, 0px); }
+      .case-screen { translate: 0 var(--mobile-case-offset, 0px); }
       .case-screen__index { translate: 0 -12px; }
 
       #avalike-title,
@@ -3612,16 +3612,39 @@
     ];
     let parallaxFrame;
     const mobileCaseMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const mobileCaseHeadings = [...document.querySelectorAll(".case-screen")].map(section => ({
-      section, heading: section.querySelector(".case-screen__logo")
+    const mobileCaseSections = [...document.querySelectorAll(".case-screen")].map(section => ({
+      section, heading: section.querySelector(".case-screen__logo"), offset: 0
     }));
     const updateMobileCaseParallax = () => {
       const enabled = window.innerWidth <= 767 && !mobileCaseMotion.matches;
-      mobileCaseHeadings.forEach(({ section, heading }) => {
-        const distance = Math.max(0, window.innerHeight * .33 - section.getBoundingClientRect().top);
-        // Zero initial slope: no jump at activation, no delayed scroll-following transition.
-        const offset = enabled ? Math.min(24, .12 * (distance - 40 * (1 - Math.exp(-distance / 40)))) : 0;
-        heading.style.setProperty("--mobile-case-offset", `${-offset}px`);
+      // Read all geometry first and remove each section's own previous translation.
+      // The next heading may itself belong to an earlier transition farther down the page.
+      const geometry = mobileCaseSections.map(({ section, heading, offset }) => ({
+        headingTop: heading.getBoundingClientRect().top - offset,
+        bottom: section.getBoundingClientRect().bottom - offset
+      }));
+      const displacement = distance => Math.min(72, .32 * (distance - 48 * (1 - Math.exp(-distance / 48))));
+      mobileCaseSections.forEach((item, index) => {
+        let offset = 0;
+        if (enabled && index + 1 < geometry.length) {
+          const distance = Math.max(0, window.innerHeight / 3 - geometry[index + 1].headingTop);
+          // Freeze at the point where the translated previous section leaves the viewport.
+          // Solve t + displacement(t) = its bottom position at activation, without scroll history.
+          const exitBudget = Math.max(0, geometry[index].bottom + distance);
+          let progress = distance;
+          if (progress + displacement(progress) > exitBudget) {
+            let low = 0, high = Math.min(progress, exitBudget);
+            for (let iteration = 0; iteration < 20; ++iteration) {
+              const middle = (low + high) / 2;
+              if (middle + displacement(middle) < exitBudget) low = middle;
+              else high = middle;
+            }
+            progress = (low + high) / 2;
+          }
+          offset = -displacement(progress);
+        }
+        item.offset = offset;
+        item.section.style.setProperty("--mobile-case-offset", `${offset}px`);
       });
     };
     window.addEventListener("resize", updateMobileCaseParallax, { passive: true });
@@ -3757,22 +3780,15 @@
 
     const copyEmailToClipboard = (address) => window.siteEmailCopy.copy(address);
 
-    emailButton.addEventListener("click", async () => {
-      if (!await copyEmailToClipboard(email)) return;
-      emailButton.classList.add("is-copied");
-      window.clearTimeout(emailButton.copyConfirmationTimeout);
-      emailButton.copyConfirmationTimeout = window.setTimeout(() => {
-        emailButton.classList.remove("is-copied");
-      }, 1800);
-    });
+    const handleEmailCopy = async () => {
+      if (await copyEmailToClipboard(email)) window.siteEmailCopy.show();
+    };
+    emailButton.addEventListener("click", handleEmailCopy);
 
     const contactsCopyButton = document.querySelector(".contacts-screen__copy");
     const contactsCopyCursorImage = contactsCopyCursor.querySelector(".is-copy-icon");
     const contactsCopiedCursorImage = contactsCopyCursor.querySelector(".is-copied-icon");
-    contactsCopyButton.addEventListener("click", async () => {
-      if (!await copyEmailToClipboard(email)) return;
-      window.siteEmailCopy.show();
-    });
+    contactsCopyButton.addEventListener("click", handleEmailCopy);
 
     contactsEmail.addEventListener("click", () => contactsCopyButton.click());
   </script>

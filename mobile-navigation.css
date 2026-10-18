@@ -34,6 +34,11 @@
     backdrop-filter: blur(var(--mobile-menu-blur));
   }
 
+  body.case-active .hero__nav:not(.is-open)::before {
+    left: -8px;
+    width: calc(100vw - 2 * var(--page-padding, var(--page-x, 20px)) + 16px);
+  }
+
   .case-nav {
     background: var(--mobile-menu-surface);
     -webkit-backdrop-filter: blur(var(--mobile-menu-blur));
