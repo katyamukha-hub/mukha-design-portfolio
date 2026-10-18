@@ -3163,7 +3163,7 @@
 
     const isMobilePhotoViewer = () => window.matchMedia("(max-width: 767px)").matches;
 
-    const createMobilePhotoGallery = ({ photos, thumbnails, label, responsive = false }) => {
+    const createMobilePhotoGallery = ({ photos, thumbnails, label, responsive = false, stackVariant = "offset" }) => {
     const mobilePhotoViewer = document.createElement("div");
     mobilePhotoViewer.className = "mobile-photo-viewer";
     mobilePhotoViewer.setAttribute("role", "dialog");
@@ -3285,8 +3285,8 @@
         const position = ((index - targetIndex) * mobilePhotoDirection + count) % count;
         const visiblePosition = Math.min(position, 4);
         const offsetX = 0;
-        const offsetY = visiblePosition * -stackStep;
-        const scale = 1 - visiblePosition * 0.12;
+        const offsetY = stackVariant === "depth" ? 0 : visiblePosition * -stackStep;
+        const scale = 1 - visiblePosition * (stackVariant === "depth" ? 0.04 : 0.12);
         card.style.opacity = "";
         card.style.setProperty("--card-rotation", `${mobilePhotoRotations[index]}deg`);
         card.style.setProperty("--card-scale", String(scale));
@@ -3594,7 +3594,7 @@
     });
     const postOfficePhotos = [...document.querySelectorAll(".facts-screen__gallery img")];
     const postOfficeMobileGallery = createMobilePhotoGallery({
-      photos: postOfficePhotos, thumbnails: postOfficePhotos, label: "Почтовые отделения", responsive: true
+      photos: postOfficePhotos, thumbnails: postOfficePhotos, label: "Почтовые отделения", responsive: true, stackVariant: "depth"
     });
     photoTrigger.addEventListener("click", (event) => {
       if (!isMobilePhotoViewer()) return;
