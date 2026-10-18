@@ -3171,8 +3171,26 @@
     let mobilePhotoHintTimer;
     let mobilePhotoHintAnimation;
     let mobilePhotoHintShown = false;
-    let mobilePhotoOpenFrame;
     let mobilePhotoOpeningTimer;
+    let mobilePhotoOriginThumb;
+    let mobilePhotoClosing = false;
+    let mobilePhotoTransitions = [];
+    const mobilePhotoTransitionDuration = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 620;
+    const cancelMobilePhotoTransitions = () => {
+      mobilePhotoTransitions.forEach(animation => animation.cancel());
+      mobilePhotoTransitions = [];
+    };
+    const mobilePhotoPreviewTransform = (card) => {
+      const bounds = mobilePhotoOriginThumb.getBoundingClientRect();
+      const deck = mobilePhotoDeck.getBoundingClientRect();
+      // Scale the actual contained image, including cards constrained by max-height.
+      const ratio = card.naturalWidth / card.naturalHeight || 1;
+      const imageHeight = Math.min(card.offsetHeight, card.offsetWidth / ratio);
+      const scale = bounds.height / Math.max(1, imageHeight);
+      const x = bounds.left + bounds.width / 2 - (deck.left + deck.width / 2);
+      const y = bounds.top + bounds.height / 2 - (deck.top + deck.height / 2);
+      return `translate3d(calc(-50% + ${x}px), calc(-50% + ${y}px), 0) rotate(0deg) scale(${scale})`;
+    };
 
     const cancelMobilePhotoHint = () => {
       window.clearTimeout(mobilePhotoHintTimer);
@@ -3216,12 +3234,20 @@
     };
 
     const closeMobilePhotoViewer = () => {
-      if (!mobilePhotoViewer.classList.contains("is-open")) return;
+      if (!mobilePhotoViewer.classList.contains("is-open") || mobilePhotoClosing) return;
+      mobilePhotoClosing = true;
+      const duration = isMobilePhotoViewer() ? mobilePhotoTransitionDuration() : 0;
+      const activeCard = mobilePhotoCards[mobilePhotoIndex];
+      // Capture the visible frame before cancelling an opening, hint or swipe.
+      const frames = mobilePhotoCards.map(card => ({
+        transform: getComputedStyle(card).transform,
+        opacity: getComputedStyle(card).opacity
+      }));
       cancelMobilePhotoHint();
-      cancelAnimationFrame(mobilePhotoOpenFrame);
+      cancelMobilePhotoTransitions();
       window.clearTimeout(mobilePhotoOpeningTimer);
       window.clearTimeout(mobilePhotoSettleTimer);
-      mobilePhotoBusy = false;
+      mobilePhotoBusy = true;
       mobilePhotoDragging = false;
       if (mobilePhotoPointerId !== null) {
         mobilePhotoCards.forEach(card => {
@@ -3231,66 +3257,96 @@
       mobilePhotoPointerId = null;
       mobileEdgePointer = null;
       mobileVerticalGesture = null;
-      mobilePhotoCards.forEach(card => {
-        card.classList.remove("is-dragging", "is-exiting");
-        card.style.transition = "";
+      mobilePhotoCards.forEach((card, index) => {
+        card.style.transition = "none";
         card.style.transitionDelay = "0ms";
-        card.style.opacity = "";
+        card.classList.remove("is-dragging", "is-exiting");
+        card.style.transform = frames[index].transform;
+        card.style.opacity = frames[index].opacity;
+        const isActive = card === activeCard;
+        mobilePhotoTransitions.push(card.animate([
+          frames[index],
+          {
+            transform: isActive ? mobilePhotoPreviewTransform(card) : frames[index].transform,
+            opacity: isActive ? 1 : 0
+          }
+        ], {
+          duration: isActive ? duration : Math.min(220, duration),
+          easing: "cubic-bezier(.22,.75,.25,1)",
+          fill: "forwards"
+        }));
       });
-      mobilePhotoViewer.classList.remove("is-open");
-      mobilePhotoIndex = 0;
-      mobilePhotoHistory = [];
-      document.body.style.overflow = mobilePhotoPreviousOverflow;
       window.clearTimeout(mobilePhotoCloseTimer);
       mobilePhotoCloseTimer = window.setTimeout(() => {
+        mobilePhotoViewer.classList.remove("is-open");
         mobilePhotoViewer.hidden = true;
-      }, 280);
+        cancelMobilePhotoTransitions();
+        mobilePhotoOriginThumb.style.visibility = "";
+        mobilePhotoCards.forEach(card => {
+          card.style.transition = "";
+          card.style.opacity = "";
+        });
+        mobilePhotoIndex = 0;
+        mobilePhotoHistory = [];
+        mobilePhotoBusy = false;
+        mobilePhotoClosing = false;
+        document.body.style.overflow = mobilePhotoPreviousOverflow;
+      }, duration);
     };
 
-    const openMobilePhotoViewer = (index) => {
-      if (!isMobilePhotoViewer()) return;
+    const openMobilePhotoViewer = (index, thumb) => {
+      if (!isMobilePhotoViewer() || mobilePhotoViewer.classList.contains("is-open")) return;
       window.clearTimeout(mobilePhotoCloseTimer);
       mobilePhotoIndex = index;
       mobilePhotoDirection = 1;
       mobilePhotoHistory = [];
       mobilePhotoBusy = true;
+      mobilePhotoOriginThumb = thumb || photoThumbs.find(item => item.getAttribute("src") === heroPhotos[index].getAttribute("src")) || photoThumbs[0];
       mobilePhotoPreviousOverflow = document.body.style.overflow;
       mobilePhotoViewer.hidden = false;
-      const previewBounds = document.querySelector(".hero__photo-thumbs").getBoundingClientRect();
-      const originX = previewBounds.left + previewBounds.width / 2 - window.innerWidth / 2;
-      const originY = previewBounds.top + previewBounds.height / 2 - window.innerHeight / 2;
-      mobilePhotoCards.forEach((card, cardIndex) => {
-        card.style.transitionDelay = `${cardIndex * 38}ms`;
-        card.style.opacity = "0";
-        card.style.transform = `translate3d(calc(-50% + ${originX}px), calc(-50% + ${originY}px), 0) rotate(0deg) scale(.25)`;
-      });
       document.body.style.overflow = "hidden";
+      // Keep the overlay visible throughout both transitions; animate cards rather than fading the whole viewer.
+      mobilePhotoViewer.style.transition = "none";
       mobilePhotoViewer.classList.add("is-open");
-      mobilePhotoViewer.offsetWidth;
-      mobilePhotoOpenFrame = requestAnimationFrame(() => {
-        mobilePhotoCards.forEach((card) => {
-          card.style.opacity = "";
-        });
-        renderMobilePhotoDeck();
-        mobilePhotoOpeningTimer = window.setTimeout(() => {
-          mobilePhotoCards.forEach((card) => { card.style.transitionDelay = "0ms"; });
-          mobilePhotoBusy = false;
-        }, 720);
-        if (!mobilePhotoHintShown) {
-          mobilePhotoHintShown = true;
-          if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-            mobilePhotoHintTimer = window.setTimeout(() => {
-              if (mobilePhotoDragging || mobilePhotoBusy || !mobilePhotoViewer.classList.contains("is-open")) return;
-              const card = mobilePhotoCards[mobilePhotoIndex];
-              mobilePhotoHintAnimation = card.animate([
-                { transform: mobilePhotoDragTransform(mobilePhotoIndex, 0) },
-                { transform: mobilePhotoDragTransform(mobilePhotoIndex, -42) },
-                { transform: mobilePhotoDragTransform(mobilePhotoIndex, 0) }
-              ], { duration: 800, easing: "ease-in-out" });
-            }, 1000);
-          }
-        }
+      mobilePhotoCards.forEach(card => {
+        card.style.transition = "none";
+        card.style.transitionDelay = "0ms";
       });
+      renderMobilePhotoDeck();
+      const duration = mobilePhotoTransitionDuration();
+      mobilePhotoCards.forEach((card, cardIndex) => {
+        const isActive = cardIndex === mobilePhotoIndex;
+        const opacity = getComputedStyle(card).opacity;
+        mobilePhotoTransitions.push(card.animate([
+          { transform: isActive ? mobilePhotoPreviewTransform(card) : card.style.transform, opacity: isActive ? 1 : 0 },
+          { transform: card.style.transform, opacity }
+        ], {
+          duration: isActive ? duration : duration * .65,
+          delay: isActive ? 0 : duration * .35,
+          easing: "cubic-bezier(.22,.75,.25,1)",
+          fill: "both"
+        }));
+      });
+      mobilePhotoOriginThumb.style.visibility = "hidden";
+      mobilePhotoOpeningTimer = window.setTimeout(() => {
+        cancelMobilePhotoTransitions();
+        mobilePhotoCards.forEach(card => { card.style.transition = ""; });
+        mobilePhotoBusy = false;
+      }, duration);
+      if (!mobilePhotoHintShown) {
+        mobilePhotoHintShown = true;
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          mobilePhotoHintTimer = window.setTimeout(() => {
+            if (mobilePhotoDragging || mobilePhotoBusy || !mobilePhotoViewer.classList.contains("is-open")) return;
+            const card = mobilePhotoCards[mobilePhotoIndex];
+            mobilePhotoHintAnimation = card.animate([
+              { transform: mobilePhotoDragTransform(mobilePhotoIndex, 0) },
+              { transform: mobilePhotoDragTransform(mobilePhotoIndex, -42) },
+              { transform: mobilePhotoDragTransform(mobilePhotoIndex, 0) }
+            ], { duration: 800, easing: "ease-in-out" });
+          }, duration + 280);
+        }
+      }
     };
 
     const finishMobilePhotoDrag = (event) => {
@@ -3429,7 +3485,7 @@
       closeMobilePhotoViewer();
       window.setTimeout(() => {
         window.scrollBy({ top: Math.min(520, Math.abs(deltaY)), behavior: "smooth" });
-      }, 20);
+      }, mobilePhotoTransitionDuration() + 20);
     });
     mobilePhotoViewer.addEventListener("pointercancel", () => { mobileVerticalGesture = null; });
 
@@ -3439,7 +3495,7 @@
       const thumb = event.target.closest(".hero__photo-thumbs img");
       const source = thumb?.getAttribute("src");
       const index = Math.max(0, heroPhotos.findIndex((photo) => photo.getAttribute("src") === source));
-      openMobilePhotoViewer(index);
+      openMobilePhotoViewer(index, thumb);
     });
     mobilePhotoViewer.addEventListener("pointerdown", (event) => {
       if (event.target !== mobilePhotoViewer && event.target !== mobilePhotoDeck) return;
