@@ -1,0 +1,132 @@
+/* Mobile navigation and footer extracted from index.html's scrolled state.
+   Desktop rules remain in their original page styles. */
+@media (max-width: 767px) {
+  :root {
+    --mobile-chrome-family: "CoFo Sans Trial", Arial, sans-serif;
+    --mobile-chrome-size: 20px;
+    --mobile-chrome-line: 26px;
+    --mobile-chrome-weight: 300;
+    --mobile-chrome-spacing: -.03em;
+    --mobile-chrome-link-gap: calc(26px * 1.2142857);
+    --mobile-chrome-action-gap: calc(26px * 1.6071429);
+    --mobile-chrome-gutter: 36px;
+    --mobile-chrome-x-height: calc((100vw - 2 * var(--mobile-chrome-gutter)) * 28.514 / 646);
+  }
+
+  .hero__nav,
+  .hero__nav a,
+  .hero__top-links--floating,
+  .hero__top-links--floating a,
+  .contacts-screen__links,
+  .contacts-screen__links a,
+  body > main.page > .portfolio-header,
+  body > main.page > .portfolio-header nav,
+  body > main.page > .portfolio-header a,
+  body > main.page > .portfolio-footer,
+  body > main.page > .portfolio-footer .portfolio-footer__email,
+  body > main.page > .portfolio-footer nav,
+  body > main.page > .portfolio-footer a {
+    font-family: var(--mobile-chrome-family);
+    font-size: var(--mobile-chrome-size);
+    /* Legacy case styles set an important weight on every element. Scope the correction. */
+    font-weight: var(--mobile-chrome-weight) !important;
+    line-height: var(--mobile-chrome-line);
+    letter-spacing: var(--mobile-chrome-spacing);
+    color: #424242;
+  }
+
+  .hero__top-links.hero__top-links--floating,
+  body > main.page > .portfolio-header .portfolio-header__actions {
+    position: fixed;
+    top: 18px;
+    right: var(--mobile-chrome-gutter);
+    left: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--mobile-chrome-action-gap);
+    margin: 0;
+  }
+
+  .hero__top-links--floating .hero__link-arrow,
+  body > main.page > .portfolio-header .portfolio-header__arrow {
+    display: inline-block;
+    width: 13.333px;
+    height: 12.378px;
+    vertical-align: -1px;
+  }
+
+  body > main.page > .portfolio-header {
+    top: 18px;
+    left: var(--mobile-chrome-gutter);
+    right: auto;
+    padding: 0;
+    background: transparent;
+  }
+
+  body > main.page > .portfolio-header .portfolio-header__nav {
+    gap: 10px;
+  }
+
+  body > main.page > .portfolio-footer {
+    display: flex;
+    align-items: center;
+    min-height: 50svh;
+    height: auto;
+    padding: 52px 36px;
+    overflow: hidden;
+    background: #f5f2f2;
+  }
+  body > main.page > .portfolio-footer .portfolio-footer__content {
+    display: block;
+    width: max-content;
+  }
+  .contacts-screen__email,
+  body > main.page > .portfolio-footer .portfolio-footer__email {
+    display: block;
+    width: auto;
+    max-width: calc(100vw - 2 * var(--mobile-chrome-gutter));
+    height: calc(var(--mobile-chrome-x-height) * 67 / 37.416);
+    margin: 0;
+    filter: url(#mobile-heading-ink);
+    background: transparent;
+  }
+  .contacts-screen__links,
+  body > main.page > .portfolio-footer .portfolio-footer__links {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    width: auto;
+    gap: var(--mobile-chrome-link-gap);
+    margin-top: var(--mobile-chrome-link-gap);
+  }
+  body > main.page > .portfolio-footer .portfolio-footer__links a::after {
+    background: currentColor;
+  }
+  body > main.page > .portfolio-footer .portfolio-footer__links a[href*="t.me"]::after {
+    background: linear-gradient(to right, currentColor 0 calc(52% - 8px), transparent calc(52% - 8px) calc(66% - 6px), currentColor calc(66% - 6px) 100%);
+  }
+}
+@media (min-width: 501px) and (max-width: 699px) {
+  :root { --mobile-chrome-action-gap: calc(26px * .9782609); }
+}
+@media (max-width: 700px) {
+  :root { --mobile-chrome-gutter: 20px; }
+  body > main.page > .portfolio-footer { padding: 20px; }
+  body > main.page > .portfolio-footer .portfolio-footer__email { font-size: 22px; }
+  body > main.page > .portfolio-header .portfolio-header__arrow { margin-right: 5.27px; }
+  body > main.page > .portfolio-header .portfolio-header__action[href*="t.me"] .portfolio-header__arrow { margin-right: 6.5px; }
+}
+@media (max-width: 500px) {
+  :root { --mobile-chrome-action-gap: calc(26px * .6521739); }
+}
+@media (max-width: 479px) {
+  body > main.page > .portfolio-header .portfolio-header__toggle {
+    width: 28px;
+    height: 24px;
+    padding: 3px 2px;
+    color: #424242;
+  }
+  body > main.page > .portfolio-header .portfolio-header__toggle span { background: currentColor; }
+  body > main.page > .portfolio-header.is-open .portfolio-header__nav { margin-top: 10px; }
+}

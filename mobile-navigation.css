@@ -3,6 +3,7 @@
   :root {
     --mobile-menu-surface: var(--background, var(--case-bg, #f5f2f2));
     --mobile-menu-blur: 30px;
+    --mobile-menu-outset: 8px;
     --mobile-menu-rgb: 245, 242, 242; /* Site background #f5f2f2. */
   }
 
@@ -34,9 +35,11 @@
     backdrop-filter: blur(var(--mobile-menu-blur));
   }
 
-  body.case-active .hero__nav:not(.is-open)::before {
-    left: -8px;
-    width: calc(100vw - 2 * var(--page-padding, var(--page-x, 20px)) + 16px);
+  body.case-active .hero__nav::before,
+  .hero__nav.is-open::before,
+  .portfolio-header::before {
+    left: calc(-1 * var(--mobile-menu-outset));
+    width: calc(100vw - 2 * var(--page-padding, var(--page-x, 20px)) + 2 * var(--mobile-menu-outset));
   }
 
   .case-nav {

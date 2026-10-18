@@ -2179,10 +2179,22 @@
       line-height: var(--case-heading-height);
     }
 
+    @media (max-width: 767px) {
+      .hero__status {
+        font-family: var(--font-primary-family);
+        font-size: var(--font-body-size);
+        font-weight: var(--font-primary-weight);
+        line-height: var(--font-body-line-height);
+        letter-spacing: var(--font-primary-letter-spacing);
+      }
+    }
+
   </style>
   <link rel="stylesheet" href="mobile-navigation.css" />
   <link rel="stylesheet" href="email-toast.css" />
   <script src="email-toast.js" defer></script>
+  <link rel="stylesheet" href="mobile-chrome.css" />
+  <script src="mobile-navigation.js" defer></script>
 </head>
 <body>
   <!-- Tint external SVG artwork through its alpha channel, only on mobile.
@@ -2365,34 +2377,34 @@
         <p>я&nbsp;проехала более 6000 км по россии, сняла 150+ почтовых отделений.<br>проект попал в шорт-лист журнала «Отпечаток» и&nbsp;опубликован на ресурсе colta.</p>
       </article>
       <div class="facts-screen__gallery" aria-label="Фотографии проекта о почте России">
-        <img src="assets/images/post-offices/post-office-12.jpg" srcset="assets/images/post-offices/640%20px/post-office-12-640.jpg 640w, assets/images/post-offices/post-office-12.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-06.jpg" srcset="assets/images/post-offices/640%20px/post-office-06-640.jpg 640w, assets/images/post-offices/post-office-06.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-07.jpg" srcset="assets/images/post-offices/640%20px/post-office-07-640.jpg 640w, assets/images/post-offices/post-office-07.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-13.jpg" srcset="assets/images/post-offices/640%20px/post-office-13-640.jpg 640w, assets/images/post-offices/post-office-13.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-05.jpg" srcset="assets/images/post-offices/640%20px/post-office-05-640.jpg 640w, assets/images/post-offices/post-office-05.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-11.jpg" srcset="assets/images/post-offices/640%20px/post-office-11-640.jpg 640w, assets/images/post-offices/post-office-11.jpg 995w" sizes="(max-width: 767px) 72px, 995px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-10.jpg" srcset="assets/images/post-offices/640%20px/post-office-10-640.jpg 640w, assets/images/post-offices/post-office-10.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-01.jpg" srcset="assets/images/post-offices/640%20px/post-office-01-640.jpg 640w, assets/images/post-offices/post-office-01.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-02.jpg" srcset="assets/images/post-offices/640%20px/post-office-02-640.jpg 640w, assets/images/post-offices/post-office-02.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-03.jpg" srcset="assets/images/post-offices/640%20px/post-office-03-640.jpg 640w, assets/images/post-offices/post-office-03.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-04.jpg" srcset="assets/images/post-offices/640%20px/post-office-04-640.jpg 640w, assets/images/post-offices/post-office-04.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-08.jpg" srcset="assets/images/post-offices/640%20px/post-office-08-640.jpg 640w, assets/images/post-offices/post-office-08.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-09.jpg" srcset="assets/images/post-offices/640%20px/post-office-09-640.jpg 640w, assets/images/post-offices/post-office-09.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-14.jpg" srcset="assets/images/post-offices/640%20px/post-office-14-640.jpg 640w, assets/images/post-offices/post-office-14.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-15.jpg" srcset="assets/images/post-offices/640%20px/post-office-15-640.jpg 640w, assets/images/post-offices/post-office-15.jpg 1988w" sizes="(max-width: 767px) 72px, 1988px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-16.jpg" srcset="assets/images/post-offices/640%20px/post-office-16-640.jpg 640w, assets/images/post-offices/post-office-16.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-17.jpg" srcset="assets/images/post-offices/640%20px/post-office-17-640.jpg 640w, assets/images/post-offices/post-office-17.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-18.jpg" srcset="assets/images/post-offices/640%20px/post-office-18-640.jpg 640w, assets/images/post-offices/post-office-18.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-19.jpg" srcset="assets/images/post-offices/640%20px/post-office-19-640.jpg 640w, assets/images/post-offices/post-office-19.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-20.jpg" srcset="assets/images/post-offices/640%20px/post-office-20-640.jpg 640w, assets/images/post-offices/post-office-20.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-21.jpg" srcset="assets/images/post-offices/640%20px/post-office-21-640.jpg 640w, assets/images/post-offices/post-office-21.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-22.jpg" srcset="assets/images/post-offices/640%20px/post-office-22-640.jpg 640w, assets/images/post-offices/post-office-22.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-23.jpg" srcset="assets/images/post-offices/640%20px/post-office-23-640.jpg 640w, assets/images/post-offices/post-office-23.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-24.jpg" srcset="assets/images/post-offices/640%20px/post-office-24-640.jpg 640w, assets/images/post-offices/post-office-24.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-25.jpg" srcset="assets/images/post-offices/640%20px/post-office-25-640.jpg 640w, assets/images/post-offices/post-office-25.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-26.jpg" srcset="assets/images/post-offices/640%20px/post-office-26-640.jpg 640w, assets/images/post-offices/post-office-26.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-27.jpg" srcset="assets/images/post-offices/640%20px/post-office-27-640.jpg 640w, assets/images/post-offices/post-office-27.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
-        <img src="assets/images/post-offices/post-office-28.jpg" srcset="assets/images/post-offices/640%20px/post-office-28-640.jpg 640w, assets/images/post-offices/post-office-28.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-12.jpg" srcset="assets/images/post-offices/320%20px/post-office-12-320.JPG 320w, assets/images/post-offices/640%20px/post-office-12-640.JPG 640w, assets/images/post-offices/post-office-12.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-06.jpg" srcset="assets/images/post-offices/320%20px/post-office-06-320.JPG 320w, assets/images/post-offices/640%20px/post-office-06-640.JPG 640w, assets/images/post-offices/post-office-06.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-07.jpg" srcset="assets/images/post-offices/320%20px/post-office-07-320.JPG 320w, assets/images/post-offices/640%20px/post-office-07-640.JPG 640w, assets/images/post-offices/post-office-07.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-13.jpg" srcset="assets/images/post-offices/320%20px/post-office-13-320.JPG 320w, assets/images/post-offices/640%20px/post-office-13-640.JPG 640w, assets/images/post-offices/post-office-13.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-05.jpg" srcset="assets/images/post-offices/320%20px/post-office-05-320.JPG 320w, assets/images/post-offices/640%20px/post-office-05-640.JPG 640w, assets/images/post-offices/post-office-05.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-11.jpg" srcset="assets/images/post-offices/320%20px/post-office-11-320.JPG 320w, assets/images/post-offices/640%20px/post-office-11-640.JPG 640w, assets/images/post-offices/post-office-11.jpg 995w" sizes="(max-width: 767px) 72px, 995px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-10.jpg" srcset="assets/images/post-offices/320%20px/post-office-10-320.JPG 320w, assets/images/post-offices/640%20px/post-office-10-640.JPG 640w, assets/images/post-offices/post-office-10.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-01.jpg" srcset="assets/images/post-offices/320%20px/post-office-01-320.JPG 320w, assets/images/post-offices/640%20px/post-office-01-640.JPG 640w, assets/images/post-offices/post-office-01.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-02.jpg" srcset="assets/images/post-offices/320%20px/post-office-02-320.JPG 320w, assets/images/post-offices/640%20px/post-office-02-640.JPG 640w, assets/images/post-offices/post-office-02.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-03.jpg" srcset="assets/images/post-offices/320%20px/post-office-03-320.JPG 320w, assets/images/post-offices/640%20px/post-office-03-640.JPG 640w, assets/images/post-offices/post-office-03.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-04.jpg" srcset="assets/images/post-offices/320%20px/post-office-04-320.JPG 320w, assets/images/post-offices/640%20px/post-office-04-640.JPG 640w, assets/images/post-offices/post-office-04.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-08.jpg" srcset="assets/images/post-offices/320%20px/post-office-08-320.JPG 320w, assets/images/post-offices/640%20px/post-office-08-640.JPG 640w, assets/images/post-offices/post-office-08.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-09.jpg" srcset="assets/images/post-offices/320%20px/post-office-09-320.JPG 320w, assets/images/post-offices/640%20px/post-office-09-640.JPG 640w, assets/images/post-offices/post-office-09.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-14.jpg" srcset="assets/images/post-offices/320%20px/post-office-14-320.JPG 320w, assets/images/post-offices/640%20px/post-office-14-640.JPG 640w, assets/images/post-offices/post-office-14.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-15.jpg" srcset="assets/images/post-offices/320%20px/post-office-15-320.JPG 320w, assets/images/post-offices/640%20px/post-office-15-640.JPG 640w, assets/images/post-offices/post-office-15.jpg 1988w" sizes="(max-width: 767px) 72px, 1988px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-16.jpg" srcset="assets/images/post-offices/320%20px/post-office-16-320.JPG 320w, assets/images/post-offices/640%20px/post-office-16-640.JPG 640w, assets/images/post-offices/post-office-16.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-17.jpg" srcset="assets/images/post-offices/320%20px/post-office-17-320.JPG 320w, assets/images/post-offices/640%20px/post-office-17-640.JPG 640w, assets/images/post-offices/post-office-17.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-18.jpg" srcset="assets/images/post-offices/320%20px/post-office-18-320.JPG 320w, assets/images/post-offices/640%20px/post-office-18-640.JPG 640w, assets/images/post-offices/post-office-18.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-19.jpg" srcset="assets/images/post-offices/320%20px/post-office-19-320.JPG 320w, assets/images/post-offices/640%20px/post-office-19-640.JPG 640w, assets/images/post-offices/post-office-19.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-20.jpg" srcset="assets/images/post-offices/320%20px/post-office-20-320.JPG 320w, assets/images/post-offices/640%20px/post-office-20-640.JPG 640w, assets/images/post-offices/post-office-20.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-21.jpg" srcset="assets/images/post-offices/320%20px/post-office-21-320.JPG 320w, assets/images/post-offices/640%20px/post-office-21-640.JPG 640w, assets/images/post-offices/post-office-21.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-22.jpg" srcset="assets/images/post-offices/320%20px/post-office-22-320.JPG 320w, assets/images/post-offices/640%20px/post-office-22-640.JPG 640w, assets/images/post-offices/post-office-22.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-23.jpg" srcset="assets/images/post-offices/320%20px/post-office-23-320.JPG 320w, assets/images/post-offices/640%20px/post-office-23-640.JPG 640w, assets/images/post-offices/post-office-23.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-24.jpg" srcset="assets/images/post-offices/320%20px/post-office-24-320.JPG 320w, assets/images/post-offices/640%20px/post-office-24-640.JPG 640w, assets/images/post-offices/post-office-24.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-25.jpg" srcset="assets/images/post-offices/320%20px/post-office-25-320.JPG 320w, assets/images/post-offices/640%20px/post-office-25-640.JPG 640w, assets/images/post-offices/post-office-25.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-26.jpg" srcset="assets/images/post-offices/320%20px/post-office-26-320.JPG 320w, assets/images/post-offices/640%20px/post-office-26-640.JPG 640w, assets/images/post-offices/post-office-26.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-27.jpg" srcset="assets/images/post-offices/320%20px/post-office-27-320.JPG 320w, assets/images/post-offices/640%20px/post-office-27-640.JPG 640w, assets/images/post-offices/post-office-27.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+        <img src="assets/images/post-offices/post-office-28.jpg" srcset="assets/images/post-offices/320%20px/post-office-28-320.JPG 320w, assets/images/post-offices/640%20px/post-office-28-640.JPG 640w, assets/images/post-offices/post-office-28.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
       </div>
     </section>
 
@@ -2699,18 +2711,6 @@
       if (!image.complete) image.addEventListener("load", scheduleCaseSpacing, { once: true });
     });
 
-    heroNavToggle.addEventListener("click", () => {
-      const isOpen = heroNav.classList.toggle("is-open");
-      heroNavToggle.setAttribute("aria-expanded", String(isOpen));
-      heroNavToggle.setAttribute("aria-label", isOpen ? "Закрыть меню" : "Открыть меню");
-    });
-    heroNav.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        heroNav.classList.remove("is-open");
-        heroNavToggle.setAttribute("aria-expanded", "false");
-        heroNavToggle.setAttribute("aria-label", "Открыть меню");
-      });
-    });
     const getCaseVisualHoverBounds = (caseScreen) => {
       const imageBounds = caseScreen.querySelector(".case-screen__visual img").getBoundingClientRect();
       const captionBounds = caseScreen.querySelector(".case-screen__footer").getBoundingClientRect();
@@ -3190,6 +3190,9 @@
     });
     const mobilePhotoRotations = photos.map(() => 0);
     const fullPhotoPrepared = new Set();
+    const gallerySrcsets = responsive ? photos.map(photo => photo.getAttribute("srcset")
+      .split(",").map(candidate => candidate.trim())
+      .filter(candidate => Number.parseInt(candidate.split(/\s+/).pop(), 10) >= 640).join(", ")) : [];
     const prepareMobilePhotos = (index) => {
       if (!responsive) return;
       const count = photos.length;
@@ -3197,7 +3200,7 @@
         const i = (index + position * mobilePhotoDirection + count) % count;
         const card = mobilePhotoCards[i];
         if (!card.getAttribute("src")) {
-          card.src = photos[i].getAttribute("srcset").split(" ")[0];
+          card.src = gallerySrcsets[i].split(" ")[0];
         }
       }
       // Let DPR choose between 640px and the ~2000px original only near the active image.
@@ -3207,7 +3210,7 @@
         fullPhotoPrepared.add(i);
         const card = mobilePhotoCards[i];
         card.sizes = "82vw";
-        card.srcset = photos[i].getAttribute("srcset");
+        card.srcset = gallerySrcsets[i];
         card.src = photos[i].getAttribute("src");
       });
     };
