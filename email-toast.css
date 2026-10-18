@@ -1,0 +1,37 @@
+.email-toast {
+  position: fixed;
+  z-index: 2000;
+  left: 50%;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  width: max-content;
+  max-width: calc(100vw - 40px);
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: #212222;
+  color: #fff;
+  font: var(--font-caption-weight, 400) var(--font-caption-size, 14px)/var(--font-caption-line-height, 18px) var(--font-primary-family, Arial, sans-serif);
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 8px);
+  transition: opacity 200ms ease, transform 200ms ease, visibility 0s linear 200ms;
+}
+.email-toast.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+  transition-delay: 0s;
+}
+@media (max-width: 767px) {
+  /* A background on the filtered SVG would be tinted into a solid rectangle. */
+  .contacts-screen__email:hover,
+  .contacts-screen__email:focus-visible,
+  .contacts-screen.is-email-hover .contacts-screen__email {
+    background-color: transparent;
+  }
+  .contacts-copy-cursor { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .email-toast { transition-duration: 0ms; transform: translateX(-50%); }
+}

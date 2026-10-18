@@ -12,16 +12,21 @@
     }
   }
 
-  .hero__top-links--floating,
-  .portfolio-header__actions {
+  .hero__nav,
+  .portfolio-header {
     isolation: isolate;
   }
 
-  .hero__top-links--floating::before,
-  .portfolio-header__actions::before {
+  /* One surface spans all twelve columns, behind both the burger and action links. */
+  body.case-active .hero__nav::before,
+  .hero__nav.is-open::before,
+  .portfolio-header::before {
     content: "";
     position: absolute;
-    inset: -8px -10px;
+    top: -8px;
+    bottom: -12px;
+    left: 0;
+    width: calc(100vw - 2 * var(--page-padding, var(--page-x, 20px)));
     z-index: -1;
     pointer-events: none;
     background: var(--mobile-menu-surface);
@@ -37,23 +42,6 @@
 }
 
 @media (max-width: 479px) {
-  .hero__nav,
-  .portfolio-header {
-    isolation: isolate;
-  }
-
-  .hero__nav.is-open::before,
-  .portfolio-header.is-open::before {
-    content: "";
-    position: absolute;
-    inset: -8px -10px -12px;
-    z-index: -1;
-    pointer-events: none;
-    background: var(--mobile-menu-surface);
-    -webkit-backdrop-filter: blur(var(--mobile-menu-blur));
-    backdrop-filter: blur(var(--mobile-menu-blur));
-  }
-
   .hero__nav-toggle span,
   .portfolio-header__toggle span {
     transform-origin: center;
