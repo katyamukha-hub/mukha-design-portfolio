@@ -633,6 +633,10 @@
       .mobile-photo-viewer__card.is-exiting {
         transition: transform 250ms cubic-bezier(.22,.75,.25,1), opacity 220ms ease;
       }
+
+      .mobile-photo-viewer__deck.is-advancing .mobile-photo-viewer__card:not(.is-exiting) {
+        transition: transform 520ms cubic-bezier(.22,1,.36,1), opacity 420ms ease;
+      }
     }
 
     .hero__nav,
@@ -1937,9 +1941,23 @@
 
     }
 
-    @media (max-width: 353px) {
+    @media (max-width: 767px) {
       :root {
-        --case-heading-height: min(24.7168px, calc(7.8947vw - 3.1579px));
+        /* The 646-unit facts heading is widest per unit of lowercase height.
+           Use all 12 columns between the existing page gutters as the shared limit. */
+        --heading-x-height: calc((100vw - 2 * var(--page-padding)) * 28.514 / 646);
+        --case-heading-height: calc(var(--heading-x-height) * 39 / 27.388);
+        /* Three lines: measure lowercase letters in one line, not the whole block. */
+        --friends-heading-height: calc(var(--heading-x-height) * 102 / 23.135);
+      }
+
+      #avalike-title,
+      #skillshare-title,
+      #mendi-title,
+      #facts-title,
+      #friends-title,
+      #contacts-title {
+        filter: url(#mobile-heading-ink);
       }
     }
 
@@ -2176,6 +2194,16 @@
   </style>
 </head>
 <body>
+  <!-- Tint external SVG artwork through its alpha channel, only on mobile.
+       Source paths, including the email's fixed fill/blend mode, stay unchanged. -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute; pointer-events:none; overflow:hidden">
+    <defs>
+      <filter id="mobile-heading-ink" color-interpolation-filters="sRGB">
+        <feFlood flood-color="#212222" result="ink" />
+        <feComposite in="ink" in2="SourceAlpha" operator="in" />
+      </filter>
+    </defs>
+  </svg>
   <div class="case-hover-cursor" aria-hidden="true"><img src="assets/Icons/coursor.svg" alt=""></div>
   <div class="contacts-copy-cursor" aria-hidden="true">
     <img class="is-copy-icon" src="assets/Icons/copy_coursor.svg" alt="">
@@ -3168,6 +3196,7 @@
     let mobilePhotoDirection = 1;
     let mobilePhotoBusy = false;
     let mobilePhotoSettleTimer;
+    let mobilePhotoExitTimer;
     let mobilePhotoHintTimer;
     let mobilePhotoHintAnimation;
     let mobilePhotoHintShown = false;
@@ -3215,21 +3244,24 @@
 
     const isMobilePhotoViewer = () => window.matchMedia("(max-width: 767px)").matches;
 
-    const renderMobilePhotoDeck = () => {
+    const renderMobilePhotoDeck = (targetIndex = mobilePhotoIndex, exitingCard = null) => {
       const count = mobilePhotoCards.length;
+      // Keep the deeper cards within short viewports, with a 52px step on typical phones.
+      const stackStep = Math.min(52, Math.max(24, window.innerHeight * .075 - 4));
       mobilePhotoCards.forEach((card, index) => {
-        const position = ((index - mobilePhotoIndex) * mobilePhotoDirection + count) % count;
+        if (card === exitingCard) return;
+        const position = ((index - targetIndex) * mobilePhotoDirection + count) % count;
         const visiblePosition = Math.min(position, 4);
         const offsetX = 0;
-        const offsetY = visiblePosition * -24;
-        const scale = 1 - visiblePosition * 0.06;
+        const offsetY = visiblePosition * -stackStep;
+        const scale = 1 - visiblePosition * 0.12;
         card.style.opacity = "";
         card.style.setProperty("--card-rotation", `${mobilePhotoRotations[index]}deg`);
         card.style.setProperty("--card-scale", String(scale));
         card.style.setProperty("--card-opacity", position < 5 ? "1" : "0");
         card.style.transform = `translate3d(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px), 0) rotate(${mobilePhotoRotations[index]}deg) scale(${scale})`;
-        card.style.zIndex = String(count - position);
-        card.classList.toggle("is-active", position === 0);
+        card.style.zIndex = String(count - position - (exitingCard ? 1 : 0));
+        card.classList.toggle("is-active", index === mobilePhotoIndex);
       });
     };
 
@@ -3247,6 +3279,8 @@
       cancelMobilePhotoTransitions();
       window.clearTimeout(mobilePhotoOpeningTimer);
       window.clearTimeout(mobilePhotoSettleTimer);
+      window.clearTimeout(mobilePhotoExitTimer);
+      mobilePhotoDeck.classList.remove("is-advancing");
       mobilePhotoBusy = true;
       mobilePhotoDragging = false;
       if (mobilePhotoPointerId !== null) {
@@ -3379,7 +3413,10 @@
       card.classList.add("is-exiting");
       card.style.transform = `translate3d(calc(-50% + ${exitDirection * 120}vw), -50%, 0) rotate(${rotation}deg) scale(1)`;
       card.style.opacity = "0";
-      settleMobilePhoto(250, () => {
+      mobilePhotoDeck.classList.add("is-advancing");
+      renderMobilePhotoDeck(nextIndex, card);
+      // The stack starts moving now, while the outgoing card is still flying away.
+      mobilePhotoExitTimer = window.setTimeout(() => {
         mobilePhotoIndex = nextIndex;
         card.classList.remove("is-exiting");
         // Recycle the outgoing card behind the stack without animating it across the new top.
@@ -3387,7 +3424,8 @@
         renderMobilePhotoDeck();
         card.offsetWidth;
         card.style.transition = "";
-      });
+      }, 250);
+      settleMobilePhoto(520, () => mobilePhotoDeck.classList.remove("is-advancing"));
     };
 
     mobilePhotoCards.forEach((card) => {
@@ -3510,6 +3548,7 @@
     });
     window.addEventListener("resize", () => {
       if (!isMobilePhotoViewer()) closeMobilePhotoViewer();
+      else if (mobilePhotoViewer.classList.contains("is-open") && !mobilePhotoBusy && !mobilePhotoDragging) renderMobilePhotoDeck();
     });
 
     const parallaxGroups = [
