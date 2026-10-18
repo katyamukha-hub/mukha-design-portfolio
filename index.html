@@ -3165,6 +3165,33 @@
     let mobilePhotoPreviousOverflow = "";
     let mobilePhotoCloseTimer;
     let mobilePhotoHistory = [];
+    let mobilePhotoDirection = 1;
+    let mobilePhotoBusy = false;
+    let mobilePhotoSettleTimer;
+    let mobilePhotoHintTimer;
+    let mobilePhotoHintAnimation;
+    let mobilePhotoHintShown = false;
+    let mobilePhotoOpenFrame;
+    let mobilePhotoOpeningTimer;
+
+    const cancelMobilePhotoHint = () => {
+      window.clearTimeout(mobilePhotoHintTimer);
+      mobilePhotoHintAnimation?.cancel();
+      mobilePhotoHintAnimation = null;
+    };
+    const mobilePhotoDragTransform = (index, dragX) => {
+      const progress = Math.min(Math.abs(dragX) / 180, 1);
+      const rotation = mobilePhotoRotations[index] + Math.sign(dragX) * progress * 8;
+      return `translate3d(calc(-50% + ${dragX}px), -50%, 0) rotate(${rotation}deg) scale(1)`;
+    };
+    const settleMobilePhoto = (duration, callback) => {
+      mobilePhotoBusy = true;
+      window.clearTimeout(mobilePhotoSettleTimer);
+      mobilePhotoSettleTimer = window.setTimeout(() => {
+        callback?.();
+        mobilePhotoBusy = false;
+      }, duration);
+    };
     let mobileEdgePointer = null;
     let mobileVerticalGesture = null;
 
@@ -3173,11 +3200,12 @@
     const renderMobilePhotoDeck = () => {
       const count = mobilePhotoCards.length;
       mobilePhotoCards.forEach((card, index) => {
-        const position = (index - mobilePhotoIndex + count) % count;
+        const position = ((index - mobilePhotoIndex) * mobilePhotoDirection + count) % count;
         const visiblePosition = Math.min(position, 4);
         const offsetX = 0;
         const offsetY = visiblePosition * -24;
         const scale = 1 - visiblePosition * 0.06;
+        card.style.opacity = "";
         card.style.setProperty("--card-rotation", `${mobilePhotoRotations[index]}deg`);
         card.style.setProperty("--card-scale", String(scale));
         card.style.setProperty("--card-opacity", position < 5 ? "1" : "0");
@@ -3189,6 +3217,26 @@
 
     const closeMobilePhotoViewer = () => {
       if (!mobilePhotoViewer.classList.contains("is-open")) return;
+      cancelMobilePhotoHint();
+      cancelAnimationFrame(mobilePhotoOpenFrame);
+      window.clearTimeout(mobilePhotoOpeningTimer);
+      window.clearTimeout(mobilePhotoSettleTimer);
+      mobilePhotoBusy = false;
+      mobilePhotoDragging = false;
+      if (mobilePhotoPointerId !== null) {
+        mobilePhotoCards.forEach(card => {
+          if (card.hasPointerCapture(mobilePhotoPointerId)) card.releasePointerCapture(mobilePhotoPointerId);
+        });
+      }
+      mobilePhotoPointerId = null;
+      mobileEdgePointer = null;
+      mobileVerticalGesture = null;
+      mobilePhotoCards.forEach(card => {
+        card.classList.remove("is-dragging", "is-exiting");
+        card.style.transition = "";
+        card.style.transitionDelay = "0ms";
+        card.style.opacity = "";
+      });
       mobilePhotoViewer.classList.remove("is-open");
       mobilePhotoIndex = 0;
       mobilePhotoHistory = [];
@@ -3202,7 +3250,10 @@
     const openMobilePhotoViewer = (index) => {
       if (!isMobilePhotoViewer()) return;
       window.clearTimeout(mobilePhotoCloseTimer);
-      mobilePhotoIndex = 0;
+      mobilePhotoIndex = index;
+      mobilePhotoDirection = 1;
+      mobilePhotoHistory = [];
+      mobilePhotoBusy = true;
       mobilePhotoPreviousOverflow = document.body.style.overflow;
       mobilePhotoViewer.hidden = false;
       const previewBounds = document.querySelector(".hero__photo-thumbs").getBoundingClientRect();
@@ -3216,14 +3267,29 @@
       document.body.style.overflow = "hidden";
       mobilePhotoViewer.classList.add("is-open");
       mobilePhotoViewer.offsetWidth;
-      requestAnimationFrame(() => {
+      mobilePhotoOpenFrame = requestAnimationFrame(() => {
         mobilePhotoCards.forEach((card) => {
           card.style.opacity = "";
         });
         renderMobilePhotoDeck();
-        window.setTimeout(() => {
+        mobilePhotoOpeningTimer = window.setTimeout(() => {
           mobilePhotoCards.forEach((card) => { card.style.transitionDelay = "0ms"; });
+          mobilePhotoBusy = false;
         }, 720);
+        if (!mobilePhotoHintShown) {
+          mobilePhotoHintShown = true;
+          if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            mobilePhotoHintTimer = window.setTimeout(() => {
+              if (mobilePhotoDragging || mobilePhotoBusy || !mobilePhotoViewer.classList.contains("is-open")) return;
+              const card = mobilePhotoCards[mobilePhotoIndex];
+              mobilePhotoHintAnimation = card.animate([
+                { transform: mobilePhotoDragTransform(mobilePhotoIndex, 0) },
+                { transform: mobilePhotoDragTransform(mobilePhotoIndex, -42) },
+                { transform: mobilePhotoDragTransform(mobilePhotoIndex, 0) }
+              ], { duration: 800, easing: "ease-in-out" });
+            }, 1000);
+          }
+        }
       });
     };
 
@@ -3233,7 +3299,7 @@
       const deltaX = event.clientX - mobilePhotoStartX;
       const elapsed = Math.max(1, performance.now() - mobilePhotoStartTime);
       const velocity = Math.abs(deltaX) / elapsed;
-      const shouldAdvance = Math.abs(deltaX) > 80 || velocity > 0.6;
+      const shouldAdvance = event.type !== "pointercancel" && (Math.abs(deltaX) > 80 || velocity > 0.6);
       mobilePhotoDragging = false;
       card.classList.remove("is-dragging");
       card.releasePointerCapture?.(mobilePhotoPointerId);
@@ -3241,8 +3307,12 @@
 
       if (!shouldAdvance) {
         renderMobilePhotoDeck();
+        settleMobilePhoto(520);
         return;
       }
+      mobilePhotoDirection = deltaX < 0 ? 1 : -1;
+      renderMobilePhotoDeck();
+      const nextIndex = (mobilePhotoIndex + mobilePhotoDirection + mobilePhotoCards.length) % mobilePhotoCards.length;
 
       const exitDirection = deltaX < 0 ? -1 : 1;
       const rotation = mobilePhotoRotations[mobilePhotoIndex] + exitDirection * 8;
@@ -3253,16 +3323,21 @@
       card.classList.add("is-exiting");
       card.style.transform = `translate3d(calc(-50% + ${exitDirection * 120}vw), -50%, 0) rotate(${rotation}deg) scale(1)`;
       card.style.opacity = "0";
-      window.setTimeout(() => {
-        mobilePhotoIndex = (mobilePhotoIndex + (deltaX > 0 ? 1 : -1) + mobilePhotoCards.length) % mobilePhotoCards.length;
+      settleMobilePhoto(250, () => {
+        mobilePhotoIndex = nextIndex;
         card.classList.remove("is-exiting");
+        // Recycle the outgoing card behind the stack without animating it across the new top.
+        card.style.transition = "none";
         renderMobilePhotoDeck();
-      }, 250);
+        card.offsetWidth;
+        card.style.transition = "";
+      });
     };
 
     mobilePhotoCards.forEach((card) => {
       card.addEventListener("pointerdown", (event) => {
-        if (!isMobilePhotoViewer() || !card.classList.contains("is-active")) return;
+        if (!isMobilePhotoViewer() || mobilePhotoBusy || mobilePhotoDragging || !card.classList.contains("is-active")) return;
+        cancelMobilePhotoHint();
         mobilePhotoPointerId = event.pointerId;
         mobilePhotoStartX = event.clientX;
         mobilePhotoStartTime = performance.now();
@@ -3273,18 +3348,25 @@
       card.addEventListener("pointermove", (event) => {
         if (!mobilePhotoDragging || event.pointerId !== mobilePhotoPointerId) return;
         const deltaX = event.clientX - mobilePhotoStartX;
-        const dragX = deltaX;
-        const direction = dragX < 0 ? -1 : 1;
-        const progress = Math.min(Math.abs(dragX) / 180, 1);
-        const rotation = mobilePhotoRotations[mobilePhotoIndex] + direction * progress * 8;
-        card.style.transform = `translate3d(calc(-50% + ${dragX}px), -50%, 0) rotate(${rotation}deg) scale(1)`;
+        if (deltaX !== 0) {
+          const direction = deltaX < 0 ? 1 : -1;
+          if (direction !== mobilePhotoDirection) {
+            mobilePhotoDirection = direction;
+            // The revealed card must switch with gesture direction, without a delayed crossfade.
+            mobilePhotoCards.forEach(item => { item.style.transition = "none"; });
+            renderMobilePhotoDeck();
+            mobilePhotoDeck.offsetWidth;
+            mobilePhotoCards.forEach(item => { item.style.transition = ""; });
+          }
+        }
+        card.style.transform = mobilePhotoDragTransform(mobilePhotoIndex, deltaX);
       });
       card.addEventListener("pointerup", finishMobilePhotoDrag);
       card.addEventListener("pointercancel", finishMobilePhotoDrag);
     });
 
     mobilePhotoDeck.addEventListener("pointerdown", (event) => {
-      if (event.target !== mobilePhotoDeck || !isMobilePhotoViewer()) return;
+      if (event.target !== mobilePhotoDeck || !isMobilePhotoViewer() || mobilePhotoBusy || mobilePhotoDragging) return;
       const edgeSize = 72;
       const fromLeft = event.clientX <= edgeSize;
       const fromRight = event.clientX >= window.innerWidth - edgeSize;
@@ -3305,7 +3387,7 @@
       mobilePhotoDeck.releasePointerCapture?.(event.pointerId);
       const deltaX = event.clientX - edgePointer.startX;
       const movedToCenter = (edgePointer.fromRight && deltaX < -70) || (edgePointer.fromLeft && deltaX > 70);
-      if (!movedToCenter || !mobilePhotoHistory.length) return;
+      if (!movedToCenter || !mobilePhotoHistory.length || mobilePhotoBusy || mobilePhotoDragging) return;
 
       const lastMove = mobilePhotoHistory[mobilePhotoHistory.length - 1];
       const matchingSide = (edgePointer.fromRight && lastMove.side === "right") || (edgePointer.fromLeft && lastMove.side === "left");
@@ -3322,11 +3404,13 @@
       restoredCard.style.transition = "transform 360ms cubic-bezier(.22,.75,.25,1), opacity 300ms ease";
       restoredCard.style.opacity = "";
       renderMobilePhotoDeck();
+      settleMobilePhoto(360, () => { restoredCard.style.transition = ""; });
     });
     mobilePhotoDeck.addEventListener("pointercancel", (event) => {
       if (mobileEdgePointer?.id === event.pointerId) mobileEdgePointer = null;
     });
 
+    mobilePhotoViewer.addEventListener("pointerdown", cancelMobilePhotoHint, { capture: true });
     mobilePhotoViewer.addEventListener("pointerdown", (event) => {
       if (!isMobilePhotoViewer()) return;
       mobileVerticalGesture = {
