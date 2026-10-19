@@ -1451,7 +1451,7 @@
       justify-content: flex-end;
     }
 
-    .case-screen__visual img {
+    .case-screen__visual :is(img, video) {
       display: block;
       width: auto;
       max-width: 100%;
@@ -1689,7 +1689,7 @@
         margin-top: 24px;
       }
 
-      .case-screen__visual img {
+      .case-screen__visual :is(img, video) {
         width: 100%;
       }
 
@@ -2326,7 +2326,7 @@
 
       <div class="case-screen__content">
         <figure class="case-screen__visual">
-          <img src="assets/images/обложки/avalike-case-hero-1440.png" alt="Обложка кейса Avalike">
+          <video src="assets/images/avalike/avalike-case-hero.mp4" poster="assets/images/обложки/avalike-case-hero-1440.png" width="1301" height="845" autoplay muted playsinline loop preload="metadata" aria-label="Обложка кейса Avalike"></video>
         </figure>
 
         <footer class="case-screen__footer">
@@ -2730,6 +2730,7 @@
     const contactsCopyCursor = document.querySelector(".contacts-copy-cursor");
 
     const allCaseScreens = [...document.querySelectorAll(".case-screen")];
+    const getCaseMedia = (section) => section.querySelector(".case-screen__visual img, .case-screen__visual video");
     let caseSpacingFrame;
     const updateCaseSpacing = () => {
       const casesWithNext = allCaseScreens;
@@ -2741,7 +2742,7 @@
         const footerBottom = section.querySelector(".case-screen__footer").getBoundingClientRect().bottom;
         const infoBottom = section.querySelector(".case-screen__info").getBoundingClientRect().bottom;
         const nextImageTop = index + 1 < allCaseScreens.length
-          ? allCaseScreens[index + 1].querySelector(".case-screen__visual img").getBoundingClientRect().top
+          ? getCaseMedia(allCaseScreens[index + 1]).getBoundingClientRect().top
           : document.querySelector(".facts-screen__title").getBoundingClientRect().top;
         const originalGap = Math.max(0, nextImageTop - footerBottom);
         const contentBottom = Math.max(footerBottom, infoBottom) - sectionBounds.top;
@@ -2761,12 +2762,16 @@
     window.addEventListener("load", scheduleCaseSpacing, { once: true });
     document.fonts.ready.then(scheduleCaseSpacing);
     allCaseScreens.forEach((section) => {
-      const image = section.querySelector(".case-screen__visual img");
-      if (!image.complete) image.addEventListener("load", scheduleCaseSpacing, { once: true });
+      const media = getCaseMedia(section);
+      if (media instanceof HTMLImageElement && !media.complete) {
+        media.addEventListener("load", scheduleCaseSpacing, { once: true });
+      } else if (media instanceof HTMLVideoElement && media.readyState < HTMLMediaElement.HAVE_METADATA) {
+        media.addEventListener("loadedmetadata", scheduleCaseSpacing, { once: true });
+      }
     });
 
     const getCaseVisualHoverBounds = (caseScreen) => {
-      const imageBounds = caseScreen.querySelector(".case-screen__visual img").getBoundingClientRect();
+      const imageBounds = getCaseMedia(caseScreen).getBoundingClientRect();
       const captionBounds = caseScreen.querySelector(".case-screen__footer").getBoundingClientRect();
       return {
         left: imageBounds.left,
