@@ -4,11 +4,12 @@
   toast.setAttribute('role', 'status');
   toast.setAttribute('aria-live', 'polite');
   toast.setAttribute('aria-atomic', 'true');
-  toast.innerHTML = '<span class="email-toast__icon" aria-hidden="true">✓</span><span class="email-toast__message">Почта скопирована</span><span class="email-toast__progress" aria-hidden="true"></span>';
+  toast.innerHTML = '<span class="email-toast__message">Почта скопирована</span>';
   document.body.appendChild(toast);
   const message = toast.querySelector('.email-toast__message');
   let hideTimer;
   const show = () => {
+    if (!window.matchMedia('(max-width: 767px)').matches) return;
     clearTimeout(hideTimer);
     toast.classList.remove('is-visible');
     message.textContent = '';

@@ -284,18 +284,12 @@
     }
 
     .hero__email.is-copied .hero__copy-icon {
-      content: url("assets/Icons/copy icon_copied.svg");
       transform: translateY(1px) scale(var(--copy-icon-copied-scale));
     }
 
     .hero__email.is-copied .hero__copy-confirmation {
       opacity: 1;
       visibility: visible;
-    }
-
-    .hero__email:not(.is-copied):hover .hero__copy-icon,
-    .hero__email:not(.is-copied):focus-visible .hero__copy-icon {
-      content: url("assets/Icons/copy icon_hover.svg");
     }
 
     /* Vertical hero positions scale from a 700px viewport height. */
@@ -1066,6 +1060,11 @@
       font-size: 19.6px;
       line-height: 23.4px;
       letter-spacing: -0.03em;
+    }
+
+    .facts-screen__fact--three a {
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
 
     .facts-screen__fact p {
@@ -2426,7 +2425,7 @@
       <article class="facts-screen__fact facts-screen__fact--three">
         <span>факт (3 — 3)</span>
         <h2>сняла проект про почту россии</h2>
-        <p>я&nbsp;проехала более 6000 км по россии, сняла 150+ почтовых отделений.<br>проект попал в шорт-лист журнала «Отпечаток» и&nbsp;опубликован на ресурсе colta.</p>
+        <p>я&nbsp;проехала более 6000 км по россии, сняла 150+ почтовых отделений.<br>проект попал в шорт-лист журнала «Отпечаток» и&nbsp;опубликован на ресурсе <a href="https://colta.ru/galleries/specials/29544-fotoproekt-katya-muha-otdeleniya#ad-image-0" target="_blank" rel="noopener noreferrer">colta</a>.</p>
       </article>
       <div class="facts-screen__gallery" id="post-office-gallery" aria-label="Фотографии проекта о почте России">
         <img src="assets/images/post-offices/post-office-12.jpg" srcset="assets/images/post-offices/320%20px/post-office-12-320.JPG 320w, assets/images/post-offices/640%20px/post-office-12-640.JPG 640w, assets/images/post-offices/post-office-12.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
@@ -3901,8 +3900,48 @@
 
     const copyEmailToClipboard = (address) => window.siteEmailCopy.copy(address);
 
-    const handleEmailCopy = async () => {
-      if (await copyEmailToClipboard(email)) window.siteEmailCopy.show();
+    const heroCopyIcon = emailButton.querySelector(".hero__copy-icon");
+    const heroDefaultIcon = "assets/Icons/copy icon.svg";
+    const heroHoverIcon = "assets/Icons/copy icon_hover.svg";
+    const heroCopiedIcon = "assets/Icons/copy icon_copied.svg";
+    let keepHeroDefaultIcon = false;
+    const updateHeroCopyIcon = () => {
+      if (emailButton.classList.contains("is-copied")) return;
+      heroCopyIcon.src = !keepHeroDefaultIcon &&
+        (emailButton.matches(":hover") || emailButton.matches(":focus-visible"))
+        ? heroHoverIcon : heroDefaultIcon;
+    };
+    emailButton.addEventListener("pointerenter", () => {
+      keepHeroDefaultIcon = false;
+      updateHeroCopyIcon();
+    });
+    emailButton.addEventListener("pointerleave", () => {
+      keepHeroDefaultIcon = false;
+      updateHeroCopyIcon();
+    });
+    emailButton.addEventListener("focus", updateHeroCopyIcon);
+    emailButton.addEventListener("blur", () => {
+      keepHeroDefaultIcon = false;
+      updateHeroCopyIcon();
+    });
+    let heroCopiedTimer;
+    const handleEmailCopy = async (event) => {
+      if (!(await copyEmailToClipboard(email))) return;
+      window.siteEmailCopy.show();
+      if (event.currentTarget === emailButton) {
+        clearTimeout(heroCopiedTimer);
+        emailButton.classList.add("is-copied");
+        heroCopyIcon.src = heroCopiedIcon;
+        heroCopiedTimer = setTimeout(() => {
+          emailButton.classList.remove("is-copied");
+          keepHeroDefaultIcon = true;
+          heroCopyIcon.src = heroDefaultIcon;
+        }, 2200);
+      } else if (window.matchMedia("(min-width: 768px) and (hover: hover) and (pointer: fine)").matches) {
+        contactsCopyCursorImage.classList.add("is-copied-icon");
+        contactsCopiedCursorImage.classList.remove("is-copied-icon");
+        contactsCopyCursor.classList.add("is-copied");
+      }
     };
     emailButton.addEventListener("click", handleEmailCopy);
 
