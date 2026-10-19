@@ -287,6 +287,18 @@ body,
   }
 }
 
+/* Reduce the centered eight-column content to six original columns. */
+@media (min-width: 1201px) {
+  :root {
+    --case-content-max: calc((min(var(--case-wide-content-max, 1444px), calc(100vw - var(--case-page-x) * 2)) + var(--case-grid-gap)) * 3 / 4 - var(--case-grid-gap));
+  }
+
+  .case-meta {
+    max-width: calc(var(--case-content-max) + var(--case-page-x) * 2);
+    margin-inline: auto;
+  }
+}
+
 /* Shared desktop text scale for case content and both case navigation menus. */
 @media (min-width: 901px) {
   .case-hero__description,
