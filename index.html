@@ -253,17 +253,11 @@
       border: 0;
       border-radius: 3px;
       cursor: pointer;
-      transition: background-color 180ms ease;
     }
 
     .hero__email:hover .hero__email-text,
     .hero__email:focus-visible .hero__email-text {
       text-decoration: none;
-    }
-
-    .hero__email:hover,
-    .hero__email:focus-visible {
-      background-color: color-mix(in srgb, var(--text) 8%, var(--background));
     }
 
     .hero__copy-icon {
@@ -1129,25 +1123,77 @@
       transform: translateX(40px) scale(4.4146);
     }
 
+    .facts-screen__gallery-indicator { display: none; }
+
     @media (min-width: 1000px) {
       .facts-screen {
+        --post-gallery-top: 1140px;
+        --post-gallery-padding: 160px;
+        --post-gallery-image-width: 80px;
+        --post-gallery-image-height: 60px;
+        --post-gallery-indicator-gap: 20px;
         min-height: 1510px;
         overflow-x: clip;
       }
 
       .facts-screen__gallery {
-        top: 1140px;
+        top: var(--post-gallery-top);
         right: 36px;
         grid-template-columns: none;
         grid-template-rows: auto;
         grid-auto-flow: column;
-        grid-auto-columns: 72px;
+        grid-auto-columns: var(--post-gallery-image-width);
         justify-content: start;
         column-gap: calc((100% - 504px) / 6);
-        padding-block: 160px;
+        padding-block: var(--post-gallery-padding);
         overflow-x: auto;
         overflow-y: hidden;
         overscroll-behavior-x: contain;
+        scrollbar-width: none;
+      }
+
+      .facts-screen__gallery::-webkit-scrollbar {
+        display: none;
+      }
+
+      .facts-screen__gallery img {
+        width: var(--post-gallery-image-width);
+        height: var(--post-gallery-image-height);
+      }
+
+      .facts-screen__gallery-indicator {
+        display: block;
+        position: absolute;
+        top: calc(var(--post-gallery-top) + var(--post-gallery-padding) + var(--post-gallery-image-height) + var(--post-gallery-indicator-gap));
+        right: 36px;
+        left: 36px;
+        height: 2px;
+        border-radius: 999px;
+        background: #d9d9d9;
+        cursor: grab;
+        touch-action: none;
+      }
+
+      .facts-screen__gallery-indicator:active { cursor: grabbing; }
+
+      .facts-screen__gallery-indicator:focus-visible {
+        outline: 1px solid #8e8e8e;
+        outline-offset: 5px;
+      }
+
+      .facts-screen__gallery-indicator::before {
+        content: "";
+        position: absolute;
+        inset: -9px 0;
+      }
+
+      .facts-screen__gallery-indicator-thumb {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        border-radius: inherit;
+        background: #8e8e8e;
       }
 
       .facts-screen__gallery img:nth-child(n) {
@@ -1158,6 +1204,19 @@
       .facts-screen__gallery img:nth-child(7n):hover {
         transform: scale(4.4146);
       }
+    }
+
+    @media (min-width: 1001px) {
+      .facts-screen { min-height: 1622px; }
+
+      .facts-screen__gallery {
+        grid-template-columns: repeat(14, var(--post-gallery-image-width));
+        grid-template-rows: repeat(2, var(--post-gallery-image-height));
+        grid-auto-flow: row;
+        row-gap: 52px;
+      }
+
+      .facts-screen__gallery-indicator { display: none; }
     }
 
     .contacts-screen {
@@ -1255,13 +1314,6 @@
 
     .contacts-screen__email {
       cursor: none;
-    }
-
-    .contacts-screen__email:hover,
-    .contacts-screen__email:focus-visible,
-    .contacts-screen.is-email-hover .contacts-screen__email {
-      border-radius: 3px;
-      background-color: color-mix(in srgb, var(--text) 8%, var(--background));
     }
 
     .contacts-screen__links a {
@@ -2376,7 +2428,7 @@
         <h2>сняла проект про почту россии</h2>
         <p>я&nbsp;проехала более 6000 км по россии, сняла 150+ почтовых отделений.<br>проект попал в шорт-лист журнала «Отпечаток» и&nbsp;опубликован на ресурсе colta.</p>
       </article>
-      <div class="facts-screen__gallery" aria-label="Фотографии проекта о почте России">
+      <div class="facts-screen__gallery" id="post-office-gallery" aria-label="Фотографии проекта о почте России">
         <img src="assets/images/post-offices/post-office-12.jpg" srcset="assets/images/post-offices/320%20px/post-office-12-320.JPG 320w, assets/images/post-offices/640%20px/post-office-12-640.JPG 640w, assets/images/post-offices/post-office-12.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
         <img src="assets/images/post-offices/post-office-06.jpg" srcset="assets/images/post-offices/320%20px/post-office-06-320.JPG 320w, assets/images/post-offices/640%20px/post-office-06-640.JPG 640w, assets/images/post-offices/post-office-06.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
         <img src="assets/images/post-offices/post-office-07.jpg" srcset="assets/images/post-offices/320%20px/post-office-07-320.JPG 320w, assets/images/post-offices/640%20px/post-office-07-640.JPG 640w, assets/images/post-offices/post-office-07.jpg 2002w" sizes="(max-width: 767px) 72px, 2002px" loading="lazy" decoding="async" alt="">
@@ -2405,6 +2457,9 @@
         <img src="assets/images/post-offices/post-office-26.jpg" srcset="assets/images/post-offices/320%20px/post-office-26-320.JPG 320w, assets/images/post-offices/640%20px/post-office-26-640.JPG 640w, assets/images/post-offices/post-office-26.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
         <img src="assets/images/post-offices/post-office-27.jpg" srcset="assets/images/post-offices/320%20px/post-office-27-320.JPG 320w, assets/images/post-offices/640%20px/post-office-27-640.JPG 640w, assets/images/post-offices/post-office-27.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
         <img src="assets/images/post-offices/post-office-28.jpg" srcset="assets/images/post-offices/320%20px/post-office-28-320.JPG 320w, assets/images/post-offices/640%20px/post-office-28-640.JPG 640w, assets/images/post-offices/post-office-28.jpg 1990w" sizes="(max-width: 767px) 72px, 1990px" loading="lazy" decoding="async" alt="">
+      </div>
+      <div class="facts-screen__gallery-indicator" role="scrollbar" aria-label="Прокрутка фотографий" aria-controls="post-office-gallery" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+        <span class="facts-screen__gallery-indicator-thumb"></span>
       </div>
     </section>
 
@@ -3596,6 +3651,63 @@
       photos: heroPhotos, thumbnails: photoThumbs, label: "Документальные фотографии"
     });
     const postOfficePhotos = [...document.querySelectorAll(".facts-screen__gallery img")];
+    const postOfficeGallery = document.querySelector(".facts-screen__gallery");
+    const postOfficeScrollIndicator = document.querySelector(".facts-screen__gallery-indicator");
+    const postOfficeScrollThumb = document.querySelector(".facts-screen__gallery-indicator-thumb");
+    const updatePostOfficeScrollIndicator = () => {
+      const visibleWidth = postOfficeGallery.clientWidth;
+      const totalWidth = postOfficeGallery.scrollWidth;
+      const scrollRange = Math.max(0, totalWidth - visibleWidth);
+      const thumbWidth = totalWidth ? Math.min(1, visibleWidth / totalWidth) : 1;
+      const progress = scrollRange ? Math.min(1, Math.max(0, postOfficeGallery.scrollLeft / scrollRange)) : 0;
+      postOfficeScrollThumb.style.width = `${thumbWidth * 100}%`;
+      postOfficeScrollThumb.style.left = `${progress * (1 - thumbWidth) * 100}%`;
+      postOfficeScrollIndicator.setAttribute("aria-valuenow", String(Math.round(progress * 100)));
+    };
+    postOfficeGallery.addEventListener("scroll", updatePostOfficeScrollIndicator, { passive: true });
+    window.addEventListener("resize", updatePostOfficeScrollIndicator);
+    updatePostOfficeScrollIndicator();
+    let postOfficeIndicatorDrag = null;
+    const scrollPostOfficeFromIndicator = (event) => {
+      const track = postOfficeScrollIndicator.getBoundingClientRect();
+      const thumbWidth = postOfficeScrollThumb.getBoundingClientRect().width;
+      const travel = track.width - thumbWidth;
+      const fraction = travel > 0
+        ? Math.min(1, Math.max(0, (event.clientX - track.left - postOfficeIndicatorDrag.offset) / travel))
+        : 0;
+      postOfficeGallery.scrollLeft = fraction * Math.max(0, postOfficeGallery.scrollWidth - postOfficeGallery.clientWidth);
+    };
+    postOfficeScrollIndicator.addEventListener("pointerdown", (event) => {
+      if (!window.matchMedia("(min-width: 1000px)").matches) return;
+      const thumb = postOfficeScrollThumb.getBoundingClientRect();
+      postOfficeIndicatorDrag = {
+        id: event.pointerId,
+        offset: event.clientX >= thumb.left && event.clientX <= thumb.right
+          ? event.clientX - thumb.left
+          : thumb.width / 2
+      };
+      postOfficeScrollIndicator.setPointerCapture(event.pointerId);
+      scrollPostOfficeFromIndicator(event);
+      event.preventDefault();
+    });
+    postOfficeScrollIndicator.addEventListener("pointermove", (event) => {
+      if (postOfficeIndicatorDrag?.id === event.pointerId) scrollPostOfficeFromIndicator(event);
+    });
+    const endPostOfficeIndicatorDrag = (event) => {
+      if (postOfficeIndicatorDrag?.id === event.pointerId) postOfficeIndicatorDrag = null;
+    };
+    postOfficeScrollIndicator.addEventListener("pointerup", endPostOfficeIndicatorDrag);
+    postOfficeScrollIndicator.addEventListener("pointercancel", endPostOfficeIndicatorDrag);
+    postOfficeScrollIndicator.addEventListener("lostpointercapture", endPostOfficeIndicatorDrag);
+    postOfficeScrollIndicator.addEventListener("keydown", (event) => {
+      const step = postOfficeGallery.clientWidth / 10;
+      if (event.key === "ArrowLeft") postOfficeGallery.scrollLeft -= step;
+      else if (event.key === "ArrowRight") postOfficeGallery.scrollLeft += step;
+      else if (event.key === "Home") postOfficeGallery.scrollLeft = 0;
+      else if (event.key === "End") postOfficeGallery.scrollLeft = postOfficeGallery.scrollWidth;
+      else return;
+      event.preventDefault();
+    });
     const postOfficeMobileGallery = createMobilePhotoGallery({
       photos: postOfficePhotos, thumbnails: postOfficePhotos, label: "Почтовые отделения", responsive: true, stackVariant: "depth"
     });

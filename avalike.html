@@ -2454,6 +2454,14 @@
       margin: 0;
     }
 
+    @media (min-width: 761px) {
+      .case-meta__grid {
+        grid-column: 3 / span 8;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        column-gap: var(--grid-gap);
+      }
+    }
+
     .case-meta__item { min-width: 0; }
     .case-meta__item dt,
     .case-meta__item dd { margin: 0; }
