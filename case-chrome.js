@@ -7,9 +7,9 @@
   header.innerHTML = `
       <button class="portfolio-header__toggle" type="button" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span><span></span></button>
       <nav class="portfolio-header__nav" aria-label="Основная навигация">
-        <a href="index.html">home,</a>
-        <a href="index.html#facts">обо&nbsp;мне,</a>
-        <a href="index.html#contacts">контакты</a>
+        <a href="https://mukha.design/">home,</a>
+        <a href="https://mukha.design/#facts">обо&nbsp;мне,</a>
+        <a href="https://mukha.design/#contacts">контакты</a>
       </nav>
       <nav class="portfolio-header__actions" aria-label="CV и Telegram">
         <a class="portfolio-header__action" href="assets/files/katya-mukha-cv.pdf" target="_blank" rel="noreferrer"><img class="portfolio-header__arrow" src="assets/Icons/arrow.svg" alt="">cv</a>
