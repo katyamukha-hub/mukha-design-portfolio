@@ -1276,41 +1276,6 @@
       display: none;
     }
 
-    .contacts-copy-cursor {
-      position: fixed;
-      z-index: 30;
-      width: 90px;
-      height: 31.111px;
-      pointer-events: none;
-      opacity: 0;
-      transform: translate(-50%, -50%);
-      transition: opacity 120ms ease, width 200ms cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .contacts-copy-cursor.is-visible {
-      opacity: 1;
-    }
-
-    .contacts-copy-cursor.is-copied {
-      width: 108.889px;
-    }
-
-    .contacts-copy-cursor img {
-      position: absolute;
-      inset: 0;
-      display: block;
-      width: 100%;
-      height: 31.111px;
-      object-fit: fill;
-      transform-origin: left center;
-      transition: opacity 200ms cubic-bezier(0.22, 1, 0.36, 1), transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .contacts-copy-cursor img.is-copied-icon {
-      opacity: 0;
-      transform: scaleX(0);
-    }
-
     .contacts-screen__email {
       cursor: none;
     }
@@ -2725,9 +2690,6 @@
     const heroNav = document.querySelector(".hero__nav");
     const heroNavToggle = document.querySelector(".hero__nav-toggle");
     const caseHoverCursor = document.querySelector(".case-hover-cursor");
-    const contactsScreen = document.querySelector(".contacts-screen");
-    const contactsEmail = document.querySelector(".contacts-screen__email");
-    const contactsCopyCursor = document.querySelector(".contacts-copy-cursor");
 
     const allCaseScreens = [...document.querySelectorAll(".case-screen")];
     const getCaseMedia = (section) => section.querySelector(".case-screen__visual img, .case-screen__visual video");
@@ -3866,21 +3828,7 @@
       caseHoverCursor.classList.toggle("is-visible", isOnCaseCover && canShowCaseCursor);
       caseHoverCursor.classList.toggle("is-case-hover", isOnCaseCover && canShowCaseCursor);
 
-      const emailBounds = contactsEmail.getBoundingClientRect();
-      const isOnContactsEmail =
-        event.clientX >= emailBounds.left &&
-        event.clientX <= emailBounds.right &&
-        event.clientY >= emailBounds.top &&
-        event.clientY <= emailBounds.bottom;
-      contactsCopyCursor.style.left = `${event.clientX}px`;
-      contactsCopyCursor.style.top = `${event.clientY}px`;
-      contactsCopyCursor.classList.toggle("is-visible", isOnContactsEmail);
-      contactsScreen.classList.toggle("is-email-hover", isOnContactsEmail);
-      if (!isOnContactsEmail) {
-        contactsCopyCursorImage.classList.remove("is-copied-icon");
-        contactsCopiedCursorImage.classList.add("is-copied-icon");
-        contactsCopyCursor.classList.remove("is-copied");
-      }
+
     });
 
     const casePages = {
@@ -3942,20 +3890,17 @@
           keepHeroDefaultIcon = true;
           heroCopyIcon.src = heroDefaultIcon;
         }, 2200);
-      } else if (window.matchMedia("(min-width: 768px) and (hover: hover) and (pointer: fine)").matches) {
-        contactsCopyCursorImage.classList.add("is-copied-icon");
-        contactsCopiedCursorImage.classList.remove("is-copied-icon");
-        contactsCopyCursor.classList.add("is-copied");
       }
     };
     emailButton.addEventListener("click", handleEmailCopy);
 
-    const contactsCopyButton = document.querySelector(".contacts-screen__copy");
-    const contactsCopyCursorImage = contactsCopyCursor.querySelector(".is-copy-icon");
-    const contactsCopiedCursorImage = contactsCopyCursor.querySelector(".is-copied-icon");
-    contactsCopyButton.addEventListener("click", handleEmailCopy);
+    document.addEventListener('DOMContentLoaded', () => {
+      window.siteEmailCopy.bind(document.querySelector('.contacts-screen__email'), {
+        container: document.querySelector('.contacts-screen'),
+        button: document.querySelector('.contacts-screen__copy')
+      });
+    }, { once: true });
 
-    contactsEmail.addEventListener("click", () => contactsCopyButton.click());
   </script>
 </body>
 </html>

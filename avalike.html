@@ -658,6 +658,11 @@
       height: auto;
     }
 
+    .case-image--results-cover {
+      width: 100%;
+      height: auto;
+    }
+
     .case-animated-media__fallback {
       position: relative;
       z-index: 0;
@@ -2947,7 +2952,8 @@
     }
 
     @media (min-width: 901px) {
-      .case-section-heading__caption {
+      .case-section-heading__caption,
+      .case-split-section[aria-labelledby="components-title"] .case-split-section__caption {
         font-size: 18px;
         line-height: 24px;
       }
@@ -2985,7 +2991,6 @@
           <ul class="case-section-nav__list">
             <li><a class="case-section-nav__link is-active" href="#results-title" data-section-target="results-title" aria-current="true">Результаты</a></li>
             <li><a class="case-section-nav__link" href="#double-diamond-title" data-section-target="double-diamond-title">Double Diamond</a></li>
-            <li><a class="case-section-nav__link" href="#research-stages-title" data-section-target="research-stages-title">Этапы исследования</a></li>
             <li><a class="case-section-nav__link" href="#research-title" data-section-target="research-title">Конкурентный анализ</a></li>
             <li><a class="case-section-nav__link" href="#research-results-title" data-section-target="research-results-title">Результаты исследования</a></li>
             <li><a class="case-section-nav__link" href="#jtbd-title" data-section-target="jtbd-title">JTBD</a></li>
@@ -3002,8 +3007,8 @@
             <li><a class="case-section-nav__link" href="#prototype-title" data-section-target="prototype-title">Прототип</a></li>
             <li><a class="case-section-nav__link" href="#conversation-experience-title" data-section-target="conversation-experience-title">Взаимодействие с агентом</a></li>
             <li><a class="case-section-nav__link" href="#components-title" data-section-target="components-title">Компоненты</a></li>
-            <li><a class="case-section-nav__link" href="#design-review-title" data-section-target="design-review-title">Дизайн-ревью</a></li>
             <li><a class="case-section-nav__link" href="#handoff-title" data-section-target="handoff-title">Hand-off</a></li>
+            <li><a class="case-section-nav__link" href="#design-review-title" data-section-target="design-review-title">Дизайн-ревью</a></li>
             <li><a class="case-section-nav__link" href="#release-title" data-section-target="release-title">Релиз</a></li>
           </ul>
         </nav>
@@ -3084,10 +3089,22 @@
       </div>
     </section>
 
+    <section class="case-image-section" aria-label="Мобильные экраны Avalike — ключевые результаты">
+      <div class="case-image-section__grid">
+        <div class="case-image-section__content">
+          <img class="case-image case-image--results-cover" src="assets/images/avalike/avalike-results-cover.png" width="1301" height="845" alt="Мобильные экраны платформы Avalike" loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </section>
+
     <section class="case-section-heading case-section-heading--double-diamond" aria-labelledby="double-diamond-title">
       <div class="case-section-heading__grid">
         <div class="case-section-heading__content">
           <h2 class="case-section-heading__title" id="double-diamond-title">Double Diamond</h2>
+          <div class="case-section-heading__body">
+            <p class="case-section-heading__caption">Работу над Avalike я структурировала по логике Double Diamond.</p>
+            <p class="case-section-heading__caption">Главная сложность заключалась в том, чтобы объединить в одном продукте два разных пользовательских опыта: взаимодействие с AI-персонажами и инструменты для их создания и монетизации. Вместе с продакт-менеджером мы определили ключевые задачи и сценарии, а затем проверяли структуру и взаимодействия на ранних прототипах, прежде чем переходить к детальному UI.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -3112,22 +3129,6 @@
             loading="lazy"
             decoding="async"
           />
-        </div>
-      </div>
-    </section>
-
-    <section class="case-text-section" aria-labelledby="research-stages-title">
-      <div class="case-text-section__grid">
-        <div class="case-text-section__content">
-          <h2 class="case-text-section__title" id="research-stages-title">Этапы исследования</h2>
-
-          <div class="case-text-section__body">
-            <ul class="case-text-section__list">
-              <li>интервью со&nbsp;стейкхолдерами</li>
-              <li>анализ конкурентов</li>
-              <li>интервью с&nbsp;пользователями</li>
-            </ul>
-          </div>
         </div>
       </div>
     </section>
@@ -3178,7 +3179,7 @@
     <section class="jtbd-section" aria-labelledby="jtbd-title">
       <div class="jtbd-section__grid">
         <div class="jtbd-section__content">
-          <h2 class="jtbd-section__title" id="jtbd-title">JTBD</h2>
+          <h2 class="jtbd-section__title" id="jtbd-title">Jobs to Be Done</h2>
 
           <div class="jtbd-board" aria-label="JTBD-гипотезы">
             <h3 class="jtbd-board__role case-caption">Пользователь платформы</h3>
@@ -3208,6 +3209,10 @@
       <div class="case-section-heading__grid">
         <div class="case-section-heading__content">
           <h2 class="case-section-heading__title" id="main-scenarios-title">Основные сценарии</h2>
+          <div class="case-section-heading__body">
+            <p class="case-section-heading__caption">Выделили три ключевых сценария платформы: поиск и выбор AI-персонажа в маркетплейсе с последующим переходом к диалогу; создание, настройка и публикация собственного персонажа; управление агентами, группами и базами знаний в кабинете креатора.</p>
+            <p class="case-section-heading__caption">Для каждого сценария я проработала основные шаги, точки входа и переходы между разделами продукта.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -3241,6 +3246,7 @@
     <section class="case-text-section case-story" aria-labelledby="character-creation-story-title">
       <div class="case-text-section__grid">
         <div class="case-text-section__content">
+          <p class="case-text-section__text">На этапе проработки сценариев я сфокусировалась на двух UX-задачах: упрощении создания персонажа и организации функций платформы для разных пользовательских ролей.</p>
           <h2 class="case-text-section__title" id="character-creation-story-title">Как сделать создание персонажа проще и понятнее?</h2>
           <div class="case-text-section__body">
             <div class="case-story__step">
@@ -3432,7 +3438,7 @@
     <section class="case-split-section" aria-labelledby="components-title">
       <div class="case-split-section__grid">
         <div class="case-split-section__text">
-          <h2 class="case-split-section__title" id="components-title">Компоненты</h2>
+          <h2 class="case-split-section__title" id="components-title">Компонентная система</h2>
           <div class="case-split-section__body">
             <p class="case-split-section__caption">Собрала дизайн-систему, которой команда могла пользоваться при&nbsp;дальнейшей сборке интерфейса: кнопки, инпуты, селекты, типографику и&nbsp;цветовые стили.</p>
 
@@ -3446,23 +3452,10 @@
       </div>
     </section>
 
-    <section class="case-split-section" aria-labelledby="design-review-title">
-      <div class="case-split-section__grid">
-        <div class="case-split-section__text">
-          <h2 class="case-split-section__title" id="design-review-title">Дизайн-ревью</h2>
-          <p class="case-split-section__caption">Работала с&nbsp;разработкой в&nbsp;несколько итераций: проверяла реализацию, уточняла состояния, отступы, поведение компонентов и&nbsp;граничные случаи.</p>
-        </div>
-
-        <div class="case-split-section__media">
-          <img class="case-image" src="assets/images/avalike/avalike-design-review.png" alt="Дизайн-ревью Avalike" loading="lazy" decoding="async" />
-        </div>
-      </div>
-    </section>
-
     <section class="case-text-section" aria-labelledby="handoff-title">
       <div class="case-text-section__grid">
         <div class="case-text-section__content">
-          <h2 class="case-text-section__title" id="handoff-title">Hand-off</h2>
+          <h2 class="case-text-section__title" id="handoff-title">Передача макетов в разработку</h2>
 
           <div class="case-text-section__body">
             <p class="case-text-section__text">
@@ -3476,6 +3469,19 @@
               <li>компоненты</li>
             </ul>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-split-section" aria-labelledby="design-review-title">
+      <div class="case-split-section__grid">
+        <div class="case-split-section__text">
+          <h2 class="case-split-section__title" id="design-review-title">Дизайн-ревью</h2>
+          <p class="case-split-section__caption">Работала с&nbsp;разработкой в&nbsp;несколько итераций: проверяла реализацию, уточняла состояния, отступы, поведение компонентов и&nbsp;граничные случаи.</p>
+        </div>
+
+        <div class="case-split-section__media">
+          <img class="case-image" src="assets/images/avalike/avalike-design-review.png" alt="Дизайн-ревью Avalike" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>

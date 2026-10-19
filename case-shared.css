@@ -168,6 +168,11 @@ body,
   top: 124px;
 }
 
+/* Temporarily hide section navigation while retaining its markup and behavior. */
+.case-section-nav {
+  display: none !important;
+}
+
 /* Keep the lower navigation above page content and reserve room for it. */
 .case-nav {
   z-index: 30;
@@ -287,8 +292,8 @@ body,
   }
 }
 
-/* Reduce the centered eight-column content to six original columns. */
-@media (min-width: 1201px) {
+/* Reduce the centered eight-column content only above the large desktop breakpoint. */
+@media (min-width: 1561px) {
   :root {
     --case-content-max: calc((min(var(--case-wide-content-max, 1444px), calc(100vw - var(--case-page-x) * 2)) + var(--case-grid-gap)) * 3 / 4 - var(--case-grid-gap));
   }

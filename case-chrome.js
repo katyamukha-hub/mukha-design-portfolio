@@ -52,10 +52,5 @@
   }
   mobile.addEventListener('change', syncMobileChrome);
   syncMobileChrome();
-  email.addEventListener('click', async () => {
-    if (await window.siteEmailCopy.copy('katya@mukha.design')) window.siteEmailCopy.show();
-  });
-  email.addEventListener('keydown', event => {
-    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); email.click(); }
-  });
+  window.siteEmailCopy.bind(email, { container: footer });
 })();
