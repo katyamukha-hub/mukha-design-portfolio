@@ -2276,7 +2276,7 @@
       <button class="hero__email hero__email--bottom" type="button" aria-label="Скопировать email katya@mukha.design">
         <span class="hero__email-text">katya@mukha.design</span>
         <img class="hero__copy-icon" src="assets/Icons/copy icon.svg" alt="">
-        <span class="hero__copy-confirmation" aria-live="polite">почта скопирована</span>
+        <span class="hero__copy-confirmation" aria-live="polite">Почта скопирована</span>
       </button>
     </section>
 
@@ -3878,10 +3878,10 @@
       updateHeroCopyIcon();
     });
     let heroCopiedTimer;
-    const handleEmailCopy = async (event) => {
+    const handleEmailCopy = async () => {
       if (!(await copyEmailToClipboard(email))) return;
       window.siteEmailCopy.show();
-      if (event.currentTarget === emailButton) {
+      if (window.matchMedia("(min-width: 768px) and (hover: hover) and (pointer: fine)").matches) {
         clearTimeout(heroCopiedTimer);
         emailButton.classList.add("is-copied");
         heroCopyIcon.src = heroCopiedIcon;
