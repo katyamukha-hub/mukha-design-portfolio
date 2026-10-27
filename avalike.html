@@ -3029,8 +3029,7 @@
           <div class="case-hero__media case-animated-media">
             <video
               class="case-hero__image"
-              src="assets/images/avalike/avalike-case-hero.mp4"
-              poster="assets/images/avalike/avalike-results-cover.png"
+              poster="assets/images/avalike/avalike-case-hero-poster.jpg"
               width="1301"
               height="845"
               style="aspect-ratio: 1301 / 845;"
@@ -3040,7 +3039,11 @@
               loop
               preload="auto"
               aria-label="Интерфейс платформы Avalike"
-            ></video>
+            >
+              <source src="assets/images/avalike/avalike-case-hero-720p.mp4" media="(max-width: 767px)" type="video/mp4">
+              <source src="assets/images/avalike/avalike-case-hero-1080p.mp4" media="(max-width: 1439px)" type="video/mp4">
+              <source src="assets/images/avalike/avalike-case-hero.mp4" type="video/mp4">
+            </video>
 
           </div>
         </div>

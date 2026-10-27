@@ -2291,7 +2291,11 @@
 
       <div class="case-screen__content">
         <figure class="case-screen__visual">
-          <video src="assets/images/avalike/avalike-case-hero.mp4" poster="assets/images/обложки/avalike-case-hero-1440.png" width="1301" height="845" autoplay muted playsinline loop preload="metadata" aria-label="Обложка кейса Avalike"></video>
+          <video poster="assets/images/avalike/avalike-case-hero-poster.jpg" width="1301" height="845" autoplay muted playsinline loop preload="metadata" aria-label="Обложка кейса Avalike">
+              <source src="assets/images/avalike/avalike-case-hero-720p.mp4" media="(max-width: 767px)" type="video/mp4">
+              <source src="assets/images/avalike/avalike-case-hero-1080p.mp4" media="(max-width: 1439px)" type="video/mp4">
+              <source src="assets/images/avalike/avalike-case-hero.mp4" type="video/mp4">
+            </video>
         </figure>
 
         <footer class="case-screen__footer">
