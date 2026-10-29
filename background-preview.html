@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сравнение фонов — Katya Mukha</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; color: #424242; font: 14px/1.35 Arial, sans-serif; }
+  .toolbar { min-height: 88px; padding: 14px 24px; display: flex; align-items: center; gap: 24px; background: white; border-bottom: 1px solid #e8e8e8; }
+  .intro { flex: 0 0 auto; }
+  .intro strong { display: block; font-size: 14px; font-weight: 500; }
+  .intro span { display: block; margin-top: 4px; font-size: 12px; color: #777; }
+  .options { display: flex; gap: 8px; flex-wrap: wrap; }
+  button { display: flex; align-items: center; gap: 9px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; background: white; color: inherit; cursor: pointer; text-align: left; font: inherit; }
+  button[aria-pressed="true"] { border-color: #424242; box-shadow: inset 0 0 0 1px #424242; }
+  button:focus-visible { outline: 2px solid #424242; outline-offset: 3px; }
+  .swatch { width: 28px; height: 28px; border: 1px solid #dedede; border-radius: 50%; background: var(--swatch); }
+  small { display: block; color: #777; font-size: 11px; margin-top: 2px; }
+  iframe { display: block; width: 100%; height: calc(100dvh - var(--toolbar-height, 88px)); border: 0; }
+  @media(max-width: 700px) { .toolbar { padding: 12px; gap: 10px; flex-direction: column; align-items: flex-start; } button { padding: 6px 8px; font-size: 12px; } .swatch { width: 22px; height: 22px; } }
+</style>
+<header class="toolbar">
+  <div class="intro"><strong>Фон главной</strong><span>Сравните на всей странице</span></div>
+  <div class="options" aria-label="Варианты фона"></div>
+</header>
+<iframe src="index.html" title="Главная страница с выбранным фоном"></iframe>
+<script>
+  const variants = [
+    ['Нейтральный · выбран', '#F8F8F7'],
+    ['Почти белый', '#FCFCFC'],
+    ['Светлый молочный', '#FDFCF9'],
+    ['Светлый прохладный', '#FAFCFE'],
+    ['Чистый белый', '#FFFFFF']
+  ];
+  const frame = document.querySelector('iframe');
+  const options = document.querySelector('.options');
+  let selected = Math.max(0, variants.findIndex(([, color]) => color.slice(1) === location.hash.slice(1).toUpperCase()));
+  if (!location.hash) selected = 0;
+  const apply = () => {
+    const color = variants[selected][1];
+    frame.contentDocument.documentElement.style.setProperty('--background', color);
+    [...options.children].forEach((button, index) => button.setAttribute('aria-pressed', String(index === selected)));
+    history.replaceState(null, '', '#' + color.slice(1));
+  };
+  variants.forEach(([name, color], index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.style.setProperty('--swatch', color);
+    button.innerHTML = `<span class="swatch" aria-hidden="true"></span><span>${name}<small>${color}</small></span>`;
+    button.setAttribute('aria-pressed', String(index === selected));
+    button.addEventListener('click', () => { selected = index; apply(); });
+    options.append(button);
+  });
+  frame.addEventListener('load', apply);
+  new ResizeObserver(([entry]) => document.documentElement.style.setProperty('--toolbar-height', `${entry.target.getBoundingClientRect().height}px`)).observe(document.querySelector('.toolbar'));
+</script>
+</html>

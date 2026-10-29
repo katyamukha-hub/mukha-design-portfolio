@@ -10,7 +10,7 @@
   min-height: 48px;
   padding: 10px 18px;
   border-radius: 16px;
-  background: rgba(245, 242, 242, .58);
+  background: rgba(248, 248, 247, .58);
   -webkit-backdrop-filter: blur(24px);
   backdrop-filter: blur(24px);
   box-shadow: 0 8px 28px rgba(33, 34, 34, .1);
@@ -32,7 +32,7 @@
 }
 .email-toast__message { white-space: nowrap; }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .email-toast { background: rgba(245, 242, 242, .94); }
+  .email-toast { background: rgba(248, 248, 247, .94); }
 }
 @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
   .email-toast { display: none; }

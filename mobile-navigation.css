@@ -1,10 +1,10 @@
 /* Shared mobile menu surfaces; use the opaque site colour without blur support. */
 @media (max-width: 767px) {
   :root {
-    --mobile-menu-surface: var(--background, var(--case-bg, #f5f2f2));
+    --mobile-menu-surface: var(--background, var(--case-bg, #f8f8f7));
     --mobile-menu-blur: 30px;
     --mobile-menu-outset: 8px;
-    --mobile-menu-rgb: 245, 242, 242; /* Site background #f5f2f2. */
+    --mobile-menu-rgb: 248, 248, 247; /* Site background #f8f8f7. */
   }
 
   @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
