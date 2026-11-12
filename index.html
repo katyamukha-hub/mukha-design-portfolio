@@ -83,8 +83,6 @@
       --font-caption-letter-spacing: 0;
       --arrow-width: 13.333px;
       --arrow-height: 12.378px;
-      --copy-icon-scale: 0.9090909;
-      --copy-icon-copied-scale: 0.7438016;
       --hero-intro-size: var(--font-primary-size);
       --hero-intro-line-height: var(--font-primary-line-height);
       --font-primary-menu-gap: calc(var(--font-primary-line-height) * 0.7142857);
@@ -262,34 +260,66 @@
 
     .hero__copy-icon {
       display: block;
-      width: 28px;
-      height: 28px;
-      flex: 0 0 28px;
-      transform: translateY(1px) scale(var(--copy-icon-scale));
+      flex: none;
+      transform: translateY(1px);
+    }
+
+    .hero__copy-sheets {
+      stroke: #424242;
+      opacity: 0.58;
+      transform-origin: center;
+      transition: opacity 150ms ease, transform 180ms ease;
+    }
+
+    .hero__email:is(:hover, :focus-visible) .hero__copy-sheets {
+      opacity: 1;
+    }
+
+    .hero__copy-checks {
+      opacity: 0;
+      transition: opacity 130ms ease;
+    }
+
+    .hero__copy-checks path {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      transition: stroke-dashoffset 0ms 130ms;
+    }
+
+    .hero__email.is-copied .hero__copy-sheets {
+      opacity: 0;
+      transform: translateY(-2px) scale(0.78);
+    }
+
+    .hero__email.is-copied .hero__copy-checks {
+      opacity: 1;
+    }
+
+    .hero__email.is-copied .hero__copy-checks path {
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 210ms ease-out 60ms;
+    }
+
+    .hero__email.is-copied .hero__copy-checks path + path {
+      transition-delay: 135ms;
     }
 
     .hero__copy-confirmation {
       position: absolute;
-      top: calc(100% + 8px);
-      right: 0;
-      z-index: 2;
-      padding: 4px 8px;
-      border-radius: 3px;
-      background: var(--background);
-      font-size: 12px;
-      opacity: 0;
-      visibility: hidden;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
       white-space: nowrap;
-      transition: opacity 160ms ease, visibility 160ms ease;
     }
 
-    .hero__email.is-copied .hero__copy-icon {
-      transform: translateY(1px) scale(var(--copy-icon-copied-scale));
-    }
-
-    .hero__email.is-copied .hero__copy-confirmation {
-      opacity: 1;
-      visibility: visible;
+    @media (prefers-reduced-motion: reduce) {
+      .hero__copy-sheets,
+      .hero__copy-checks,
+      .hero__email.is-copied .hero__copy-checks path,
+      .hero__email.is-copied .hero__copy-checks path + path {
+        transition: none;
+      }
     }
 
     /* Vertical hero positions scale from a 700px viewport height. */
@@ -2275,8 +2305,17 @@
       </div>
       <button class="hero__email hero__email--bottom" type="button" aria-label="Скопировать email katya@mukha.design">
         <span class="hero__email-text">katya@mukha.design</span>
-        <img class="hero__copy-icon" src="assets/Icons/copy icon.svg" alt="">
-        <span class="hero__copy-confirmation" aria-live="polite">Почта скопирована</span>
+        <svg class="hero__copy-icon" width="21.25" height="28" viewBox="0 0 21.25 28" fill="none" aria-hidden="true">
+          <g class="hero__copy-sheets" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.5 6.5h7.75a2 2 0 0 1 2 2v7.75"/>
+            <rect x="7.25" y="9.75" width="9.75" height="9.75" rx="2"/>
+          </g>
+          <g class="hero__copy-checks" stroke="#424242" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6.5 13.5 3.5 3.5 6.5-6.5" pathLength="1"/>
+            <path d="m14 17 6.5-6.5" pathLength="1"/>
+          </g>
+        </svg>
+        <span class="hero__copy-confirmation" role="status"></span>
       </button>
     </section>
 
@@ -3860,46 +3899,18 @@
       });
     });
 
-    const copyEmailToClipboard = (address) => window.siteEmailCopy.copy(address);
-
-    const heroCopyIcon = emailButton.querySelector(".hero__copy-icon");
-    const heroDefaultIcon = "assets/Icons/copy icon.svg";
-    const heroHoverIcon = "assets/Icons/copy icon_hover.svg";
-    const heroCopiedIcon = "assets/Icons/copy icon_copied.svg";
-    let keepHeroDefaultIcon = false;
-    const updateHeroCopyIcon = () => {
-      if (emailButton.classList.contains("is-copied")) return;
-      heroCopyIcon.src = !keepHeroDefaultIcon &&
-        (emailButton.matches(":hover") || emailButton.matches(":focus-visible"))
-        ? heroHoverIcon : heroDefaultIcon;
-    };
-    emailButton.addEventListener("pointerenter", () => {
-      keepHeroDefaultIcon = false;
-      updateHeroCopyIcon();
-    });
-    emailButton.addEventListener("pointerleave", () => {
-      keepHeroDefaultIcon = false;
-      updateHeroCopyIcon();
-    });
-    emailButton.addEventListener("focus", updateHeroCopyIcon);
-    emailButton.addEventListener("blur", () => {
-      keepHeroDefaultIcon = false;
-      updateHeroCopyIcon();
-    });
+    const heroCopyConfirmation = emailButton.querySelector(".hero__copy-confirmation");
     let heroCopiedTimer;
     const handleEmailCopy = async () => {
-      if (!(await copyEmailToClipboard(email))) return;
-      window.siteEmailCopy.show();
-      if (window.matchMedia("(min-width: 768px) and (hover: hover) and (pointer: fine)").matches) {
-        clearTimeout(heroCopiedTimer);
-        emailButton.classList.add("is-copied");
-        heroCopyIcon.src = heroCopiedIcon;
-        heroCopiedTimer = setTimeout(() => {
-          emailButton.classList.remove("is-copied");
-          keepHeroDefaultIcon = true;
-          heroCopyIcon.src = heroDefaultIcon;
-        }, 2200);
-      }
+      if (!(await window.siteEmailCopy.copy(email))) return;
+
+      clearTimeout(heroCopiedTimer);
+      emailButton.classList.add("is-copied");
+      heroCopyConfirmation.textContent = "Почта скопирована";
+      heroCopiedTimer = setTimeout(() => {
+        emailButton.classList.remove("is-copied");
+        heroCopyConfirmation.textContent = "";
+      }, 1800);
     };
     emailButton.addEventListener("click", handleEmailCopy);
 
