@@ -7,7 +7,7 @@
   header.innerHTML = `
       <button class="portfolio-header__toggle" type="button" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span><span></span></button>
       <nav class="portfolio-header__nav" aria-label="Основная навигация">
-        <a href="https://mukha.design/">home,</a>
+        <a href="/?from=case">home,</a>
         <a href="https://mukha.design/#facts">обо&nbsp;мне,</a>
         <a href="https://mukha.design/#contacts">контакты</a>
       </nav>

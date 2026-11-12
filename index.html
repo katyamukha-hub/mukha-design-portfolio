@@ -421,6 +421,8 @@
       opacity: 0;
     }
 
+    body.skip-home-intro .loader-screen { display: none; }
+
     .loader-fly {
       position: fixed;
       z-index: 100;
@@ -2299,6 +2301,16 @@
   <script src="mobile-navigation.js" defer></script>
 </head>
 <body>
+  <script>
+    {
+      const homeURL = new URL(location.href);
+      if (homeURL.searchParams.get("from") === "case") {
+        document.body.classList.add("skip-home-intro", "is-loaded", "is-fly-complete");
+        homeURL.searchParams.delete("from");
+        history.replaceState(history.state, "", homeURL);
+      }
+    }
+  </script>
   <!-- Tint external SVG artwork through its alpha channel, only on mobile.
        Source paths, including the email's fixed fill/blend mode, stay unchanged. -->
   <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute; pointer-events:none; overflow:hidden">
@@ -2552,6 +2564,11 @@
     <a href="https://t.me/katyamukha" target="_blank" rel="noreferrer"><img class="hero__link-arrow" src="assets/Icons/arrow.svg" alt="">telegram</a>
   </nav>
   <script>
+    const homePageEvents = new AbortController();
+    window.addEventListener("avalike:leaving-home", () => homePageEvents.abort(), { once: true });
+    const listenOnHome = (target, type, listener, options = {}) => {
+      target.addEventListener(type, listener, { ...options, signal: homePageEvents.signal });
+    };
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     const navigationEntry = performance.getEntriesByType("navigation")[0];
     const isPageReload = navigationEntry?.type === "reload";
@@ -2560,7 +2577,7 @@
     }
     window.scrollTo(0, 0);
     if (isPageReload) {
-      window.addEventListener("pageshow", () => window.scrollTo(0, 0), { once: true });
+      listenOnHome(window, "pageshow", () => window.scrollTo(0, 0), { once: true });
     }
 
     const initializeKatyaDrawing = async () => {
@@ -2758,16 +2775,16 @@
       });
     };
     // Listen outside the logo too: the cursor's circle can overlap it from outside.
-    window.addEventListener("pointermove", handleKatyaPointer, { passive: true });
+    listenOnHome(window, "pointermove", handleKatyaPointer, { passive: true });
     const clearKatyaPointer = () => {
       katyaPreviousPointer = null;
       katyaGroups.forEach(group => { group.inside = false; });
     };
     document.documentElement.addEventListener("pointerleave", clearKatyaPointer);
-    window.addEventListener("pointercancel", clearKatyaPointer);
-    window.addEventListener("blur", clearKatyaPointer);
-    window.addEventListener("scroll", clearKatyaPointer, { passive: true });
-    window.addEventListener("resize", clearKatyaPointer, { passive: true });
+    listenOnHome(window, "pointercancel", clearKatyaPointer);
+    listenOnHome(window, "blur", clearKatyaPointer);
+    listenOnHome(window, "scroll", clearKatyaPointer, { passive: true });
+    listenOnHome(window, "resize", clearKatyaPointer, { passive: true });
     katyaReducedMotion.addEventListener("change", () => {
       if (!katyaReducedMotion.matches) return;
       cancelAnimationFrame(katyaFrame);
@@ -2821,12 +2838,13 @@
       });
     };
     const scheduleCaseSpacing = () => {
+      if (homePageEvents.signal.aborted) return;
       cancelAnimationFrame(caseSpacingFrame);
       caseSpacingFrame = requestAnimationFrame(updateCaseSpacing);
     };
     scheduleCaseSpacing();
-    window.addEventListener("resize", scheduleCaseSpacing);
-    window.addEventListener("load", scheduleCaseSpacing, { once: true });
+    listenOnHome(window, "resize", scheduleCaseSpacing);
+    listenOnHome(window, "load", scheduleCaseSpacing, { once: true });
     document.fonts.ready.then(scheduleCaseSpacing);
     allCaseScreens.forEach((section) => {
       const media = getCaseMedia(section);
@@ -3054,7 +3072,7 @@
       if (!photoTrigger.contains(event.target) && !photoStack.contains(event.target)) stopHeroPhotos();
     });
     heroScreen.addEventListener("pointerleave", stopHeroPhotos);
-    window.addEventListener("resize", () => {
+    listenOnHome(window, "resize", () => {
       if (window.innerWidth < 1000) stopHeroPhotos();
       else if (photoStack.classList.contains("is-open")) renderPhotoFan();
     });
@@ -3217,7 +3235,7 @@
     };
 
     desktopPhotoClose.addEventListener("click", () => closeDesktopComposition());
-    document.addEventListener("keydown", (event) => {
+    listenOnHome(document, "keydown", (event) => {
       if (event.key === "Escape") closeDesktopComposition();
     });
 
@@ -3282,7 +3300,7 @@
     desktopPhotoComposition.addEventListener("click", (event) => {
       if (event.target === desktopPhotoComposition) closeDesktopComposition();
     });
-    window.addEventListener("resize", () => {
+    listenOnHome(window, "resize", () => {
       if (window.innerWidth < 768 && desktopPhotoState !== "closed") closeDesktopComposition();
       else if (desktopPhotoState === "open" || desktopPhotoState === "opening") renderDesktopComposition();
     });
@@ -3708,10 +3726,10 @@
       const bottom = Math.max(...bounds.map((item) => item.bottom));
       if (event.clientY < top || event.clientY > bottom) closeMobilePhotoViewer();
     });
-    document.addEventListener("keydown", (event) => {
+    listenOnHome(document, "keydown", (event) => {
       if (event.key === "Escape") closeMobilePhotoViewer();
     });
-    window.addEventListener("resize", () => {
+    listenOnHome(window, "resize", () => {
       if (!isMobilePhotoViewer()) closeMobilePhotoViewer();
       else if (mobilePhotoViewer.classList.contains("is-open") && !mobilePhotoBusy && !mobilePhotoDragging) renderMobilePhotoDeck();
     });
@@ -3736,7 +3754,7 @@
       postOfficeScrollIndicator.setAttribute("aria-valuenow", String(Math.round(progress * 100)));
     };
     postOfficeGallery.addEventListener("scroll", updatePostOfficeScrollIndicator, { passive: true });
-    window.addEventListener("resize", updatePostOfficeScrollIndicator);
+    listenOnHome(window, "resize", updatePostOfficeScrollIndicator);
     updatePostOfficeScrollIndicator();
     let postOfficeIndicatorDrag = null;
     const scrollPostOfficeFromIndicator = (event) => {
@@ -3839,8 +3857,8 @@
         item.section.style.setProperty("--mobile-case-offset", `${offset}px`);
       });
     };
-    window.addEventListener("resize", updateMobileCaseParallax, { passive: true });
-    window.addEventListener("load", updateMobileCaseParallax, { once: true });
+    listenOnHome(window, "resize", updateMobileCaseParallax, { passive: true });
+    listenOnHome(window, "load", updateMobileCaseParallax, { once: true });
     mobileCaseMotion.addEventListener("change", updateMobileCaseParallax);
 
     const updateHeroParallax = () => {
@@ -3855,7 +3873,7 @@
       parallaxFrame = undefined;
     };
 
-    window.addEventListener("scroll", () => {
+    listenOnHome(window, "scroll", () => {
       if (!parallaxFrame) parallaxFrame = window.requestAnimationFrame(updateHeroParallax);
       document.body.classList.toggle("case-active", window.scrollY > 80);
     }, { passive: true });
@@ -3863,52 +3881,56 @@
     updateHeroParallax();
     document.body.classList.toggle("case-active", window.scrollY > 80);
 
-    const loaderFly = document.querySelector(".loader-fly");
-    const getFlyAngle = (style) => {
-      const matrix = new DOMMatrixReadOnly(style.transform === "none" ? undefined : style.transform);
-      let angle = Math.atan2(matrix.b, matrix.a) * 180 / Math.PI;
-      // Include the independent CSS rotate property if it is used on the final fly.
-      const rotation = style.rotate || "none";
-      if (rotation !== "none") {
-        const value = rotation.trim().split(/\s+/).pop();
-        const number = parseFloat(value);
-        if (Number.isFinite(number)) {
-          angle += value.endsWith("grad") ? number * 0.9
-            : value.endsWith("rad") ? number * 180 / Math.PI
-            : value.endsWith("turn") ? number * 360 : number;
+    if (document.body.classList.contains("skip-home-intro")) {
+      document.querySelector(".loader-screen").remove();
+    } else {
+      const loaderFly = document.querySelector(".loader-fly");
+      const getFlyAngle = (style) => {
+        const matrix = new DOMMatrixReadOnly(style.transform === "none" ? undefined : style.transform);
+        let angle = Math.atan2(matrix.b, matrix.a) * 180 / Math.PI;
+        // Include the independent CSS rotate property if it is used on the final fly.
+        const rotation = style.rotate || "none";
+        if (rotation !== "none") {
+          const value = rotation.trim().split(/\s+/).pop();
+          const number = parseFloat(value);
+          if (Number.isFinite(number)) {
+            angle += value.endsWith("grad") ? number * 0.9
+              : value.endsWith("rad") ? number * 180 / Math.PI
+              : value.endsWith("turn") ? number * 360 : number;
+          }
         }
-      }
-      return angle;
-    };
-    // Both elements use the same artwork, so its intrinsic orientation is shared.
-    // Start at the computed final CSS angle, and finish one clockwise turn later.
-    const flyTargetAngle = getFlyAngle(getComputedStyle(heroFly));
-    const flyTurns = 1;
-    const flyEndAngle = flyTargetAngle + 360 * flyTurns;
-    loaderFly.style.setProperty("--fly-start-angle", `${flyTargetAngle}deg`);
-    loaderFly.style.setProperty("--fly-end-angle", `${flyEndAngle}deg`);
-    loaderFly.style.transform = `translate(-50%, -50%) rotate(${flyTargetAngle}deg)`;
-    loaderFly.addEventListener("animationend", (event) => {
-      if (event.animationName !== "loader-fly-spin") return;
-      // Preserve the exact final transform before releasing the filled animation.
-      loaderFly.style.transform = `translate(-50%, -50%) rotate(${flyEndAngle}deg)`;
-      loaderFly.classList.remove("is-spinning");
-      const target = heroFly.getBoundingClientRect();
-      loaderFly.style.top = `${target.top + target.height / 2}px`;
-      loaderFly.style.left = `${target.left + target.width / 2}px`;
-      loaderFly.style.width = `${target.width}px`;
-      loaderFly.style.height = `${target.height}px`;
-      document.body.classList.add("is-loaded");
-      window.setTimeout(() => {
-        document.body.classList.add("is-fly-complete");
+        return angle;
+      };
+      // Both elements use the same artwork, so its intrinsic orientation is shared.
+      // Start at the computed final CSS angle, and finish one clockwise turn later.
+      const flyTargetAngle = getFlyAngle(getComputedStyle(heroFly));
+      const flyTurns = 1;
+      const flyEndAngle = flyTargetAngle + 360 * flyTurns;
+      loaderFly.style.setProperty("--fly-start-angle", `${flyTargetAngle}deg`);
+      loaderFly.style.setProperty("--fly-end-angle", `${flyEndAngle}deg`);
+      loaderFly.style.transform = `translate(-50%, -50%) rotate(${flyTargetAngle}deg)`;
+      loaderFly.addEventListener("animationend", (event) => {
+        if (event.animationName !== "loader-fly-spin") return;
+        // Preserve the exact final transform before releasing the filled animation.
+        loaderFly.style.transform = `translate(-50%, -50%) rotate(${flyEndAngle}deg)`;
+        loaderFly.classList.remove("is-spinning");
+        const target = heroFly.getBoundingClientRect();
+        loaderFly.style.top = `${target.top + target.height / 2}px`;
+        loaderFly.style.left = `${target.left + target.width / 2}px`;
+        loaderFly.style.width = `${target.width}px`;
+        loaderFly.style.height = `${target.height}px`;
+        document.body.classList.add("is-loaded");
         window.setTimeout(() => {
-          loaderFly.closest(".loader-screen").remove();
-        }, 180);
-      }, 600);
-    }, { once: true });
-    loaderFly.classList.add("is-spinning");
+          document.body.classList.add("is-fly-complete");
+          window.setTimeout(() => {
+            loaderFly.closest(".loader-screen").remove();
+          }, 180);
+        }, 600);
+      }, { once: true });
+      loaderFly.classList.add("is-spinning");
+    }
 
-    document.addEventListener("pointermove", (event) => {
+    listenOnHome(document, "pointermove", (event) => {
       let activeCase = null;
 
       caseScreens.forEach((caseScreen) => {
@@ -3971,7 +3993,7 @@
     };
     emailButton.addEventListener("click", handleEmailCopy);
 
-    document.addEventListener('DOMContentLoaded', () => {
+    listenOnHome(document, 'DOMContentLoaded', () => {
       window.siteEmailCopy.bind(document.querySelector('.contacts-screen__email'), {
         container: document.querySelector('.contacts-screen'),
         button: document.querySelector('.contacts-screen__copy')
@@ -3979,6 +4001,6 @@
     }, { once: true });
 
   </script>
-  <script src="avalike-transition.js"></script>
+  <script src="avalike-transition.js?v=4"></script>
 </body>
 </html>

@@ -3,17 +3,21 @@
   border-radius: inherit;
 }
 
-[data-avalike-destination].is-restoring-video video {
-  visibility: hidden;
+.avalike-live-player-ancestor { display: contents; }
+.avalike-live-slot { aspect-ratio: 16 / 9; }
+
+.avalike-live-player {
+  position: absolute;
+  z-index: 1;
+  overflow: hidden;
+  margin: 0;
+  pointer-events: none;
 }
 
-.avalike-transition-still {
-  position: absolute;
-  inset: 0;
+.avalike-live-player video {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  pointer-events: none;
 }
 
 .is-avalike-arriving .avalike-cover-player {
@@ -29,12 +33,13 @@
   object-fit: contain;
 }
 
+.is-avalike-arriving .case-page-header,
 .is-avalike-arriving .avalike-hero-heading,
 .is-avalike-arriving .avalike-intro-content > .case-hero__description,
 .is-avalike-arriving .avalike-intro .case-meta,
 .is-avalike-arriving .avalike-intro ~ section,
 .is-avalike-arriving .page > footer {
-  animation: avalike-reveal 480ms ease-out 80ms both;
+  animation: avalike-reveal 600ms ease-out 350ms both;
 }
 
 @keyframes avalike-reveal {

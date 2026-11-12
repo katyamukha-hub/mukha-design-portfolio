@@ -1,147 +1,204 @@
 (() => {
   const link = document.querySelector("[data-avalike-link]");
-  const cover = document.querySelector("[data-avalike-cover]");
-  const video = cover.querySelector("video");
-  const storageKey = "avalike-cover-handoff";
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const video = link?.querySelector("[data-avalike-cover] video");
+  if (!video) return;
 
-  if (link) {
-    if (location.hostname === "mukha.design") link.href = "/avalike";
+  if (location.hostname === "mukha.design") link.href = "/avalike";
+  const root = document.documentElement;
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  let opening = false;
 
-    link.addEventListener("click", (event) => {
-      if (event.defaultPrevented || event.button !== 0 ||
-          event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-
-      const rect = cover.getBoundingClientRect();
-      const handoff = {
-        time: video.currentTime,
-        createdAt: Date.now(),
-        bounds: [rect.left, rect.top, rect.width, rect.height],
-        viewportWidth: window.innerWidth
-      };
-      if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && video.videoWidth) {
-        try {
-          const canvas = document.createElement("canvas");
-          canvas.width = Math.min(video.videoWidth, 960);
-          canvas.height = Math.round(canvas.width * video.videoHeight / video.videoWidth);
-          canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
-          handoff.frame = canvas.toDataURL("image/jpeg", 0.82);
-        } catch {
-          // The destination can use its poster if the current frame is unavailable.
-        }
-      }
-      try {
-        sessionStorage.setItem(storageKey, JSON.stringify(handoff));
-      } catch {
-        // Storage can be disabled. The link still opens the case.
-      }
+  const animateCover = (cover, player, source, onFinish) => {
+    const target = cover.getBoundingClientRect();
+    const frame = (rect, borderRadius) => ({
+      left: rect.left + "px",
+      top: rect.top + "px",
+      width: rect.width + "px",
+      height: rect.height + "px",
+      borderRadius
     });
 
-    return;
-  }
+    cover.style.height = target.height + "px";
+    root.classList.add("is-avalike-arriving");
+    const start = frame(source.rect, source.radius);
+    const animation = player.animate([
+      { ...start, offset: 0 },
+      { ...start, offset: 0.1, easing: "cubic-bezier(.4,0,.25,1)" },
+      { ...frame(target, getComputedStyle(cover).borderRadius), offset: 1 }
+    ], { duration: 1000, fill: "both" });
+    const events = new AbortController();
+    const cleanup = () => {
+      events.abort();
+      root.classList.remove("is-avalike-arriving");
+      cover.style.removeProperty("height");
+      animation.cancel();
+      onFinish?.();
+    };
+    window.addEventListener("resize", () => animation.cancel(), { signal: events.signal });
+    animation.finished.then(cleanup, cleanup);
+  };
 
-  let handoff;
-  try {
-    handoff = JSON.parse(sessionStorage.getItem(storageKey));
-    sessionStorage.removeItem(storageKey);
-  } catch {
-    // Direct visits and unavailable storage both use the normal player.
-  }
-  const fromHome = document.referrer && new URL(document.referrer).origin === location.origin &&
-    /^\/(?:index\.html)?$/.test(new URL(document.referrer).pathname);
-  const resume = fromHome && Number.isFinite(handoff?.time) &&
-    handoff.time >= 0 && Date.now() - handoff.createdAt < 15000;
-
-  if (!resume) return;
-
-  const player = cover.querySelector(".avalike-cover-player");
-  const still = document.createElement("img");
-  still.className = "avalike-transition-still";
-  still.alt = "";
-  still.src = handoff.frame || video.poster;
-  cover.classList.add("is-restoring-video");
-  player.append(still);
-  video.pause();
-
-  const start = handoff.bounds;
-  if (!reducedMotion.matches && typeof player.animate === "function" &&
-      window.innerWidth === handoff.viewportWidth &&
-      Array.isArray(start) && start.length === 4 && start.every(Number.isFinite) &&
-      start[2] > 0 && start[3] > 0 && start[1] < window.innerHeight && start[1] + start[3] > 0) {
-    // Wait for the complete hero and its layout, then start before the first paint.
-    requestAnimationFrame(() => {
-      const target = cover.getBoundingClientRect();
-      const end = [target.left, target.top, target.width, target.height];
-      const dx = end[0] - start[0];
-      const dy = end[1] - start[1];
-      const stretchX = Math.min(36, Math.abs(dx) * 0.13);
-      const stretchY = Math.min(32, Math.abs(dy) * 0.11);
-      const frame = ([left, top, width, height]) => ({
-        left: `${left}px`, top: `${top}px`, width: `${width}px`, height: `${height}px`
+  const keepPlayerConnected = (cover, main) => {
+    const player = video.parentElement;
+    // Some browsers restart media when a playing element is reparented.
+    // Keep its original ancestor chain and align the player over the case slot.
+    for (let child = player; child.parentElement !== document.body;) {
+      const parent = child.parentElement;
+      for (const sibling of [...parent.children]) {
+        if (sibling !== child) sibling.remove();
+      }
+      for (const name of parent.getAttributeNames()) parent.removeAttribute(name);
+      parent.className = "avalike-live-player-ancestor";
+      child = parent;
+    }
+    player.removeAttribute("data-avalike-cover");
+    player.className = "avalike-cover-player avalike-live-player";
+    cover.classList.add("avalike-live-slot");
+    cover.setAttribute("role", "img");
+    cover.setAttribute("aria-label", video.getAttribute("aria-label"));
+    player.setAttribute("aria-hidden", "true");
+    const align = () => {
+      const bounds = cover.getBoundingClientRect();
+      Object.assign(player.style, {
+        left: bounds.left + window.scrollX + "px",
+        top: bounds.top + window.scrollY + "px",
+        width: bounds.width + "px",
+        height: bounds.height + "px",
+        borderRadius: getComputedStyle(cover).borderRadius
       });
-      const stretch = [
-        start[0] + dx * 0.7 - stretchX / 2,
-        start[1] + dy * 0.7 - stretchY / 2,
-        start[2] + (end[2] - start[2]) * 0.7 + stretchX,
-        start[3] + (end[3] - start[3]) * 0.7 + stretchY
-      ];
-      const overshoot = [
-        end[0] + Math.max(-12, Math.min(12, dx * 0.035)),
-        end[1] + Math.max(-14, Math.min(14, dy * 0.04)),
-        end[2],
-        end[3]
-      ];
-
-      cover.style.height = `${target.height}px`;
-      document.documentElement.classList.add("is-avalike-arriving");
-      const animation = player.animate([
-        { ...frame(start), offset: 0, easing: "cubic-bezier(.28,.15,.47,1)" },
-        { ...frame(stretch), offset: 0.52, easing: "ease-out" },
-        { ...frame(overshoot), offset: 0.8, easing: "ease-in-out", backgroundColor: "#222224" },
-        { ...frame(end), offset: 1, backgroundColor: "transparent" }
-      ], { duration: 680, fill: "both" });
-      const resize = new AbortController();
-      const cleanup = () => {
-        resize.abort();
-        document.documentElement.classList.remove("is-avalike-arriving");
-        cover.style.removeProperty("height");
-        animation.cancel();
-      };
-      animation.finished.then(cleanup, cleanup);
-      window.addEventListener("resize", () => animation.cancel(), { once: true, signal: resize.signal });
-    });
-  }
-
-  const events = new AbortController();
-  const options = { signal: events.signal };
-  let positionRequested = false;
-  const finish = () => {
-    events.abort();
-    clearTimeout(timeout);
-    still.remove();
-    cover.classList.remove("is-restoring-video");
-    video.play().catch(() => {});
+    };
+    const observer = new ResizeObserver(align);
+    observer.observe(main);
+    observer.observe(cover);
+    window.addEventListener("resize", align, { passive: true });
+    document.fonts.ready.then(align);
+    align();
+    return align;
   };
-  const timeout = setTimeout(finish, 4500);
-  const seek = () => {
-    if (positionRequested) return;
-    positionRequested = true;
-    const limit = Number.isFinite(video.duration) ? Math.max(0, video.duration - 0.05) : handoff.time;
-    const position = Math.min(handoff.time, limit);
-    if (Math.abs(video.currentTime - position) < 0.04 &&
-        video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-      finish();
-      return;
+
+  const prepareStyles = async (caseDocument, styles) => {
+    const pending = [];
+    for (const source of caseDocument.head.querySelectorAll('style, link[rel="stylesheet"]')) {
+      const style = document.importNode(source, true);
+      const media = style.media;
+      style.media = "not all";
+      styles.push({ style, media });
+      if (style instanceof HTMLLinkElement) {
+        pending.push(new Promise((resolve, reject) => {
+          style.addEventListener("load", resolve, { once: true });
+          style.addEventListener("error", reject, { once: true });
+        }));
+      }
+      document.head.append(style);
     }
+    let timeout;
     try {
-      video.currentTime = position;
-    } catch {
-      finish();
+      await Promise.race([
+        Promise.all(pending),
+        new Promise((_, reject) => {
+          timeout = setTimeout(() => reject(new Error("Case styles timed out")), 5000);
+        })
+      ]);
+    } finally {
+      clearTimeout(timeout);
     }
   };
 
-  video.addEventListener("seeked", finish, options);
-  video.addEventListener("error", finish, options);
-  video.addEventListener("loadedmetadata", seek, options);
-  if (video.readyState >= HTMLMediaElement.HAVE_METADATA) seek();
+  const initCase = async (source) => {
+    const appendScript = (script) => document.body.append(script);
+    const loadScript = (src) => new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = resolve;
+      script.onerror = reject;
+      appendScript(script);
+    });
+    const init = document.createElement("script");
+    init.textContent = "(() => {\n" + source.textContent + "\n})();";
+    appendScript(init);
+    await Promise.all([loadScript("case-shared.js"), loadScript("case-chrome.js?v=2")]);
+  };
+
+  link.addEventListener("click", async (event) => {
+    if (event.defaultPrevented || event.button !== 0 ||
+        event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ||
+        reducedMotion.matches) return;
+
+    event.preventDefault();
+    if (opening) return;
+    opening = true;
+    const destination = link.href;
+    const homeURL = location.href;
+    const homeStyles = [...document.head.querySelectorAll('style, link[rel="stylesheet"]')];
+    const caseStyles = [];
+    let caseMounted = false;
+
+    try {
+      const response = await fetch(destination, { signal: AbortSignal.timeout(5000) });
+      if (!response.ok) throw new Error("Case unavailable");
+      const caseDocument = new DOMParser().parseFromString(await response.text(), "text/html");
+      const main = caseDocument.querySelector("main.page");
+      const placeholder = main?.querySelector("[data-avalike-destination] video");
+      const init = caseDocument.querySelector("[data-avalike-init]");
+      if (!placeholder || !init) throw new Error("Case layout unavailable");
+
+      const destinationVideoClass = placeholder.className;
+      const destinationVideoLabel = placeholder.getAttribute("aria-label");
+      let player = placeholder.parentElement;
+      const cover = player.parentElement;
+      placeholder.remove();
+      await prepareStyles(caseDocument, caseStyles);
+      if (location.href !== homeURL || !link.isConnected) {
+        caseStyles.forEach(({ style }) => style.remove());
+        opening = false;
+        return;
+      }
+
+      const source = { rect: video.getBoundingClientRect(), radius: getComputedStyle(video).borderRadius };
+      const canMovePlayer = typeof Element.prototype.moveBefore === "function";
+      const originalMain = video.closest("main");
+      const homeContent = [...document.body.children].filter(element =>
+        !element.matches("script, .email-toast") && (canMovePlayer || element !== originalMain)
+      );
+      history.pushState(null, "", destination);
+      caseMounted = true;
+      window.addEventListener("popstate", () => location.reload(), { once: true });
+      window.dispatchEvent(new Event("avalike:leaving-home"));
+      homeStyles.forEach(style => style.remove());
+      caseStyles.forEach(({ style, media }) => { style.media = media; });
+      document.body.append(main);
+      if (canMovePlayer) player.moveBefore(video, null);
+      video.className = destinationVideoClass;
+      video.setAttribute("aria-label", destinationVideoLabel);
+      video.width = video.videoWidth || 1920;
+      video.height = video.videoHeight || 1080;
+      homeContent.forEach(element => element.remove());
+      document.body.className = caseDocument.body.className;
+      document.title = caseDocument.title;
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+
+      let alignPlayer;
+      if (!canMovePlayer) {
+        player.remove();
+        alignPlayer = keepPlayerConnected(cover, main);
+        player = video.parentElement;
+      }
+      if (!reducedMotion.matches && typeof player.animate === "function") {
+        animateCover(cover, player, source, alignPlayer);
+      }
+      video.play().catch(() => {});
+      const heading = main.querySelector("h1");
+      heading?.setAttribute("tabindex", "-1");
+      heading?.focus({ preventScroll: true });
+      await initCase(init);
+    } catch (error) {
+      console.warn("Avalike live transition unavailable", error);
+      if (caseMounted) {
+        location.reload();
+      } else {
+        caseStyles.forEach(({ style }) => style.remove());
+        location.assign(destination);
+      }
+    }
+  });
 })();

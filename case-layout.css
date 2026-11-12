@@ -1,0 +1,244 @@
+/* Avalike's approved type and spacing, applied to the Skillshare and Mendi grids. */
+.case-layout {
+  --case-layout-width: calc(100% - 2 * var(--case-page-x));
+  --case-section-space: var(--avalike-section-gap, 56px);
+  --case-title-space: var(--avalike-title-content-gap, 16px);
+  --case-hero-space: var(--avalike-hero-title-content-gap, 20px);
+  --case-caption-space: var(--avalike-caption-title-gap, 6px);
+  --case-media-space: var(--avalike-text-media-gap, 26px);
+  --case-copy-space: var(--avalike-paragraph-gap, 13px);
+  --case-section-title-size: var(--avalike-heading-font-size, 30px);
+  --case-content-color: var(--avalike-body-color, var(--case-ink));
+  --case-title-color: var(--avalike-heading-color, var(--case-ink));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--case-section-space);
+  width: var(--case-layout-width);
+  margin-inline: auto;
+  padding-block: var(--avalike-case-top-padding, 99px) var(--avalike-case-bottom-padding, 96px);
+}
+
+@media (width > 900px) {
+  .case-layout { width: min(720px, var(--case-layout-width)); }
+}
+
+@media (width > 760px) {
+  .case-layout {
+    --case-section-space: var(--avalike-section-gap, 80px);
+    --case-title-space: var(--avalike-title-content-gap, 18px);
+    --case-hero-space: var(--avalike-hero-title-content-gap, 24px);
+    --case-caption-space: var(--avalike-caption-title-gap, 7px);
+    --case-media-space: var(--avalike-text-media-gap, 36px);
+    --case-copy-space: var(--avalike-paragraph-gap, 12px);
+    --case-section-title-size: var(--avalike-heading-font-size, 28px);
+    --case-content-color: var(--avalike-body-color, #262626);
+    --case-title-color: var(--avalike-heading-color, #2b2b2b);
+    padding-block: var(--avalike-case-top-padding, 100px) var(--avalike-case-bottom-padding, 112px);
+  }
+}
+
+.case-layout[data-container-width] {
+  width: min(var(--avalike-container-width), var(--case-layout-width));
+}
+
+.case-layout :is(.case-hero, .case-text-section, .case-section-heading,
+  .case-image-section, .jtbd-section, .skillshare-hypotheses-section) {
+  min-width: 0;
+  margin-block: 0;
+  padding: 0;
+}
+
+.case-layout .case-hero { min-height: 0; }
+
+.case-layout :is(.case-hero__grid, .case-hero__content, .case-text-section__grid,
+  .case-section-heading__grid, .case-image-section__grid, .jtbd-section__grid,
+  .skillshare-hypotheses-section__inner) {
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  max-width: none;
+}
+
+.case-layout :is(.case-hero__content, .case-hero__text, .case-text-section__content,
+  .case-section-heading__content, .case-image-section__content, .jtbd-section__content,
+  .skillshare-hypotheses-section__title, .skillshare-hypotheses-grid) {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.case-layout .case-image-section--main-scenarios .case-image-section__content {
+  width: calc((100% + 100vw) / 2);
+  margin-inline: 0;
+  padding-inline: 0;
+}
+
+.case-layout :is(.case-layout-section, .case-layout-media-body,
+  .case-layout-copy, .case-layout-copy-part .case-section-heading__content,
+  .case-text-section__content, .jtbd-section__content) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+}
+
+.case-layout :is(.case-layout-section, .jtbd-section__content,
+  .skillshare-hypotheses-section__inner) { row-gap: var(--case-title-space); }
+.case-layout .case-layout-media-body { gap: var(--case-media-space); }
+.case-layout :is(.case-layout-copy, .case-layout-copy-part .case-section-heading__content,
+  .case-text-section__content) { row-gap: var(--case-copy-space); }
+.case-layout .case-text-section__content:has(> .case-layout-copy) { row-gap: var(--case-title-space); }
+
+.case-layout .case-hero__content {
+  display: grid;
+  row-gap: var(--case-hero-space);
+}
+
+.case-layout .case-layout-hero-body {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  row-gap: var(--case-media-space);
+}
+
+.case-layout .case-layout-hero-body > .case-hero__description { grid-column: 1 / -1; }
+.case-layout .case-hero__text--title-only {
+  display: grid;
+  gap: var(--case-caption-space);
+  margin: 0;
+}
+
+.case-layout .case-hero__title {
+  margin: 0;
+  color: var(--case-title-color);
+}
+
+.case-layout .case-hero__title:not(.case-hero__title--original) {
+  font-size: var(--avalike-hero-font-size, 32px);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
+.case-layout[data-hero-font-size] .case-hero__title--original {
+  font-size: var(--avalike-hero-font-size);
+}
+
+.case-layout h2 {
+  margin-block: 0;
+  color: var(--case-title-color);
+  font-size: var(--case-section-title-size);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.case-layout :is(.case-hero__description, .case-text-section__text,
+  .case-text-section__list, .case-section-heading__caption, .case-section-heading__list) {
+  max-width: none;
+  margin-block: 0;
+  color: var(--case-content-color);
+  font-size: var(--avalike-body-font-size, 17px);
+  line-height: var(--avalike-body-line-height, 26px);
+}
+
+.case-layout .case-hero__eyebrow {
+  margin: 0;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.case-layout :is(.jtbd-card, .hypotheses-card, .skillshare-hypothesis__card) {
+  min-width: 0;
+  min-height: 0;
+  padding: var(--avalike-story-card-padding, 24px);
+  background-color: #fff;
+  border-radius: 30px;
+  color: var(--case-content-color);
+  font-size: var(--avalike-story-font-size, 16px);
+  line-height: 24px;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+
+.case-layout :is(.jtbd-card, .hypotheses-card) { border-radius: 32px; }
+.case-layout .jtbd-card { line-height: 1.44444; }
+
+.case-layout :is(.hypotheses-card__label, .skillshare-hypothesis__label) {
+  margin-bottom: var(--avalike-story-label-content-gap, 8px);
+  font: 400 14px/24px "CoFo Sans Mono Trial", "CoFo Sans", Arial, sans-serif;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--case-ink);
+  opacity: .4;
+}
+
+.case-layout :is(.jtbd-board, .hypotheses-board, .skillshare-hypotheses-group) {
+  gap: var(--avalike-jtbd-card-gap, 8px);
+}
+
+.case-layout :is(.hypotheses-card__icon, .skillshare-hypothesis__icon) {
+  top: var(--avalike-hypothesis-icon-top, var(--case-hypothesis-icon-inset, 8px));
+  right: var(--avalike-hypothesis-icon-right, var(--case-hypothesis-icon-inset, 8px));
+}
+
+@media (width >= 700px) {
+  .case-layout [aria-labelledby="jtbd-title"] .jtbd-board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width < 700px) {
+  .case-layout [aria-labelledby="jtbd-title"] .jtbd-board {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (width > 760px) {
+  .case-layout {
+    --case-hypothesis-icon-inset: 18px;
+  }
+
+  .case-layout .case-hero__eyebrow {
+    color: #a3a3a3;
+    opacity: 1;
+  }
+
+  .case-layout :is(.jtbd-card, .hypotheses-card, .skillshare-hypothesis__card) {
+    line-height: var(--avalike-body-line-height, 26px);
+  }
+
+  .case-layout :is(.hypotheses-card, .skillshare-hypothesis__card) {
+    padding: var(--avalike-story-card-padding, 32px);
+  }
+
+  .case-layout :is(.hypotheses-board, .skillshare-hypotheses-group, .jtbd-board--hypothesis-spacing) {
+    gap: var(--avalike-jtbd-card-gap, 20px);
+  }
+
+  .case-layout :is(.hypotheses-card__label, .skillshare-hypothesis__label) {
+    margin-bottom: var(--avalike-story-label-content-gap, 6px);
+    color: #b5b5b5;
+    opacity: 1;
+  }
+}
+
+.case-layout[data-page-caption-color] .case-hero__eyebrow {
+  color: var(--avalike-page-caption-color);
+  opacity: 1;
+}
+
+.case-layout[data-story-caption-color] :is(.hypotheses-card__label, .skillshare-hypothesis__label) {
+  color: var(--avalike-story-caption-color);
+  opacity: 1;
+}
+
+.case-layout[data-hypothesis-background] .hypotheses-card {
+  background-color: var(--avalike-hypothesis-background);
+}
+
+.case-layout[data-mendi-card-radius] :is(.hypotheses-card, [aria-labelledby="jtbd-title"] .jtbd-card) {
+  border-radius: var(--avalike-mendi-card-radius);
+}
+
+.case-layout[data-highlight-body] :is(.case-hero__description, .case-text-section__text,
+  .case-text-section__list, .case-section-heading__caption, .case-section-heading__list) {
+  background-color: #ffe996;
+  outline: 1px solid #a66b00;
+  outline-offset: -1px;
+}
