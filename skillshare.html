@@ -2297,6 +2297,7 @@
   </style>
   <link rel="stylesheet" href="case-chrome.css" />
   <link rel="stylesheet" href="case-shared.css" />
+  <link rel="stylesheet" href="case-profile.css" />
   <script src="case-shared.js" defer></script>
   <link rel="stylesheet" href="mobile-navigation.css" />
   <link rel="stylesheet" href="email-toast.css" />
@@ -2309,272 +2310,286 @@
   <main class="page">
     <header class="portfolio-header case-page-header" data-case-header="skillshare" aria-label="Верхняя навигация"></header>
 
-    <section class="case-hero" aria-labelledby="case-title">
-      <div class="case-hero__grid">
-        <nav class="case-nav" aria-label="Навигация по кейсам">
-          <a class="case-nav__home" href="https://mukha.design/">Все кейсы</a>
-          <ul class="case-nav__list">
-            <li><a class="case-nav__link" href="https://mukha.design/avalike">Avalike</a></li>
-            <li><span class="case-nav__current">→ Skillshare</span></li>
-            <li><a class="case-nav__link" href="https://mukha.design/mendi">Mendi</a></li>
-          </ul>
-        </nav>
+    <div class="case-profile">
+      <section class="case-hero" aria-labelledby="case-title">
+        <div class="case-hero__grid">
+          <nav class="case-nav" aria-label="Навигация по кейсам">
+            <a class="case-nav__home" href="https://mukha.design/">Все кейсы</a>
+            <ul class="case-nav__list">
+              <li><a class="case-nav__link" href="https://mukha.design/avalike">Avalike</a></li>
+              <li><span class="case-nav__current">→ Skillshare</span></li>
+              <li><a class="case-nav__link" href="https://mukha.design/mendi">Mendi</a></li>
+            </ul>
+          </nav>
 
-        <nav class="case-section-nav" aria-label="Разделы кейса Skillshare">
-          <ul class="case-section-nav__list">
-            <li><a class="case-section-nav__link is-active" href="#results-title" data-section-target="results-title" aria-current="true">Результаты</a></li>
-            <li><a class="case-section-nav__link" href="#double-diamond-title" data-section-target="double-diamond-title">Double Diamond</a></li>
-            <li><a class="case-section-nav__link" href="#interviews-title" data-section-target="interviews-title">Глубинные интервью</a></li>
-            <li><a class="case-section-nav__link" href="#competitive-title" data-section-target="competitive-title">Конкурентный анализ</a></li>
-            <li><a class="case-section-nav__link" href="#hypotheses-title" data-section-target="hypotheses-title">Проверка гипотез</a></li>
-            <li><a class="case-section-nav__link" href="#journey-title" data-section-target="journey-title">User Journey Map</a></li>
-            <li><a class="case-section-nav__link" href="#wireframes-title" data-section-target="wireframes-title">Вайрфреймы</a></li>
-          </ul>
-        </nav>
+          <nav class="case-section-nav" aria-label="Разделы кейса Skillshare">
+            <ul class="case-section-nav__list">
+              <li><a class="case-section-nav__link is-active" href="#results-title" data-section-target="results-title" aria-current="true">Результаты</a></li>
+              <li><a class="case-section-nav__link" href="#double-diamond-title" data-section-target="double-diamond-title">Double Diamond</a></li>
+              <li><a class="case-section-nav__link" href="#interviews-title" data-section-target="interviews-title">Глубинные интервью</a></li>
+              <li><a class="case-section-nav__link" href="#competitive-title" data-section-target="competitive-title">Конкурентный анализ</a></li>
+              <li><a class="case-section-nav__link" href="#hypotheses-title" data-section-target="hypotheses-title">Проверка гипотез</a></li>
+              <li><a class="case-section-nav__link" href="#journey-title" data-section-target="journey-title">User Journey Map</a></li>
+              <li><a class="case-section-nav__link" href="#wireframes-title" data-section-target="wireframes-title">Вайрфреймы</a></li>
+            </ul>
+          </nav>
 
-        <button class="back-to-top" type="button" aria-label="Наверх">↑</button>
+          <button class="back-to-top" type="button" aria-label="Наверх">↑</button>
 
-        <div class="case-hero__content">
-          <div class="case-hero__text case-hero__text--title-only">
-            <p class="case-hero__eyebrow">Skillshare • Product designer • iOS, core flows</p>
+          <div class="case-hero__content">
+            <div class="case-hero__text case-hero__text--title-only">
+              <p class="case-hero__eyebrow">Skillshare • Product designer • iOS, core flows</p>
 
-            <h1 class="case-hero__title" id="case-title">Проектирование приложения, где пользователи могут найти хобби и&nbsp;провести мастер&#8209;класс</h1>
+              <h1 class="case-hero__title" id="case-title">Проектирование приложения, где пользователи могут найти хобби и&nbsp;провести мастер&#8209;класс</h1>
+            </div>
+
+            <div class="case-hero__media">
+              <video
+                class="case-hero__image case-hero__video"
+                src="assets/images/skillshare/skillshare-case-hero.mp4"
+                poster="assets/images/skillshare/skillshare-case-hero.png"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-label="Анимированная обложка Skillshare"
+              ></video>
+
+              <p class="case-hero__description case-hero__description--under-media">
+                Skillshare — мобильное приложение, которое позволяет делиться навыками и&nbsp;хобби через онлайн мастер&#8209;классы внутри платформы.
+              </p>
+            </div>
           </div>
+        </div>
+      </section>
 
-          <div class="case-hero__media">
-            <video
-              class="case-hero__image case-hero__video"
-              src="assets/images/skillshare/skillshare-case-hero.mp4"
-              poster="assets/images/skillshare/skillshare-case-hero.png"
-              autoplay
-              muted
-              loop
-              playsinline
-              preload="metadata"
-              aria-label="Анимированная обложка Skillshare"
-            ></video>
+      <section class="case-text-section case-text-section--before-media" aria-labelledby="results-title">
+        <div class="case-text-section__grid">
+          <div class="case-text-section__content">
+            <h2 class="case-text-section__title" id="results-title">Результаты</h2>
 
-            <p class="case-hero__description case-hero__description--under-media">
-              Skillshare — мобильное приложение, которое позволяет делиться навыками и&nbsp;хобби через онлайн мастер&#8209;классы внутри платформы.
+            <p class="case-text-section__text">
+              Протестировала сценарии ключевых потоков платформы:
+            </p>
+
+            <ul class="case-text-section__list">
+              <li>поиск и&nbsp;выбор мастер&#8209;класса;</li>
+              <li>страница мастер&#8209;класса и&nbsp;группы;</li>
+              <li>чат и&nbsp;коммуникация с&nbsp;участниками;</li>
+              <li>кабинет эксперта и&nbsp;создание мастер&#8209;класса.</li>
+            </ul>
+
+            <p class="case-text-section__text">
+              Спроектировала основные сценарии для приложения. На&nbsp;этапе исследования работала в&nbsp;команде из&nbsp;пяти человек, а&nbsp;на&nbsp;этапе разработки&nbsp;— как единственный дизайнер.
+            </p>
+
+            <p class="case-text-section__text">
+              Мы&nbsp;провели глубинные интервью, чтобы проверить продуктовые гипотезы, и&nbsp;конкурентный анализ, чтобы выявить повторяющиеся UX- и&nbsp;UI-паттерны. Затем протестировали вайрфреймы и&nbsp;подготовили финальные макеты.
             </p>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="case-text-section case-text-section--before-media" aria-labelledby="results-title">
-      <div class="case-text-section__grid">
-        <div class="case-text-section__content">
-          <h2 class="case-text-section__title" id="results-title">Результаты</h2>
-
-          <p class="case-text-section__text">
-            Протестировала сценарии ключевых потоков платформы:
-          </p>
-
-          <ul class="case-text-section__list">
-            <li>поиск и&nbsp;выбор мастер&#8209;класса;</li>
-            <li>страница мастер&#8209;класса и&nbsp;группы;</li>
-            <li>чат и&nbsp;коммуникация с&nbsp;участниками;</li>
-            <li>кабинет эксперта и&nbsp;создание мастер&#8209;класса.</li>
-          </ul>
-
-          <p class="case-text-section__text">
-            Спроектировала основные сценарии для приложения. На&nbsp;этапе исследования работала в&nbsp;команде из&nbsp;пяти человек, а&nbsp;на&nbsp;этапе разработки&nbsp;— как единственный дизайнер.
-          </p>
-
-          <p class="case-text-section__text">
-            Мы&nbsp;провели глубинные интервью, чтобы проверить продуктовые гипотезы, и&nbsp;конкурентный анализ, чтобы выявить повторяющиеся UX- и&nbsp;UI-паттерны. Затем протестировали вайрфреймы и&nbsp;подготовили финальные макеты.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="double-diamond-title">
-      <div class="case-section-heading__grid">
-        <div class="case-section-heading__content">
-          <h2 class="case-section-heading__title" id="double-diamond-title">Double Diamond</h2>
-          <p class="case-section-heading__caption">Модель этапов проектирования: от исследования задачи до проверки решения.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="case-image-section" aria-label="Double Diamond Skillshare">
-      <div class="case-image-section__grid">
-        <div class="case-image-section__content">
-          <img class="case-image" src="assets/images/skillshare/skillshare-double-diamond.png" alt="Double Diamond процесса Skillshare" loading="lazy" decoding="async" />
-        </div>
-      </div>
-    </section>
-
-    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="interviews-title">
-      <div class="case-section-heading__grid">
-        <div class="case-section-heading__content">
-          <h2 class="case-section-heading__title" id="interviews-title">Глубинные интервью</h2>
-          <p class="case-section-heading__caption">Вместе с&nbsp;командой провели 8&nbsp;глубинных интервью, чтобы проверить продуктовые гипотезы и&nbsp;понять мотивацию пользователей. Результаты систематизировали, выделили ключевые барьеры и&nbsp;использовали при проектировании основных сценариев.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="case-image-section" aria-label="Глубинные интервью Skillshare">
-      <div class="case-image-section__grid">
-        <div class="case-image-section__content">
-          <img class="case-image" src="assets/images/skillshare/skillshare-interview.png" alt="Материалы глубинных интервью Skillshare" loading="lazy" decoding="async" />
-        </div>
-      </div>
-    </section>
-
-    <section class="case-text-section" aria-label="Выводы глубинных интервью">
-      <div class="case-text-section__grid">
-        <div class="case-text-section__content">
-          <p class="case-text-section__text">Пользователям сложно оценить качество курса без отзывов, информации о&nbsp;преподавателе и&nbsp;возможности задать ему вопрос. Длинные занятия, отсутствие обратной связи и&nbsp;персонализации снижают мотивацию, а&nbsp;навязчивые продажи и&nbsp;избыточная геймификация подрывают доверие.</p>
-
-          <p class="case-text-section__text">Пользователи приходят с&nbsp;конкретной задачей и&nbsp;хотят заранее понимать, какого результата смогут достичь. Их&nbsp;поддерживают короткие структурированные уроки, видимый прогресс, обратная связь от&nbsp;эксперта и&nbsp;безопасное сообщество, где можно обсуждать работы и&nbsp;делиться результатами.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="competitive-title">
-      <div class="case-section-heading__grid">
-        <div class="case-section-heading__content">
-          <h2 class="case-section-heading__title" id="competitive-title">Конкурентный анализ</h2>
-          <p class="case-section-heading__caption">Был проведен анализ функционала приложений как прямых, так и&nbsp;косвенных конкурентов, включая способы записи, механики поиска, визуальное оформление и&nbsp;пользовательские сценарии.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="case-image-section" aria-label="Конкурентный анализ Skillshare">
-      <div class="case-image-section__grid">
-        <div class="case-image-section__content">
-          <img class="case-image case-image--competitive-analysis" src="assets/images/skillshare/skillshare-competitive-analysis.png" alt="Конкурентный анализ Skillshare" loading="lazy" decoding="async" />
-        </div>
-      </div>
-    </section>
-
-    <section class="skillshare-hypotheses-section" aria-labelledby="hypotheses-title">
-      <div class="skillshare-hypotheses-section__inner">
-        <h2 class="skillshare-hypotheses-section__title" id="hypotheses-title">Проверка гипотез</h2>
-
-        <div class="skillshare-hypotheses-grid">
-          <article class="skillshare-hypothesis">
-            <div class="skillshare-hypothesis__card">
-              <span class="skillshare-hypothesis__label">Гипотеза №1</span>
-              <p>Если дать пользователям большой выбор мастер-классов по разным хобби, у них появится мотивация пробовать новые занятия и развивать свои навыки.</p>
+      <div class="case-profile__group">
+        <section class="case-section-heading case-section-heading--before-media" aria-labelledby="double-diamond-title">
+          <div class="case-section-heading__grid">
+            <div class="case-section-heading__content">
+              <h2 class="case-section-heading__title" id="double-diamond-title">Double Diamond</h2>
+              <p class="case-section-heading__caption">Модель этапов проектирования: от исследования задачи до проверки решения.</p>
             </div>
-            <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
-              <img class="skillshare-hypothesis__icon" src="assets/images/check.svg" alt="Гипотеза подтверждена" />
-              <p>Подтвердилась. Обычно у пользователей уже есть конкретный запрос и они ищут, где его реализовать. Но кто-то ждет, пока его «зацепит», и это вполне может произойти в каталоге такого приложения. И чем больше выбор курсов, тем больше шансов, что человек подберет то, что ему интересно.</p>
-            </div>
-          </article>
+          </div>
+        </section>
 
-          <article class="skillshare-hypothesis">
-            <div class="skillshare-hypothesis__card">
-              <span class="skillshare-hypothesis__label">Гипотеза №2</span>
-              <p>Если придумать, как отслеживать прогресс и достижения, у пользователей появится мотивация заниматься хобби и достигать новых результатов.</p>
+        <section class="case-image-section" aria-label="Double Diamond Skillshare">
+          <div class="case-image-section__grid">
+            <div class="case-image-section__content">
+              <img class="case-image" src="assets/images/skillshare/skillshare-double-diamond.png" alt="Double Diamond процесса Skillshare" loading="lazy" decoding="async" />
             </div>
-            <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
-              <img class="skillshare-hypothesis__icon" src="assets/images/check.svg" alt="Гипотеза подтверждена" />
-              <p>Подтвердилась. Оценка своего прогресса важна для пользователей.</p>
-            </div>
-          </article>
-
-          <article class="skillshare-hypothesis">
-            <div class="skillshare-hypothesis__card">
-              <span class="skillshare-hypothesis__label">Гипотеза №3</span>
-              <p>Если создать возможность обмениваться навыками и своей экспертностью, пользователи начнут предлагать онлайн-уроки по интересным для себя темам.</p>
-            </div>
-            <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
-              <img class="skillshare-hypothesis__icon" src="assets/images/check.svg" alt="Гипотеза подтверждена" />
-              <p>Подтвердилась, но с оговорками. В основном пользователи готовы тратить время на то, чтобы делиться своими навыками, когда четко понимают, что за это получат (деньги, рекламу, новые полезные знакомства, какое-то иное весомое поощрение).</p>
-            </div>
-          </article>
-
-          <article class="skillshare-hypothesis">
-            <div class="skillshare-hypothesis__card">
-              <span class="skillshare-hypothesis__label">Гипотеза №4</span>
-              <p>Если дать возможность участвовать в групповых занятиях, удастся вовлечь пользователей в обучение, они будут обмениваться опытом и создавать сообщества по интересам.</p>
-            </div>
-            <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
-              <img class="skillshare-hypothesis__icon" src="assets/images/check.svg" alt="Гипотеза подтверждена" />
-              <p>Подтвердилась. Для пользователя важна обратная связь от других пользователей, возможность коммуникации и наличие комьюнити, где можно обсудить свои интересы и задать вопросы.</p>
-            </div>
-          </article>
-
-          <article class="skillshare-hypothesis">
-            <div class="skillshare-hypothesis__card">
-              <span class="skillshare-hypothesis__label">Гипотеза №5</span>
-              <p>Если пользователи будут видеть наглядный результат, который можно достичь, пройдя мастер-класс (в виде примеров работ преподавателя и студентов), то он с большей вероятностью захочет им воспользоваться.</p>
-            </div>
-            <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
-              <img class="skillshare-hypothesis__icon" src="assets/images/check.svg" alt="Гипотеза подтверждена" />
-              <p>Подтвердилась. Пользователю важно видеть результаты работы других пользователей до покупки курса. Это может послужить источником вдохновения, и мотивацией пройти курс.</p>
-            </div>
-          </article>
-
-          <article class="skillshare-hypothesis">
-            <div class="skillshare-hypothesis__card">
-              <span class="skillshare-hypothesis__label">Гипотеза №6</span>
-              <p>Если помочь пользователю понять, что ему подойдет (например, с помощью теста на тип личности), он быстрее и с большей вероятностью найдет для себя что-то интересное.</p>
-            </div>
-            <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
-              <img class="skillshare-hypothesis__icon" src="assets/images/minus.svg" alt="Гипотеза не подтвердилась" />
-              <p>Скорее не подтвердилась — пользователь приходит в приложение на платформу уже с довольно четким запросом и не чувствует потребности в тестах/подсказках.</p>
-            </div>
-          </article>
-
-        </div>
+          </div>
+        </section>
       </div>
-    </section>
 
-    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="journey-title">
-      <div class="case-section-heading__grid">
-        <div class="case-section-heading__content">
-          <h2 class="case-section-heading__title" id="journey-title">User Journey Map</h2>
-          <p class="case-section-heading__caption">Собрала карту пользовательского пути, чтобы увидеть точки сомнения, мотивацию и&nbsp;ключевые шаги от&nbsp;поиска хобби до&nbsp;участия в&nbsp;мастер&#8209;классе.</p>
-        </div>
-      </div>
-    </section>
+      <div class="case-profile__group">
+        <section class="case-section-heading case-section-heading--before-media" aria-labelledby="interviews-title">
+          <div class="case-section-heading__grid">
+            <div class="case-section-heading__content">
+              <h2 class="case-section-heading__title" id="interviews-title">Глубинные интервью</h2>
+              <p class="case-section-heading__caption">Вместе с&nbsp;командой провели 8&nbsp;глубинных интервью, чтобы проверить продуктовые гипотезы и&nbsp;понять мотивацию пользователей. Результаты систематизировали, выделили ключевые барьеры и&nbsp;использовали при проектировании основных сценариев.</p>
+            </div>
+          </div>
+        </section>
 
-    <section class="case-image-section" aria-label="User Journey Map Skillshare">
-      <div class="case-image-section__grid">
-        <div class="case-image-section__content">
-          <img class="case-image" src="assets/images/skillshare/skillshare-user-journey-map.png" alt="User Journey Map Skillshare" loading="lazy" decoding="async" />
-        </div>
-      </div>
-    </section>
+        <section class="case-image-section" aria-label="Глубинные интервью Skillshare">
+          <div class="case-image-section__grid">
+            <div class="case-image-section__content">
+              <img class="case-image" src="assets/images/skillshare/skillshare-interview.png" alt="Материалы глубинных интервью Skillshare" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </section>
 
-    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="wireframes-title">
-      <div class="case-section-heading__grid">
-        <div class="case-section-heading__content">
-          <h2 class="case-section-heading__title" id="wireframes-title">Вайрфреймы</h2>
-          <p class="case-section-heading__caption">Основные сценарии были собраны в&nbsp;вайрфреймах, чтобы до&nbsp;визуального дизайна проверить структуру экранов, навигацию и&nbsp;сценарии поиска мастер&#8209;класса.</p>
-        </div>
-      </div>
-    </section>
+        <section class="case-text-section" aria-label="Выводы глубинных интервью">
+          <div class="case-text-section__grid">
+            <div class="case-text-section__content">
+              <p class="case-text-section__text">Пользователям сложно оценить качество курса без отзывов, информации о&nbsp;преподавателе и&nbsp;возможности задать ему вопрос. Длинные занятия, отсутствие обратной связи и&nbsp;персонализации снижают мотивацию, а&nbsp;навязчивые продажи и&nbsp;избыточная геймификация подрывают доверие.</p>
 
-    <section class="case-image-section" aria-label="Вайрфреймы Skillshare">
-      <div class="case-image-section__grid">
-        <div class="case-image-section__content">
-          <img class="case-image" src="assets/images/skillshare/skillshare-wireframes.png" alt="Вайрфреймы Skillshare" loading="lazy" decoding="async" />
-        </div>
+              <p class="case-text-section__text">Пользователи приходят с&nbsp;конкретной задачей и&nbsp;хотят заранее понимать, какого результата смогут достичь. Их&nbsp;поддерживают короткие структурированные уроки, видимый прогресс, обратная связь от&nbsp;эксперта и&nbsp;безопасное сообщество, где можно обсуждать работы и&nbsp;делиться результатами.</p>
+            </div>
+          </div>
+        </section>
       </div>
-    </section>
 
-    <section class="case-section-heading case-section-heading--before-media" aria-labelledby="final-results-title">
-      <div class="case-section-heading__grid">
-        <div class="case-section-heading__content">
-          <h2 class="case-section-heading__title" id="final-results-title">Результаты</h2>
-          <p class="case-section-heading__caption">Финальные экраны приложения и ключевые сценарии Skillshare.</p>
-        </div>
-      </div>
-    </section>
+      <div class="case-profile__group">
+        <section class="case-section-heading case-section-heading--before-media" aria-labelledby="competitive-title">
+          <div class="case-section-heading__grid">
+            <div class="case-section-heading__content">
+              <h2 class="case-section-heading__title" id="competitive-title">Конкурентный анализ</h2>
+              <p class="case-section-heading__caption">Был проведен анализ функционала приложений как прямых, так и&nbsp;косвенных конкурентов, включая способы записи, механики поиска, визуальное оформление и&nbsp;пользовательские сценарии.</p>
+            </div>
+          </div>
+        </section>
 
-    <section class="case-image-section case-image-section--release" aria-label="Финальный дизайн Skillshare">
-      <div class="case-image-section__grid">
-        <div class="case-image-section__content">
-          <img class="case-image" src="assets/images/skillshare/skillshare-final-design.png" alt="Skillshare Final Design" loading="lazy" decoding="async" />
-        </div>
+        <section class="case-image-section" aria-label="Конкурентный анализ Skillshare">
+          <div class="case-image-section__grid">
+            <div class="case-image-section__content">
+              <img class="case-image case-image--competitive-analysis" src="assets/images/skillshare/skillshare-competitive-analysis.png" alt="Конкурентный анализ Skillshare" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </section>
       </div>
-    </section>
+
+      <section class="skillshare-hypotheses-section" aria-labelledby="hypotheses-title">
+        <div class="skillshare-hypotheses-section__inner">
+          <h2 class="skillshare-hypotheses-section__title" id="hypotheses-title">Проверка гипотез</h2>
+
+          <div class="skillshare-hypotheses-grid">
+            <article class="skillshare-hypothesis">
+              <div class="skillshare-hypothesis__card">
+                <span class="skillshare-hypothesis__label">Гипотеза №1</span>
+                <p>Если дать пользователям большой выбор мастер-классов по разным хобби, у них появится мотивация пробовать новые занятия и развивать свои навыки.</p>
+              </div>
+              <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
+                <img class="skillshare-hypothesis__icon" src="assets/images/check.svg" alt="Гипотеза подтверждена" />
+                <p>Подтвердилась. Обычно у пользователей уже есть конкретный запрос и они ищут, где его реализовать. Но кто-то ждет, пока его «зацепит», и это вполне может произойти в каталоге такого приложения. И чем больше выбор курсов, тем больше шансов, что человек подберет то, что ему интересно.</p>
+              </div>
+            </article>
+
+            <article class="skillshare-hypothesis">
+              <div class="skillshare-hypothesis__card">
+                <span class="skillshare-hypothesis__label">Гипотеза №2</span>
+                <p>Если придумать, как отслеживать прогресс и достижения, у пользователей появится мотивация заниматься хобби и достигать новых результатов.</p>
+              </div>
+              <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
+                <img class="skillshare-hypothesis__icon" src="assets/images/check.svg" alt="Гипотеза подтверждена" />
+                <p>Подтвердилась. Оценка своего прогресса важна для пользователей.</p>
+              </div>
+            </article>
+
+            <article class="skillshare-hypothesis">
+              <div class="skillshare-hypothesis__card">
+                <span class="skillshare-hypothesis__label">Гипотеза №3</span>
+                <p>Если создать возможность обмениваться навыками и своей экспертностью, пользователи начнут предлагать онлайн-уроки по интересным для себя темам.</p>
+              </div>
+              <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
+                <img class="skillshare-hypothesis__icon" src="assets/images/check.svg" alt="Гипотеза подтверждена" />
+                <p>Подтвердилась, но с оговорками. В основном пользователи готовы тратить время на то, чтобы делиться своими навыками, когда четко понимают, что за это получат (деньги, рекламу, новые полезные знакомства, какое-то иное весомое поощрение).</p>
+              </div>
+            </article>
+
+            <article class="skillshare-hypothesis">
+              <div class="skillshare-hypothesis__card">
+                <span class="skillshare-hypothesis__label">Гипотеза №4</span>
+                <p>Если дать возможность участвовать в групповых занятиях, удастся вовлечь пользователей в обучение, они будут обмениваться опытом и создавать сообщества по интересам.</p>
+              </div>
+              <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
+                <img class="skillshare-hypothesis__icon" src="assets/images/check.svg" alt="Гипотеза подтверждена" />
+                <p>Подтвердилась. Для пользователя важна обратная связь от других пользователей, возможность коммуникации и наличие комьюнити, где можно обсудить свои интересы и задать вопросы.</p>
+              </div>
+            </article>
+
+            <article class="skillshare-hypothesis">
+              <div class="skillshare-hypothesis__card">
+                <span class="skillshare-hypothesis__label">Гипотеза №5</span>
+                <p>Если пользователи будут видеть наглядный результат, который можно достичь, пройдя мастер-класс (в виде примеров работ преподавателя и студентов), то он с большей вероятностью захочет им воспользоваться.</p>
+              </div>
+              <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
+                <img class="skillshare-hypothesis__icon" src="assets/images/check.svg" alt="Гипотеза подтверждена" />
+                <p>Подтвердилась. Пользователю важно видеть результаты работы других пользователей до покупки курса. Это может послужить источником вдохновения, и мотивацией пройти курс.</p>
+              </div>
+            </article>
+
+            <article class="skillshare-hypothesis">
+              <div class="skillshare-hypothesis__card">
+                <span class="skillshare-hypothesis__label">Гипотеза №6</span>
+                <p>Если помочь пользователю понять, что ему подойдет (например, с помощью теста на тип личности), он быстрее и с большей вероятностью найдет для себя что-то интересное.</p>
+              </div>
+              <div class="skillshare-hypothesis__card skillshare-hypothesis__result">
+                <img class="skillshare-hypothesis__icon" src="assets/images/minus.svg" alt="Гипотеза не подтвердилась" />
+                <p>Скорее не подтвердилась — пользователь приходит в приложение на платформу уже с довольно четким запросом и не чувствует потребности в тестах/подсказках.</p>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <div class="case-profile__group">
+        <section class="case-section-heading case-section-heading--before-media" aria-labelledby="journey-title">
+          <div class="case-section-heading__grid">
+            <div class="case-section-heading__content">
+              <h2 class="case-section-heading__title" id="journey-title">User Journey Map</h2>
+              <p class="case-section-heading__caption">Собрала карту пользовательского пути, чтобы увидеть точки сомнения, мотивацию и&nbsp;ключевые шаги от&nbsp;поиска хобби до&nbsp;участия в&nbsp;мастер&#8209;классе.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-image-section" aria-label="User Journey Map Skillshare">
+          <div class="case-image-section__grid">
+            <div class="case-image-section__content">
+              <img class="case-image" src="assets/images/skillshare/skillshare-user-journey-map.png" alt="User Journey Map Skillshare" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="case-profile__group">
+        <section class="case-section-heading case-section-heading--before-media" aria-labelledby="wireframes-title">
+          <div class="case-section-heading__grid">
+            <div class="case-section-heading__content">
+              <h2 class="case-section-heading__title" id="wireframes-title">Вайрфреймы</h2>
+              <p class="case-section-heading__caption">Основные сценарии были собраны в&nbsp;вайрфреймах, чтобы до&nbsp;визуального дизайна проверить структуру экранов, навигацию и&nbsp;сценарии поиска мастер&#8209;класса.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-image-section" aria-label="Вайрфреймы Skillshare">
+          <div class="case-image-section__grid">
+            <div class="case-image-section__content">
+              <img class="case-image" src="assets/images/skillshare/skillshare-wireframes.png" alt="Вайрфреймы Skillshare" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="case-profile__group">
+        <section class="case-section-heading case-section-heading--before-media" aria-labelledby="final-results-title">
+          <div class="case-section-heading__grid">
+            <div class="case-section-heading__content">
+              <h2 class="case-section-heading__title" id="final-results-title">Результаты</h2>
+              <p class="case-section-heading__caption">Финальные экраны приложения и ключевые сценарии Skillshare.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-image-section case-image-section--release" aria-label="Финальный дизайн Skillshare">
+          <div class="case-image-section__grid">
+            <div class="case-image-section__content">
+              <img class="case-image" src="assets/images/skillshare/skillshare-final-design.png" alt="Skillshare Final Design" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
 
     <footer id="screen-contacts" class="contacts-section portfolio-footer case-page-footer" data-case-footer aria-label="Контакты"></footer>
   </main>

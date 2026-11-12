@@ -1,0 +1,43 @@
+.avalike-cover-player {
+  position: relative;
+  border-radius: inherit;
+}
+
+[data-avalike-destination].is-restoring-video video {
+  visibility: hidden;
+}
+
+.avalike-transition-still {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.is-avalike-arriving .avalike-cover-player {
+  position: fixed;
+  z-index: 30;
+  overflow: hidden;
+  background: #222224;
+}
+
+.is-avalike-arriving .avalike-cover-player video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.is-avalike-arriving .avalike-hero-heading,
+.is-avalike-arriving .avalike-intro-content > .case-hero__description,
+.is-avalike-arriving .avalike-intro .case-meta,
+.is-avalike-arriving .avalike-intro ~ section,
+.is-avalike-arriving .page > footer {
+  animation: avalike-reveal 480ms ease-out 80ms both;
+}
+
+@keyframes avalike-reveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

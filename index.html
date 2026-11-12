@@ -849,7 +849,7 @@
     }
 
     #case-avalike .case-screen__info {
-      top: 106.5px;
+      --case-info-top: 106.5px;
     }
 
     #case-avalike .case-screen__content {
@@ -858,11 +858,11 @@
 
     #case-skillshare .case-screen__info,
     #case-mendi .case-screen__info {
-      top: 126.5px;
+      --case-info-top: 126.5px;
     }
 
     #case-friends .case-screen__info {
-      top: 92.5px;
+      --case-info-top: 92.5px;
     }
 
     @media (min-width: 700px) and (max-width: 900px) {
@@ -1371,7 +1371,7 @@
     .case-screen__info {
       position: absolute;
       z-index: 1;
-      top: 193px;
+      top: var(--case-info-top, 193px);
       left: var(--page-padding);
       width: 350px;
     }
@@ -1466,6 +1466,19 @@
     .case-screen__visual {
       width: fit-content;
       max-width: 100%;
+    }
+
+    .case-screen__cover-link:is(:hover, :focus-visible) {
+      opacity: 1;
+    }
+
+    .case-screen__cover-link:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 5px;
+    }
+
+    .case-screen__cover-link video {
+      pointer-events: none;
     }
 
     .case-screen__footer {
@@ -1653,7 +1666,7 @@
         display: none;
       }
 
-      #case-avalike .case-screen__result {
+      :is(#case-avalike, #case-mendi) .case-screen__result {
         grid-column: 1 / -1;
         grid-row: 3;
       }
@@ -1663,7 +1676,7 @@
         grid-row: 3;
       }
 
-      #case-avalike .case-screen__rule {
+      :is(#case-avalike, #case-mendi) .case-screen__rule {
         grid-row: 4;
       }
 
@@ -2219,6 +2232,55 @@
       line-height: var(--case-heading-height);
     }
 
+    @media (width < 1200px) {
+      .case-screen .case-screen__description,
+      .case-screen .case-screen__result,
+      #case-avalike .case-screen__description {
+        font-size: calc(var(--font-body-size) - 2px);
+        line-height: calc(var(--font-body-line-height) - 2px);
+      }
+
+      #case-avalike .case-screen__description {
+        margin-bottom: 0;
+      }
+    }
+
+    @media (700px < width < 1200px) {
+      .case-screen__info {
+        position: relative;
+        grid-column: 1 / span 4;
+        grid-row: 1;
+        align-self: start;
+        top: auto;
+        left: auto;
+        width: auto;
+        min-width: 0;
+        margin-top: var(--case-info-top, 193px);
+        margin-bottom: 24px;
+        overflow-wrap: anywhere;
+      }
+
+      .case-screen__info .case-screen__logo {
+        max-width: 100%;
+      }
+
+      .case-screen__description br {
+        display: none;
+      }
+
+      .case-screen__content {
+        align-self: start;
+        min-width: 0;
+      }
+    }
+
+    @media (700px <= width <= 767px) {
+      :is(#avalike-title, #skillshare-title) {
+        --case-heading-height: 24.7168px;
+        --heading-x-height: calc(var(--case-heading-height) * 0.702256410);
+      }
+    }
+
     @media (max-width: 767px) {
       .hero__status {
         font-family: var(--font-primary-family);
@@ -2322,8 +2384,8 @@
         <div class="case-screen__rule" aria-hidden="true"></div>
       </div>
 
-      <div class="case-screen__content">
-        <figure class="case-screen__visual">
+      <a class="case-screen__content case-screen__cover-link" href="avalike.html" aria-label="Смотреть кейс Avalike" data-avalike-link>
+        <figure class="case-screen__visual" data-avalike-cover>
           <video poster="assets/images/avalike/avalike-case-hero-character-poster.jpg" width="1301" height="845" autoplay muted playsinline loop preload="metadata" aria-label="Обложка кейса Avalike">
               <source src="assets/images/avalike/avalike-case-hero-720p.mp4" media="(max-width: 767px)" type="video/mp4">
               <source src="assets/images/avalike/avalike-case-hero-1080p.mp4" media="(max-width: 1439px)" type="video/mp4">
@@ -2335,7 +2397,7 @@
           <p class="case-screen__caption">Product Designer, web + mobile, end-to-end core flows</p>
           <p class="case-screen__count">25/26</p>
         </footer>
-      </div>
+      </a>
     </section>
 
     <section class="case-screen" id="case-skillshare" aria-labelledby="skillshare-title">
@@ -2363,6 +2425,7 @@
         <p class="case-screen__index">(3 — 3)</p>
         <img class="case-screen__logo" id="mendi-title" src="Mendi.svg" alt="Mendi">
         <p class="case-screen__description">Приложение, которое позволяет следить за приемом лекарств.</p>
+        <p class="case-screen__result">Спроектировала поиск и добавление лекарств, отметку приёма и просмотр статистики.</p>
         <div class="case-screen__rule" aria-hidden="true"></div>
       </div>
 
@@ -3874,12 +3937,12 @@
     });
 
     const casePages = {
-      "case-avalike": "https://mukha.design/avalike",
       "case-skillshare": "https://mukha.design/skillshare",
       "case-mendi": "https://mukha.design/mendi"
     };
 
     caseScreens.forEach((caseScreen) => {
+      if (!casePages[caseScreen.id]) return;
       caseScreen.addEventListener("click", (event) => {
         const contentBounds = getCaseVisualHoverBounds(caseScreen);
         const isOnCaseContent =
@@ -3916,5 +3979,6 @@
     }, { once: true });
 
   </script>
+  <script src="avalike-transition.js"></script>
 </body>
 </html>
