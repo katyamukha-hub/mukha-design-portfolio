@@ -253,9 +253,8 @@
       cursor: pointer;
     }
 
-    .hero__email:hover .hero__email-text,
-    .hero__email:focus-visible .hero__email-text {
-      text-decoration: none;
+    .hero__email:is(:hover, :focus-visible) {
+      color: color-mix(in srgb, var(--text) 80%, var(--background));
     }
 
     .hero__copy-icon {
@@ -265,22 +264,9 @@
     }
 
     .hero__copy-sheets {
+      transform-box: fill-box;
       transform-origin: center;
-      transition: opacity 150ms ease, transform 180ms ease;
-    }
-
-    @media (prefers-reduced-motion: no-preference) {
-      .hero__copy-sheets > * {
-        transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
-      }
-
-      .hero__email:not(.is-copied):is(:hover, :focus-visible) .hero__copy-sheets path {
-        transform: translateY(-1.5px);
-      }
-
-      .hero__email:not(.is-copied):is(:hover, :focus-visible) .hero__copy-sheets rect {
-        transform: translate(-1.5px, 1px);
-      }
+      transition: opacity 150ms ease, transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     .hero__copy-checks {
@@ -2267,11 +2253,11 @@
     <img class="is-copied-icon" src="assets/Icons/copied_coursor.svg" alt="">
   </div>
   <div class="loader-screen" aria-hidden="true">
-    <img class="loader-fly" src="mukha.png" alt="">
+    <img class="loader-fly" src="assets/mukha.png" alt="">
   </div>
   <main>
     <section class="hero" aria-labelledby="hero-title">
-      <img class="hero__mukha" src="mukha.png" alt="">
+      <img class="hero__mukha" src="assets/mukha.png" alt="">
       <span class="hero__mukha-overlay" aria-hidden="true"></span>
       <div class="hero__katya" data-svg-src="Katya.svg">
         <img src="Katya.svg" alt="Katya Mukha">
