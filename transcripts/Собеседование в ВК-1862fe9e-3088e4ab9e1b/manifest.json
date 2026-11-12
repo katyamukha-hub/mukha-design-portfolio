@@ -1,0 +1,24 @@
+{
+  "parameters": {
+    "version": 1,
+    "sha256": "2d8899847ef5d13e160766431a3192e51caccb191e50126b8e7c56210e0dd9a8",
+    "model": {
+      "model.bin": "9b45e1009dcc4ab601eff815b61d80e60ce3fd8c74c1a14f4a282258286b51ae",
+      "config.json": "3622a2ddc41ec0e0fd4e68c13c6830f03b90c38d89aaad184de02c8c642cf807",
+      "tokenizer.json": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab",
+      "vocabulary.txt": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+    },
+    "engine": "1.2.1",
+    "language": "ru",
+    "prompt": "ВК, ВКонтакте",
+    "beam_size": 5,
+    "compute_type": "int8",
+    "vad_filter": false
+  },
+  "source": "/Users/kate/Downloads/Собеседование в ВК.m4a",
+  "duration": 1348.3093125,
+  "outputs": {
+    "Собеседование в ВК_transcript.txt": "70f8f26784f58ca4816df2d7d37018ac83cedb97cc00172534ffa9fc76f02479",
+    "segments.json": "83032d0f744368d943f80bd38c1587ac45563e37218354c77fd0759ac89311b9"
+  }
+}
